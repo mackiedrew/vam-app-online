@@ -1,0 +1,29 @@
+{
+  "name": "vam-server",
+  "version": "0.0.1",
+  "description": "Django server implementation of VAM.",
+  "main": "index.js",
+  "scripts": {
+    "venv:install": "python3 -m venv ./virtual_environment/",
+    "venv:start": "source ./virtual_environment/bin/activate",
+    "pip": "pip3 install -r requirements.txt",
+    "install": "npm run venv:install && npm run venv:start && npm run pip",
+    "start": "npm run venv:start && python3 server/manage.py runserver"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mackiedrew/vam-server.git"
+  },
+  "keywords": [
+    "django",
+    "graphene",
+    "graphql",
+    "python"
+  ],
+  "author": "Mackie Drew",
+  "license": "Unlicensed",
+  "bugs": {
+    "url": "https://github.com/mackiedrew/vam-server/issues"
+  },
+  "homepage": "https://valence.audio/"
+}
