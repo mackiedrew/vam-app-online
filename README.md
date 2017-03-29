@@ -1,7 +1,8 @@
 # VAM Server
 
-This should be a Python3, Django, and Graph QL-based implementation of the Valence Audio
-Manipulation (VAM) program.
+This should be a Python3, Django, and Graph QL-based implementation of the Valence Audio Manipulation (VAM) program.
+
+This VAM implementation is going to be 
 
 # Technology
 
