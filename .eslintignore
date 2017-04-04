@@ -5,3 +5,4 @@ webpack.config.js
 backend/
 node_modules/
 virtual_environment/
+coverage/
