@@ -10,7 +10,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="app">
         <header>
           VAM Online
           <nav>
@@ -28,11 +28,6 @@ class App extends Component {
       </div>
     )
   }
-
-}
-
-App.propTypes = {
-
 }
 
 export default App
