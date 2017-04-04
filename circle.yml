@@ -1,0 +1,9 @@
+machine:
+  node:
+    version: 6.9.5
+
+dependencies:
+  npm install
+
+test:
+  npm run test
