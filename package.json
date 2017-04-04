@@ -10,7 +10,7 @@
     "start:backend": "python3 backend/manage.py runserver",
     "start:frontend": "webpack-dev-server --hot --inline",
     "lint:frontend": "eslint ./",
-    "test": "jest && codecov -t 08a9c11b-ea34-46f8-a03c-90802a1528e9",
+    "test": "jest",
     "start": "npm run start:frontend",
     "build": "webpack -p"
   },
