@@ -5,6 +5,8 @@ machine:
 dependencies:
   override:
     - npm install
+    - npm install codecov
+    - npm install eslint
 
 test:
   override:
