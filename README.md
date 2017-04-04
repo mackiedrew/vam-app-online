@@ -1,8 +1,10 @@
-# VAM Server
+# VAM Online
 
-This should be a Python3, Django, and Graph QL-based implementation of the Valence Audio Manipulation (VAM) program.
+The frontend will be react.
 
-This VAM implementation is going to be 
+This should be a Python3, Django, and Graph QL-based backend implementation of the Valence Audio Manipulation (VAM) program.
+
+
 
 # Technology
 

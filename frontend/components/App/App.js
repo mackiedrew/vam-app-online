@@ -1,11 +1,37 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-const App = () =>
-  <div>
-    <h1>Hello World</h1>
-  </div>
+import Tracks from '../Tracks/Tracks'
 
-App.PropTypes = {
+class App extends Component {
+
+  constructor() {
+    super()
+  }
+
+  render() {
+    return (
+      <div>
+        <header>
+          VAM Online
+          <nav>
+            <a href="./">Home</a>
+          </nav>
+        </header>
+        <main>
+          <Tracks />
+          {/* Tracks List */}
+          {/* Load Tracks */}
+        </main>
+        <footer>
+          Developed for Valence Audio
+        </footer>
+      </div>
+    )
+  }
+
+}
+
+App.propTypes = {
 
 }
 

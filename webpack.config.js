@@ -18,11 +18,25 @@ module.exports = {
 
   devtool: "eval-source-map",
 
+  devServer: {
+    host: 'localhost',
+    port: 7447,
+
+    historyApiFallback: true,
+    // respond to 404s with index.html
+
+    hot: true,
+    // enable HMR on the server
+  },
+
   context: path.resolve(__dirname, './frontend'),
 
-  entry: {
-    app: './index.js',
-  },
+  entry: [
+    'react-hot-loader/patch',
+    'webpack-dev-server/client?http://localhost:7447',
+    'webpack/hot/only-dev-server',
+    './index.js',
+  ],
 
   output: {
     path: path.resolve(__dirname, './public'),
