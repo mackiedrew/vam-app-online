@@ -10,7 +10,7 @@
     "start:backend": "python3 backend/manage.py runserver",
     "start:frontend": "webpack-dev-server --hot --inline",
     "lint:frontend": "eslint ./",
-    "lint": "npm run lint",
+    "lint": "npm run lint:frontend",
     "test": "jest",
     "start": "npm run start:frontend",
     "build": "webpack -p"
