@@ -6,6 +6,16 @@ This VAM implementation is going to be
 
 # Technology
 
+## Backend
+1. Python 3.5
+2. Django
+
+## Frontend
+1. Webpack
+2. Babel
+3. React
+4. ESLint
+
 # Installation
 
 1. Create virtual environment: `python3 -m venv ./virtual_environment/`

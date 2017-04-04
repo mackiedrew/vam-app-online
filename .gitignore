@@ -1,3 +1,9 @@
+# Backend
 virtual_environment/
 __pycache__
+
+# Frontend
 npm-debug.log
+node_modules/
+*.bundle.js
+
