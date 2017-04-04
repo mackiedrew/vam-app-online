@@ -1,2 +1,2 @@
-Django==1.10.6
+Django==1.10.2
 graphene_django==1.2.1
