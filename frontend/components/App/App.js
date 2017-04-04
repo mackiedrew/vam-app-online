@@ -19,7 +19,6 @@ class App extends Component {
         </header>
         <main>
           <Tracks />
-          {/* Tracks List */}
           {/* Load Tracks */}
         </main>
         <footer>

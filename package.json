@@ -13,6 +13,7 @@
     "lint": "npm run lint:frontend",
     "test": "jest",
     "start": "npm run start:frontend",
+    "electron": "electron main.js",
     "build": "webpack -p"
   },
   "jest": {
@@ -24,7 +25,7 @@
     ],
     "collectCoverage": true,
     "transform": {
-       ".*": "<rootDir>/node_modules/jest-babel-preprocessor/preprocessor.js"
+      ".*": "<rootDir>/node_modules/jest-babel-preprocessor/preprocessor.js"
     },
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react"
@@ -57,9 +58,12 @@
   },
   "homepage": "https://valence.audio/",
   "dependencies": {
+    "chart.js": "^2.5.0",
+    "electron": "^1.6.2",
     "react": "15.4.2",
     "react-dom": "15.4.2",
-    "react-hot-loader": "3.0.0-beta.6"
+    "react-hot-loader": "3.0.0-beta.6",
+    "wav": "^1.0.1"
   },
   "devDependencies": {
     "babel-core": "6.24.0",
