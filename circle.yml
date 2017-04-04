@@ -1,0 +1,16 @@
+machine:
+  node:
+    version: 6.9.5
+
+dependencies:
+  override:
+    - npm install
+    - npm install -g codecov
+    - npm install -g eslint
+
+test:
+  override:
+    - npm run lint
+    - npm run test
+  post:
+    - codecov -t 08a9c11b-ea34-46f8-a03c-90802a1528e9
