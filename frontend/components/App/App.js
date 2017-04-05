@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import './App.scss'
 import Tracks from '../Tracks/Tracks'
 
 class App extends Component {
@@ -12,14 +12,13 @@ class App extends Component {
     return (
       <div className="app">
         <header>
-          VAM Online
+          VAM Editor
           <nav>
             <a href="./">Home</a>
           </nav>
         </header>
         <main>
           <Tracks />
-          {/* Tracks List */}
           {/* Load Tracks */}
         </main>
         <footer>
