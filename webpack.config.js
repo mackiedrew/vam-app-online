@@ -24,14 +24,12 @@ module.exports = {
 
     historyApiFallback: true,
     // respond to 404s with index.html
-
-    hot: true,
-    // enable HMR on the server
   },
 
   context: path.resolve(__dirname, './frontend'),
 
   entry: [
+    "babel-polyfill",
     'react-hot-loader/patch',
     'webpack-dev-server/client?http://localhost:7447',
     'webpack/hot/only-dev-server',
@@ -39,7 +37,7 @@ module.exports = {
   ],
 
   output: {
-    path: path.resolve(__dirname, './public'),
+    path: path.resolve(__dirname, 'public'),
     filename: '[name].bundle.js',
   },
 
@@ -47,13 +45,8 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.jsx$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
+        loader: ['babel-loader'],
+        exclude: /node_modules/,
       }
     ]
   },
