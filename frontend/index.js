@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import App from './components/App/App.js'
+import App from './components/App/App'
 
-const render = Component => { // eslint-disable-line
+const render = (Component) => {
   ReactDOM.render(
     <AppContainer>
-      <App/>
+      <Component />
     </AppContainer>,
     document.getElementById('root')
   )
@@ -15,9 +15,10 @@ const render = Component => { // eslint-disable-line
 render(App)
 
 // Hot Module Replacement
-if (module.hot) { // eslint-disable-line
-  module.hot.accept( // eslint-disable-line
-    './components/App/App',
-    () => render(App)
-  )
+if (module.hot) {
+  console.log('test3')
+  module.hot.accept('./components/App/App', () => {
+    console.log('test2')
+    render(App)
+  })
 }
