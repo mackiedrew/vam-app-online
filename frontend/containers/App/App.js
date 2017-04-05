@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.scss'
-import Tracks from '../Tracks/Tracks'
+import Tracks from '../../components/Tracks/Tracks'
 
 class App extends Component {
 
