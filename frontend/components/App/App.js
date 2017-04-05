@@ -13,7 +13,6 @@ class App extends Component {
       <div className="app">
         <header>
           VAM Editor
-          <p>lol</p>
           <nav>
             <a href="./">Home</a>
           </nav>

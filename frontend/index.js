@@ -15,10 +15,8 @@ const render = (Component) => {
 render(App)
 
 // Hot Module Replacement
-if (module.hot) {
-  console.log('test3')
-  module.hot.accept('./components/App/App', () => {
-    console.log('test2')
+if (module.hot) { // eslint-disable-line
+  module.hot.accept('./components/App/App', () => { // eslint-disable-line
     render(App)
   })
 }
