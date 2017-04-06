@@ -34,8 +34,7 @@
     ],
     "moduleNameMapper": {
       ".+\\.(css|scss)$": "<rootDir>/node_modules/jest-css-modules"
-    },
-    "scriptPreprocessor": "<rootDir>/node_modules/jest-babel-preprocessor/preprocessor.js"
+    }
   },
   "repository": {
     "type": "git",
