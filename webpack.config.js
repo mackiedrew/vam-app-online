@@ -1,6 +1,7 @@
 const { resolve } = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ElectronPlugin = require('electron-webpack-plugin')
 
 // Constants
 const PORT = 7447
@@ -15,7 +16,18 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body',
 })
 
+const ElectronPluginConfig = new ElectronPlugin({
+  relaunchPathMatch: './src',
+  path: './build',
+  args: ['--enable-logging'],
+  options: {
+    env: {NODE_ENV: 'development'},
+  },
+})
+
 const configuration = {
+
+  target: 'electron',
 
   context: APP_DIRECTORY,
 
@@ -101,6 +113,7 @@ const configuration = {
   },
 
   plugins: [
+    ElectronPluginConfig,
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     HtmlWebpackPluginConfig,
