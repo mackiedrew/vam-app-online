@@ -13,4 +13,4 @@ test:
     - yarn lint
     - yarn test
   post:
-    - npm run coverage
+    - yarn run coverage
