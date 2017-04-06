@@ -1,65 +1,117 @@
-const path = require('path')
+const { resolve } = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ElectronPlugin = require('electron-webpack-plugin')
 
-const ProductionNodeEnvironment = new webpack.DefinePlugin({
-  'process.env': {
-    'NODE_ENV': JSON.stringify('production')
-  }
-})
+/// Constants ///
+const PORT = 7447
+const BASE_DIRECTORY = resolve(__dirname)
+const BUILD_DIRECTORY = `${BASE_DIRECTORY}/build`
+const APP_DIRECTORY = `${BASE_DIRECTORY}/src`
 
+/// Webpack plugins ///
+
+// This plugin allows for base-page templating
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: './public/index.html',
+  template: `${APP_DIRECTORY}/index.ejs`,
   filename: 'index.html',
-  inject: 'body'
+  inject: 'body',
 })
 
-module.exports = {
+const ElectronPluginConfig = new ElectronPlugin({
+  relaunchPathMatch: './src',
+  path: './build',
+  args: ['--enable-logging'],
+  options: {
+    env: {NODE_ENV: 'development'},
+  },
+})
 
-  devtool: "eval-source-map",
+const configuration = {
 
-  devServer: {
-    host: 'localhost',
-    port: 7447,
+  target: 'electron',
 
-    historyApiFallback: true,
-    // respond to 404s with index.html
+  context: APP_DIRECTORY,
 
-    hot: true,
-    // enable HMR on the server
+  entry: {
+    app: [
+      'react-hot-loader/patch',
+      `webpack-dev-server/client?http://localhost:${PORT}`,
+      `${APP_DIRECTORY}/index.js`,
+    ],
   },
 
-  context: path.resolve(__dirname, './frontend'),
-
-  entry: [
-    'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:7447',
-    'webpack/hot/only-dev-server',
-    './index.js',
-  ],
-
   output: {
-    path: path.resolve(__dirname, './public'),
+    path: BUILD_DIRECTORY,
+    publicPath: BUILD_DIRECTORY,
     filename: '[name].bundle.js',
+  },
+
+  node: {
+    __dirname: false,
+    __filename: false
   },
 
   module: {
     loaders: [
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
+        loader: [
+          'babel-loader',
+          ],
+        exclude: /node_modules/,
       },
       {
-        test: /\.jsx$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
-      }
+        test: /\.json$/,
+        loader: [
+          'json-loader',
+          ]
+      },
+      {
+        test: /\.css$/,
+        loader: [
+          'style-loader',
+          'css-loader?modules',
+          'postcss-loader',
+        ],
+      },
+      {
+        test: /\.scss$/,
+        loader: [
+          'style-loader',
+          'css-loader',
+          'sass-loader',
+        ],
+      },
+      {
+        test: /\.svg$/,
+        loader: [
+           'babel-loader',
+          {
+            loader: 'react-svg-loader',
+            query: {
+              svgo: {
+                plugins: [{removeTitle: true}],
+                floatPrecision: 2
+              }
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(png|jpg|gif)$/, 
+        exclude: /node_modules/,
+        loader: 'file-loader?name=images/[hash].[ext]'
+      },
     ]
   },
 
   plugins: [
-    ProductionNodeEnvironment,
+    ElectronPluginConfig,
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
     HtmlWebpackPluginConfig,
   ],
 }
+
+module.exports = configuration

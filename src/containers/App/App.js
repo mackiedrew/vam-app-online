@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-
-import Tracks from '../Tracks/Tracks'
+import './App.scss'
+import Tracks from '../../components/Tracks/Tracks'
 
 class App extends Component {
 
@@ -12,18 +12,14 @@ class App extends Component {
     return (
       <div className="app">
         <header>
-          VAM Online
-          <nav>
-            <a href="./">Home</a>
-          </nav>
+          <h1>VAM Editor</h1>
         </header>
         <main>
           <Tracks />
-          {/* Tracks List */}
           {/* Load Tracks */}
         </main>
         <footer>
-          Developed for Valence Audio
+          <span><em>Developed for Valence Audio</em></span>
         </footer>
       </div>
     )
