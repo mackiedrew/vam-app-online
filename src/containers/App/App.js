@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
+import { remote } from 'electron'
+import fs from 'fs'
+import wav from 'wav'
+
 import './App.scss'
 import Tracks from '../../components/Tracks/Tracks'
+
+const showFileDialog = remote.dialog.showOpenDialog
 
 class App extends Component {
 
@@ -17,6 +23,24 @@ class App extends Component {
         <main>
           <Tracks />
           {/* Load Tracks */}
+          <button onClick={() => showFileDialog({
+            title: 'Select Show Tracks',
+            filters: [
+              {
+                name: 'Track Files (.wav)',
+                extensions: ['wav'],                
+              },
+            ],
+            properties: [
+              'openFile',
+              'multiSelections',
+            ]
+          }, (files) => {
+            files.map((file) => {
+              console.log(file)
+            })
+          })}
+          >Select Tracks</button>
         </main>
         <footer>
           <span><em>Developed for Valence Audio</em></span>
