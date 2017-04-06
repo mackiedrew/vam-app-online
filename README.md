@@ -10,6 +10,7 @@ The frontend will be a React and Electron project.
 1. CircleCI 
 2. Codecov
 3. GitHub
+4. Yarn & NPM
 
 ## Content
 1. Webpack
