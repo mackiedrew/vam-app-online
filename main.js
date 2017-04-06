@@ -1,11 +1,14 @@
 /*eslint-env node*/
 
-const {app, BrowserWindow} = require('electron')
+const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const url = require('url')
 
 // Allows for automatic reloading
-require('electron-reload')(__dirname)
+require('electron-reload')(__dirname, {
+  electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
+  hardResetMethod: 'exit'
+})
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

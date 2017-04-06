@@ -12,10 +12,7 @@ class App extends Component {
     return (
       <div className="app">
         <header>
-          VAM Editor
-          <nav>
-            <a href="./">Home</a>
-          </nav>
+          VAM Edito
         </header>
         <main>
           <Tracks />

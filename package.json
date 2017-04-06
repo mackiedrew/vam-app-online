@@ -4,10 +4,11 @@
   "description": "Electron implementation of VAM.",
   "main": "main.js",
   "scripts": {
-    "start": "./node_modules/.bin/webpack-dev-server",
+    "watch": "./node_modules/.bin/webpack --watch",
     "lint": "./node_modules/.bin/eslint ./",
     "test": "./node_modules/.bin/jest",
     "electron": "./node_modules/.bin/electron main.js",
+    "start": "npm run electron & npm run watch",
     "build": "./node_modules/.bin/webpack -p"
   },
   "jest": {
@@ -33,7 +34,8 @@
     ],
     "moduleNameMapper": {
       ".+\\.(css|scss)$": "<rootDir>/node_modules/jest-css-modules"
-    }
+    },
+    "scriptPreprocessor": "<rootDir>/node_modules/jest-babel-preprocessor/preprocessor.js"
   },
   "repository": {
     "type": "git",
@@ -69,6 +71,7 @@
     "electron-packager": "^8.6.0",
     "electron-rebuild": "^1.5.7",
     "electron-reload": "^1.1.0",
+    "electron-webpack-plugin": "^1.2.2",
     "enzyme": "2.8.0",
     "enzyme-to-json": "1.5.0",
     "eslint": "3.19.0",

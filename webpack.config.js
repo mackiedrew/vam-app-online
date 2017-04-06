@@ -3,13 +3,15 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ElectronPlugin = require('electron-webpack-plugin')
 
-// Constants
+/// Constants ///
 const PORT = 7447
 const BASE_DIRECTORY = resolve(__dirname)
 const BUILD_DIRECTORY = `${BASE_DIRECTORY}/build`
 const APP_DIRECTORY = `${BASE_DIRECTORY}/src`
 
-// Webpack plugins
+/// Webpack plugins ///
+
+// This plugin allows for base-page templating
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: `${APP_DIRECTORY}/index.ejs`,
   filename: 'index.html',
@@ -33,10 +35,10 @@ const configuration = {
 
   entry: {
     app: [
+      'react-hot-loader/patch',
       `webpack-dev-server/client?http://localhost:${PORT}`,
       `${APP_DIRECTORY}/index.js`,
     ],
-
   },
 
   output: {
@@ -48,14 +50,6 @@ const configuration = {
   node: {
     __dirname: false,
     __filename: false
-  },
-
-  devServer: {
-    port: PORT,
-    inline: false,
-    contentBase: BUILD_DIRECTORY,
-    publicPath: BUILD_DIRECTORY,
-    outputPath: BUILD_DIRECTORY,
   },
 
   module: {
