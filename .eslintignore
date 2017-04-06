@@ -1,8 +1,9 @@
+# Directories
+node_modules/
+coverage/
+build/
+
+# Files
 *.test.js
 jestsetup.js
 webpack.config.js
-*.bundle.js
-backend/
-node_modules/
-virtual_environment/
-coverage/
