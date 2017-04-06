@@ -4,13 +4,9 @@
   "description": "Electron implementation of VAM.",
   "main": "main.js",
   "scripts": {
-    "venv:install": "python3 -m venv ./virtual_environment/",
-    "venv:start": "source ./virtual_environment/bin/activate",
-    "start:backend": "python3 backend/manage.py runserver",
-    "start:frontend": "./node_modules/.bin/webpack-dev-server",
+    "start": "./node_modules/.bin/webpack-dev-server",
     "lint": "./node_modules/.bin/eslint ./",
     "test": "./node_modules/.bin/jest",
-    "start": "npm run start:frontend",
     "electron": "./node_modules/.bin/electron main.js",
     "build": "./node_modules/.bin/webpack -p"
   },
@@ -97,7 +93,6 @@
     "sinon": "2.1.0",
     "style-loader": "0.16.1",
     "webpack": "2.3.3",
-    "webpack-dev-server": "2.4.2",
-    "webpack-target-electron-renderer": "^0.4.0"
+    "webpack-dev-server": "2.4.2"
   }
 }

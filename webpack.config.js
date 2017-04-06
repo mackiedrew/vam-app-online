@@ -1,7 +1,6 @@
 const { resolve } = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const webpackTargetElectronRenderer = require('webpack-target-electron-renderer')
 
 // Constants
 const PORT = 7447
@@ -93,8 +92,5 @@ const configuration = {
     HtmlWebpackPluginConfig,
   ],
 }
-
-
-configuration.target = webpackTargetElectronRenderer(configuration)
 
 module.exports = configuration
