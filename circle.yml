@@ -11,4 +11,4 @@ test:
     - npm run lint
     - npm run test
   post:
-    - codecov -t 08a9c11b-ea34-46f8-a03c-90802a1528e9
+    - npm run coverage

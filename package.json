@@ -10,6 +10,7 @@
     "rebuild": "npm run clean && npm run build",
     "lint": "./node_modules/.bin/eslint ./",
     "test": "./node_modules/.bin/jest",
+    "coverage": "./node_modules/.bin/codecov -t 08a9c11b-ea34-46f8-a03c-90802a1528e9",
     "electron": "./node_modules/.bin/electron main.js",
     "start": "npm run rebuild && (npm run electron & npm run watch)",
     "deploy": "./node_modules/.bin/electron-packager . VAM --all --overwrite --out binaries/"
