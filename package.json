@@ -5,11 +5,14 @@
   "main": "main.js",
   "scripts": {
     "watch": "./node_modules/.bin/webpack --watch",
+    "clean": "rm -r ./build/",
+    "build": "./node_modules/.bin/webpack -p",
+    "rebuild": "npm run clean && npm run build",
     "lint": "./node_modules/.bin/eslint ./",
     "test": "./node_modules/.bin/jest",
     "electron": "./node_modules/.bin/electron main.js",
-    "start": "npm run electron & npm run watch",
-    "build": "./node_modules/.bin/webpack -p"
+    "start": "npm run rebuild && (npm run electron & npm run watch)",
+    "deploy": "./node_modules/.bin/electron-packager . VAM --all --overwrite --out binaries/"
   },
   "jest": {
     "coverageDirectory": "./coverage/",

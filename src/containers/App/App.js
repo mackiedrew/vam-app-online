@@ -12,14 +12,14 @@ class App extends Component {
     return (
       <div className="app">
         <header>
-          VAM Edito
+          <h1>VAM Editor</h1>
         </header>
         <main>
           <Tracks />
           {/* Load Tracks */}
         </main>
         <footer>
-          Developed for Valence Audio
+          <span><em>Developed for Valence Audio</em></span>
         </footer>
       </div>
     )
