@@ -1,10 +1,7 @@
-# Backend
-virtual_environment/
-__pycache__
-
-# Frontend
+# Temporary Files
 npm-debug.log
+
+# Infrastructure
 node_modules/
-*.bundle.js
 coverage/
-dist/*.bundle.js
+build/

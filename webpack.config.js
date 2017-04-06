@@ -1,46 +1,36 @@
 const { resolve } = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpackTargetElectronRenderer = require('webpack-target-electron-renderer')
 
 // Constants
-const port = 7447
-const srcDirectory = 'frontend'
-const outputDirectory = 'build'
+const PORT = 7447
+const BUILD_DIRECTORY = resolve(__dirname, 'build')
+const APP_DIRECTORY = resolve(__dirname, 'src')
 
 // Webpack plugins
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: resolve(__dirname, `${srcDirectory}/index.html`),
+  template: __dirname + '/src/index.ejs',
   filename: 'index.html',
   inject: 'body',
 })
 
 
 const configuration = {
-
-  context: resolve(__dirname, srcDirectory),
-
-  entry: [
-    "babel-polyfill",
-    'react-hot-loader/patch',
-    `webpack-dev-server/client?http://0.0.0.0:${port}`,
-    'webpack/hot/only-dev-server',
-    './index.js',
-  ],
+  entry: APP_DIRECTORY + '/index.js',
 
   output: {
+    path: BUILD_DIRECTORY,
     filename: '[name].bundle.js',
-    path: resolve(__dirname, outputDirectory),
-    publicPath: 'http://0.0.0.0:7447/'
+  },
+
+  node: {
+    __dirname: false,
+    __filename: false
   },
 
   devServer: {
-    host: '0.0.0.0',
-    hot: true,
-    inline: true,
-    port: port,
-    historyApiFallback: true,
-    contentBase: resolve(__dirname, outputDirectory),
-    publicPath: '/',
+    port: PORT,
   },
 
   module: {
@@ -98,11 +88,13 @@ const configuration = {
   },
 
   plugins: [
-        new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-
+    new webpack.NamedModulesPlugin(),
     HtmlWebpackPluginConfig,
   ],
 }
+
+
+configuration.target = webpackTargetElectronRenderer(configuration)
 
 module.exports = configuration

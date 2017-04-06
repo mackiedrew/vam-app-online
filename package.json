@@ -1,16 +1,14 @@
 {
   "name": "vam-online",
   "version": "0.0.1",
-  "description": "Django server and electron implementation of VAM.",
-  "main": "index.js",
+  "description": "Electron implementation of VAM.",
+  "main": "main.js",
   "scripts": {
     "venv:install": "python3 -m venv ./virtual_environment/",
     "venv:start": "source ./virtual_environment/bin/activate",
-    "pip": "pip3 install -r requirements.txt",
     "start:backend": "python3 backend/manage.py runserver",
     "start:frontend": "./node_modules/.bin/webpack-dev-server",
-    "lint:frontend": "./node_modules/.bin/eslint ./",
-    "lint": "npm run lint:frontend",
+    "lint": "./node_modules/.bin/eslint ./",
     "test": "./node_modules/.bin/jest",
     "start": "npm run start:frontend",
     "electron": "./node_modules/.bin/electron main.js",
@@ -46,10 +44,8 @@
     "url": "git+https://github.com/mackiedrew/vam-online.git"
   },
   "keywords": [
-    "django",
-    "graphene",
-    "graphql",
-    "python"
+    "electron",
+    "react"
   ],
   "author": "Mackie Drew",
   "license": "CC-BY-NC-ND-4.0",
@@ -60,9 +56,9 @@
   "dependencies": {
     "chart.js": "2.5.0",
     "electron": "1.6.2",
+    "electron-reload": "^1.1.0",
     "react": "15.4.2",
     "react-dom": "15.4.2",
-    "react-hot-loader": "3.0.0-beta.6",
     "wav": "1.0.1"
   },
   "devDependencies": {
@@ -77,6 +73,8 @@
     "chai-enzyme": "0.6.1",
     "codecov": "2.1.0",
     "css-loader": "0.28.0",
+    "electron-packager": "^8.6.0",
+    "electron-rebuild": "^1.5.7",
     "enzyme": "2.8.0",
     "enzyme-to-json": "1.5.0",
     "eslint": "3.19.0",
@@ -99,6 +97,7 @@
     "sinon": "2.1.0",
     "style-loader": "0.16.1",
     "webpack": "2.3.3",
-    "webpack-dev-server": "2.4.2"
+    "webpack-dev-server": "2.4.2",
+    "webpack-target-electron-renderer": "^0.4.0"
   }
 }
