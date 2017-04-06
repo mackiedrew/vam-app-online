@@ -1,46 +1,55 @@
 const { resolve } = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ElectronPlugin = require('electron-webpack-plugin')
 
-// Constants
-const port = 7447
-const srcDirectory = 'frontend'
-const outputDirectory = 'build'
+/// Constants ///
+const PORT = 7447
+const BASE_DIRECTORY = resolve(__dirname)
+const BUILD_DIRECTORY = `${BASE_DIRECTORY}/build`
+const APP_DIRECTORY = `${BASE_DIRECTORY}/src`
 
-// Webpack plugins
+/// Webpack plugins ///
+
+// This plugin allows for base-page templating
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: resolve(__dirname, `${srcDirectory}/index.html`),
+  template: `${APP_DIRECTORY}/index.ejs`,
   filename: 'index.html',
   inject: 'body',
 })
 
+const ElectronPluginConfig = new ElectronPlugin({
+  relaunchPathMatch: './src',
+  path: './build',
+  args: ['--enable-logging'],
+  options: {
+    env: {NODE_ENV: 'development'},
+  },
+})
 
 const configuration = {
 
-  context: resolve(__dirname, srcDirectory),
+  target: 'electron',
 
-  entry: [
-    "babel-polyfill",
-    'react-hot-loader/patch',
-    `webpack-dev-server/client?http://0.0.0.0:${port}`,
-    'webpack/hot/only-dev-server',
-    './index.js',
-  ],
+  context: APP_DIRECTORY,
 
-  output: {
-    filename: '[name].bundle.js',
-    path: resolve(__dirname, outputDirectory),
-    publicPath: 'http://0.0.0.0:7447/'
+  entry: {
+    app: [
+      'react-hot-loader/patch',
+      `webpack-dev-server/client?http://localhost:${PORT}`,
+      `${APP_DIRECTORY}/index.js`,
+    ],
   },
 
-  devServer: {
-    host: '0.0.0.0',
-    hot: true,
-    inline: true,
-    port: port,
-    historyApiFallback: true,
-    contentBase: resolve(__dirname, outputDirectory),
-    publicPath: '/',
+  output: {
+    path: BUILD_DIRECTORY,
+    publicPath: BUILD_DIRECTORY,
+    filename: '[name].bundle.js',
+  },
+
+  node: {
+    __dirname: false,
+    __filename: false
   },
 
   module: {
@@ -98,9 +107,9 @@ const configuration = {
   },
 
   plugins: [
-        new webpack.NamedModulesPlugin(),
+    ElectronPluginConfig,
     new webpack.HotModuleReplacementPlugin(),
-
+    new webpack.NamedModulesPlugin(),
     HtmlWebpackPluginConfig,
   ],
 }

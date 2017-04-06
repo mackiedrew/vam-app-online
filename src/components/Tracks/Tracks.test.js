@@ -13,7 +13,6 @@ describe('<Tracks />', () => {
   it('renders without crashing', () => {
     const wrapper = shallow(<Tracks />)
     expect(wrapper.is('div.tracks')).to.be.equal(true)
-    expect(wrapper.find('p')).to.have.length(1)
   })
 
 })
