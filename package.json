@@ -7,7 +7,7 @@
   ],
   "license": "CC-BY-NC-ND-4.0",
   "description": "Electron implementation of VAM.",
-  "main": "main.js",
+  "main": "electron.js",
   "scripts": {
     "watch": "./node_modules/.bin/webpack --watch",
     "clean": "rm -rf ./build/",
@@ -16,7 +16,7 @@
     "lint": "./node_modules/.bin/eslint ./",
     "test": "./node_modules/.bin/jest",
     "coverage": "./node_modules/.bin/codecov -t 08a9c11b-ea34-46f8-a03c-90802a1528e9",
-    "electron": "./node_modules/.bin/electron main.js",
+    "electron": "./node_modules/.bin/electron .",
     "start": "npm run rebuild && (npm run electron & npm run watch)",
     "deploy": "./node_modules/.bin/electron-packager . VAM --all --overwrite --out binaries/"
   },
@@ -72,9 +72,11 @@
     "chart.js": "2.5.0",
     "electron": "1.6.2",
     "electron-reload": "1.1.0",
+    "filter-obj": "^1.1.0",
     "react": "15.4.2",
     "react-chartjs-2": "2.0.5",
     "react-dom": "15.4.2",
+    "shortid": "^2.2.8",
     "wav": "1.0.1"
   },
   "devDependencies": {

@@ -4,15 +4,15 @@ import { expect } from 'chai'
 import { sinon } from 'sinon'
 
 // Components
-import Tracks from './Tracks'
+import Tracks from './Track'
 
 // Test Suite
-describe('<Tracks />', () => {
+describe('<Track />', () => {
 
   // Shallow Render
   it('renders without crashing', () => {
     const wrapper = shallow(<Track />)
-    expect(wrapper.is('div.tracks')).to.be.equal(true)
+    expect(wrapper.is('div.track')).to.be.equal(true)
   })
 
 })
