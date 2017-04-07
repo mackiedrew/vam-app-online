@@ -1,8 +1,9 @@
 # Temporary Files
 npm-debug.log
+cache/
 
 # Infrastructure
 node_modules/
 coverage/
 build/
-binaries/
+release/
