@@ -25,7 +25,7 @@ class Tracks extends Component {
     // Bind functions to `this`
     this.handleAdd = this.handleAdd.bind(this)
     this.handleRemove = this.handleRemove.bind(this)
-    this.selectTrack = this.selectTrack.bind(this)
+    this.selectTracks = this.selectTracks.bind(this)
   }
 
   /**
@@ -68,7 +68,7 @@ class Tracks extends Component {
   /**
    * Open a file dialog, return a series of tracks, and then add these tracks to the list.
    */
-  selectTrack() {
+  selectTracks() {
     // Simple reference to handleAdd function in class context
     const handleAdd = this.handleAdd
     // Open file dialog, it will ask for one or more files of type `wav`
@@ -89,11 +89,11 @@ class Tracks extends Component {
     // Simplifying references for clarity
     const { tracks } = this.state
     const handleRemove = this.handleRemove
-    const selectTrack = this.selectTrack
+    const selectTracks = this.selectTracks
 
     return (
       <div className="tracks">
-        { tracks && Object.keys(tracks).map((id) =>
+        { Object.keys(tracks).map((id) =>
           <Track
             key={id}
             id={id}
@@ -101,7 +101,9 @@ class Tracks extends Component {
             close={handleRemove}
           />
         )}
-        <button className="add-tracks" onClick={selectTrack}>Add Tracks</button>
+        <button className="add-tracks" onClick={selectTracks}>
+          Add Tracks
+        </button>
       </div>
     )
   }
