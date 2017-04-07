@@ -1,4 +1,4 @@
-/*eslint-env node*/
+/* eslint-env node */
 
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
