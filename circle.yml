@@ -4,13 +4,13 @@ machine:
 
 dependencies:
   override:
-    - npm install
-    - npm install -g codecov
-    - npm install -g eslint
+    - yarn
+  cache_directories:
+    - ~/.cache/yarn
 
 test:
   override:
-    - npm run lint
-    - npm run test
+    - yarn lint
+    - yarn test
   post:
-    - codecov -t 08a9c11b-ea34-46f8-a03c-90802a1528e9
+    - npm run coverage

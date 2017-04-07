@@ -1,5 +1,5 @@
 import React from 'react'
-import './Tracks.scss'
+import './Tracks.styl'
 
 const Tracks = () =>
   <div className="tracks">
