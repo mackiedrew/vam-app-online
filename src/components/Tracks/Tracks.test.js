@@ -11,7 +11,7 @@ describe('<Tracks />', () => {
 
   // Shallow Render
   it('renders without crashing', () => {
-    const wrapper = shallow(<Track />)
+    const wrapper = shallow(<Tracks />)
     expect(wrapper.is('div.tracks')).to.be.equal(true)
   })
 

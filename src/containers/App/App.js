@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import './App.styl'
 import Tracks from '../../components/Tracks/Tracks'
