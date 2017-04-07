@@ -76,11 +76,11 @@ const configuration = {
         ],
       },
       {
-        test: /\.scss$/,
+        test: /\.styl$/,
         loader: [
           'style-loader',
           'css-loader',
-          'sass-loader',
+          'stylus-loader',
         ],
       },
       {
