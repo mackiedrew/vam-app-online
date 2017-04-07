@@ -3,7 +3,6 @@ import React from 'react'
 import './App.styl'
 import Tracks from '../../components/Tracks/Tracks'
 
-
 const App = () =>
   <div className="app">
     <header>

@@ -1,18 +1,13 @@
-import React from 'react'
-import { shallow, render } from 'enzyme'
-import { expect } from 'chai'
-import { sinon } from 'sinon'
+import Subject from './Tracks'
 
-// Components
-import Tracks from './Tracks'
+describe('<Test />', () => {
 
-// Test Suite
-describe('<Tracks />', () => {
-
-  // Shallow Render
   it('renders without crashing', () => {
-    const wrapper = shallow(<Tracks />)
-    expect(wrapper.is('div.tracks')).to.be.equal(true)
+    shallow(<Subject />)
+  })
+
+  it('renders correct children at initial state', () => {
+    const wrapper = mount(<Subject />)
   })
 
 })

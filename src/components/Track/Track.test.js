@@ -1,18 +1,42 @@
-import React from 'react'
-import { shallow, render } from 'enzyme'
-import { expect } from 'chai'
-import { sinon } from 'sinon'
+import Subject from './Track'
 
-// Components
-import Track from './Track'
+const mockProps = {
+  id: 'abc123',
+  file: '/home/test.wav'
+}
 
-// Test Suite
 describe('<Track />', () => {
 
-  // Shallow Render
   it('renders without crashing', () => {
-    const wrapper = shallow(<Track id={'abc123'} file="/home/test.wav" />)
-    expect(wrapper.is('div.track')).to.be.equal(true)
+    shallow(<Subject { ...mockProps } />)
+  })
+
+  it('renders as a div with class: `track`', () => {
+    const wrapper = shallow(<Subject { ...mockProps } />)
+    assume(wrapper.is("div.track")).to.be.equal(true)
+  })
+
+  it('renders a button with class: `close`', () => {
+    const wrapper = shallow(<Subject { ...mockProps } />)
+    assume(wrapper.find("button.close")).to.have.length(1)
+  })
+
+  it('renders a span tag with class: `name`', () => {
+    const wrapper = shallow(<Subject { ...mockProps } />)
+    assume(wrapper.find("span.name")).to.have.length(1)
+  })
+
+  it('close() is called when you click the close button with parameter passed', () => {
+    const handleRemoveMock = sinon.spy()
+    const wrapper = shallow(
+      <Subject
+        { ...mockProps }
+        close={handleRemoveMock}
+      />
+    )
+    wrapper.find('button.close').simulate('click')
+    assume(handleRemoveMock.called).to.be.equal(true)
+    assume(handleRemoveMock.called).to.not.be.equal(false)
   })
 
 })

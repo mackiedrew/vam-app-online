@@ -21,7 +21,7 @@ class Track extends Component {
     return (
       <div className="track">
         <button className="close" onClick={() => close(id)}>X</button>
-        <p className="name">{name}</p>
+        <span className="name">{name}</span>
       </div>
     )
   }
