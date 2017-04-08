@@ -1,7 +1,9 @@
-const { resolve } = require('path')
-const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ElectronPlugin = require('electron-webpack-plugin')
+/* eslint-env node */
+
+import webpack from 'webpack'
+import { resolve } from 'path'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import ElectronPlugin from 'electron-webpack-plugin'
 
 /// Constants ///
 const PORT = 7447
@@ -58,14 +60,14 @@ const configuration = {
         test: /\.js$/,
         loader: [
           'babel-loader',
-          ],
+        ],
         exclude: /node_modules/,
       },
       {
         test: /\.json$/,
         loader: [
           'json-loader',
-          ]
+        ],
       },
       {
         test: /\.css$/,
@@ -86,24 +88,24 @@ const configuration = {
       {
         test: /\.svg$/,
         loader: [
-           'babel-loader',
+          'babel-loader',
           {
             loader: 'react-svg-loader',
             query: {
               svgo: {
                 plugins: [{removeTitle: true}],
-                floatPrecision: 2
-              }
-            }
-          }
-        ]
+                floatPrecision: 2,
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.(png|jpg|gif)$/, 
         exclude: /node_modules/,
-        loader: 'file-loader?name=images/[hash].[ext]'
+        loader: 'file-loader?name=images/[hash].[ext]',
       },
-    ]
+    ],
   },
 
   plugins: [
@@ -114,4 +116,4 @@ const configuration = {
   ],
 }
 
-module.exports = configuration
+export default configuration
