@@ -16,9 +16,9 @@ describe('<Track />', () => {
     assume(wrapper.is("div.track")).to.be.equal(true)
   })
 
-  it('renders a button with class: `close`', () => {
+  it('renders a button with class: `remove`', () => {
     const wrapper = shallow(<Subject { ...mockProps } />)
-    assume(wrapper.find("button.close")).to.have.length(1)
+    assume(wrapper.find("button.remove")).to.have.length(1)
   })
 
   it('renders a span tag with class: `name`', () => {
@@ -26,15 +26,15 @@ describe('<Track />', () => {
     assume(wrapper.find("span.name")).to.have.length(1)
   })
 
-  it('close() is called when you click the close button with parameter passed', () => {
+  it('remove() is called when you click the remove button with parameter passed', () => {
     const handleRemoveMock = sinon.spy()
     const wrapper = shallow(
       <Subject
         { ...mockProps }
-        close={handleRemoveMock}
+        remove={handleRemoveMock}
       />
     )
-    wrapper.find('button.close').simulate('click')
+    wrapper.find('button.remove').simulate('click')
     assume(handleRemoveMock.called).to.be.equal(true)
     assume(handleRemoveMock.called).to.not.be.equal(false)
   })

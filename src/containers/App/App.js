@@ -12,7 +12,7 @@ const App = () =>
       <Tracks />
     </main>
     <footer>
-      <span><em>Developed for Valence Audio</em></span>
+      <span>Developed for Valence Audio</span>
     </footer>
   </div>
 
