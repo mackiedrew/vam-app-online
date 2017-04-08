@@ -14,13 +14,12 @@ export const readWav = (filePath) => {
       }
       return resolve(buffer)
     })
-  })
+  }).then((buffer) => WavDecoder.decode(buffer))
 }
 
 /* eslint-disable no-console */
 export const logWav = (filePath) => {
   readWav(filePath)
-  .then((buffer) => WavDecoder.decode(buffer))
   .then(({sampleRate, channelData}) => {
     console.log('Sample Rate:', sampleRate)
     console.log('Channels:', channelData.length) 

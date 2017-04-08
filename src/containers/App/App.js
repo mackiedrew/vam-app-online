@@ -1,6 +1,7 @@
 import React from 'react'
-
 import './App.styl'
+
+// Components
 import Tracks from '../../components/Tracks/Tracks'
 
 const App = () =>
@@ -12,7 +13,9 @@ const App = () =>
       <Tracks />
     </main>
     <footer>
-      <span>Developed for Valence Audio</span>
+      <a href="http://valence.audio/">
+        Developed for <strong>Valence Audio</strong>
+      </a>
     </footer>
   </div>
 

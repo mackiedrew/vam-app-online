@@ -1,14 +1,23 @@
+@require '../../palette.styl'
+
 .waveform
-  padding 10px 5px
-  background-color rgba(200, 200, 200, 1.0)
+  display: flex
+  align-items center
+  padding 10px 0
+  background-color color-divider
+  height: 200px;
+
   .grain
     display inline-block
-    min-width 1%
-    background-color white
-    margin: 5px 0.5px
-    height 40px
-    transition transform 0.2s ease
+    flex-grow: 1
+    min-height: 25%
+    background-color color-accent
+    margin 0
+    transform: scaleY(0.8)
+    transition all 0.2s ease
+    
     &:hover
-      transition transform 0.2s ease
-      transform scale(1.2)
+      transform: scaleY(1.0)
+      filter: brightness(1.1)
+      transition all 0.2s ease
       cursor pointer
