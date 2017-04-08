@@ -36,5 +36,6 @@ module.exports = {
             "error",
             "never",
         ],
+        "react/prop-types": 0
     }
 };

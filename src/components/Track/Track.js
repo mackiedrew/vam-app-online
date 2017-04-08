@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import './Track.styl'
 
 class Track extends Component {
@@ -25,13 +25,6 @@ class Track extends Component {
       </div>
     )
   }
-}
-
-// Define prop types
-Track.propTypes = {
-  id: PropTypes.string.isRequired,
-  file: PropTypes.string.isRequired,
-  close: PropTypes.func,
 }
 
 export default Track
