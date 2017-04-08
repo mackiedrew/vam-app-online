@@ -113,6 +113,7 @@
     "react-hot-loader": "3.0.0-beta.6",
     "react-svg-loader": "1.1.1",
     "sinon": "2.1.0",
+    "spectron": "^3.6.1",
     "style-loader": "0.16.1",
     "stylus": "0.54.5",
     "stylus-loader": "3.0.1",

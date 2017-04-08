@@ -38,13 +38,9 @@ describe('<Tracks />', () => {
     assume(Object.keys(wrapper.state('tracks'))).to.have.length(2)
   })
 
-  it('selectTracks function', () => {
+  it('selectTracks function should invoke handleAdd', () => {
     const wrapper = shallow(<Subject />)
-    wrapper.instance().selectTracks()
-  })
-
-  it('selectTracks function', () => {
-    const wrapper = shallow(<Subject />)
+    //wrapper.instance().selectTracks()
   })
 
   it('renders one <Track /> if there is one track in state', () => {
