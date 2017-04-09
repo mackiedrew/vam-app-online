@@ -70,24 +70,28 @@ describe('<Track />s function readPath(path)', () => {
   it('sets the state appropriately after correctly reading a wav file', () => {
     const wrapper = shallow(<Subject { ...mockProps } />)
     // Try to read a real wav file
-    wrapper.instance().readPath(goodPath)
-    .then(() => {
+    const promise = wrapper.instance().readPath(goodPath)
+    .then((sucess) => {
+      assume(sucess).to.be.equal(true)
       assume(wrapper.state('sampleRate')).to.not.equal(undefined)
       assume(wrapper.state('length')).to.not.equal(undefined)
       assume(wrapper.state('maxAmplitude')).to.not.equal(undefined)
       assume(wrapper.state('grains').length).to.be.above(0)
     })
     .catch((error) => console.error(error))
+    assume(promise).should.be.fufilled
   })
 
   it('sets the error state after correctly failing to read a wav file', () => {
     const wrapper = shallow(<Subject { ...mockProps } />)
     // Try to read a real wav file
-    wrapper.instance().readPath(badPath)
+    const promise = wrapper.instance().readPath(badPath)
     .then(() => {
       assume(wrapper.state('error')).to.not.equal(undefined)
     })
     .catch((error) => console.error(error))
+    
+    assume(promise).should.be.fufilled
   })
 
 })
