@@ -1,4 +1,4 @@
-import { secondsToSamples, readWav, logWav, richReadWav } from './wavHelp'
+import { secondsToSamples, readWav, richReadWav } from './wavHelp'
 
 describe('secondsToSamples(seconds, sampleRate)', () => {
 
@@ -43,13 +43,6 @@ describe('readWav(filePath)', () => {
       assume(channelData.length).to.be.above(0)
     })
     .catch(() => assume(true).to.be.equal(false))
-  })
-})
-
-describe('logWav(filePath)', () => {
-  it('returns nothing', () => {
-    const result = logWav(sampleWavPath)
-    assume(result).to.be.equal(undefined)
   })
 })
 
