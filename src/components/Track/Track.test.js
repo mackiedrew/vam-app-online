@@ -71,8 +71,10 @@ describe('<Track />s function readPath(path)', () => {
     const wrapper = shallow(<Subject { ...mockProps } />)
     // Try to read a real wav file
     const promise = wrapper.instance().readPath(goodPath)
-    .then((sucess) => {
-      assume(sucess).to.be.equal(true)
+    .then((result) => {
+      assume(result).to.be.equal(true)
+    })
+    .then(() => {
       assume(wrapper.state('sampleRate')).to.not.equal(undefined)
       assume(wrapper.state('length')).to.not.equal(undefined)
       assume(wrapper.state('maxAmplitude')).to.not.equal(undefined)
