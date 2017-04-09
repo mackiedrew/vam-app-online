@@ -17,7 +17,10 @@ class Tracks extends Component {
     super(props)
     // Set initial state to make it easier to reset to later
     this.initialState = {
-      tracks: {/*debug: '/home/mackie/Desktop/test_show/episodes/1/tracks/martin.wav'*/},
+      tracks: {
+        // debug: '/home/mackie/Desktop/test_show/episodes/1/tracks/martin.wav',
+        // failing: '/THISDOESNOTEXIST/doot.wav',
+      },
     }
     // Reset state to initialState
     this.state = this.initialState

@@ -23,6 +23,7 @@ class Track extends Component {
     // Use separate value to allow for easy reset
     this.initialState = {
       name: fileName,
+      error: undefined,
       sampleRate: undefined,
       length: undefined,
       maxAmplitude: undefined,
@@ -42,14 +43,13 @@ class Track extends Component {
   // Read important data off of the wav file
   readPath(path) {
     return richReadWav(path)
-    .then((wavData) =>
-      this.setState({ ...wavData })
-    )
+    .then((wavData) => this.setState({ ...wavData }))
+    .catch((error) => this.setState({ error: String(error) }))
   }
 
   render() {
     // Break out values for the sake of easier template reading
-    const { name, grains, maxAmplitude } = this.state
+    const { name, grains, maxAmplitude, error } = this.state
     const { id, remove } = this.props
 
     return (
@@ -59,6 +59,7 @@ class Track extends Component {
           <button className="remove" onClick={() => remove(id)}>Remove</button>
         </div>
         <div className="display">
+          {error ? <strong className="error">{error}</strong> : ''}
           <Waveform
             blocks={grains}
             maxAmplitude={maxAmplitude}
