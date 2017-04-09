@@ -1,4 +1,4 @@
-import { secondsToSamples } from './wavHelp'
+import { secondsToSamples, readWav } from './wavHelp'
 
 describe('secondsToSamples(seconds, sampleRate)', () => {
 
@@ -19,10 +19,31 @@ describe('secondsToSamples(seconds, sampleRate)', () => {
 
 })
 
-
 describe('readWav(filePath)', () => {
-  it('promise is rejected if the file does not exist')
-  it('promise is resolved if the file is a valid wav')
+  
+  it('promise is rejected if the file does not exist', () => {
+    const expectedResponse ='ERROR'
+    const response = readWav('/XYZ123/ThisFileDoesNotExist.zip')
+    .then(() => assume(true).to.be.equal(false))
+    .catch(() => assume(true).to.be.equal(true))
+  })
+
+  it('promise is resolved if the file is a valid wav', () => {
+    const expectedResponse ='ERROR'
+    const response = readWav('./example/sample.wav')
+    .then(() => assume(true).to.be.equal(true))
+    .catch(() => assume(true).to.be.equal(false))
+  })
+
+  it('returns a buffer containing sampleRate and an array of channels', () => {
+    const expectedResponse ='ERROR'
+    const response = readWav('./example/sample.wav')
+    .then((buffer) => {
+      assume(buffer.sampleRate).to.be.above(0)
+      assume(channelData.length).to.be.above(0)
+    })
+    .catch(() => assume(true).to.be.equal(false))
+  })
 })
 
 describe('logWav(filePath)', () => {

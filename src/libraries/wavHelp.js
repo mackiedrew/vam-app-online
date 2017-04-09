@@ -26,7 +26,8 @@ export const readWav = (filePath) => {
       }
       return resolve(buffer)
     })
-  }).then((buffer) => WavDecoder.decode(buffer))
+  })
+  .then((buffer) => WavDecoder.decode(buffer))
 }
 
 /**
