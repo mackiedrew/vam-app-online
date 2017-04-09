@@ -55,6 +55,10 @@ describe('<Track />s remove track button', () => {
 
 })
 
+
+
+
+
 const goodPath = './example/sample.wav'
 const badPath = './NOT/A/PATH/sample.wav'
 
@@ -62,7 +66,7 @@ describe('<Track />s function readPath(path)', () => {
   
   it('promise should be fulfilled if given proper path', () => {
     const wrapper = shallow(<Subject { ...mockProps } />)
-    await assume(wrapper.instance().readPath(goodPath)).resolves.not.toEqual(undefined)
+    assume(wrapper.instance().readPath(goodPath)).resolves.not.toEqual(undefined)
   })
 
 

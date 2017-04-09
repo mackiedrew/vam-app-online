@@ -3,15 +3,15 @@ import { floor, ceiling, mergeZip, logicalSegment } from './genericHelp'
 describe('floor(value)', () => {
 
   it('rounds a positive number closer to zero', () => {
-    assume(floor(5.9)).to.be.equal(5)
+    expect(floor(5.9)).toEqual(5)
   })
 
   it('rounds a negative number closer to zero', () => {
-    assume(floor(-5.9)).to.be.equal(-5)
+    expect(floor(-5.9)).toEqual(-5)
   })
   
   it('rounds zero, by doing nothing', () => {
-    assume(floor(0)).to.be.equal(0)
+    expect(floor(0)).toEqual(0)
   })
 
 })
@@ -19,15 +19,15 @@ describe('floor(value)', () => {
 describe('ceiling(value)', () => {
 
   it('rounds a positive number closer to zero', () => {
-    assume(ceiling(5.1)).to.be.equal(6)
+    expect(ceiling(5.1)).toEqual(6)
   })
 
   it('rounds a negative number closer to zero', () => {
-    assume(ceiling(-5.1)).to.be.equal(-6)
+    expect(ceiling(-5.1)).toEqual(-6)
   })
   
   it('rounds zero, by doing nothing', () => {
-    assume(ceiling(0)).to.be.equal(0)
+    expect(ceiling(0)).toEqual(0)
   })
 
 })
@@ -37,10 +37,10 @@ const testArray = [0, 1, 0, 1, 0, -1, 0, 1, 1]
 describe('logicalSegment(array, segmentSize)', () => {
 
   it('generates the correct number of segments', () => {
-    assume(logicalSegment(testArray, 2).length).to.be.equal(5)
-    assume(logicalSegment(testArray, 3).length).to.be.equal(4)
-    assume(logicalSegment(testArray, 4).length).to.be.equal(3)
-    assume(logicalSegment(testArray, 5).length).to.be.equal(2)
+    expect(logicalSegment(testArray, 2).length).toEqual(5)
+    expect(logicalSegment(testArray, 3).length).toEqual(4)
+    expect(logicalSegment(testArray, 4).length).toEqual(3)
+    expect(logicalSegment(testArray, 5).length).toEqual(2)
   })
 
   it('both start and end keys are generated for every segment', () => {
@@ -53,12 +53,12 @@ describe('logicalSegment(array, segmentSize)', () => {
       }
       return passing
     }, 0)
-    assume(passingSegments).to.be.equal(segments.length)
+    expect(passingSegments).toEqual(segments.length)
   })
 
   it('last end segment is equal to value length of the array minus one', () => {
     const segments = logicalSegment(testArray, 3)
-    assume(segments[segments.length - 1].end).to.be.equal(9)
+    expect(segments[segments.length - 1].end).toEqual(9)
   })
 
   it('returns equal segments of proper size, except for the last segment size', () => {
@@ -67,26 +67,21 @@ describe('logicalSegment(array, segmentSize)', () => {
     const segmentLengths = segments.map(({start, end}) => end - start)
     const segmentLengthsTotal = segmentLengths.slice(0, -1).reduce((a, b) => a + b, 0)
     const segmentMean = segmentLengthsTotal / (segments.length - 1)
-    assume(segmentMean).to.be.equal(segmentSize)
+    expect(segmentMean).toEqual(segmentSize)
 
     const danglingLength = segmentLengthsTotal - testArray.length
-    assume(segmentLengths[segmentLengths.length - 1]).to.be.equal(danglingLength)
+    expect(segmentLengths[segmentLengths.length - 1]).toEqual(danglingLength)
   })
 
   it('returns segments with which the end value of [n] is equal to start of [n+1]', () => {
     const segmentSize = 3
     const segments = logicalSegment(testArray, segmentSize)
-    assume(segments[0].start).to.be.equal(0)
+    expect(segments[0].start).toEqual(0)
     segments.slice(1,-1).forEach(({start, end}, index) => {
       const previousEnd = segments[index].end
-      assume(start).to.be.equal(previousEnd)
+      expect(start).toEqual(previousEnd)
     })
-    assume(segments[segments.length - 1].end).to.be.equal(testArray.length)
+    expect(segments[segments.length - 1].end).toEqual(testArray.length)
   })
 
-})
-
-describe('merge zip', () => {
-  it('returns an array with length equal to the longest provided object')
-  it()
 })
