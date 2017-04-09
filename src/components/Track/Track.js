@@ -33,8 +33,19 @@ class Track extends Component {
     // Set state to initialState
     this.state = this.initialState
 
-    // Read important data off of the wav file
-    richReadWav(this.props.path).then((wavData) => this.setState({ ...wavData }))
+    // Read wav data from provided path
+    this.readPath(props.path)
+
+    // Bind functions
+    this.readPath = this.readPath.bind(this)
+  }
+
+  // Read important data off of the wav file
+  readPath(path) {
+    richReadWav(path)
+    .then((wavData) =>
+      this.setState({ ...wavData })
+    )
   }
 
   render() {
