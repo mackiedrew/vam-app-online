@@ -11,7 +11,7 @@ const Waveform = ({ grains, minAmplitude, maxAmplitude }) => {
   return (
     <div className="waveform">
       {
-        grains.map(({ amplitude }, index) => {
+        grains && grains.map(({ amplitude }, index) => {
 
           const amplitudeFactor = maxAmplitude - minAmplitude
           const percentageMaxAmplitude = (amplitude - minAmplitude) / amplitudeFactor

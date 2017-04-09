@@ -1,12 +1,11 @@
-// This should be used to store any settings, 
-{
+const configuration = {
   /* 
    * A slice is a physically separated portion chopped off of the main loaded track,
    * this is to help loading times and resource usage. They should all be the same length
    * minus the final slice which will simply be the remaining time.
    */
-  "slices": {
-    "target": 120 // seconds
+  slices: {
+    target: 120 // seconds
   },
 
   /* 
@@ -15,9 +14,10 @@
    * phrases, or sentences. Likely to be cut down silent regions. It should also be a goal to 
    * target logical edit segments.
    */
-  "grains": { 
-    "min": 0.5, // seconds
-    "max": 20 // seconds
+  grains: { 
+    temp: 0.05, // second -- Used for making grains until a proper system is designed
+    min: 0.5, // seconds
+    max: 20 // seconds
   },
 
   /* 
@@ -25,18 +25,20 @@
    * make editing large files much quicker. They should be logical groupings trying to match similar
    * grains together. Fine is smaller than coarse.
    */
-  "chunks": {
+  chunks: {
 
     // Smallest
-    "fine": {
-      "min": 5, // grains
-      "max": 20 // grains
+    fine: {
+      min: 5, // grains
+      max: 20 // grains
     },
 
     // Largest
-    "coarse": {
-      "min": 5, // fine chunks
-      "max": 20 // fine chunks
+    coarse: {
+      min: 5, // fine chunks
+      max: 20 // fine chunks
     }
   }
 }
+
+export default configuration

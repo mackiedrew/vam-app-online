@@ -16,14 +16,19 @@ describe('<Track />', () => {
     assume(wrapper.is("div.track")).to.be.equal(true)
   })
 
-  it('renders a button with class: `remove`', () => {
+  it('renders a div with class: `controls`', () => {
     const wrapper = shallow(<Subject { ...mockProps } />)
-    assume(wrapper.find("button.remove")).to.have.length(1)
+    assume(wrapper.find("div.controls")).to.have.length(1)
   })
 
   it('renders a span tag with class: `name`', () => {
     const wrapper = shallow(<Subject { ...mockProps } />)
     assume(wrapper.find("span.name")).to.have.length(1)
+  })
+
+  it('renders a button with class: `remove`', () => {
+    const wrapper = shallow(<Subject { ...mockProps } />)
+    assume(wrapper.find("button.remove")).to.have.length(1)
   })
 
   it('remove() is called when you click the remove button with parameter passed', () => {
@@ -37,6 +42,16 @@ describe('<Track />', () => {
     wrapper.find('button.remove').simulate('click')
     assume(handleRemoveMock.called).to.be.equal(true)
     assume(handleRemoveMock.called).to.not.be.equal(false)
+  })
+
+  it('renders a div with class: `display`', () => {
+    const wrapper = shallow(<Subject { ...mockProps } />)
+    assume(wrapper.find("div.controls")).to.have.length(1)
+  })
+
+  it('renders <Waveform />', () => {
+    const wrapper = shallow(<Subject { ...mockProps } />)
+    assume(wrapper.find("Waveform")).to.have.length(1)
   })
 
 })
