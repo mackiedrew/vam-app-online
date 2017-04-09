@@ -26,7 +26,6 @@ class Track extends Component {
       sampleRate: undefined,
       length: undefined,
       maxAmplitude: undefined,
-      data: [],
       grains: [],
     }
 
@@ -42,7 +41,7 @@ class Track extends Component {
 
   // Read important data off of the wav file
   readPath(path) {
-    richReadWav(path)
+    return richReadWav(path)
     .then((wavData) =>
       this.setState({ ...wavData })
     )

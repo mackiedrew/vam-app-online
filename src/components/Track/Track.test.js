@@ -54,4 +54,16 @@ describe('<Track />', () => {
     assume(wrapper.find('Waveform')).to.have.length(1)
   })
 
+  it('function readPath(path) sets the state appropriately after reading a wav file', () => {
+    const wrapper = shallow(<Subject { ...mockProps } />)
+    // Try to read a real wav file
+    wrapper.instance().readPath('./example/sample.wav')
+    .then(() => {
+      assume(wrapper.state('sampleRate')).to.not.equal(undefined)
+      assume(wrapper.state('length')).to.not.equal(undefined)
+      assume(wrapper.state('maxAmplitude')).to.not.equal(undefined)
+      assume(wrapper.state('grains').length).to.be.above(0)
+    })
+  })
+
 })

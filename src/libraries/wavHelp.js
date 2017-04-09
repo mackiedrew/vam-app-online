@@ -31,23 +31,6 @@ export const readWav = (filePath) => {
 }
 
 /**
- * Reads and logs a promise containing the data within the wav files decoded by `wav-decoder`.
- * @param {String} filePath Absolute full path to the wav file, including filename.ext
- */
-export const logWav = (filePath) => {
-  readWav(filePath)
-  .then(({sampleRate, channelData}) => {
-    /* eslint-disable no-console */
-    console.log('Sample Rate:', sampleRate)
-    console.log('Channels:', channelData.length) 
-    channelData.map((channelDatum, index) => {
-      console.log(`Channel (${index}):`, channelData[index])
-    })
-    /* eslint-enable no-console */
-  })
-}
-
-/**
  * Ugly function, but currently gathers information that is much more processed than the simple 
  * readWav() function.
  * @param {String} filePath Absolute full path to the wav file, including filename.ext

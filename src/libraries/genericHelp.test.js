@@ -1,4 +1,4 @@
-import { floor, ceiling, logicalSegment } from './genericHelp'
+import { floor, ceiling, mergeZip, logicalSegment } from './genericHelp'
 
 describe('floor(value)', () => {
 
@@ -84,4 +84,9 @@ describe('logicalSegment(array, segmentSize)', () => {
     assume(segments[segments.length - 1].end).to.be.equal(testArray.length)
   })
 
+})
+
+describe('merge zip', () => {
+  it('returns an array with length equal to the longest provided object')
+  it()
 })
