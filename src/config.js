@@ -15,7 +15,7 @@ const configuration = {
    * target logical edit segments.
    */
   grains: { 
-    temp: 0.05, // second -- Used for making grains until a proper system is designed
+    temp: 1, // second -- Used for making grains until a proper system is designed
     min: 0.5, // seconds
     max: 20 // seconds
   },

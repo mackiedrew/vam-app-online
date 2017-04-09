@@ -57,7 +57,6 @@ describe('<Tracks />', () => {
     const tracks = wrapper.state('tracks')
     // Get targetID from list
     const targetID = Object.keys(tracks).filter((id) => tracks[id] === targetTrack)[0]
-    console.log(targetID)
     // Attempt removal by id
     wrapper.instance().handleRemove(targetID)
     assume(Object.keys(wrapper.state('tracks'))).to.have.length(1)

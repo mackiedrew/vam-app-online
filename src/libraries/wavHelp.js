@@ -79,9 +79,8 @@ export const richReadWav = (filePath) => {
     }))
 
     // Calculate track amplitude information
-    const minAmplitude = Math.min(...grainAmplitudes)
     const maxAmplitude = Math.max(...grainAmplitudes)
 
-    return { sampleRate, length, grains, minAmplitude, maxAmplitude }
+    return { sampleRate, length, grains, maxAmplitude }
   })
 }

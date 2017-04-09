@@ -25,7 +25,6 @@ class Track extends Component {
       name: fileName,
       sampleRate: undefined,
       length: undefined,
-      minAmplitude: undefined,
       maxAmplitude: undefined,
       data: [],
       grains: [],
@@ -40,7 +39,7 @@ class Track extends Component {
 
   render() {
     // Break out values for the sake of easier template reading
-    const { name, grains, minAmplitude, maxAmplitude } = this.state
+    const { name, grains, maxAmplitude } = this.state
     const { id, remove } = this.props
 
     return (
@@ -51,8 +50,7 @@ class Track extends Component {
         </div>
         <div className="display">
           <Waveform
-            grains={grains}
-            minAmplitude={minAmplitude}
+            blocks={grains}
             maxAmplitude={maxAmplitude}
           />
         </div>

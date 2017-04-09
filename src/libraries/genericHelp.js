@@ -13,7 +13,12 @@ export const floor = (value) => ~~value
  * Will round both positive and negative numbers away from zero.
  * @param {Number} value The value to be rounded away from zero.
  */
-export const ceiling = (value) => (value > 0) ? floor(value) + 1 : floor(value) - 1
+export const ceiling = (value) => {
+  if (value === 0) {
+    return 0
+  }
+  return (value > 0) ? floor(value) + 1 : floor(value) - 1
+}
 
 /**
  * Creates an array of 'segments' that contain two values: start and end.
@@ -26,10 +31,14 @@ export const ceiling = (value) => (value > 0) ? floor(value) + 1 : floor(value) 
 export const logicalSegment = (array, segmentSize) => {
   const totalSegments = ceiling(array.length / segmentSize)
   const segmentsRange = range(0, totalSegments)
-  const segments = segmentsRange.map((index) => {
-    const start = index * segmentSize
-    const end = index + 1 === totalSegments ? length : start + segmentSize
-    return {start, end}
+  const starts = segmentsRange.map((segment) => segment * segmentSize)
+  // Good
+  const ends = segmentsRange.map((segment) => {
+    return segment === totalSegments - 1 ? array.length : (segment + 1) * segmentSize
   })
+  const segments = segmentsRange.map((segment) => ({
+    start: starts[segment],
+    end: ends[segment],
+  }))
   return segments
 }
