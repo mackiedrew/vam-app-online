@@ -1,23 +1,41 @@
-import React from 'react'
+import React, { Component } from 'react'
 import './WaveBlock.styl'
 
 /**
  * Single grain, fine chunk, or coarse chunk as displayed as a component of a waveform.
  * @param {Object} props Read-only properties that get passed down from parent.
  */
-const WaveBlock = ({ amplitude, maxAmplitude }) => {
+class WaveBlock extends Component {
 
-  const relativeAmplitude = amplitude / maxAmplitude
+  constructor(props) {
+    super(props)
+    this.relativeAmplitude = this.relativeAmplitude.bind(this)
+    this.amplitudeStyle = this.amplitudeStyle.bind(this)
+  }
 
-  const style = { height: `${relativeAmplitude * 200}px` }
+  relativeAmplitude() {
+    const { amplitude, maxAmplitude } = this.props
+    return amplitude / maxAmplitude
+  }
 
-  return (
-    <div className="wave-block">
-      <div className="amplitude" style={style}>
+  amplitudeStyle() {
+    const fillPercentage = this.relativeAmplitude()
+    const height = `${fillPercentage * 100}%`
+    return { height }
+  }
 
+  render() {
+
+    const amplitudeStyle = this.amplitudeStyle()
+
+    return (
+      <div className="wave-block">
+        <div className="amplitude" style={amplitudeStyle}>
+
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 export default WaveBlock

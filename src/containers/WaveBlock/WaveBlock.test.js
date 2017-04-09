@@ -5,20 +5,44 @@ const mockProps = {
   maxAmplitude: 10,
 }
 
-describe('<WaveBlock />', () => {
+describe('<WaveBlock /> structure', () => {
+
+  const wrapper = shallow(<Subject {...mockProps} />)
 
   it('renders without crashing', () => {
     shallow(<Subject {...mockProps} />)
   })
 
   it('renders as a div with class: `wave-block`', () => {
-    const wrapper = shallow(<Subject {...mockProps} />)
-    assume(wrapper.is('div.wave-block')).to.be.equal(true)
+    expect(wrapper.is('div.wave-block')).toEqual(true)
   })
 
-    it('renders a single div with class: `amplitude`', () => {
-    const wrapper = shallow(<Subject {...mockProps} />)
-    assume(wrapper.find('div.amplitude')).to.have.length(1)
+  it('renders a single div with class: `amplitude`', () => {
+    expect(wrapper.find('div.amplitude')).toHaveLength(1)
+  })
+
+  it('renders a single div with class: `amplitude`', () => {
+    expect(wrapper.find('div.amplitude')).toHaveLength(1)
+  })
+
+})
+
+describe('<WaveBlock /> display math', () => {
+
+  it('relative amplitude is returns 1 (100%) when provided with maxAmplitude === amplitude', () => {
+    const wrapper = shallow(<Subject amplitude={10} maxAmplitude={10} />)
+    expect(wrapper.instance().relativeAmplitude()).toEqual(1)
+  })
+
+  it('relative amplitude is returns 0 (0%) when provided with amplitude 0', () => {
+    const wrapper = shallow(<Subject amplitude={0} maxAmplitude={10} />)
+    expect(wrapper.instance().relativeAmplitude()).toEqual(0)
+  })
+
+  it('amplitudeStyle returns an object with expected keys', () => {
+    const wrapper = shallow(<Subject amplitude={5} maxAmplitude={10} />)
+    expect(wrapper.instance().amplitudeStyle()).toBeInstanceOf(Object)
+    expect(wrapper.instance().amplitudeStyle().height).toEqual('50%')
   })
 
 })

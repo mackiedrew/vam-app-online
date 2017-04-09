@@ -43,10 +43,7 @@ class Track extends Component {
   // Read important data off of the wav file
   readPath(path) {
     return richReadWav(path)
-    .then((wavData) => {
-      this.setState({ ...wavData })
-      return true
-    })
+    .then((wavData) => this.setState({ ...wavData }))
     .catch((error) => this.setState({ error: String(error) }))
   }
 

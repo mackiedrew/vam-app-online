@@ -1,6 +1,6 @@
 // Libraries
 import fs from 'fs'
-import WavDecoder from 'wav-decoder'
+import { decode } from 'wav-decoder'
 import { logicalSegment } from './genericHelp'
 
 // Load configuration file
@@ -15,10 +15,10 @@ import config from '../config.js'
 export const secondsToSamples = (seconds=1, sampleRate=44100) => seconds * sampleRate
 
 /**
- * Reads and returns a promise containing the data within the wav files decoded by `wav-decoder`.
+ * Reads and returns a promise containing the file buffer.
  * @param {String} filePath Absolute full path to the wav file, including filename.ext
  */
-export const readWav = (filePath) => {
+export const readFile = (filePath) => {
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, (error, buffer) => {
       if (error) {
@@ -27,8 +27,16 @@ export const readWav = (filePath) => {
       return resolve(buffer)
     })
   })
-  .then((buffer) => WavDecoder.decode(buffer))
 }
+
+/**
+ * Reads and returns a promise containing the data within the wav files decoded by `wav-decoder`.
+ * @param {String} filePath Absolute full path to the wav file, including filename.ext
+ */
+export const decodeWav = (filePath) => {
+  return readFile(filePath)
+  .then((buffer) => decode(buffer))
+} 
 
 /**
  * Ugly function, but currently gathers information that is much more processed than the simple 
@@ -36,7 +44,7 @@ export const readWav = (filePath) => {
  * @param {String} filePath Absolute full path to the wav file, including filename.ext
  */
 export const richReadWav = (filePath) => {
-  return readWav(filePath)
+  return decodeWav(filePath)
   .then(({sampleRate, channelData}) => {
     // Break out data for easy reference
     const data = channelData[0]

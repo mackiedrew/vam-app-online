@@ -11,7 +11,7 @@ const mockProps = {
   maxAmplitude: 10,
 }
 
-describe('<Waveform />', () => {
+describe('<Waveform /> structure', () => {
 
   it('renders without crashing with no grains', () => {
     shallow(<Subject />)
@@ -23,12 +23,12 @@ describe('<Waveform />', () => {
 
   it('renders with no <WaveBlock />s when no blocks are supplied', () => {
     const wrapper = shallow(<Subject />)
-    assume(wrapper.find('WaveBlock')).to.have.length(0)
+    expect(wrapper.find('WaveBlock')).to.have.length(0)
   })
 
   it('renders with a single <WaveBlock> when provided with one block', () => {
     const wrapper = shallow(<Subject {...mockProps} />)
-    assume(wrapper.find('WaveBlock')).to.have.length(1)
+    expect(wrapper.find('WaveBlock')).to.have.length(1)
   })
 
 })
