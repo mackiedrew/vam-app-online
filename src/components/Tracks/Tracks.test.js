@@ -1,4 +1,7 @@
 import Subject from './Tracks'
+import electron from 'electron'
+
+const remote = electron.remote
 
 describe('<Tracks /> structure', () => {
 
@@ -48,7 +51,13 @@ describe('<Tracks /> functionality', () => {
     expect(Object.keys(wrapper.state('tracks'))).toHaveLength(2)
   })
 
-  it('selectTracks function should invoke handleAdd')
+  it('selectTracks function should invoke handleAdd with mocked tracks', () => {
+    const wrapper = shallow(<Subject />)
+
+    wrapper.instance().selectTracks()
+    const tracksArray = Object.keys(wrapper.state('tracks'))
+    expect(tracksArray).toHaveLength(1)
+  })
 
   it('renders one <Track /> if there is one track in state', () => {
     const wrapper = shallow(<Subject />)

@@ -7,9 +7,34 @@ import shortid from 'shortid'
 import filterObj from 'filter-obj'
 import { remote } from 'electron'
 
+/**
+ * This seems strange, but bare with me, mockDialog is important for testing. So what we are looking
+ * at is a definition with a lot of qualifications. First, if remote exists, then set the value to
+ * the actual remote.dialog.showOpenDialog. If it doesn't exists, then fall back onto the function
+ * mockDialog() which returns a function that supplies what could seem like a reasonable fake value 
+ * for the return. If there is a way to do this in the test file, I'd love to know.
+ */
+const mockDialog = () => ['./example/sample.wav']
+const showOpenDialog = (remote && remote.dialog.showOpenDialog) || mockDialog
+
 // Component Imports
 import Track from '../Track/Track'
 
+// Constants
+const openDialogConfig = {
+  title: 'Select Tracks',
+  buttonLabel: 'Load Tracks',
+  filters: [{ name: 'Track Files (.wav)', extensions: ['wav'] }],
+  properties: [
+    'openFile',
+    'multiSelections',
+  ]
+}
+
+/**
+ * Tracks should be the overall organizing structure, controlling controls, track communication,
+ * and editing invocations.
+ */
 class Tracks extends Component {
 
   constructor(props) {
@@ -75,21 +100,13 @@ class Tracks extends Component {
     // Simple reference to handleAdd function in class context
     const handleAdd = this.handleAdd
     // Open file dialog, it will ask for one or more files of type `wav`
-    const selected_tracks = remote.dialog.showOpenDialog({
-      title: 'Select Tracks',
-      buttonLabel: 'Load Tracks',
-      filters: [{ name: 'Track Files (.wav)', extensions: ['wav'] }],
-      properties: [
-        'openFile',
-        'multiSelections',
-      ]
-    })
+    const selected_tracks = showOpenDialog(openDialogConfig)
     handleAdd(selected_tracks)
   }
 
   render() {
 
-    // Simplifying references for clarity
+    // Breakout references for clarity and ease
     const { tracks } = this.state
     const handleRemove = this.handleRemove
     const selectTracks = this.selectTracks
