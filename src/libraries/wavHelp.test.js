@@ -74,5 +74,21 @@ describe('decodeWav(filePath)', () => {
 })
 
 describe('richReadWav(filePath)', () => {
-  it('temp')
+
+  it('returns a rejected promise if given bad file path', () => {
+    return richReadWav(badSampleWavPath)
+    .then(
+      (result) => expect(result).toBeFalsy(),
+      (error) => expect(error).toBeTruthy()
+    )
+  })
+
+  it('returns a resolved promise if given a proper file path', () => {
+    return richReadWav(sampleWavPath)
+    .then(
+      (result) => expect(result).toBeTruthy(),
+      (error) => expect(error).toBeFalsy()
+    )
+  })
+
 })
