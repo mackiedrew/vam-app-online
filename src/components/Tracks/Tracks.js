@@ -19,6 +19,7 @@ const showOpenDialog = (remote && remote.dialog.showOpenDialog) || mockDialog
 
 // Component Imports
 import Track from '../Track/Track'
+import SeekBar from '../SeekBar/SeekBar'
 
 // Constants
 const openDialogConfig = {
@@ -46,14 +47,28 @@ class Tracks extends Component {
         // debug: '/home/mackie/Desktop/test_show/episodes/1/tracks/martin.wav',
         // failing: '/THISDOESNOTEXIST/doot.wav',
       },
+      seek: 0, // samples
     }
     // Reset state to initialState
     this.state = this.initialState
 
     // Bind functions to `this`
+    this.seekTo = this.seekTo.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
     this.handleRemove = this.handleRemove.bind(this)
     this.selectTracks = this.selectTracks.bind(this)
+  }
+
+  /**
+   * Move the seeking cursor to a specified location.
+   * @param {Number} sample Integer to move the seeking cursor to, must be integer.
+   */
+  seekTo(sample) {
+    // Check if sample is less than 0, indexes do not go that low. No upper-bound check yet.
+    const newPosition = sample < 0 ? 0 : sample
+    const stateChanges = { seek: newPosition }
+    this.setState(stateChanges)
+    return newPosition
   }
 
   /**
@@ -107,9 +122,10 @@ class Tracks extends Component {
   render() {
 
     // Breakout references for clarity and ease
-    const { tracks } = this.state
+    const { seek, tracks } = this.state
     const handleRemove = this.handleRemove
     const selectTracks = this.selectTracks
+    const seekTo = this.seekTo
 
     // Create track list for iterating over
     const trackIds = Object.keys(tracks)
@@ -124,6 +140,10 @@ class Tracks extends Component {
 
     return (
       <div className="tracks">
+        <SeekBar
+          seek={seek}
+          seekTo={seekTo}
+        />
         {trackList}
         <button className="add-tracks" onClick={selectTracks}>
           Add Tracks

@@ -20,9 +20,14 @@ class Track extends Component {
     // Parse the file name of the track out of the full file path
     const fileName = props.path && parse(props.path).base
 
+    // Format wrapper ID name for consistent reference
+    this.wrapperID = `track-${props.id}`
+    const wrapperWidth = undefined // getPixelWidth() later
+
     // Use separate value to allow for easy reset
     this.initialState = {
       name: fileName,
+      pixelWidth: wrapperWidth,
       error: undefined,
       sampleRate: undefined,
       length: undefined,
@@ -51,9 +56,10 @@ class Track extends Component {
     // Break out values for the sake of easier template reading
     const { name, grains, maxAmplitude, error } = this.state
     const { id, remove } = this.props
+    const wrapperID = this.wrapperID
 
     return (
-      <div className="track">
+      <div id={wrapperID} className="track">
         <div className="controls">
           <span className="name">{name}</span>
           <button className="remove" onClick={() => remove(id)}>Remove</button>

@@ -24,6 +24,10 @@ describe('<Tracks /> structure', () => {
     expect(wrapper.find('Track')).toHaveLength(0)
   })
 
+  it('renders a single <SeekBar />', () => {
+    expect(wrapper.find('SeekBar')).toHaveLength(1)
+  })
+
   it('renders three <Track /> if there is three track in state', () => {
     const wrapperWithThree = shallow(<Subject />)
     wrapperWithThree.instance().handleAdd([
@@ -78,6 +82,27 @@ describe('<Tracks /> functionality', () => {
     // Attempt removal by id
     wrapper.instance().handleRemove(targetID)
     expect(Object.keys(wrapper.state('tracks'))).toHaveLength(1)
+  })
+
+})
+
+describe('<Tracks />s seek functions', () => {
+
+  it('initializes with seek at 0 samples', () => {
+    const wrapper = shallow(<Subject />)
+    expect(wrapper.state('seek')).toEqual(0)
+  })
+
+  it('seekTo(sample) returns a value no lower than 0', () => {
+    const wrapper = shallow(<Subject />)
+    expect(wrapper.instance().seekTo(-30)).toEqual(0)
+    expect(wrapper.state('seek')).toEqual(0)
+  })
+
+  it('seekTo(sample) returns sets the state of seek to the value passed to it.', () => {
+    const wrapper = shallow(<Subject />)
+    expect(wrapper.instance().seekTo(30)).toEqual(30)
+    expect(wrapper.state('seek')).toEqual(30)
   })
 
 })
