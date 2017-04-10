@@ -55,15 +55,31 @@ describe('<Track />s remove track button', () => {
 
 })
 
+const badSampleWavPath = '/XYZ123/ThisFileDoesNotExist.zip'
+const sampleWavPath = './example/sample.wav'
 
+describe('<Track />s function readPath(filePath)', () => {
 
+  it('returns a rejected promise that sets the `error` state of <Track />', () => {
+    const wrapper = shallow(<Subject { ...mockProps } />)
+    return wrapper.instance().readPath(badSampleWavPath)
+    .then(
+      (result) => {
+        expect(wrapper.state('error')).toBeDefined()
+      }
+    )
+  })
 
-
-const goodPath = './example/sample.wav'
-const badPath = './NOT/A/PATH/sample.wav'
-
-describe('<Track />s function readPath(path)', () => {
-  
-  it('works')
+  it('returns a resolved promise that sets the state of <Track />', () => {
+    const wrapper = shallow(<Subject { ...mockProps } />)
+    return wrapper.instance().readPath(sampleWavPath)
+    .then(
+      (result) => {
+        expect(wrapper.state('sampleRate')).toBeDefined()
+        expect(wrapper.state('length')).toBeDefined()
+        expect(wrapper.state('grains').length).toBeGreaterThan(0)
+      }
+    )
+  })
 
 })

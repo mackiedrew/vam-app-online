@@ -23,11 +23,54 @@ const badSampleWavPath = '/XYZ123/ThisFileDoesNotExist.zip'
 const sampleWavPath = './example/sample.wav'
 
 describe('readFile(filePath)', () => {
-  it('temp')
+
+  it('returns a rejected promise if given bad file path', () => {
+    return readFile(badSampleWavPath)
+    .then(
+      (result) => expect(result).toBeFalsy(),
+      (error) => expect(error).toBeTruthy()
+    )
+  })
+
+  it('returns a resolved promise if given a proper file path', () => {
+    return readFile(sampleWavPath)
+    .then(
+      (result) => expect(result).toBeTruthy(),
+      (error) => expect(error).toBeFalsy()
+    )
+  })
+
 })
 
 describe('decodeWav(filePath)', () => {
-  it('temp')
+  
+  it('returns a rejected promise if given bad file path', () => {
+    return decodeWav(badSampleWavPath)
+    .then(
+      (result) => expect(result).toBeFalsy(),
+      (error) => expect(error).toBeTruthy()
+    )
+  })
+
+  it('returns a resolved promise if given a proper file path', () => {
+    return decodeWav(sampleWavPath)
+    .then(
+      (result) => expect(result).toBeTruthy(),
+      (error) => expect(error).toBeFalsy()
+    )
+  })
+
+  it('returns a resolved promise if given a proper file path', () => {
+    return decodeWav(sampleWavPath)
+    .then(
+      (result) => {
+        expect(result.sampleRate).toBeTruthy()
+        expect(result.channelData).toBeTruthy()
+      },
+      (error) => expect(error).toBeFalsy()
+    )
+  })
+  
 })
 
 describe('richReadWav(filePath)', () => {
