@@ -1,18 +1,18 @@
+@require '../../palette.styl'
+
 .track
-  background-color: red
-  margin: 10px
-  padding: 20px
 
-  button.close
-    background-color: rgba(0, 0, 0, 0.5)
-    border: 0
-    border-radius: 50%
-    color: white
-    width: 30px
-    height: 30px
-    float: right
-    transition: 0.2s
+  .controls
+    width 90%
+    padding 5%
+    background-color color-dark
+    color white
+    
+    button.remove
+      color black
+      
+  .display
+    width 100%
 
-    &:hover
-      transform: scale(1.2)
-      transition: 0.2s
+  .error
+    color rgba(255, 0, 0, 0.8)

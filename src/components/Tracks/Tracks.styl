@@ -1,3 +1,23 @@
+@require '../../palette.styl'
+
 .tracks
-  width: 100%
-  background-color: rgba(240, 240, 240, 1.0)
+  width 100%
+
+  button.add-tracks
+    color white
+    background-color color-main
+    border 0
+    width 90%
+    padding: 15px
+    margin 20px 5%
+    transition all 0.2s ease
+
+    &:hover
+      transform: scale(1.1)
+      transition all 0.2s ease
+      filter: brightness(1.2)
+      cursor pointer
+
+    &:active
+      filter: brightness(0.8)
+      transition all 0.2s ease

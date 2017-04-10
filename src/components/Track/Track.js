@@ -1,37 +1,73 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import './Track.styl'
 
+// Libraries
+import { parse } from 'path'
+import { richReadWav } from '../../libraries/wavHelp'
+
+// Components
+import Waveform from '../../containers/Waveform/Waveform'
+
+/**
+ * <Track /> should take in a simple path to a to a file and generate logical divisions and pass
+ * down any display options to allow
+ */
 class Track extends Component {
 
   constructor(props) {
     super(props)
+
+    // Parse the file name of the track out of the full file path
+    const fileName = props.path && parse(props.path).base
+
+    // Use separate value to allow for easy reset
     this.initialState = {
-      name: props.file,
-      length: undefined, // Samples
+      name: fileName,
+      error: undefined,
+      sampleRate: undefined,
+      length: undefined,
+      maxAmplitude: undefined,
       grains: [],
     }
+
+    // Set state to initialState
     this.state = this.initialState
+
+    // Read wav data from provided path
+    this.readPath(props.path)
+
+    // Bind functions
+    this.readPath = this.readPath.bind(this)
+  }
+
+  // Read important data off of the wav file
+  readPath(path) {
+    return richReadWav(path)
+    .then((wavData) => this.setState({ ...wavData }))
+    .catch((error) => this.setState({ error: String(error) }))
   }
 
   render() {
-
-    const { name } = this.state
-    const { id, close } = this.props
+    // Break out values for the sake of easier template reading
+    const { name, grains, maxAmplitude, error } = this.state
+    const { id, remove } = this.props
 
     return (
       <div className="track">
-        <button className="close" onClick={() => close(id)}>X</button>
-        <span className="name">{name}</span>
+        <div className="controls">
+          <span className="name">{name}</span>
+          <button className="remove" onClick={() => remove(id)}>Remove</button>
+        </div>
+        <div className="display">
+          {error ? <strong className="error">{error}</strong> : ''}
+          <Waveform
+            blocks={grains}
+            maxAmplitude={maxAmplitude}
+          />
+        </div>
       </div>
     )
   }
-}
-
-// Define prop types
-Track.propTypes = {
-  id: PropTypes.string.isRequired,
-  file: PropTypes.string.isRequired,
-  close: PropTypes.func,
 }
 
 export default Track
