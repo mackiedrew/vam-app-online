@@ -33,15 +33,15 @@
       "/coverage/",
       "/build/",
       "/node_modules/",
-      "/jestsetup.js",
+      "/jestSetup.js",
       "(.test)\\.(ts|tsx|js)$"
     ],
     "coverageThreshold": {
       "global": {
         "branches": 0,
-        "functions": 60,
-        "lines": 60,
-        "statements": 60
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
       }
     },
     "modulePathIgnorePatterns": [
@@ -55,7 +55,7 @@
     ],
     "verbose": true,
     "setupFiles": [
-      "./jestsetup.js"
+      "./jestSetup.js"
     ],
     "snapshotSerializers": [
       "<rootDir>/node_modules/enzyme-to-json/serializer"
@@ -113,6 +113,7 @@
     "file-loader": "0.11.1",
     "html-webpack-plugin": "2.28.0",
     "jest": "19.0.2",
+    "jest-babel-istanbul": "^0.1.0",
     "jest-cli": "19.0.2",
     "jest-css-modules": "1.1.0",
     "json-loader": "0.5.4",
