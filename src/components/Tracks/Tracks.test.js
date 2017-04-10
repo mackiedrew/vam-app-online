@@ -53,7 +53,6 @@ describe('<Tracks /> functionality', () => {
 
   it('selectTracks function should invoke handleAdd with mocked tracks', () => {
     const wrapper = shallow(<Subject />)
-
     wrapper.instance().selectTracks()
     const tracksArray = Object.keys(wrapper.state('tracks'))
     expect(tracksArray).toHaveLength(1)

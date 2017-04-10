@@ -111,16 +111,20 @@ class Tracks extends Component {
     const handleRemove = this.handleRemove
     const selectTracks = this.selectTracks
 
+    // Create track list for iterating over
+    const trackIds = Object.keys(tracks)
+    const trackList = trackIds.map((id) =>
+      <Track
+        key={id}
+        id={id}
+        path={tracks[id]}
+        remove={handleRemove}
+      />
+    )
+
     return (
       <div className="tracks">
-        { Object.keys(tracks).map((id) =>
-          <Track
-            key={id}
-            id={id}
-            path={tracks[id]}
-            remove={handleRemove}
-          />
-        )}
+        {trackList}
         <button className="add-tracks" onClick={selectTracks}>
           Add Tracks
         </button>
