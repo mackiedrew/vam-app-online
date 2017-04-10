@@ -1,6 +1,5 @@
 // Make functions available in all test files without importing
 import { shallow, render, mount } from 'enzyme'
-import { expect } from 'chai'
 import sinon from 'sinon'
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -9,7 +8,6 @@ import ReactDOM from 'react-dom'
 global.shallow = shallow
 global.render = render
 global.mount = mount
-global.assume = expect
 global.sinon = sinon
 
 // Framework

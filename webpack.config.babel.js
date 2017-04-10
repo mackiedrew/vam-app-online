@@ -13,7 +13,7 @@ const APP_DIRECTORY = `${BASE_DIRECTORY}/src`
 
 /// Webpack plugins ///
 
-// This plugin allows for base-page templating
+// This plugin allows for base-page template
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: `${APP_DIRECTORY}/index.ejs`,
   filename: 'index.html',

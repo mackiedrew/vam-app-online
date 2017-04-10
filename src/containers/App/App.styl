@@ -1,9 +1,31 @@
+@require '../../palette.styl'
+
 body
-  margin: 0
+  margin 0
+  color color-text-1
+  padding 0
+  font-family 'Franklin Gothic Medium', 'Arial Narrow', 'Arial', 'sans-serif'
+
+a
+  text-decoration none
+  color color-text-1
 
 .app
-  padding: 10px
 
-footer
-  width: 100%
-  text-align: center
+  header
+    background-color color-main
+    color white
+    padding 20px
+    
+    h1
+      display block
+      width 100%
+      text-align center
+
+  main
+    padding 40px
+
+  footer
+    width 100%
+    text-align center
+    font-size 12px
