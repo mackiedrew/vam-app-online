@@ -9,9 +9,9 @@ VAM Online is a front-end-only implementation of the turk developed while experi
 
 # Technology
 
-## Infrasturcutre
+## Infrastructure
 1. CircleCI
-2. Codecov
+2. CodeCov
 3. GitHub
 4. Yarn & NPM
 5. CodeFactor.io
@@ -23,7 +23,7 @@ VAM Online is a front-end-only implementation of the turk developed while experi
 4. ESLint
 5. Jest
 6. Stylus
-7. ejs Templating
+7. ejs Templates
 8. Electron
 9. NodeJS
 
