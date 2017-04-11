@@ -3,7 +3,7 @@
 [![codecov](https://codecov.io/gh/mackiedrew/vam-online/branch/master/graph/badge.svg?token=7cyF0ihR2C)](https://codecov.io/gh/mackiedrew/vam-online)
 [![David](https://david-dm.org/mackiedrew/vam-online.svg)](https://david-dm.org/mackiedrew/vam-online.svg)
 [![CodeFactor](https://www.codefactor.io/repository/github/mackiedrew/vam-online/badge)](https://www.codefactor.io/repository/github/mackiedrew/vam-online)
-
+[![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
 
 VAM Online is a front-end-only implementation of the turk developed while experimenting in the Python version. It is implemented in Electron so NodeJS and Browser libraries can be used to make a proper product. It is intended for internal use by Valence Editing.
 
