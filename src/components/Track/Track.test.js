@@ -2,7 +2,7 @@ import Subject from './Track'
 
 const mockProps = {
   id: 'abc123',
-  file: '/home/test.wav'
+  path: '/home/test.wav'
 }
 
 describe('<Track /> structure', () => {
@@ -58,11 +58,11 @@ describe('<Track />s remove track button', () => {
 const badSampleWavPath = '/XYZ123/ThisFileDoesNotExist.zip'
 const sampleWavPath = './example/sample.wav'
 
-describe('<Track />s function readPath(filePath)', () => {
+describe('<Track />s function readPath()', () => {
 
   it('returns a rejected promise that sets the `error` state of <Track />', () => {
-    const wrapper = shallow(<Subject { ...mockProps } />)
-    return wrapper.instance().readPath(badSampleWavPath)
+    const wrapper = shallow(<Subject id={mockProps.id} path={badSampleWavPath} />)
+    return wrapper.instance().readPath()
     .then(
       (result) => {
         expect(wrapper.state('error')).toBeDefined()
@@ -71,8 +71,8 @@ describe('<Track />s function readPath(filePath)', () => {
   })
 
   it('returns a resolved promise that sets the state of <Track />', () => {
-    const wrapper = shallow(<Subject { ...mockProps } />)
-    return wrapper.instance().readPath(sampleWavPath)
+    const wrapper = shallow(<Subject id={mockProps.id} path={sampleWavPath} />)
+    return wrapper.instance().readPath()
     .then(
       (result) => {
         expect(wrapper.state('sampleRate')).toBeDefined()

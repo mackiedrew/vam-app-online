@@ -28,6 +28,15 @@ describe('<SeekBar /> structure', () => {
     expect(wrapper.find('button.seek-forward')).toHaveLength(1)
   })
 
+  it('renders a button with class: `seek-reverse`', () => {
+    expect(wrapper.find('button.seek-reverse')).toHaveLength(1)
+  })
+
+})
+
+describe('<SeekBar /> buttons work', () => {
+  it('seek-forward increases seek when clicked')
+  it('seek-reverse decreases seek when clicked')
 })
 
 describe('<SeekBar /> function seekForward(samples)', () => {
@@ -39,6 +48,20 @@ describe('<SeekBar /> function seekForward(samples)', () => {
     const mockSeekTo = sinon.spy()
     const wrapper = shallow(<Subject seek={mockSeek} seekTo={mockSeekTo} />)
     wrapper.instance().seekForward()
+    expect(mockSeekTo.calledOnce).toBe(true)
+  })
+
+})
+
+describe('<SeekBar /> function seekReverse(samples)', () => {
+
+  const mockSeek = 44100 * 30 // 30 seconds
+  const mockSamples = 20000
+
+  it('calls the function provided by props.seekTo, exactly once.', () => {
+    const mockSeekTo = sinon.spy()
+    const wrapper = shallow(<Subject seek={mockSeek} seekTo={mockSeekTo} />)
+    wrapper.instance().seekReverse()
     expect(mockSeekTo.calledOnce).toBe(true)
   })
 

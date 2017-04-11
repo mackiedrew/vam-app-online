@@ -22,11 +22,27 @@ class SeekBar extends Component {
     }
     // Reset state to initialState
     this.state = this.initialState
+    // Bind functions to `this`
+    this.seekForward = this.seekForward.bind(this)
+    this.seekReverse = this.seekReverse.bind(this)
   }
 
-  seekForward(samples=44100) {
+  /**
+   * Increment the seek value by given samples.
+   * @param {Number} samples Number of samples to increase seek by; 441000 samples by default.
+   */
+  seekForward(samples = 44100) {
     const { seek, seekTo } = this.props
     return seekTo(seek + samples)
+  }
+
+ /**
+   * Decrement the seek value by given samples.
+   * @param {Number} samples Number of samples to decrease seek by; 441000 samples by default.
+   */
+  seekReverse(samples = 44100) {
+    const { seek, seekTo } = this.props
+    return seekTo(seek - samples)
   }
 
   render() {
@@ -34,12 +50,14 @@ class SeekBar extends Component {
     const { currentTime } = this.state
     const { seek } = this.props
     const seekForward = this.seekForward
+    const seekReverse = this.seekReverse
 
     return (
       <div className="seek-bar">
         <div className="indicator current-sample">{seek}</div>
         <div className="indicator current-time">{currentTime}</div>
-        <button className="seek-forward" onClick={seekForward} >>></button>
+        <button className="seek-forward" onClick={() => seekForward()} >Fwd</button>
+        <button className="seek-reverse" onClick={() => seekReverse()} >Rev</button>
       </div>
     )
   }

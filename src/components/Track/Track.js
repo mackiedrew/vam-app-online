@@ -39,14 +39,17 @@ class Track extends Component {
     this.state = this.initialState
 
     // Read wav data from provided path
-    this.readPath(props.path)
+    this.readPath()
 
     // Bind functions
     this.readPath = this.readPath.bind(this)
   }
 
-  // Read important data off of the wav file
-  readPath(path) {
+  /**
+   * Read important information from the wav file and place it into state. Or store an error.
+   */
+  readPath() {
+    const { path } = this.props
     return richReadWav(path)
     .then((wavData) => this.setState({ ...wavData }))
     .catch((error) => this.setState({ error: String(error) }))
@@ -66,6 +69,7 @@ class Track extends Component {
         </div>
         <div className="display">
           {error ? <strong className="error">{error}</strong> : ''}
+          <div className="seek-line"></div>
           <Waveform
             blocks={grains}
             maxAmplitude={maxAmplitude}

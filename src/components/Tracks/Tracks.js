@@ -57,13 +57,14 @@ class Tracks extends Component {
     this.handleAdd = this.handleAdd.bind(this)
     this.handleRemove = this.handleRemove.bind(this)
     this.selectTracks = this.selectTracks.bind(this)
+    this.trackList = this.trackList.bind(this)
   }
 
   /**
    * Move the seeking cursor to a specified location.
    * @param {Number} sample Integer to move the seeking cursor to, must be integer.
    */
-  seekTo(sample) {
+  seekTo(sample = 0) {
     // Check if sample is less than 0, indexes do not go that low. No upper-bound check yet.
     const newPosition = sample < 0 ? 0 : sample
     const stateChanges = { seek: newPosition }
@@ -76,7 +77,7 @@ class Tracks extends Component {
    * @param {Array} files Array of string complete paths to the file for the new track. 
    * ['path/to/the/file.ext', 'path/number/two.ext']
    */
-  handleAdd(files=[]) {
+  handleAdd(files = []) {
     // Simple reference to state of tracks
     const { tracks } = this.state
     // Generate new id for new track.
@@ -97,7 +98,7 @@ class Tracks extends Component {
    * Remove a track from the tracks array matching the provided track id.
    * @param {String} idToRemove ID to remove from the tracks list
    */
-  handleRemove(idToRemove) {
+  handleRemove(idToRemove = '') {
     // Simple reference to state of tracks
     const { tracks } = this.state
     // Allow track to remain if it's index does not equal that of the index to remove
@@ -119,24 +120,25 @@ class Tracks extends Component {
     handleAdd(selected_tracks)
   }
 
-  render() {
-
+  trackList() {
     // Breakout references for clarity and ease
-    const { seek, tracks } = this.state
+    const { tracks } = this.state
     const handleRemove = this.handleRemove
-    const selectTracks = this.selectTracks
-    const seekTo = this.seekTo
-
-    // Create track list for iterating over
-    const trackIds = Object.keys(tracks)
-    const trackList = trackIds.map((id) =>
-      <Track
-        key={id}
-        id={id}
-        path={tracks[id]}
-        remove={handleRemove}
-      />
+    // Create list of tracks for iteration
+    const trackIds = tracks && Object.keys(tracks)
+    // Create an array containing <Track /> elements matching tracks in state
+    const trackList = trackIds && trackIds.map((id) =>
+      <Track key={id} id={id} path={tracks[id]} remove={handleRemove} />
     )
+    return trackList
+  }
+
+  render() {
+    // Breakout references for clarity and ease
+    const { seek } = this.state
+    const seekTo = this.seekTo
+    const trackList = this.trackList
+    const selectTracks = this.selectTracks
 
     return (
       <div className="tracks">
@@ -144,7 +146,7 @@ class Tracks extends Component {
           seek={seek}
           seekTo={seekTo}
         />
-        {trackList}
+        { trackList() }
         <button className="add-tracks" onClick={selectTracks}>
           Add Tracks
         </button>

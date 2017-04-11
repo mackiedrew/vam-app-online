@@ -43,6 +43,22 @@ describe('<Tracks /> structure', () => {
 
 describe('<Tracks /> functionality', () => {
 
+  it('when no parameter is passed to handleAdd() doesn\'t change state' , () => {
+    const wrapper = shallow(<Subject />)
+    const previousState = wrapper.state('tracks')
+    wrapper.instance().handleAdd()
+    const newState = wrapper.state('tracks')
+    expect(newState).toEqual(previousState)
+  })
+
+  it('when an empty array is passed to handleAdd() doesn\'t change state', () => {
+    const wrapper = shallow(<Subject />)
+    const previousState = wrapper.state('tracks')
+    wrapper.instance().handleAdd([])
+    const newState = wrapper.state('tracks')
+    expect(newState).toEqual(previousState)
+  })
+
   it('can add a single track to the track list with handleAdd', () => {
     const wrapper = shallow(<Subject />)
     wrapper.instance().handleAdd(['/path/to/track1.wav'])
@@ -68,6 +84,22 @@ describe('<Tracks /> functionality', () => {
     expect(Object.keys(wrapper.state('tracks'))).toHaveLength(1)
     wrapper.update()
     expect(wrapper.find('Track')).toHaveLength(1)
+  })
+
+  it('when no parameter is passed to handleRemove() doesn\'t change state' , () => {
+    const wrapper = shallow(<Subject />)
+    const previousState = wrapper.state('tracks')
+    wrapper.instance().handleRemove()
+    const newState = wrapper.state('tracks')
+    expect(newState).toEqual(previousState)
+  })
+
+  it('when an empty string is passed to handleRemove() doesn\'t change state' , () => {
+    const wrapper = shallow(<Subject />)
+    const previousState = wrapper.state('tracks')
+    wrapper.instance().handleRemove('')
+    const newState = wrapper.state('tracks')
+    expect(newState).toEqual(previousState)
   })
 
   it('test that the proper track is removed when handleRemove is called', () => {
@@ -96,6 +128,12 @@ describe('<Tracks />s seek functions', () => {
   it('seekTo(sample) returns a value no lower than 0', () => {
     const wrapper = shallow(<Subject />)
     expect(wrapper.instance().seekTo(-30)).toEqual(0)
+    expect(wrapper.state('seek')).toEqual(0)
+  })
+
+  it('seekTo() returns 0 when provided no argument', () => {
+    const wrapper = shallow(<Subject />)
+    expect(wrapper.instance().seekTo()).toEqual(0)
     expect(wrapper.state('seek')).toEqual(0)
   })
 
