@@ -1,6 +1,5 @@
 import Subject from './SeekBar'
 
-
 describe('<SeekBar /> structure', () => {
   
   it('renders without crashing', () => {
@@ -13,7 +12,7 @@ describe('<SeekBar /> structure', () => {
     expect(wrapper.is('div.seek-bar')).toEqual(true)
   })
 
-  it('renders two divs with class: `indicator`', () => {
+  it('renders two div\'s with class: `indicator`', () => {
     expect(wrapper.find('div.indicator')).toHaveLength(2)
   })
 
@@ -27,6 +26,20 @@ describe('<SeekBar /> structure', () => {
 
   it('renders a button with class: `seek-forward`', () => {
     expect(wrapper.find('button.seek-forward')).toHaveLength(1)
+  })
+
+})
+
+describe('<SeekBar /> function seekForward(samples)', () => {
+
+  const mockSeek = 44100 * 30 // 30 seconds
+  const mockSamples = 20000
+
+  it('calls the function provided by props.seekTo, exactly once.', () => {
+    const mockSeekTo = sinon.spy()
+    const wrapper = shallow(<Subject seek={mockSeek} seekTo={mockSeekTo} />)
+    wrapper.instance().seekForward()
+    expect(mockSeekTo.calledOnce).toBe(true)
   })
 
 })
