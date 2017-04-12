@@ -1,10 +1,12 @@
 // Libraries
 import fs from 'fs'
 import { decode } from 'wav-decoder'
-import { logicalSegment } from './genericHelp'
+
+// Helpers
+import { logicalSegment } from '../generic/generic'
 
 // Load configuration file
-import config from '../config.js'
+import config from '../../config.js'
 
 /**
  * Converts seconds to samples, given a sample rate. Both have defaults so if you provide not params

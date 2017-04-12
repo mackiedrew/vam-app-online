@@ -5,8 +5,8 @@ import './Track.styl'
 import { parse } from 'path'
 
 // Helpers
-import { richReadWav } from '../../libraries/wavHelp'
-import { divisionBinarySearch } from '../../libraries/genericHelp'
+import { richReadWav } from '../../help/wav/wav'
+import { divisionBinarySearch } from '../../help/generic/generic'
 
 // Components
 import Waveform from '../../containers/Waveform/Waveform'
