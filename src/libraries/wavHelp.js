@@ -64,7 +64,7 @@ export const richReadWav = (filePath) => {
   .then(({sampleRate, channelData}) => {
     // Break out data for easy reference
     const data = channelData[0]
-    const length = data.length
+    const trackLength = data.length
 
     // Generate grains by logically segmenting the full array of samples
     const grainLength = secondsToSamples(config.grains.temp)
@@ -89,6 +89,6 @@ export const richReadWav = (filePath) => {
     // Calculate track amplitude information
     const maxAmplitude = Math.max(...grainAmplitudes)
 
-    return { sampleRate, length, grains, maxAmplitude }
+    return { sampleRate, trackLength, grains, maxAmplitude }
   })
 }

@@ -45,7 +45,6 @@ class Tracks extends Component {
     this.initialState = {
       tracks: {
         debug: './example/sample.wav',
-        // failing: '/THISDOESNOTEXIST/doot.wav',
       },
       trackLengths: {},
       seek: 0, // samples
@@ -71,8 +70,11 @@ class Tracks extends Component {
    * @param {Number} sample Integer to move the seeking cursor to, must be integer.
    */
   seekTo(sample = 0) {
+    const maxSample = Math.max(...Object.values(this.state.trackLengths))
     // Check if sample is less than 0, indexes do not go that low. No upper-bound check yet.
-    const newPosition = sample < 0 ? 0 : sample
+    const candidatePositions = [0, sample, maxSample]
+    const sortedPositions = candidatePositions.sort((a, b) => a - b)
+    const newPosition = sortedPositions[1]
     const stateChanges = { seek: newPosition }
     this.setState(stateChanges)
     return newPosition
@@ -168,8 +170,7 @@ class Tracks extends Component {
       ...extantTrackLengths,
       [trackId]: trackLength,
     }
-    console.log("Track Lengths:", newTrackLengths)
-    return newTrackLengths
+    this.setState({trackLengths: newTrackLengths})
   }
 
   render() {

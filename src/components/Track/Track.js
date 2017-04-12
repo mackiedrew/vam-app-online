@@ -31,7 +31,7 @@ class Track extends Component {
       name: fileName,
       error: undefined,
       sampleRate: undefined,
-      length: undefined,
+      trackLength: undefined,
       maxAmplitude: undefined,
       grains: [],
     }
@@ -41,7 +41,6 @@ class Track extends Component {
 
     // Read wav data from provided path
     this.readPath()
-    .then(props.reportTrackLength(props.id, this.state.length))
 
     // Bind functions
     this.readPath = this.readPath.bind(this)
@@ -55,14 +54,14 @@ class Track extends Component {
    */
   sampleToGrain(sample) {
 
-    const { grains, length } = this.state
+    const { grains, trackLength } = this.state
 
     // Exit quickly if the sample is not in the track.
     if (
         typeof sample !== 'number' ||
         sample < 0 ||
-        sample > length || 
-        !grains || !length
+        sample > trackLength || 
+        !grains || !trackLength
         ) {
       return false
     }
@@ -92,21 +91,27 @@ class Track extends Component {
    * Read important information from the wav file and place it into state. Or store an error.
    */
   readPath() {
-    const { path } = this.props
+    const { id, path, reportTrackLength } = this.props
     return richReadWav(path)
-    .then((wavData) => this.setState({ ...wavData }))
+    .then((wavData) => {
+      this.setState({ ...wavData })
+      return wavData
+    })
+    .then((wavData) => {
+      reportTrackLength(id, wavData.trackLength)
+    })
     .catch((error) => this.setState({ error: String(error) }))
   }
 
   render() {
 
     // Break out values for the sake of easier template reading
-    const { name, grains, maxAmplitude, error, length } = this.state
+    const { name, grains, maxAmplitude, error, trackLength } = this.state
     const { id, remove, view, seek, seekTo } = this.props
     const { start, end } = view
     const wrapperID = this.wrapperID
 
-    const endPoint = end || length
+    const endPoint = end || trackLength
     const seekPercentageInView = ((seek - start) /  endPoint) * 100
     const seekStyle = {
       left: `${seekPercentageInView}%`,
