@@ -1,4 +1,4 @@
-import { secondsToSamples, decodeWav, readFile, richReadWav } from './wavHelp'
+import { secondsToSamples, samplesToSeconds, decodeWav, readFile, richReadWav } from './wavHelp'
 
 describe('secondsToSamples(seconds, sampleRate)', () => {
 
@@ -15,6 +15,25 @@ describe('secondsToSamples(seconds, sampleRate)', () => {
 
   it('multiplies seconds by sampleRate', () => {
     expect(secondsToSamples(testSeconds, testSampleRate)).toEqual(testSeconds * testSampleRate)
+  })
+
+})
+
+describe('samplesToSeconds(samples, sampleRate)', () => {
+
+  const testSamples = 302322
+  const testSampleRate = 90123
+
+  it('when provided with no values it returns 1 / 44100 seconds', () => {
+    expect(samplesToSeconds()).toEqual(1 / 44100)
+  })
+
+  it('when provided with no sampleRate it returns samples / 44100 [Hz]', () => {
+    expect(samplesToSeconds(testSamples)).toEqual(testSamples / 44100)
+  })
+
+  it('divides samples by sampleRate', () => {
+    expect(samplesToSeconds(testSamples, testSampleRate)).toEqual(testSamples / testSampleRate)
   })
 
 })
