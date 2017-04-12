@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './SeekBar.styl'
 
 // Libraries
-import { secondsToSamples } from '../../libraries/wavHelp'
+import { secondsToSamples } from '../../help/wav/wav'
 
 /**
  * SeekBar will handle the controls and logic, and maybe a UI for interacting with the current seek
