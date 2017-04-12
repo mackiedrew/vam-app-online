@@ -1,52 +1,51 @@
 /* eslint-env node */
 
-import webpack from 'webpack'
-import { resolve } from 'path'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import ElectronPlugin from 'electron-webpack-plugin'
+import webpack from "webpack";
+import { resolve } from "path";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import ElectronPlugin from "electron-webpack-plugin";
 
 /// Constants ///
-const PORT = 7447
-const BASE_DIRECTORY = resolve(__dirname)
-const BUILD_DIRECTORY = `${BASE_DIRECTORY}/build`
-const APP_DIRECTORY = `${BASE_DIRECTORY}/src`
+const PORT = 7447;
+const BASE_DIRECTORY = resolve(__dirname);
+const BUILD_DIRECTORY = `${BASE_DIRECTORY}/build`;
+const APP_DIRECTORY = `${BASE_DIRECTORY}/src`;
 
 /// Webpack plugins ///
 
 // This plugin allows for base-page template
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: `${APP_DIRECTORY}/index.ejs`,
-  filename: 'index.html',
-  inject: 'body',
-})
+  filename: "index.html",
+  inject: "body"
+});
 
 const ElectronPluginConfig = new ElectronPlugin({
-  relaunchPathMatch: './src',
-  path: './build',
-  args: ['--enable-logging'],
+  relaunchPathMatch: "./src",
+  path: "./build",
+  args: ["--enable-logging"],
   options: {
-    env: {NODE_ENV: 'development'},
-  },
-})
+    env: { NODE_ENV: "development" }
+  }
+});
 
 const configuration = {
-
-  target: 'electron',
+  target: "electron",
 
   context: APP_DIRECTORY,
 
   entry: {
     app: [
-      'react-hot-loader/patch',
+      "react-hot-loader/patch",
       `webpack-dev-server/client?http://localhost:${PORT}`,
-      `${APP_DIRECTORY}/index.js`,
-    ],
+      `${APP_DIRECTORY}/index.js`
+    ]
   },
 
   output: {
     path: BUILD_DIRECTORY,
     publicPath: BUILD_DIRECTORY,
-    filename: '[name].bundle.js',
+    filename: "[name].bundle.js"
   },
 
   node: {
@@ -58,62 +57,50 @@ const configuration = {
     loaders: [
       {
         test: /\.js$/,
-        loader: [
-          'babel-loader',
-        ],
-        exclude: /node_modules/,
+        loader: ["babel-loader"],
+        exclude: /node_modules/
       },
       {
         test: /\.json$/,
-        loader: [
-          'json-loader',
-        ],
+        loader: ["json-loader"]
       },
       {
         test: /\.css$/,
-        loader: [
-          'style-loader',
-          'css-loader?modules',
-          'postcss-loader',
-        ],
+        loader: ["style-loader", "css-loader?modules", "postcss-loader"]
       },
       {
         test: /\.styl$/,
-        loader: [
-          'style-loader',
-          'css-loader',
-          'stylus-loader',
-        ],
+        loader: ["style-loader", "css-loader", "stylus-loader"]
       },
       {
         test: /\.svg$/,
         loader: [
-          'babel-loader',
+          "babel-loader",
           {
-            loader: 'react-svg-loader',
+            loader: "react-svg-loader",
             query: {
               svgo: {
-                plugins: [{removeTitle: true}],
-                floatPrecision: 2,
-              },
-            },
-          },
-        ],
+                plugins: [{ removeTitle: true }],
+                floatPrecision: 2
+              }
+            }
+          }
+        ]
       },
       {
-        test: /\.(png|jpg|gif)$/, 
+        test: /\.(png|jpg|gif)$/,
         exclude: /node_modules/,
-        loader: 'file-loader?name=images/[hash].[ext]',
-      },
-    ],
+        loader: "file-loader?name=images/[hash].[ext]"
+      }
+    ]
   },
 
   plugins: [
     ElectronPluginConfig,
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
-    HtmlWebpackPluginConfig,
-  ],
-}
+    HtmlWebpackPluginConfig
+  ]
+};
 
-export default configuration
+export default configuration;

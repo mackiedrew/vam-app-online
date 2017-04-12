@@ -1,24 +1,24 @@
 // Libraries
-import range from 'lodash.range'
+import range from "lodash.range";
 
 /**
  * Faster flooring method using a bitwise trick with better behavior than Math.floor().
  * Will round both positive and negative numbers closer to zero.
  * @param {Number} value The value to be rounded closer to zero.
  */
-export const floor = (value) => ~~value
+export const floor = value => ~~value;
 
 /**
  * Leverages the faster floor into a ceiling function.
  * Will round both positive and negative numbers away from zero.
  * @param {Number} value The value to be rounded away from zero.
  */
-export const ceiling = (value) => {
+export const ceiling = value => {
   if (value === 0) {
-    return 0
+    return 0;
   }
-  return (value > 0) ? floor(value) + 1 : floor(value) - 1
-}
+  return value > 0 ? floor(value) + 1 : floor(value) - 1;
+};
 
 /**
  * Creates an array of 'segments' that contain two values: start and end.
@@ -29,19 +29,21 @@ export const ceiling = (value) => {
  * @param {Number} segmentSize Integer, number of array elements per segment (inclusive).
  */
 export const logicalSegment = (array, segmentSize) => {
-  const totalSegments = ceiling(array.length / segmentSize)
-  const segmentsRange = range(0, totalSegments)
-  const starts = segmentsRange.map((segment) => segment * segmentSize)
+  const totalSegments = ceiling(array.length / segmentSize);
+  const segmentsRange = range(0, totalSegments);
+  const starts = segmentsRange.map(segment => segment * segmentSize);
   // Good
-  const ends = segmentsRange.map((segment) => {
-    return segment === totalSegments - 1 ? array.length : (segment + 1) * segmentSize
-  })
-  const segments = segmentsRange.map((segment) => ({
+  const ends = segmentsRange.map(segment => {
+    return segment === totalSegments - 1
+      ? array.length
+      : (segment + 1) * segmentSize;
+  });
+  const segments = segmentsRange.map(segment => ({
     start: starts[segment],
-    end: ends[segment],
-  }))
-  return segments
-}
+    end: ends[segment]
+  }));
+  return segments;
+};
 
 /**
  * This binary search will use large divisions of a sorted, continuous integer array with keys:
@@ -53,30 +55,34 @@ export const logicalSegment = (array, segmentSize) => {
  */
 export const divisionBinarySearch = (targetValue, divisionArray) => {
   // Exit quickly if the sample is not in the track.
-  if (typeof targetValue !== 'number' || !divisionArray || divisionArray.length < 1) {
-    return false
+  if (
+    typeof targetValue !== "number" ||
+    !divisionArray ||
+    divisionArray.length < 1
+  ) {
+    return false;
   }
-  const maxIndex = divisionArray && divisionArray[divisionArray.length - 1].end
+  const maxIndex = divisionArray && divisionArray[divisionArray.length - 1].end;
   if (targetValue < 0 || targetValue > maxIndex) {
-    return false
+    return false;
   }
 
   // Search bounds for binary search, when they are equal, the value is found
-  let low = 0
-  let high = divisionArray.length
+  let low = 0;
+  let high = divisionArray.length;
   while (low <= high) {
     // Middle is the current search point, keep bisecting to search
-    const middle = floor(low + (high - low) / 2)
-    const currentDivision = divisionArray[middle]
-    const { start, end } = currentDivision
-    const targetIsLowerThanCurrentGrain = (targetValue < start)
-    const targetIsInCurrentGrain = (targetValue >= start && targetValue < end)
+    const middle = floor(low + (high - low) / 2);
+    const currentDivision = divisionArray[middle];
+    const { start, end } = currentDivision;
+    const targetIsLowerThanCurrentGrain = targetValue < start;
+    const targetIsInCurrentGrain = targetValue >= start && targetValue < end;
     if (targetIsInCurrentGrain) {
-      return middle
+      return middle;
     } else if (targetIsLowerThanCurrentGrain) {
-      high = middle - 1
+      high = middle - 1;
     } else {
-      low = middle + 1
+      low = middle + 1;
     }
   }
-}
+};

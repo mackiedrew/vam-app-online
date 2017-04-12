@@ -31,11 +31,11 @@ module.exports = {
         ],
         "quotes": [
             "error",
-            "single",
+            "double",
         ],
         "semi": [
             "error",
-            "never",
+            "always",
         ],
         "react/forbid-elements": [
             2,
@@ -102,6 +102,8 @@ module.exports = {
         "jsx-a11y/role-has-required-aria-props": 2,
         "jsx-a11y/scope": 2,
         "jsx-a11y/tabindex-no-positive": 2,
-        "prettier/prettier": "error",
+        "prettier/prettier": [
+            "error",
+        ],
     }
 };
