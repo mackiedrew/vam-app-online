@@ -17,12 +17,8 @@ describe('<WaveBlock /> structure', () => {
     expect(wrapper.is('div.wave-block')).toEqual(true)
   })
 
-  it('renders a single div with class: `amplitude`', () => {
-    expect(wrapper.find('div.amplitude')).toHaveLength(1)
-  })
-
-  it('renders a single div with class: `amplitude`', () => {
-    expect(wrapper.find('div.amplitude')).toHaveLength(1)
+  it('renders a single button with class: `amplitude`', () => {
+    expect(wrapper.find('button.amplitude')).toHaveLength(1)
   })
 
 })
@@ -45,4 +41,13 @@ describe('<WaveBlock /> display math', () => {
     expect(wrapper.instance().amplitudeStyle().height).toEqual('50%')
   })
 
+})
+
+describe('<WaveBlock /> handleClick()', () => {
+  it('calls seekTo() function one time', () => {
+    const mockSeekTo = sinon.spy()
+    const wrapper = shallow(<Subject {...mockProps} seekTo={mockSeekTo} />)
+    wrapper.instance().handleClick()
+    expect(mockSeekTo.called).toEqual(true)
+  })
 })

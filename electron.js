@@ -16,13 +16,19 @@ let win
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({width: 800, height: 600})
+  win = new BrowserWindow({
+    minWidth: 576,
+    minHeight: 300,
+    width: 1000, 
+    height: 800,
+    autoHideMenuBar: true,
+  })
 
   // and load the index.html of the app.
   win.loadURL(url.format({
     pathname: path.resolve(__dirname, 'build/index.html'),
     protocol: 'file:',
-    slashes: true
+    slashes: true,
   }))
 
   // Open the DevTools.

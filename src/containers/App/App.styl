@@ -2,20 +2,37 @@
 
 body
   margin 0
-  color color-text-1
   padding 0
+  color $color-text-1
   font-family 'Franklin Gothic Medium', 'Arial Narrow', 'Arial', 'sans-serif'
 
 a
   text-decoration none
   color color-text-1
 
+    
+button
+  color $color-white
+  background-color $color-main
+  border 0
+  padding 10px
+  transition all 0.2s ease
+
+  &:hover
+    transition all 0.2s ease
+    filter: brightness(1.2)
+    cursor pointer
+
+  &:active
+    filter: brightness(0.8)
+    transition all 0.2s ease
+
 .app
 
   header
-    background-color color-main
+    padding 5px
+    background-color $color-main
     color white
-    padding 20px
     
     h1
       display block
@@ -23,7 +40,7 @@ a
       text-align center
 
   main
-    padding 40px
+    padding 0
 
   footer
     width 100%
