@@ -37,31 +37,31 @@ module.exports = {
             "never",
         ],
         "react/forbid-elements": [
-            1,
+            2,
             {
                 forbid: [
                     'b'
                 ]
             }
         ],
-        "react/no-danger": 1,
-        "react/no-danger-with-children": 1,
-        "react/no-deprecated": 1,
-        "react/no-direct-mutation-state": 1,
-        "react/sort-prop-types": 1,
-        "react/style-prop-object": 1,
-        "react/void-dom-elements-no-children": 1,
+        "react/no-danger": 2,
+        "react/no-danger-with-children": 2,
+        "react/no-deprecated": 2,
+        "react/no-direct-mutation-state": 2,
+        "react/sort-prop-types": 2,
+        "react/style-prop-object": 2,
+        "react/void-dom-elements-no-children": 2,
         "react/prop-types": 0,
-        "react/jsx-boolean-value": 1,
-        "react/jsx-closing-bracket-location": 1,
-        "react/jsx-closing-bracket-location": 1,
-        "react/jsx-equals-spacing": 1,
+        "react/jsx-boolean-value": 2,
+        "react/jsx-closing-bracket-location": 2,
+        "react/jsx-closing-bracket-location": 2,
+        "react/jsx-equals-spacing": 2,
         "react/jsx-first-prop-new-line": [
-            1,
+            2,
             "multiline-multiprop"
         ],
         "react/jsx-sort-props": [
-            1,
+            2,
             {
                 callbacksLast: true,
                 shorthandLast: true,
@@ -69,10 +69,37 @@ module.exports = {
                 noSortAlphabetically: false,
             }
         ],
-        "react/jsx-space-before-closing": 1,
+        "react/jsx-space-before-closing": 2,
         "react/jsx-indent-props": [
-            1,
+            2,
             2
-        ]
+        ],
+        "jsx-a11y/accessible-emoji": 2,
+        "jsx-a11y/anchor-has-content": 2,
+        "jsx-a11y/aria-activedescendant-has-tabindex": 2,
+        "jsx-a11y/aria-props": 2,
+        "jsx-a11y/aria-proptypes": 2,
+        "jsx-a11y/aria-role": 2,
+        "jsx-a11y/aria-unsupported-elements": 2,
+        "jsx-a11y/click-events-have-key-events": 2,
+        "jsx-a11y/heading-has-content": 2,
+        "jsx-a11y/href-no-hash": 2,
+        "jsx-a11y/html-has-lang": 2,
+        "jsx-a11y/iframe-has-title": 2,
+        "jsx-a11y/img-has-alt": 2,
+        "jsx-a11y/img-redundant-alt": 2,
+        "jsx-a11y/label-has-for": 2,
+        "jsx-a11y/lang": 2,
+        "jsx-a11y/mouse-events-have-key-events": 2,
+        "jsx-a11y/no-access-key": 2,
+        "jsx-a11y/no-autofocus": 2,
+        "jsx-a11y/no-distracting-elements": 2,
+        "jsx-a11y/no-onchange": 2,
+        "jsx-a11y/no-redundant-roles": 2,
+        "jsx-a11y/no-static-element-interactions": 2,
+        "jsx-a11y/onclick-has-focus": 2,
+        "jsx-a11y/role-has-required-aria-props": 2,
+        "jsx-a11y/scope": 2,
+        "jsx-a11y/tabindex-no-positive": 2
     }
 };
