@@ -1,19 +1,19 @@
 @require '../../palette.styl'
 
 .wave-block
-  background-color color-divider
+  background-color $color-divider
   display flex
   flex-direction column
   justify-content center
-  flex-grow: 1
   margin 0
   height 100%
 
   .amplitude
     display block
     margin auto 0
+    padding 0
     min-height 2px
-    background-color color-accent
+    background-color $color-accent
     transform scaleY(0.8)
     transition all 0.2s ease
     

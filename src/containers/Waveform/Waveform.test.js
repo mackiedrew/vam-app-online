@@ -21,6 +21,11 @@ describe('<Waveform /> structure', () => {
     shallow(<Subject {...mockProps} />)
   })
 
+  it('renders as a div with class: `waveform`', () => {
+    const wrapper = shallow(<Subject />)
+    expect(wrapper.is('div.waveform')).toEqual(true)
+  })
+
   it('renders with no <WaveBlock />s when no blocks are supplied', () => {
     const wrapper = shallow(<Subject />)
     expect(wrapper.find('WaveBlock')).toHaveLength(0)

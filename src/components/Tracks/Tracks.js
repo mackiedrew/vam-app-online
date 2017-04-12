@@ -19,6 +19,7 @@ const showOpenDialog = (remote && remote.dialog.showOpenDialog) || mockDialog
 
 // Component Imports
 import Track from '../Track/Track'
+import SeekBar from '../SeekBar/SeekBar'
 
 // Constants
 const openDialogConfig = {
@@ -43,32 +44,60 @@ class Tracks extends Component {
     // Set initial state to make it easier to reset to later
     this.initialState = {
       tracks: {
-        // debug: '/home/mackie/Desktop/test_show/episodes/1/tracks/martin.wav',
-        // failing: '/THISDOESNOTEXIST/doot.wav',
+        // debug: './example/sample.wav',
       },
+      trackLengths: {},
+      seek: 0, // samples
+      view: {
+        start: 0,
+        end: undefined,
+      }
     }
     // Reset state to initialState
     this.state = this.initialState
 
     // Bind functions to `this`
+    this.seekTo = this.seekTo.bind(this)
+    this.simpleAddTracks = this.simpleAddTracks.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
     this.handleRemove = this.handleRemove.bind(this)
     this.selectTracks = this.selectTracks.bind(this)
+    this.trackList = this.trackList.bind(this)
+    this.reportTrackLength = this.reportTrackLength.bind(this)
   }
 
   /**
-   * Dumb add to the track list, only manages ID, does not worry about any file system operations
-   * @param {Array} files Array of string complete paths to the file for the new track. 
-   * ['path/to/the/file.ext', 'path/number/two.ext']
+   * Move the seeking cursor to a specified location.
+   * @param {Number} sample Integer to move the seeking cursor to, must be integer.
    */
-  handleAdd(files=[]) {
+  seekTo(sample = 0) {
+    const { trackLengths } = this.state
+    const lengthList = Object.keys(trackLengths).map((key) => trackLengths[key])
+    const maxSample = Math.max(...lengthList)
+    // Check if sample is less than 0, indexes do not go that low. No upper-bound check yet.
+    const candidatePositions = [0, sample, maxSample]
+    const sortedPositions = candidatePositions.sort((a, b) => a - b)
+    const newPosition = sortedPositions[1]
+    const stateChanges = { seek: newPosition }
+    this.setState(stateChanges)
+    return newPosition
+  }
+
+  /**
+   * Simplified version of adding tracks without id generation for direct access to adding path
+   * @param {Array} ids Array of id's matching the index for each provided path
+   * @param {Array} paths Array of string complete paths to the file for the new track.
+   */
+  simpleAddTracks(ids = [], paths = []) {
+    // Exit early if there is a problem
+    if (ids.length !== paths.length || ids.length === 0) {
+      return false
+    }
     // Simple reference to state of tracks
     const { tracks } = this.state
-    // Generate new id for new track.
-    const ids = files.map(() => shortid.generate())
     // Generate new track entry with ID
     const newTracks = ids.reduce((current, id, index) => {
-      return { ...current, [id]: files[index] }
+      return { ...current, [id]: paths[index] }
     }, {})
     // Generate a list of old tracks, plus the new one
     const newTrackList = { ...tracks, ...newTracks }
@@ -79,10 +108,21 @@ class Tracks extends Component {
   }
 
   /**
+   * Add [paths] to the track list, automatically generates IDs.
+   * @param {Array} paths Array of string complete paths to the file for the new track. 
+   */
+  handleAdd(paths = []) {
+    // Generate new id for new track.
+    const ids = paths.map(() => shortid.generate())
+    // Leverage earlier function to simplify adding
+    this.simpleAddTracks(ids, paths)
+  }
+
+  /**
    * Remove a track from the tracks array matching the provided track id.
    * @param {String} idToRemove ID to remove from the tracks list
    */
-  handleRemove(idToRemove) {
+  handleRemove(idToRemove = '') {
     // Simple reference to state of tracks
     const { tracks } = this.state
     // Allow track to remain if it's index does not equal that of the index to remove
@@ -104,28 +144,67 @@ class Tracks extends Component {
     handleAdd(selected_tracks)
   }
 
-  render() {
-
+  /**
+   * Generate a set of track elements to display within the main render() function.
+   */
+  trackList() {
     // Breakout references for clarity and ease
-    const { tracks } = this.state
-    const handleRemove = this.handleRemove
-    const selectTracks = this.selectTracks
-
-    // Create track list for iterating over
-    const trackIds = Object.keys(tracks)
-    const trackList = trackIds.map((id) =>
+    const { tracks, view, seek } = this.state
+    // Create list of tracks for iteration
+    const trackIds = tracks && Object.keys(tracks)
+    // Create an array containing <Track /> elements matching tracks in state
+    const trackList = trackIds && trackIds.map((id) =>
       <Track
-        key={id}
         id={id}
+        key={id}
         path={tracks[id]}
-        remove={handleRemove}
+        remove={this.handleRemove}
+        reportTrackLength={this.reportTrackLength}
+        seek={seek}
+        seekTo={this.seekTo}
+        view={view}
       />
     )
+    return trackList
+  }
+  
+  /**
+   * Reporting track length is kind of ugly right now. But basically, the <Track /> will load the 
+   * information about their individual files, then report back to the parent. Every time this sort
+   * of update is done, it checks to make sure track lengths match existing trackIds. I do this to
+   * prevent the state nesting that is frowned upon these days. 
+   * @param {String} trackId ID string value from the 'tracks' state list reporting the new length
+   * @param {Number} trackLength track length being reported from the trackID
+   */
+  reportTrackLength(trackId, trackLength) {
+    // Breakout 2-layer-deep values for easy reference
+    const { tracks, trackLengths } = this.state
+    // Determine the tracks that still exist, then recreate the track lengths array from that
+    const stateTrackIds = Object.keys(tracks)
+    // Create an object containing existing tracks with their lengths
+    const updatedStateTrackLengths = stateTrackIds.reduce((object, id) =>
+      ({...object, [id]: trackLengths[id]}), {})
+    // Generate new object containing track lengths that should exist and the new value
+    const newTrackLengths = {...updatedStateTrackLengths, [trackId]: trackLength }
+    const stateChange = { trackLengths: newTrackLengths }
+    // Change state of track lengths
+    this.setState(stateChange)
+    // Return for flexibility and testing
+    return newTrackLengths
+  }
+
+  render() {
+    // Breakout 2-layer-deep values for easy reference
+    const { seek } = this.state
 
     return (
       <div className="tracks">
-        {trackList}
-        <button className="add-tracks" onClick={selectTracks}>
+        <SeekBar
+          seek={seek}
+          seekTo={this.seekTo}
+        />
+        { this.trackList() }
+        <button className="add-tracks" onClick={this.selectTracks}>
           Add Tracks
         </button>
       </div>

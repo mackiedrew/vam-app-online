@@ -9,10 +9,19 @@ import config from '../config.js'
 /**
  * Converts seconds to samples, given a sample rate. Both have defaults so if you provide not params
  * it will simply provide a typical conversion factor. This is intentionally over-verbose.
- * @param {Number} seconds 
+ * @param {Number} seconds This should be pretty clear. 1/60 of a minute, 1000 milliseconds
  * @param {Number} sampleRate Number of samples per seconds, default is 44100Hz or 44.1kHz 
  */
 export const secondsToSamples = (seconds=1, sampleRate=44100) => seconds * sampleRate
+
+/**
+ * Converts samples to seconds, given a sample rate. Both have defaults so if you provide not params
+ * it will simply provide a typical conversion factor. This is intentionally over-verbose.
+ * @param {Number} samples Number of samples for the given sample rate.
+ * @param {Number} sampleRate Number of samples per seconds, default is 44100Hz or 44.1kHz 
+ */
+export const samplesToSeconds = (samples=1, sampleRate=44100) =>
+  samples / sampleRate
 
 /**
  * Reads and returns a promise containing the file buffer.
@@ -48,7 +57,7 @@ export const richReadWav = (filePath) => {
   .then(({sampleRate, channelData}) => {
     // Break out data for easy reference
     const data = channelData[0]
-    const length = data.length
+    const trackLength = data.length
 
     // Generate grains by logically segmenting the full array of samples
     const grainLength = secondsToSamples(config.grains.temp)
@@ -73,6 +82,6 @@ export const richReadWav = (filePath) => {
     // Calculate track amplitude information
     const maxAmplitude = Math.max(...grainAmplitudes)
 
-    return { sampleRate, length, grains, maxAmplitude }
+    return { sampleRate, trackLength, grains, maxAmplitude }
   })
 }

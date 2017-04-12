@@ -24,6 +24,10 @@ describe('<Tracks /> structure', () => {
     expect(wrapper.find('Track')).toHaveLength(0)
   })
 
+  it('renders a single <SeekBar />', () => {
+    expect(wrapper.find('SeekBar')).toHaveLength(1)
+  })
+
   it('renders three <Track /> if there is three track in state', () => {
     const wrapperWithThree = shallow(<Subject />)
     wrapperWithThree.instance().handleAdd([
@@ -37,7 +41,23 @@ describe('<Tracks /> structure', () => {
   })
 })
 
-describe('<Tracks /> functionality', () => {
+describe('<Tracks /> track management functions', () => {
+
+  it('when no parameter is passed to handleAdd() doesn\'t change state' , () => {
+    const wrapper = shallow(<Subject />)
+    const previousState = wrapper.state('tracks')
+    wrapper.instance().handleAdd()
+    const newState = wrapper.state('tracks')
+    expect(newState).toEqual(previousState)
+  })
+
+  it('when an empty array is passed to handleAdd() doesn\'t change state', () => {
+    const wrapper = shallow(<Subject />)
+    const previousState = wrapper.state('tracks')
+    wrapper.instance().handleAdd([])
+    const newState = wrapper.state('tracks')
+    expect(newState).toEqual(previousState)
+  })
 
   it('can add a single track to the track list with handleAdd', () => {
     const wrapper = shallow(<Subject />)
@@ -66,6 +86,22 @@ describe('<Tracks /> functionality', () => {
     expect(wrapper.find('Track')).toHaveLength(1)
   })
 
+  it('when no parameter is passed to handleRemove() doesn\'t change state' , () => {
+    const wrapper = shallow(<Subject />)
+    const previousState = wrapper.state('tracks')
+    wrapper.instance().handleRemove()
+    const newState = wrapper.state('tracks')
+    expect(newState).toEqual(previousState)
+  })
+
+  it('when an empty string is passed to handleRemove() doesn\'t change state' , () => {
+    const wrapper = shallow(<Subject />)
+    const previousState = wrapper.state('tracks')
+    wrapper.instance().handleRemove('')
+    const newState = wrapper.state('tracks')
+    expect(newState).toEqual(previousState)
+  })
+
   it('test that the proper track is removed when handleRemove is called', () => {
     const targetTrack = '/path/to/track1.wav'
     const wrapper = shallow(<Subject />)
@@ -80,4 +116,82 @@ describe('<Tracks /> functionality', () => {
     expect(Object.keys(wrapper.state('tracks'))).toHaveLength(1)
   })
 
+})
+
+describe('<Tracks />s seek functions', () => {
+
+  it('initializes with seek at 0 samples', () => {
+    const wrapper = shallow(<Subject />)
+    expect(wrapper.state('seek')).toEqual(0)
+  })
+
+  it('seekTo(sample) returns a value no lower than 0', () => {
+    const wrapper = shallow(<Subject />)
+    wrapper.instance().reportTrackLength('test', 44100 * 100)
+    expect(wrapper.instance().seekTo(-30)).toEqual(0)
+    expect(wrapper.state('seek')).toEqual(0)
+  })
+
+  it('seekTo() returns 0 when provided no argument', () => {
+    const wrapper = shallow(<Subject />)
+    wrapper.instance().reportTrackLength('test', 44100 * 100)
+    expect(wrapper.instance().seekTo()).toEqual(0)
+    expect(wrapper.state('seek')).toEqual(0)
+  })
+
+  it('seekTo(sample) returns sets the state of seek to the value passed to it.', () => {
+    const wrapper = shallow(<Subject />)
+    wrapper.instance().reportTrackLength('test', 44100 * 100)
+    expect(wrapper.instance().seekTo(30)).toEqual(30)
+    expect(wrapper.state('seek')).toEqual(30)
+  })
+
+})
+
+describe('<Tracks /> reportTrackLength()', () => {
+
+  const testLength = 44100 * 100
+
+  it('returns an array containing an id of the added track', () => {
+    const wrapper = shallow(<Subject />)
+    const result = wrapper.instance().reportTrackLength('test', testLength)
+    expect(result).toEqual({test: testLength})
+  })
+
+  it('trackLengths is changed after a single track is added', () => {
+    const wrapper = shallow(<Subject />)
+    wrapper.instance().reportTrackLength('test', testLength)
+    expect(wrapper.state('trackLengths')).toEqual({test: testLength})
+  })
+
+  it('trackLengths is combined with old and new', () => {
+    const wrapper = shallow(<Subject />)
+    // Prepare track state because non-existence tracks are pruned.
+    wrapper.instance().setState({ tracks: { test: './fake/path.wav', debug: './fake/path.wav' } })
+
+    wrapper.instance().reportTrackLength('test', testLength)
+    expect(wrapper.state('trackLengths')).toEqual({ test: testLength })
+    wrapper.instance().reportTrackLength('debug', testLength)
+    expect(wrapper.state('trackLengths')).toEqual({ test: testLength, debug: testLength })
+
+  })
+
+})
+
+describe('<Tracks /> simpleAddTracks', () => {
+  
+  it('returns false when id and path length are mismatched', () => {
+    const wrapper = shallow(<Subject />)
+    const mockIds = ['123', '1403']
+    const mockPaths = ['/path/or/something.wav']
+    expect(wrapper.instance().simpleAddTracks(mockIds, mockPaths)).toBe(false)
+  })
+
+  it('returns false when id or path is empty', () => {
+    const wrapper = shallow(<Subject />)
+    const mockIds = ['123', '1403']
+    const mockPaths = ['/path/or/something.wav']
+    expect(wrapper.instance().simpleAddTracks(mockIds, undefined)).toBe(false)
+    expect(wrapper.instance().simpleAddTracks(undefined, mockPaths)).toBe(false)
+  })
 })
