@@ -44,10 +44,15 @@ class Tracks extends Component {
     // Set initial state to make it easier to reset to later
     this.initialState = {
       tracks: {
-        // debug: '/home/mackie/Desktop/test_show/episodes/1/tracks/martin.wav',
+        debug: './example/sample.wav',
         // failing: '/THISDOESNOTEXIST/doot.wav',
       },
+      trackLengths: {},
       seek: 0, // samples
+      view: {
+        start: 0,
+        end: undefined,
+      }
     }
     // Reset state to initialState
     this.state = this.initialState
@@ -58,6 +63,7 @@ class Tracks extends Component {
     this.handleRemove = this.handleRemove.bind(this)
     this.selectTracks = this.selectTracks.bind(this)
     this.trackList = this.trackList.bind(this)
+    this.reportTrackLength = this.reportTrackLength.bind(this)
   }
 
   /**
@@ -122,15 +128,48 @@ class Tracks extends Component {
 
   trackList() {
     // Breakout references for clarity and ease
-    const { tracks } = this.state
+    const { tracks, view, seek } = this.state
     const handleRemove = this.handleRemove
     // Create list of tracks for iteration
     const trackIds = tracks && Object.keys(tracks)
     // Create an array containing <Track /> elements matching tracks in state
     const trackList = trackIds && trackIds.map((id) =>
-      <Track key={id} id={id} path={tracks[id]} remove={handleRemove} />
+      <Track
+        id={id}
+        key={id}
+        path={tracks[id]}
+        remove={handleRemove}
+        reportTrackLength={this.reportTrackLength}
+        seek={seek}
+        seekTo={this.seekTo}
+        view={view}
+      />
     )
     return trackList
+  }
+  
+  /**
+   * 
+   * @param {String} trackId 
+   * @param {Number} trackLength 
+   */
+  reportTrackLength(trackId, trackLength) {
+    const { tracks, trackLengths } = this.state
+    const extantTrackIds = Object.keys(tracks)
+    const allTrackLengths = Object.keys(trackLengths)
+    const extantTrackLengths = allTrackLengths.reduce((extantSoFar, lengthId) => {
+      const trackStillExists = extantTrackIds.reduce((exists, trackId) =>
+        exists || lengthId === trackId
+      )
+      const anotherTrackLength = { [lengthId]: trackLengths[lengthId] }
+      return trackStillExists ? {...extantSoFar, ...anotherTrackLength} : { extantSoFar }
+    }, {})
+    const newTrackLengths = {
+      ...extantTrackLengths,
+      [trackId]: trackLength,
+    }
+    console.log("Track Lengths:", newTrackLengths)
+    return newTrackLengths
   }
 
   render() {

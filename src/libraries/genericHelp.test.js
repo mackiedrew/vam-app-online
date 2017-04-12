@@ -1,4 +1,4 @@
-import { floor, ceiling, mergeZip, logicalSegment } from './genericHelp'
+import { floor, ceiling, mergeZip, logicalSegment, uninvite } from './genericHelp'
 
 describe('floor(value)', () => {
 

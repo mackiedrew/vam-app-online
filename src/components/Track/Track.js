@@ -3,7 +3,10 @@ import './Track.styl'
 
 // Libraries
 import { parse } from 'path'
+
+// Helpers
 import { richReadWav } from '../../libraries/wavHelp'
+import { floor } from '../../libraries/genericHelp'
 
 // Components
 import Waveform from '../../containers/Waveform/Waveform'
@@ -22,12 +25,10 @@ class Track extends Component {
 
     // Format wrapper ID name for consistent reference
     this.wrapperID = `track-${props.id}`
-    const wrapperWidth = undefined // getPixelWidth() later
 
     // Use separate value to allow for easy reset
     this.initialState = {
       name: fileName,
-      pixelWidth: wrapperWidth,
       error: undefined,
       sampleRate: undefined,
       length: undefined,
@@ -40,9 +41,51 @@ class Track extends Component {
 
     // Read wav data from provided path
     this.readPath()
+    .then(props.reportTrackLength(props.id, this.state.length))
 
     // Bind functions
     this.readPath = this.readPath.bind(this)
+  }
+
+  /**
+   * Finds the grain that contains the sample provided, will return the grain index.
+   * It is based off of a binary search or bisection method of search.
+   * There is probably a lot of work here to do in terms of optimization.
+   * @param {Number} sample Sample number to target
+   */
+  sampleToGrain(sample) {
+
+    const { grains, length } = this.state
+
+    // Exit quickly if the sample is not in the track.
+    if (
+        typeof sample !== 'number' ||
+        sample < 0 ||
+        sample > length || 
+        !grains || !length
+        ) {
+      return false
+    }
+
+    let low = 0
+    let high = grains.length
+
+    while (low <= high) {
+      const middle = floor(low + (high - low) / 2)
+      const currentGrain = grains[middle]
+      const { start, end } = currentGrain
+      const sampleIsLowerThanCurrentGrain = (sample < start)
+      const sampleIsInCurrentGrain = (sample >= start && sample < end)
+      if (sampleIsInCurrentGrain) {
+        return middle
+      } else if (sampleIsLowerThanCurrentGrain) {
+        high = middle - 1
+      } else {
+        low = middle + 1
+      }
+    }
+    // If maximum search iterations is exceeded, return false do indicate failure
+    return false
   }
 
   /**
@@ -56,23 +99,35 @@ class Track extends Component {
   }
 
   render() {
+
     // Break out values for the sake of easier template reading
-    const { name, grains, maxAmplitude, error } = this.state
-    const { id, remove } = this.props
+    const { name, grains, maxAmplitude, error, length } = this.state
+    const { id, remove, view, seek, seekTo } = this.props
+    const { start, end } = view
     const wrapperID = this.wrapperID
 
+    const endPoint = end || length
+    const seekPercentageInView = ((seek - start) /  endPoint) * 100
+    const seekStyle = {
+      left: `${seekPercentageInView}%`,
+    }
+
     return (
-      <div id={wrapperID} className="track">
+      <div className="track" id={wrapperID}>
         <div className="controls">
           <span className="name">{name}</span>
           <button className="remove" onClick={() => remove(id)}>Remove</button>
         </div>
         <div className="display">
           {error ? <strong className="error">{error}</strong> : ''}
-          <div className="seek-line"></div>
+          <div
+            className="seek-line"
+            style={seekStyle}
+          ></div>
           <Waveform
             blocks={grains}
             maxAmplitude={maxAmplitude}
+            seekTo={seekTo}
           />
         </div>
       </div>

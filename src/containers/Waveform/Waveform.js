@@ -9,14 +9,17 @@ import WaveBlock from '../WaveBlock/WaveBlock'
  * a pretty display format. It should not do a lot of the heavy lifting, most of it should be given
  * to a library for processing or provided directly through the props.
  */
-const Waveform = ({ blocks, maxAmplitude }) =>
+const Waveform = ({ blocks, maxAmplitude, seekTo }) =>
   <div className="waveform">
     {
-      blocks && blocks.map(({ amplitude }, index) =>
+      blocks && blocks.map(({ start, end, amplitude }, index) =>
         <WaveBlock
-          key={index}
           amplitude={amplitude}
+          end={end}
+          key={index}
           maxAmplitude={maxAmplitude}
+          seekTo={seekTo}
+          start={start}
         />
       )
     }

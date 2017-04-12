@@ -18,6 +18,12 @@ class WaveBlock extends Component {
     return amplitude / maxAmplitude
   }
 
+  waveBlockStyle() {
+    const { start, end } = this.props
+    const length = end - start
+    return { flexGrow: length }
+  }
+
   amplitudeStyle() {
     const fillPercentage = this.relativeAmplitude()
     const height = `${fillPercentage * 100}%`
@@ -26,13 +32,17 @@ class WaveBlock extends Component {
 
   render() {
 
+    const { start, seekTo } = this.props
     const amplitudeStyle = this.amplitudeStyle()
+    const waveBlockStyle = this.waveBlockStyle()
 
     return (
-      <div className="wave-block">
-        <div className="amplitude" style={amplitudeStyle}>
-
-        </div>
+      <div className="wave-block" style={waveBlockStyle}>
+        <button
+          className="amplitude"
+          style={amplitudeStyle}
+          onClick={() => seekTo(start)}
+        />
       </div>
     )
   }

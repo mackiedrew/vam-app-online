@@ -47,7 +47,7 @@ describe('<SeekBar /> function seekForward(samples)', () => {
   it('calls the function provided by props.seekTo, exactly once.', () => {
     const mockSeekTo = sinon.spy()
     const wrapper = shallow(<Subject seek={mockSeek} seekTo={mockSeekTo} />)
-    wrapper.instance().seekForward()
+    wrapper.instance().seekForward(mockSamples)
     expect(mockSeekTo.calledOnce).toBe(true)
   })
 
@@ -61,7 +61,7 @@ describe('<SeekBar /> function seekReverse(samples)', () => {
   it('calls the function provided by props.seekTo, exactly once.', () => {
     const mockSeekTo = sinon.spy()
     const wrapper = shallow(<Subject seek={mockSeek} seekTo={mockSeekTo} />)
-    wrapper.instance().seekReverse()
+    wrapper.instance().seekReverse(mockSamples)
     expect(mockSeekTo.calledOnce).toBe(true)
   })
 
