@@ -15,6 +15,7 @@
     "rebuild": "npm run clean && npm run build",
     "lint:javascript": "./node_modules/.bin/eslint ./",
     "lint:stylus": "./node_modules/.bin/stylint ./src/",
+    "lint:fix": "yarn run lint --fix",
     "lint": "yarn run lint:javascript && yarn run lint:stylus",
     "test": "./node_modules/.bin/jest",
     "coverage": "./node_modules/.bin/codecov -t 08a9c11b-ea34-46f8-a03c-90802a1528e9",
