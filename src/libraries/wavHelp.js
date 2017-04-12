@@ -14,9 +14,6 @@ import config from '../config.js'
  */
 export const secondsToSamples = (seconds=1, sampleRate=44100) => seconds * sampleRate
 
-
-export const samplesToMilliseconds = (samples=1, sampleRate=44100) =>
-  samplesToSeconds(samples, sampleRate) * 1000
 /**
  * Converts samples to seconds, given a sample rate. Both have defaults so if you provide not params
  * it will simply provide a typical conversion factor. This is intentionally over-verbose.
@@ -25,10 +22,6 @@ export const samplesToMilliseconds = (samples=1, sampleRate=44100) =>
  */
 export const samplesToSeconds = (samples=1, sampleRate=44100) =>
   samples / sampleRate
-export const samplesToMinutes = (samples=1, sampleRate=44100) =>
-  samplesToSeconds(samples, sampleRate) / 60
-export const samplesToHours = (samples=1, sampleRate=44100) =>
-  samplesToMinutes(samples, sampleRate) / 60
 
 /**
  * Reads and returns a promise containing the file buffer.

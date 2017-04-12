@@ -46,11 +46,6 @@ describe('<SeekBar /> structure', () => {
 
 })
 
-describe('<SeekBar /> buttons work', () => {
-  it('seek-forward increases seek when clicked')
-  it('seek-reverse decreases seek when clicked')
-})
-
 describe('<SeekBar /> function seekSample(samples)', () => {
 
   const mockSeek = 44100 * 30 // 30 seconds

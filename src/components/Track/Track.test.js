@@ -97,3 +97,13 @@ describe('<Track />s function sampleToGrain()', () => {
   })
 
 })
+
+describe('<Track />  generateSeekLineStyle()', () => {
+  
+  it('falls back to trackLength when view.end isn\'t available', () => {
+    const wrapper = shallow(<Subject { ...mockProps } view={ { start: 0, end: undefined } }/>)
+    const result = wrapper.instance().sampleToGrain(-1)
+    expect(result).toBe(false)
+  })
+
+})

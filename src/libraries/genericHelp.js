@@ -48,16 +48,19 @@ export const logicalSegment = (array, segmentSize) => {
  * start, end. It will look for the index of the division containing a target value between it's
  * start and end keys.
  * @param {Number} targetValue Value within divisionArray to match for.
- * @param {Array} divisionArray 
- * @param {Number} maxIndex 
+ * @param {Array} divisionArray Value of divisions with a start and end key with the start being
+ * inclusive and the end being exclusive. Each entry in the array should obviously be an object.
  */
-export const divisionBinarySearch = (targetValue, divisionArray, maxIndex) => {
+export const divisionBinarySearch = (targetValue, divisionArray) => {
   // Exit quickly if the sample is not in the track.
-  const isNotNumber = typeof targetValue !== 'number'
-  const targetNotInBounds = targetValue < 0 || targetValue > maxIndex
-  if (isNotNumber || targetNotInBounds || !maxIndex) {
+  if (typeof targetValue !== 'number' || !divisionArray || divisionArray.length < 1) {
     return false
   }
+  const maxIndex = divisionArray && divisionArray[divisionArray.length - 1].end
+  if (targetValue < 0 || targetValue > maxIndex) {
+    return false
+  }
+
   // Search bounds for binary search, when they are equal, the value is found
   let low = 0
   let high = divisionArray.length
@@ -76,6 +79,4 @@ export const divisionBinarySearch = (targetValue, divisionArray, maxIndex) => {
       low = middle + 1
     }
   }
-  // If maximum search iterations is exceeded, return false do indicate failure
-  return false
 }

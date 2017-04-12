@@ -58,6 +58,7 @@ class Tracks extends Component {
 
     // Bind functions to `this`
     this.seekTo = this.seekTo.bind(this)
+    this.simpleAddTracks = this.simpleAddTracks.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
     this.handleRemove = this.handleRemove.bind(this)
     this.selectTracks = this.selectTracks.bind(this)
@@ -83,18 +84,20 @@ class Tracks extends Component {
   }
 
   /**
-   * Dumb add to the track list, only manages ID, does not worry about any file system operations
-   * @param {Array} files Array of string complete paths to the file for the new track. 
-   * ['path/to/the/file.ext', 'path/number/two.ext']
+   * Simplified version of adding tracks without id generation for direct access to adding path
+   * @param {Array} ids Array of id's matching the index for each provided path
+   * @param {Array} paths Array of string complete paths to the file for the new track.
    */
-  handleAdd(files = []) {
+  simpleAddTracks(ids = [], paths = []) {
+    // Exit early if there is a problem
+    if (ids.length !== paths.length || ids.length === 0) {
+      return false
+    }
     // Simple reference to state of tracks
     const { tracks } = this.state
-    // Generate new id for new track.
-    const ids = files.map(() => shortid.generate())
     // Generate new track entry with ID
     const newTracks = ids.reduce((current, id, index) => {
-      return { ...current, [id]: files[index] }
+      return { ...current, [id]: paths[index] }
     }, {})
     // Generate a list of old tracks, plus the new one
     const newTrackList = { ...tracks, ...newTracks }
@@ -102,6 +105,17 @@ class Tracks extends Component {
     const stateChange = { tracks: { ...newTrackList } }
     // Set tracks state to be previous state plus new track
     this.setState(stateChange)
+  }
+
+  /**
+   * Add [paths] to the track list, automatically generates IDs.
+   * @param {Array} paths Array of string complete paths to the file for the new track. 
+   */
+  handleAdd(paths = []) {
+    // Generate new id for new track.
+    const ids = paths.map(() => shortid.generate())
+    // Leverage earlier function to simplify adding
+    this.simpleAddTracks(ids, paths)
   }
 
   /**
@@ -166,22 +180,16 @@ class Tracks extends Component {
     // Breakout 2-layer-deep values for easy reference
     const { tracks, trackLengths } = this.state
     // Determine the tracks that still exist, then recreate the track lengths array from that
-    const extantTrackIds = Object.keys(tracks)
-    const allTrackLengths = Object.keys(trackLengths)
-    const extantTrackLengths = allTrackLengths.reduce((extantSoFar, lengthId) => {
-      const trackStillExists = extantTrackIds.reduce((exists, trackId) => {
-        exists || lengthId === trackId
-      }, false)
-      const anotherTrackLength = { [lengthId]: trackLengths[lengthId] }
-      return trackStillExists ? {...extantSoFar, ...anotherTrackLength} : { ...extantSoFar }
-    }, {})
-    // Generate new object containing track lengths that should exist and
-    const newTrackLengths = {
-      ...extantTrackLengths,
-      [trackId]: trackLength,
-    }
+    const stateTrackIds = Object.keys(tracks)
+    // Create an object containing existing tracks with their lengths
+    const updatedStateTrackLengths = stateTrackIds.reduce((object, id) =>
+      ({...object, [id]: trackLengths[id]}), {})
+    // Generate new object containing track lengths that should exist and the new value
+    const newTrackLengths = {...updatedStateTrackLengths, [trackId]: trackLength }
+    const stateChange = { trackLengths: newTrackLengths }
     // Change state of track lengths
-    this.setState({trackLengths: newTrackLengths})
+    this.setState(stateChange)
+    // Return for flexibility and testing
     return newTrackLengths
   }
 

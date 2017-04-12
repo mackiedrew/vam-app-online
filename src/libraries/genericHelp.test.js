@@ -1,4 +1,4 @@
-import { floor, ceiling, mergeZip, logicalSegment, uninvite } from './genericHelp'
+import { floor, ceiling, mergeZip, logicalSegment, divisionBinarySearch } from './genericHelp'
 
 describe('floor(value)', () => {
 
@@ -82,6 +82,73 @@ describe('logicalSegment(array, segmentSize)', () => {
       expect(start).toEqual(previousEnd)
     })
     expect(segments[segments.length - 1].end).toEqual(testArray.length)
+  })
+
+})
+
+describe('divisionBinarySearch()', () => {
+  
+  const mockTarget = 12
+  const mockDivisionArray = [
+    {
+      start: 0,
+      end: 10,
+    },
+    {
+      start: 10,
+      end: 20,
+    },
+    {
+      start: 20,
+      end: 30,
+    },
+    {
+      start: 30,
+      end: 40,
+    },
+    {
+      start: 50,
+      end: 60,
+    },
+    {
+      start: 70,
+      end: 80,
+    }
+  ]
+  
+  it('quick fails when no targetValue is provided', () => {
+    const result = divisionBinarySearch(undefined, mockDivisionArray)
+    expect(result).toBe(false)
+  })
+
+  it('quick fails when no divisionArray is provided', () => {
+    const result = divisionBinarySearch(mockTarget, undefined)
+    expect(result).toBe(false)
+  })
+
+  it('quick fails when an empty divisionArray is provided', () => {
+    const result = divisionBinarySearch(mockTarget, [])
+    expect(result).toBe(false)
+  })
+
+  it('quick fails when the mockTarget is less than 0', () => {
+    const result = divisionBinarySearch(-1, mockDivisionArray)
+    expect(result).toBe(false)
+  })
+
+  it('quick fails when the mockTarget is higher than the sorted array goes', () => {
+    const result = divisionBinarySearch(81, mockDivisionArray)
+    expect(result).toBe(false)
+  })
+
+  it('returns the proper result when given proper arguments and below first middle', () => {
+    const result = divisionBinarySearch(mockTarget, mockDivisionArray)
+    expect(result).toBe(1)
+  })
+
+  it('returns the proper result when given proper arguments and above first middle', () => {
+    const result = divisionBinarySearch(79, mockDivisionArray)
+    expect(result).toBe(5)
   })
 
 })

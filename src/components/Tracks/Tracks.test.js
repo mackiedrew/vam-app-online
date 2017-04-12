@@ -41,7 +41,7 @@ describe('<Tracks /> structure', () => {
   })
 })
 
-describe('<Tracks /> functionality', () => {
+describe('<Tracks /> track management functions', () => {
 
   it('when no parameter is passed to handleAdd() doesn\'t change state' , () => {
     const wrapper = shallow(<Subject />)
@@ -166,15 +166,32 @@ describe('<Tracks /> reportTrackLength()', () => {
 
   it('trackLengths is combined with old and new', () => {
     const wrapper = shallow(<Subject />)
-    wrapper.instance().setState({test: './fake/path.wav'})
+    // Prepare track state because non-existence tracks are pruned.
+    wrapper.instance().setState({ tracks: { test: './fake/path.wav', debug: './fake/path.wav' } })
+
     wrapper.instance().reportTrackLength('test', testLength)
-    expect(wrapper.state('trackLengths')).toEqual({test: testLength})
+    expect(wrapper.state('trackLengths')).toEqual({ test: testLength })
     wrapper.instance().reportTrackLength('debug', testLength)
-    expect(wrapper.state('trackLengths')).toEqual({
-      test: testLength,
-      debug: testLength,
-    })
+    expect(wrapper.state('trackLengths')).toEqual({ test: testLength, debug: testLength })
 
   })
 
+})
+
+describe('<Tracks /> simpleAddTracks', () => {
+  
+  it('returns false when id and path length are mismatched', () => {
+    const wrapper = shallow(<Subject />)
+    const mockIds = ['123', '1403']
+    const mockPaths = ['/path/or/something.wav']
+    expect(wrapper.instance().simpleAddTracks(mockIds, mockPaths)).toBe(false)
+  })
+
+  it('returns false when id or path is empty', () => {
+    const wrapper = shallow(<Subject />)
+    const mockIds = ['123', '1403']
+    const mockPaths = ['/path/or/something.wav']
+    expect(wrapper.instance().simpleAddTracks(mockIds, undefined)).toBe(false)
+    expect(wrapper.instance().simpleAddTracks(undefined, mockPaths)).toBe(false)
+  })
 })

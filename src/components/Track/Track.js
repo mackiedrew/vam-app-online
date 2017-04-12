@@ -48,6 +48,7 @@ class Track extends Component {
     // Bind functions
     this.readPath = this.readPath.bind(this)
     this.handleRemoveButton = this.handleRemoveButton.bind(this)
+    this.generateSeekLineStyle = this.generateSeekLineStyle.bind(this)
   }
 
   /**
@@ -74,25 +75,36 @@ class Track extends Component {
     .catch((error) => this.setState({ error: String(error) }))
   }
 
+  /**
+   * Generate the in-line style object for programmatically determining the position of the
+   * the seek line based on some % left of the screen taking into account the viewport.
+   */
+  generateSeekLineStyle() {
+    // Breakout any 2-layer-deep values for easy reference
+    const { trackLength } = this.state
+    const { view, seek } = this.props
+    // Figure out operation end point, fall back to trackLength if view.end hasn't come in yet.
+    const endPoint = view.end || trackLength
+    // Figure out % of parent width to cover
+    const seekPercentageInView = ((seek - view.start) /  endPoint) * 100
+    // Generate style object
+    const seekLineStyle = { left: `${seekPercentageInView}%` }
+    return seekLineStyle
+  }
+
   // Button handleClick functions
   handleRemoveButton() { this.props.remove(this.props.id) }
 
   render() {
 
     // Break out values for the sake of easier template reading
-    const { name, grains, maxAmplitude, error, trackLength } = this.state
-    const { view, seek, seekTo } = this.props
-    const { start, end } = view
-    const wrapperID = this.wrapperID
-
-    const endPoint = end || trackLength
-    const seekPercentageInView = ((seek - start) /  endPoint) * 100
-    const seekStyle = {
-      left: `${seekPercentageInView}%`,
-    }
+    const { name, grains, maxAmplitude, error  } = this.state
+    const { seekTo } = this.props
+    // Generate styles
+    const seekLineStyle = this.generateSeekLineStyle()
 
     return (
-      <div className="track" id={wrapperID}>
+      <div className="track" id={this.wrapperID}>
         <div className="controls">
           <span className="name">{name}</span>
           <button className="remove" onClick={this.handleRemoveButton}>Remove</button>
@@ -101,7 +113,7 @@ class Track extends Component {
           {error ? <strong className="error">{error}</strong> : ''}
           <div
             className="seek-line"
-            style={seekStyle}
+            style={seekLineStyle}
           ></div>
           <Waveform
             blocks={grains}
