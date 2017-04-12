@@ -42,3 +42,40 @@ export const logicalSegment = (array, segmentSize) => {
   }))
   return segments
 }
+
+/**
+ * This binary search will use large divisions of a sorted, continuous integer array with keys:
+ * start, end. It will look for the index of the division containing a target value between it's
+ * start and end keys.
+ * @param {Number} targetValue Value within divisionArray to match for.
+ * @param {Array} divisionArray 
+ * @param {Number} maxIndex 
+ */
+export const divisionBinarySearch = (targetValue, divisionArray, maxIndex) => {
+  // Exit quickly if the sample is not in the track.
+  const isNotNumber = typeof targetValue !== 'number'
+  const targetNotInBounds = targetValue < 0 || targetValue > maxIndex
+  if (isNotNumber || targetNotInBounds || !maxIndex) {
+    return false
+  }
+  // Search bounds for binary search, when they are equal, the value is found
+  let low = 0
+  let high = divisionArray.length
+  while (low <= high) {
+    // Middle is the current search point, keep bisecting to search
+    const middle = floor(low + (high - low) / 2)
+    const currentDivision = divisionArray[middle]
+    const { start, end } = currentDivision
+    const targetIsLowerThanCurrentGrain = (targetValue < start)
+    const targetIsInCurrentGrain = (targetValue >= start && targetValue < end)
+    if (targetIsInCurrentGrain) {
+      return middle
+    } else if (targetIsLowerThanCurrentGrain) {
+      high = middle - 1
+    } else {
+      low = middle + 1
+    }
+  }
+  // If maximum search iterations is exceeded, return false do indicate failure
+  return false
+}

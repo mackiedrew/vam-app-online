@@ -2,7 +2,11 @@ import Subject from './Track'
 
 const mockProps = {
   id: 'abc123',
-  path: '/home/test.wav'
+  path: './example/sample.wav',
+  view: {
+    start: 0,
+    end: 44100 * 10, // 10 Seconds
+  }
 }
 
 describe('<Track /> structure', () => {
@@ -40,7 +44,7 @@ describe('<Track /> structure', () => {
 
 describe('<Track />s remove track button', () => {
 
-  it('when clicked, remove() is called with proper parameter passed', () => {
+  it('when clicked, remove() is called when button.remove clicked', () => {
     const handleRemoveMock = sinon.spy()
     const wrapper = shallow(
       <Subject
@@ -61,7 +65,7 @@ const sampleWavPath = './example/sample.wav'
 describe('<Track />s function readPath()', () => {
 
   it('returns a rejected promise that sets the `error` state of <Track />', () => {
-    const wrapper = shallow(<Subject id={mockProps.id} path={badSampleWavPath} />)
+    const wrapper = shallow(<Subject {...mockProps} path={badSampleWavPath} />)
     return wrapper.instance().readPath()
     .then(
       (result) => {
@@ -71,15 +75,25 @@ describe('<Track />s function readPath()', () => {
   })
 
   it('returns a resolved promise that sets the state of <Track />', () => {
-    const wrapper = shallow(<Subject id={mockProps.id} path={sampleWavPath} />)
+    const wrapper = shallow(<Subject {...mockProps} path={sampleWavPath} />)
     return wrapper.instance().readPath()
     .then(
       (result) => {
         expect(wrapper.state('sampleRate')).toBeDefined()
-        expect(wrapper.state('length')).toBeDefined()
+        expect(wrapper.state('trackLength')).toBeDefined()
         expect(wrapper.state('grains').length).toBeGreaterThan(0)
       }
     )
+  })
+
+})
+
+describe('<Track />s function sampleToGrain()', () => {
+  
+  it('returns false when provided sample lower than 0', () => {
+    const wrapper = shallow(<Subject { ...mockProps } />)
+    const result = wrapper.instance().sampleToGrain(-1)
+    expect(result).toBe(false)
   })
 
 })

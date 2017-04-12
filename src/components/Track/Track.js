@@ -6,7 +6,7 @@ import { parse } from 'path'
 
 // Helpers
 import { richReadWav } from '../../libraries/wavHelp'
-import { floor } from '../../libraries/genericHelp'
+import { divisionBinarySearch } from '../../libraries/genericHelp'
 
 // Components
 import Waveform from '../../containers/Waveform/Waveform'
@@ -41,73 +41,47 @@ class Track extends Component {
 
     // Read wav data from provided path
     this.readPath()
+    .then(({ trackLength }) => {
+      props.reportTrackLength(props.id, trackLength)
+    })
 
     // Bind functions
     this.readPath = this.readPath.bind(this)
+    this.handleRemoveButton = this.handleRemoveButton.bind(this)
   }
 
   /**
-   * Finds the grain that contains the sample provided, will return the grain index.
-   * It is based off of a binary search or bisection method of search.
-   * There is probably a lot of work here to do in terms of optimization.
-   * @param {Number} sample Sample number to target
+   * Convert sample number into grain index number for this track.
+   * @param {Number} sample Sample number to target in search
    */
   sampleToGrain(sample) {
-
+    // Breakout values more than 2 layers deep for easy reference
     const { grains, trackLength } = this.state
-
-    // Exit quickly if the sample is not in the track.
-    if (
-        typeof sample !== 'number' ||
-        sample < 0 ||
-        sample > trackLength || 
-        !grains || !trackLength
-        ) {
-      return false
-    }
-
-    let low = 0
-    let high = grains.length
-
-    while (low <= high) {
-      const middle = floor(low + (high - low) / 2)
-      const currentGrain = grains[middle]
-      const { start, end } = currentGrain
-      const sampleIsLowerThanCurrentGrain = (sample < start)
-      const sampleIsInCurrentGrain = (sample >= start && sample < end)
-      if (sampleIsInCurrentGrain) {
-        return middle
-      } else if (sampleIsLowerThanCurrentGrain) {
-        high = middle - 1
-      } else {
-        low = middle + 1
-      }
-    }
-    // If maximum search iterations is exceeded, return false do indicate failure
-    return false
+    const grainIndex = divisionBinarySearch(sample, grains, trackLength)
+    return grainIndex
   }
 
   /**
    * Read important information from the wav file and place it into state. Or store an error.
    */
   readPath() {
-    const { id, path, reportTrackLength } = this.props
+    const { path } = this.props
     return richReadWav(path)
     .then((wavData) => {
       this.setState({ ...wavData })
       return wavData
     })
-    .then((wavData) => {
-      reportTrackLength(id, wavData.trackLength)
-    })
     .catch((error) => this.setState({ error: String(error) }))
   }
+
+  // Button handleClick functions
+  handleRemoveButton() { this.props.remove(this.props.id) }
 
   render() {
 
     // Break out values for the sake of easier template reading
     const { name, grains, maxAmplitude, error, trackLength } = this.state
-    const { id, remove, view, seek, seekTo } = this.props
+    const { view, seek, seekTo } = this.props
     const { start, end } = view
     const wrapperID = this.wrapperID
 
@@ -121,7 +95,7 @@ class Track extends Component {
       <div className="track" id={wrapperID}>
         <div className="controls">
           <span className="name">{name}</span>
-          <button className="remove" onClick={() => remove(id)}>Remove</button>
+          <button className="remove" onClick={this.handleRemoveButton}>Remove</button>
         </div>
         <div className="display">
           {error ? <strong className="error">{error}</strong> : ''}

@@ -22,66 +22,52 @@ class SeekBar extends Component {
     this.state = this.initialState
 
     // Bind functions to `this`
-    this.seekForward = this.seekForward.bind(this)
-    this.seekReverse = this.seekReverse.bind(this)
-    this.seekSecondsForward = this.seekSecondsForward.bind(this)
-    this.seekSecondsReverse = this.seekSecondsReverse.bind(this)
+    this.seekSamples = this.seekSamples.bind(this)
+    this.seekSeconds = this.seekSeconds.bind(this)
+    this.handlePlus10 = this.handlePlus10.bind(this)
+    this.handleMinus10 = this.handleMinus10.bind(this)
+    this.handlePlus1 = this.handlePlus1.bind(this)
+    this.handleMinus1 = this.handleMinus1.bind(this)
   }
 
   /**
-   * Increment the seek value by given samples.
-   * @param {Number} samples Number of samples to increase seek by.
+   * Move the seek value by given samples.
+   * @param {Number} samples Number of samples to move seek by.
    */
-  seekForward(samples) {
+  seekSamples(samples) {
     const { seek, seekTo } = this.props
-    return seekTo(seek + samples)
-  }
-
- /**
-   * Decrement the seek value by given samples.
-   * @param {Number} samples Number of samples to decrease seek by.
-   */
-  seekReverse(samples) {
-    const { seek, seekTo } = this.props
-    return seekTo(seek - samples)
+    const newSeek = seek + samples
+    return seekTo(newSeek)
   }
 
   /**
-   * Increment the seek value by given seconds and rate.
-   * @param {Number} seconds Number of seconds to increase seek by;
+   * Move the seek value by given seconds and rate.
+   * @param {Number} seconds Number of seconds to move seek by;
    * @param {Number} sampleRate Sample rate of the audio clip you are working with.
    */
-  seekSecondsForward(seconds, sampleRate = 44100) {
+  seekSeconds(seconds, sampleRate = 44100) {
     const samples = secondsToSamples(seconds, sampleRate)
-    return this.seekForward(samples)
+    return this.seekSamples(samples)
   }
 
-  /**
-   * Decrement the seek value by given seconds and rate.
-   * @param {Number} seconds Number of samples to decrease seek by; 441000 samples by default.
-   * @param {Number} sampleRate Sample rate of the audio clip you are working with.
-   */
-  seekSecondsReverse(seconds, sampleRate = 44100) {
-    const samples = secondsToSamples(seconds, sampleRate)
-    return this.seekReverse(samples)
-  }
+  // Click handle functions for different buttons
+  handlePlus10() { this.seekSeconds(10) }
+  handleMinus10() { this.seekSeconds(-10) }
+  handlePlus1() { this.seekSeconds(1) }
+  handleMinus1() { this.seekSeconds(-1) }
 
   render() {
     // Break out values for the sake of easier template reading
     const { currentTime } = this.state
     const { seek } = this.props
-    const seekForward = this.seekForward
-    const seekReverse = this.seekReverse
-    const seekSecondsForward = this.seekSecondsForward
-    const seekSecondsReverse = this.seekSecondsReverse
 
     return (
       <div className="seek-bar">
         <div className="control-bar">
-          <button className="seek-reverse" onClick={() => seekSecondsReverse(10)}>-10</button>
-          <button className="seek-reverse" onClick={() => seekReverse(44100)}>-1</button>
-          <button className="seek-forward" onClick={() => seekForward(44100)}>+1</button>
-          <button className="seek-forward" onClick={() => seekSecondsForward(10)}>+10</button>
+          <button className="seek-minus-10" onClick={this.handleMinus10}>-10</button>
+          <button className="seek-minus-1" onClick={this.handleMinus1}>-1</button>
+          <button className="seek-plus-1" onClick={this.handlePlus1}>+1</button>
+          <button className="seek-plus-10" onClick={this.handlePlus10}>+10</button>
         </div>
         <div className="indicators">
           <div className="current-sample">Sample: {seek}</div>

@@ -127,20 +127,28 @@ describe('<Tracks />s seek functions', () => {
 
   it('seekTo(sample) returns a value no lower than 0', () => {
     const wrapper = shallow(<Subject />)
+    wrapper.instance().reportTrackLength('test', 44100 * 100)
     expect(wrapper.instance().seekTo(-30)).toEqual(0)
     expect(wrapper.state('seek')).toEqual(0)
   })
 
   it('seekTo() returns 0 when provided no argument', () => {
     const wrapper = shallow(<Subject />)
+    wrapper.instance().reportTrackLength('test', 44100 * 100)
     expect(wrapper.instance().seekTo()).toEqual(0)
     expect(wrapper.state('seek')).toEqual(0)
   })
 
   it('seekTo(sample) returns sets the state of seek to the value passed to it.', () => {
     const wrapper = shallow(<Subject />)
+    wrapper.instance().reportTrackLength('test', 44100 * 100)
     expect(wrapper.instance().seekTo(30)).toEqual(30)
     expect(wrapper.state('seek')).toEqual(30)
   })
 
+})
+
+describe('<Tracks /> reportTrackLength()', () => {
+  it('returns an array containing an id of the added track')
+  it('trackLengths is changed after a single track is added')
 })

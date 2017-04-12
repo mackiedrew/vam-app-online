@@ -44,7 +44,7 @@ class Tracks extends Component {
     // Set initial state to make it easier to reset to later
     this.initialState = {
       tracks: {
-        debug: './example/sample.wav',
+        // debug: './example/sample.wav',
       },
       trackLengths: {},
       seek: 0, // samples
@@ -70,7 +70,9 @@ class Tracks extends Component {
    * @param {Number} sample Integer to move the seeking cursor to, must be integer.
    */
   seekTo(sample = 0) {
-    const maxSample = Math.max(...Object.values(this.state.trackLengths))
+    const { trackLengths } = this.state
+    const lengthList = Object.keys(trackLengths).map((key) => trackLengths[key])
+    const maxSample = Math.max(...lengthList)
     // Check if sample is less than 0, indexes do not go that low. No upper-bound check yet.
     const candidatePositions = [0, sample, maxSample]
     const sortedPositions = candidatePositions.sort((a, b) => a - b)
@@ -128,10 +130,12 @@ class Tracks extends Component {
     handleAdd(selected_tracks)
   }
 
+  /**
+   * Generate a set of track elements to display within the main render() function.
+   */
   trackList() {
     // Breakout references for clarity and ease
     const { tracks, view, seek } = this.state
-    const handleRemove = this.handleRemove
     // Create list of tracks for iteration
     const trackIds = tracks && Object.keys(tracks)
     // Create an array containing <Track /> elements matching tracks in state
@@ -140,7 +144,7 @@ class Tracks extends Component {
         id={id}
         key={id}
         path={tracks[id]}
-        remove={handleRemove}
+        remove={this.handleRemove}
         reportTrackLength={this.reportTrackLength}
         seek={seek}
         seekTo={this.seekTo}
@@ -151,12 +155,17 @@ class Tracks extends Component {
   }
   
   /**
-   * 
-   * @param {String} trackId 
-   * @param {Number} trackLength 
+   * Reporting track length is kind of ugly right now. But basically, the <Track /> will load the 
+   * information about their individual files, then report back to the parent. Every time this sort
+   * of update is done, it checks to make sure track lengths match existing trackIds. I do this to
+   * prevent the state nesting that is frowned upon these days. 
+   * @param {String} trackId ID string value from the 'tracks' state list reporting the new length
+   * @param {Number} trackLength track length being reported from the trackID
    */
   reportTrackLength(trackId, trackLength) {
+    // Breakout 2-layer-deep values for easy reference
     const { tracks, trackLengths } = this.state
+    // Determine the tracks that still exist, then recreate the track lengths array from that
     const extantTrackIds = Object.keys(tracks)
     const allTrackLengths = Object.keys(trackLengths)
     const extantTrackLengths = allTrackLengths.reduce((extantSoFar, lengthId) => {
@@ -166,28 +175,28 @@ class Tracks extends Component {
       const anotherTrackLength = { [lengthId]: trackLengths[lengthId] }
       return trackStillExists ? {...extantSoFar, ...anotherTrackLength} : { extantSoFar }
     }, {})
+    // Generate new object containing track lengths that should exist and
     const newTrackLengths = {
       ...extantTrackLengths,
       [trackId]: trackLength,
     }
+    // Change state of track lengths
     this.setState({trackLengths: newTrackLengths})
+    return newTrackLengths
   }
 
   render() {
-    // Breakout references for clarity and ease
+    // Breakout 2-layer-deep values for easy reference
     const { seek } = this.state
-    const seekTo = this.seekTo
-    const trackList = this.trackList
-    const selectTracks = this.selectTracks
 
     return (
       <div className="tracks">
         <SeekBar
           seek={seek}
-          seekTo={seekTo}
+          seekTo={this.seekTo}
         />
-        { trackList() }
-        <button className="add-tracks" onClick={selectTracks}>
+        { this.trackList() }
+        <button className="add-tracks" onClick={this.selectTracks}>
           Add Tracks
         </button>
       </div>
