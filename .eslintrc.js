@@ -18,6 +18,7 @@ module.exports = {
     "plugins": [
         "react",
         "jsx-a11y",
+        "prettier",
     ],
     "rules": {
         "indent": [
@@ -100,6 +101,7 @@ module.exports = {
         "jsx-a11y/onclick-has-focus": 2,
         "jsx-a11y/role-has-required-aria-props": 2,
         "jsx-a11y/scope": 2,
-        "jsx-a11y/tabindex-no-positive": 2
+        "jsx-a11y/tabindex-no-positive": 2,
+        "prettier/prettier": "error",
     }
 };
