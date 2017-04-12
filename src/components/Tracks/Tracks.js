@@ -169,11 +169,11 @@ class Tracks extends Component {
     const extantTrackIds = Object.keys(tracks)
     const allTrackLengths = Object.keys(trackLengths)
     const extantTrackLengths = allTrackLengths.reduce((extantSoFar, lengthId) => {
-      const trackStillExists = extantTrackIds.reduce((exists, trackId) =>
+      const trackStillExists = extantTrackIds.reduce((exists, trackId) => {
         exists || lengthId === trackId
-      )
+      }, false)
       const anotherTrackLength = { [lengthId]: trackLengths[lengthId] }
-      return trackStillExists ? {...extantSoFar, ...anotherTrackLength} : { extantSoFar }
+      return trackStillExists ? {...extantSoFar, ...anotherTrackLength} : { ...extantSoFar }
     }, {})
     // Generate new object containing track lengths that should exist and
     const newTrackLengths = {

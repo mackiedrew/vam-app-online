@@ -149,6 +149,32 @@ describe('<Tracks />s seek functions', () => {
 })
 
 describe('<Tracks /> reportTrackLength()', () => {
-  it('returns an array containing an id of the added track')
-  it('trackLengths is changed after a single track is added')
+
+  const testLength = 44100 * 100
+
+  it('returns an array containing an id of the added track', () => {
+    const wrapper = shallow(<Subject />)
+    const result = wrapper.instance().reportTrackLength('test', testLength)
+    expect(result).toEqual({test: testLength})
+  })
+
+  it('trackLengths is changed after a single track is added', () => {
+    const wrapper = shallow(<Subject />)
+    wrapper.instance().reportTrackLength('test', testLength)
+    expect(wrapper.state('trackLengths')).toEqual({test: testLength})
+  })
+
+  it('trackLengths is combined with old and new', () => {
+    const wrapper = shallow(<Subject />)
+    wrapper.instance().setState({test: './fake/path.wav'})
+    wrapper.instance().reportTrackLength('test', testLength)
+    expect(wrapper.state('trackLengths')).toEqual({test: testLength})
+    wrapper.instance().reportTrackLength('debug', testLength)
+    expect(wrapper.state('trackLengths')).toEqual({
+      test: testLength,
+      debug: testLength,
+    })
+
+  })
+
 })
