@@ -1,4 +1,4 @@
-import { floor, ceiling, mergeZip, logicalSegment, divisionBinarySearch } from './genericHelp'
+import { floor, ceiling, mergeZip, logicalSegment, divisionBinarySearch } from './generic'
 
 describe('floor(value)', () => {
 

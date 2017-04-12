@@ -1,4 +1,4 @@
-import { secondsToSamples, samplesToSeconds, decodeWav, readFile, richReadWav } from './wavHelp'
+import { secondsToSamples, samplesToSeconds, decodeWav, readFile, richReadWav } from './wav'
 
 describe('secondsToSamples(seconds, sampleRate)', () => {
 
