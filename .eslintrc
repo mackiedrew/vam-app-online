@@ -1,0 +1,87 @@
+{
+  
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended"
+  ],
+
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+
+  "plugins": [
+    "react",
+    "jsx-a11y",
+    "prettier"
+  ],
+
+  "rules": {
+    "eol-last": ["error", "always"],
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "double"],
+    "semi": ["error", "always"],
+    "react/forbid-elements": ["error", { "forbid": ["b"] }],
+    "react/no-danger": "error",
+    "react/no-danger-with-children": "error",
+    "react/no-deprecated": "error",
+    "react/no-direct-mutation-state": "error",
+    "react/sort-prop-types": "error",
+    "react/style-prop-object": "error",
+    "react/void-dom-elements-no-children": "error",
+    "react/prop-types": 0,
+    "react/jsx-boolean-value": "error",
+    "react/jsx-closing-bracket-location": "error",
+    "react/jsx-equals-spacing": "error",
+    "react/jsx-first-prop-new-line": ["error", "multiline-multiprop"],
+    "react/jsx-sort-props": ["error",
+      {
+        "callbacksLast": true,
+        "shorthandLast": true,
+        "ignoreCase": false,
+        "noSortAlphabetically": false
+      }
+    ],
+    "react/jsx-space-before-closing": "error",
+    "react/jsx-indent-props": ["error", 2],
+    "jsx-a11y/accessible-emoji": "error",
+    "jsx-a11y/anchor-has-content": "error",
+    "jsx-a11y/aria-activedescendant-has-tabindex": "error",
+    "jsx-a11y/aria-props": "error",
+    "jsx-a11y/aria-proptypes": "error",
+    "jsx-a11y/aria-role": "error",
+    "jsx-a11y/aria-unsupported-elements": "error",
+    "jsx-a11y/click-events-have-key-events": "error",
+    "jsx-a11y/heading-has-content": "error",
+    "jsx-a11y/href-no-hash": "error",
+    "jsx-a11y/html-has-lang": "error",
+    "jsx-a11y/iframe-has-title": "error",
+    "jsx-a11y/img-has-alt": "error",
+    "jsx-a11y/img-redundant-alt": "error",
+    "jsx-a11y/label-has-for": "error",
+    "jsx-a11y/lang": "error",
+    "jsx-a11y/mouse-events-have-key-events": "error",
+    "jsx-a11y/no-access-key": "error",
+    "jsx-a11y/no-autofocus": "error",
+    "jsx-a11y/no-distracting-elements": "error",
+    "jsx-a11y/no-onchange": "error",
+    "jsx-a11y/no-redundant-roles": "error",
+    "jsx-a11y/no-static-element-interactions": "error",
+    "jsx-a11y/onclick-has-focus": "error",
+    "jsx-a11y/role-has-required-aria-props": "error",
+    "jsx-a11y/scope": "error",
+    "jsx-a11y/tabindex-no-positive": "error",
+    "prettier/prettier": ["error"]
+  }
+
+}
