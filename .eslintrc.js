@@ -21,6 +21,10 @@ module.exports = {
         "prettier",
     ],
     "rules": {
+        "eol-last": [
+            "error",
+            "always"
+        ],
         "indent": [
             "error",
             2
