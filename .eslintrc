@@ -21,8 +21,7 @@
 
   "plugins": [
     "react",
-    "jsx-a11y",
-    "prettier"
+    "jsx-a11y"
   ],
 
   "rules": {
@@ -80,8 +79,7 @@
     "jsx-a11y/onclick-has-focus": "error",
     "jsx-a11y/role-has-required-aria-props": "error",
     "jsx-a11y/scope": "error",
-    "jsx-a11y/tabindex-no-positive": "error",
-    "prettier/prettier": ["error"]
+    "jsx-a11y/tabindex-no-positive": "error"
   }
 
 }
