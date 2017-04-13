@@ -18,6 +18,7 @@ module.exports = {
     "plugins": [
         "react",
         "jsx-a11y",
+        "prettier",
     ],
     "rules": {
         "eol-last": [
@@ -34,11 +35,11 @@ module.exports = {
         ],
         "quotes": [
             "error",
-            "single",
+            "double",
         ],
         "semi": [
             "error",
-            "never",
+            "always",
         ],
         "react/forbid-elements": [
             2,
@@ -104,6 +105,9 @@ module.exports = {
         "jsx-a11y/onclick-has-focus": 2,
         "jsx-a11y/role-has-required-aria-props": 2,
         "jsx-a11y/scope": 2,
-        "jsx-a11y/tabindex-no-positive": 2
+        "jsx-a11y/tabindex-no-positive": 2,
+        "prettier/prettier": [
+            "error",
+        ],
     }
 };

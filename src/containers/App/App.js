@@ -1,10 +1,10 @@
-import React from 'react'
-import './App.styl'
+import React from "react";
+import "./App.styl";
 
 // Components
-import Tracks from '../../components/Tracks/Tracks'
+import Tracks from "../../components/Tracks/Tracks";
 
-const App = () =>
+const App = () => (
   <div className="app">
     <header>
       <h1>VAM Editor</h1>
@@ -18,5 +18,6 @@ const App = () =>
       </a>
     </footer>
   </div>
+);
 
-export default App
+export default App;
