@@ -20,6 +20,10 @@ module.exports = {
         "jsx-a11y",
     ],
     "rules": {
+        "eol-last": [
+            "error",
+            "always"
+        ],
         "indent": [
             "error",
             2
