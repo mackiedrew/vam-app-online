@@ -14,7 +14,7 @@ const configuration = {
    * phrases, or sentences. Likely to be cut down silent regions. It should also be a goal to 
    * target logical edit segments.
    */
-  grains: { 
+  grains: {
     temp: 0.2, // second -- Used for making grains until a proper system is designed
     min: 0.1, // seconds
     max: 20 // seconds
@@ -26,7 +26,6 @@ const configuration = {
    * grains together. Fine is smaller than coarse.
    */
   chunks: {
-
     // Smallest
     fine: {
       min: 5, // grains
@@ -39,6 +38,6 @@ const configuration = {
       max: 20 // fine chunks
     }
   }
-}
+};
 
-export default configuration
+export default configuration;
