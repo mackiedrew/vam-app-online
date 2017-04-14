@@ -43,7 +43,7 @@
     "filter-obj": "1.1.0",
     "lodash.range": "3.2.0",
     "react": "15.4.2",
-    "react-dom": "15.4.2",
+    "react-dom": "15.5.4",
     "shortid": "2.2.8",
     "wav-decoder": "1.1.0",
     "wav-encoder": "1.1.0"
