@@ -14,4 +14,4 @@ test:
     - yarn run lint:stylus
     - yarn test
   post:
-    - npm run coverage
+    - yarn run coverage
