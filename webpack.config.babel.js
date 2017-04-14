@@ -9,7 +9,7 @@ import ElectronPlugin from "electron-webpack-plugin";
 const PORT = 7447;
 const BASE_DIRECTORY = resolve(__dirname);
 const BUILD_DIRECTORY = `${BASE_DIRECTORY}/build`;
-const APP_DIRECTORY = `${BASE_DIRECTORY}/src`;
+const APP_DIRECTORY = `${BASE_DIRECTORY}/source`;
 
 /// Webpack plugins ///
 
@@ -21,7 +21,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 });
 
 const ElectronPluginConfig = new ElectronPlugin({
-  relaunchPathMatch: "./src",
+  relaunchPathMatch: "./source",
   path: "./build",
   args: ["--enable-logging"],
   options: {
