@@ -1,16 +1,17 @@
 # VAM Online
 [![CircleCI](https://circleci.com/gh/mackiedrew/vam-online.svg?style=shield&circle-token=383514250cad12e2dde115ce5af3225907b390f2)](https://circleci.com/gh/mackiedrew/vam-online)
 [![codecov](https://codecov.io/gh/mackiedrew/vam-online/branch/master/graph/badge.svg?token=7cyF0ihR2C)](https://codecov.io/gh/mackiedrew/vam-online)
+[![David](https://david-dm.org/mackiedrew/vam-online.svg)](https://david-dm.org/mackiedrew/vam-online.svg)
 [![CodeFactor](https://www.codefactor.io/repository/github/mackiedrew/vam-online/badge)](https://www.codefactor.io/repository/github/mackiedrew/vam-online)
-[![David](https://david-dm.org/mackiedrew/vam-online.svg)]
+[![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
 
 VAM Online is a front-end-only implementation of the turk developed while experimenting in the Python version. It is implemented in Electron so NodeJS and Browser libraries can be used to make a proper product. It is intended for internal use by Valence Editing.
 
 # Technology
 
-## Infrasturcutre
+## Infrastructure
 1. CircleCI
-2. Codecov
+2. CodeCov
 3. GitHub
 4. Yarn & NPM
 5. CodeFactor.io
@@ -22,7 +23,7 @@ VAM Online is a front-end-only implementation of the turk developed while experi
 4. ESLint
 5. Jest
 6. Stylus
-7. ejs Templating
+7. ejs Templates
 8. Electron
 9. NodeJS
 
