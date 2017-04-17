@@ -6,5 +6,5 @@ binaries/
 
 # Files
 *.test.js
-jestsetup.js
+jestSetup.js
 webpack.config.js

@@ -35,12 +35,12 @@ const openDialogConfig = {
  */
 class Tracks extends Component {
   constructor(props) {
-    // Construct extended class `Component` with passed props
+    // Construct extended class `Component` with passed propsactive
     super(props);
     // Set initial state to make it easier to reset to later
     this.initialState = {
       tracks: {
-        // debug: './example/sample.wav',
+        debug: "./example/sample.wav",
       },
       trackLengths: {},
       seek: 0, // samples
