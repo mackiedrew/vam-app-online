@@ -1,0 +1,28 @@
+@require '../../palette.styl'
+
+.add-track
+  position relative
+  overflow hidden
+  width 100%
+  background-color $color-dark
+  color $color-white
+
+  input[type=file]
+    display block
+    position absolute
+    top 0
+    left 0
+    opacity 0
+
+  label
+    display block
+    position relative
+    padding 10px
+    width 100%
+    font-size 20px
+    font-weight 600
+    text-align center
+
+    &:hover
+      cursor pointer
+      background-color mix($color-dark, $color-white, 80)
