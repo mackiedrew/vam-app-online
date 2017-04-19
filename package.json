@@ -13,6 +13,7 @@
     "clean:full": "rm -rf build/ coverage/ node_modules/",
     "build:electron": "./node_modules/.bin/webpack -p --config webpack.config.electron.babel.js",
     "build": "./node_modules/.bin/webpack -p",
+    "build:production": "NODE_ENV=production ./node_modules/.bin/webpack -p",
     "watch": "yarn build -- --watch",
     "rebuild": "npm run clean && npm run build",
     "lint:javascript": "./node_modules/.bin/eslint ./",
@@ -25,7 +26,7 @@
     "start:electron": "npm run rebuild && (npm run electron & npm run watch)",
     "start": " yarn watch & ./node_modules/.bin/webpack-dev-server",
     "deploy:electron": "./node_modules/.bin/electron-packager . VAM --all --overwrite --out binaries/",
-    "deploy": "yarn run clean && yarn run build && gh-pages -d build"
+    "deploy": "yarn run clean && yarn run build:production && gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -71,6 +72,7 @@
     "eslint-loader": "1.7.1",
     "eslint-plugin-jsx-a11y": "4.0.0",
     "eslint-plugin-react": "6.10.3",
+    "favicons-webpack-plugin": "0.0.7",
     "file-loader": "0.11.1",
     "gh-pages": "^0.12.0",
     "html-webpack-plugin": "2.28.0",
@@ -85,6 +87,7 @@
     "react-hot-loader": "3.0.0-beta.6",
     "react-svg-loader": "1.1.1",
     "react-test-renderer": "15.5.4",
+    "serviceworker-webpack-plugin": "^0.2.1",
     "sinon": "2.1.0",
     "style-loader": "0.16.1",
     "stylint": "1.5.9",
@@ -93,6 +96,7 @@
     "svgo": "0.7.2",
     "webpack": "2.3.3",
     "webpack-dev-server": "2.4.2",
+    "webpack-manifest-plugin": "^1.1.0",
     "worker-loader": "^0.8.0",
     "yarn": "0.22.0"
   }

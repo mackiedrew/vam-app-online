@@ -26,6 +26,7 @@ class App extends Component {
 
     // Set initial state to make it easier to reset to later
     this.initialState = {
+      filterOpen: false,
       context: audioContext,
       tracks: {},
       trackLengths: {},
@@ -45,6 +46,7 @@ class App extends Component {
     this.handleTrackRemove = this.handleTrackRemove.bind(this);
     this.trackList = this.trackList.bind(this);
     this.reportTrackLength = this.reportTrackLength.bind(this);
+    this.toggleFilter = this.toggleFilter.bind(this);
   }
 
   /**
@@ -79,6 +81,11 @@ class App extends Component {
     // TODO: Put overwriting of old paths here
     const id = shortid.generate();
     this.simpleAddTracks(id, file);
+  }
+
+  toggleFilter() {
+    const { filterOpen } = this.state;
+    this.setState({ filterOpen: !filterOpen });
   }
 
   /**
@@ -155,18 +162,23 @@ class App extends Component {
 
   render() {
     // Breakout 2-layer-deep values for easy reference
-    const { seek, nextId, tracks } = this.state;
+    const { seek, nextId, tracks, filterOpen } = this.state;
+
+    const filterStyle = (open) => open ? { marginLeft: "0px" } : { marginLeft: "-100px" };
 
     return (
       <div className="app">
-        <Header>
+        <Header toggleFilter={this.toggleFilter}>
           <AddTrack handleTrackAdd={this.handleTrackAdd} nextId={nextId} />
         </Header>
         <main>
-          <div className="tracks">
-            {this.trackList()}
-          </div>
           
+          <aside className="filters" style={filterStyle(filterOpen)}>
+            Filter!
+          </aside>
+
+          <section className="tracks">
+            {this.trackList()}
             {Object.keys(tracks).map((id) => {
               const { path, type } = tracks[id];
               return (
@@ -175,6 +187,7 @@ class App extends Component {
                 </audio>
               );
             })}
+          </section>
 
         </main>
         <footer>

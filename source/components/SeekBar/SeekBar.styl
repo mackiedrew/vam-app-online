@@ -1,15 +1,22 @@
 @require '../../palette.styl'
 
 .seek-bar
+  display flex
+  justify-content space-between
   background-color $color-dark
-  text-align center
+  align-items center
   
   .indicators
+    display inline-block
     div
       display inline-block
-      margin 10px
+      padding 8px 15px
+      color $color-white
+      background-color $color-dark
+      font-family Courier, monospace
+
 
   .control-bar
+    display inline-block
     button
       display inline-block
-      margin 10px

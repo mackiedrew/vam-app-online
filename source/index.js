@@ -4,6 +4,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
 import App from "./components/App/App";
+import runtime from "serviceworker-webpack-plugin/lib/runtime";
 
 const render = (Component) => {
   ReactDOM.render(
@@ -22,4 +23,9 @@ if (module.hot) {
   module.hot.accept("./components/App/App", () => {
     render(NextApp);
   });
+}
+
+// Service Worker
+if ("serviceWorker" in navigator) {
+  runtime.register();
 }

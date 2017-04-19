@@ -20,8 +20,6 @@
 
       <% if (htmlWebpackPlugin.options.env !== 'production') { %>
         <script src="http://localhost:<%= htmlWebpackPlugin.options.port %>/webpack-dev-server.js"></script>
-      <% } else { %>
-        <script src="./bundle.js"></script>
       <% } %>
     </body>
 </html>

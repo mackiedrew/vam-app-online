@@ -15,7 +15,12 @@ class SeekBar extends Component {
 
     // Set initial state to make it easier to reset to later
     this.initialState = {
-      currentTime: "00:00:00" // seconds
+      currentTime: {
+        ms: 0,
+        s: 0,
+        m: 0,
+        h: 0
+      }
     };
     // Reset state to initialState
     this.state = this.initialState;
@@ -27,6 +32,16 @@ class SeekBar extends Component {
     this.handleMinus10 = this.handleMinus10.bind(this);
     this.handlePlus1 = this.handlePlus1.bind(this);
     this.handleMinus1 = this.handleMinus1.bind(this);
+  }
+
+  leadingZeros(rawNumber, columns = 2) {
+    const number = String(Math.round(rawNumber));
+    const digits = number.length;
+    const neededZeros = columns - digits || 0;
+    const zeroes = new Array(neededZeros).fill("0");
+    const allColumns = [...zeroes, number];
+    const output = allColumns.reduce((a, b) => a + b, "");
+    return output;
   }
 
   /**
@@ -65,8 +80,12 @@ class SeekBar extends Component {
 
   render() {
     // Break out values for the sake of easier template reading
-    const { currentTime } = this.state;
+    const { currentTime: { ms, s, m, h } } = this.state;
     const { seek } = this.props;
+
+    // Construct new time string
+    const time = `${this.leadingZeros(h)}:${this.leadingZeros(m)}:` + 
+      `${this.leadingZeros(s)}:${this.leadingZeros(ms, 3)}`;
 
     return (
       <div className="seek-bar">
@@ -83,8 +102,7 @@ class SeekBar extends Component {
           </button>
         </div>
         <div className="indicators">
-          <div className="current-sample">Sample: {seek}</div>
-          <div className="current-time">Time: {currentTime}</div>
+          <div className="current-time">{time}</div>
         </div>
       </div>
     );

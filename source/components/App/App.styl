@@ -45,11 +45,20 @@ audio
     color white
 
   main
+    display flex
     flex-grow 1
     overflow: auto
 
+    .filters
+      display inline-block
+      width 100px
+      background-color $color-lite
+      transition all 0.6s ease
+      overflow hidden
+
     .tracks
-      width 100%
+      display inline-block
+      flex-grow 1
 
   footer
     flex-shrink 0

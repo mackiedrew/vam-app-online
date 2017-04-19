@@ -3,6 +3,7 @@ import "./Header.styl";
 
 // Components
 import DownloadIcon from "../../images/download.svg";
+import FilterIcon from "../../images/filter.svg";
 
 /**
  * The role of the <Waveform /> container is aggregate data, using libraries and provided data into
@@ -11,8 +12,13 @@ import DownloadIcon from "../../images/download.svg";
  */
 const Header = (props) => (
   <header className="header">
+    <button onClick={props.toggleFilter}>
+      <FilterIcon height="24" width="24" />
+    </button>
     <h1>VAM</h1>
-    <button><DownloadIcon height="24" width="24" /></button>
+    <button>
+      <DownloadIcon height="24" width="24" />
+    </button>
     {props.children}
   </header>
 );

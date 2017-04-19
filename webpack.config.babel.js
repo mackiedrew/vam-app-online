@@ -2,6 +2,9 @@
 import webpack from "webpack";
 import { resolve, join } from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import FaviconsWebpackPlugin from "favicons-webpack-plugin";
+import ManifestPlugin from "webpack-manifest-plugin";
+import ServiceWorkerWebpackPlugin from "serviceworker-webpack-plugin";
 
 /// Constants ///
 const PORT = 7111;
@@ -17,17 +20,66 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: `${resolve(__dirname, source_directory)}/index.ejs`,
   env: env,
   filename: "index.html",
-  inject: "false",
+  inject: true,
   port: PORT
 });
 
+const FaviconsWebpackPluginConfig = new FaviconsWebpackPlugin({
+  // Your source logo
+  logo: "./images/logo.png",
+  // The prefix for all image files (might be a folder or a name)
+  prefix: "icons-[hash]/",
+  // Emit all stats of the generated icons
+  emitStats: true,
+  // The name of the json containing all favicon information
+  statsFilename: "iconstats-[hash].json",
+  // Generate a cache file with control hashes and
+  // don"t rebuild the favicons until those hashes change
+  persistentCache: true,
+  // Inject the html into the html-webpack-plugin
+  inject: true,
+  // favicon background color (see https://github.com/haydenbleasel/favicons#usage)
+  background: "#FFFFFF",
+  // favicon app title (see https://github.com/haydenbleasel/favicons#usage)
+  title: "VAM",
+
+  // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
+  icons: {
+    android: true,
+    appleIcon: true,
+    appleStartup: true,
+    coast: true,
+    favicons: true,
+    firefox: true,
+    opengraph: true,
+    twitter: true,
+    yandex: true,
+    windows: true
+  }
+});
+
+const ManifestPluginConfig = new ManifestPlugin({
+  basePath: "/build/"
+});
+
+const ServiceWorkerWebpackPluginConfig = new ServiceWorkerWebpackPlugin({
+  entry: join(__dirname, "source/workers/service.worker.js"),
+  filename: "service.worker.js"
+});
+
 const developmentPlugins = [
+  ManifestPluginConfig,
+  FaviconsWebpackPluginConfig,
+  ServiceWorkerWebpackPluginConfig,
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NamedModulesPlugin(),
   HtmlWebpackPluginConfig
 ];
 
 const productionPlugins = [
+  ManifestPluginConfig,
+  ServiceWorkerWebpackPluginConfig,
+  FaviconsWebpackPluginConfig,
   HtmlWebpackPluginConfig,
   new webpack.LoaderOptionsPlugin({
     minimize: true,
