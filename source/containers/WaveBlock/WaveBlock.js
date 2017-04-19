@@ -11,6 +11,8 @@ class WaveBlock extends Component {
     // Bind functions to `this`
     this.relativeAmplitude = this.relativeAmplitude.bind(this);
     this.amplitudeStyle = this.amplitudeStyle.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    
   }
 
   /**

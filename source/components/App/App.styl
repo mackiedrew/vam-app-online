@@ -28,6 +28,9 @@ button
     filter: brightness(0.8)
     transition all 0.2s ease
 
+audio
+  display none
+
 .app
   display flex
   width 100%
@@ -36,16 +39,10 @@ button
   flex-wrap nowrap
 
   header
+    display flex
     flex-shrink 0
-    height 50px
     background-color $color-main
     color white
-
-    h1
-      font-size 20px
-      display block
-      width 100%
-      text-align left
 
   main
     flex-grow 1

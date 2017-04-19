@@ -1,56 +1,78 @@
 /* eslint-env node */
-
 import webpack from "webpack";
-import { resolve } from "path";
+import { resolve, join } from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import ElectronPlugin from "electron-webpack-plugin";
 
 /// Constants ///
-const PORT = 7447;
-const BASE_DIRECTORY = resolve(__dirname);
-const BUILD_DIRECTORY = `${BASE_DIRECTORY}/build`;
-const APP_DIRECTORY = `${BASE_DIRECTORY}/source`;
-
-/// Webpack plugins ///
+const PORT = 7111;
+const HOST = "localhost";
+const build_directory = "build";
+const source_directory = "source";
+const env = process.env.NODE_ENV;
+const isProduction = env === "production";
+const sourceMapType = isProduction ? "cheap-module-source-map" : "eval-source-map";
 
 // This plugin allows for base-page template
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: `${APP_DIRECTORY}/index.ejs`,
+  template: `${resolve(__dirname, source_directory)}/index.ejs`,
+  env: env,
   filename: "index.html",
-  inject: "body"
+  inject: "false",
+  port: PORT
 });
 
-const ElectronPluginConfig = new ElectronPlugin({
-  relaunchPathMatch: "./source",
-  path: "./build",
-  args: ["--enable-logging"],
-  options: {
-    env: { NODE_ENV: "development" }
-  }
-});
+const developmentPlugins = [
+  new webpack.HotModuleReplacementPlugin(),
+  new webpack.NamedModulesPlugin(),
+  HtmlWebpackPluginConfig
+];
+
+const productionPlugins = [
+  HtmlWebpackPluginConfig,
+  new webpack.LoaderOptionsPlugin({
+    minimize: true,
+    debug: false
+  }),
+  new webpack.optimize.UglifyJsPlugin({
+    beautify: false,
+    mangle: {
+      screw_ie8: true,
+      keep_fnames: true
+    },
+    compress: {
+      screw_ie8: true
+    },
+    comments: false
+  })
+];
 
 const configuration = {
-  target: "electron",
 
-  context: APP_DIRECTORY,
+  context: join(__dirname, source_directory),
 
-  entry: {
-    app: [
-      "react-hot-loader/patch",
-      `webpack-dev-server/client?http://localhost:${PORT}`,
-      `${APP_DIRECTORY}/index.js`
-    ]
+  devtool: sourceMapType,
+
+  devServer: {
+    hot: true,
+    inline: true,
+    host: HOST,
+    port: PORT,
+    contentBase: "/build",
+    publicPath: "/"
   },
+
+  entry: [
+    "react-hot-loader/patch",
+    `webpack-dev-server/client?http://${HOST}:${PORT}`,
+    "webpack/hot/only-dev-server",
+    "./index.js"
+  ],
 
   output: {
-    path: BUILD_DIRECTORY,
-    publicPath: BUILD_DIRECTORY,
-    filename: "[name].bundle.js"
-  },
-
-  node: {
-    __dirname: false,
-    __filename: false
+    path: resolve(__dirname, `${build_directory}`),
+    filename: "bundle.js",
+    sourceMapFilename: "bundle.js.map",
+    publicPath: "/"
   },
 
   module: {
@@ -88,19 +110,49 @@ const configuration = {
         ]
       },
       {
-        test: /\.(png|jpg|gif)$/,
+        test: /\.(png|jpe?g|gif)$/,
         exclude: /node_modules/,
-        loader: "file-loader?name=images/[hash].[ext]"
+        loader: [
+          "file-loader?name=images/[hash].[ext]",
+          {
+            loader: "img-loader",
+            options: {
+              enabled: isProduction,
+              gifsicle: {
+                interlaced: false
+              },
+              mozjpeg: {
+                progressive: true,
+                arithmetic: false
+              },
+              optipng: isProduction,
+              pngquant: {
+                floyd: 0.5,
+                speed: 2
+              }
+            }
+          }
+        ]
+      },
+      {
+        test: /\.ico$/,
+        exclude: /node_modules/,
+        loader: "file-loader?name=favicon.ico"
+      },
+      {
+        test: /CNAME$/,
+        exclude: /node_modules/,
+        loader: "file-loader?name=CNAME"
+      },
+      {
+        test: /\.worker\.js$/,
+        exclude: /node_modules/,
+        loader: ["babel-loader", "worker-loader"]
       }
     ]
   },
 
-  plugins: [
-    ElectronPluginConfig,
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
-    HtmlWebpackPluginConfig
-  ]
+  plugins: isProduction ? productionPlugins : developmentPlugins
 };
 
 export default configuration;

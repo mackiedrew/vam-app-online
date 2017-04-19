@@ -10,6 +10,7 @@ import filterObj from "filter-obj";
 import Track from "../Track/Track";
 import AddTrack from "../AddTrack/AddTrack";
 import SeekBar from "../SeekBar/SeekBar";
+import Header from "../../containers/Header/Header";
 
 /**
  * Tracks should be the overall organizing structure, controlling controls, track communication,
@@ -20,11 +21,13 @@ class App extends Component {
     // Construct extended class `Component` with passed props
     super(props);
 
+    // Create audio context for editing
+    const audioContext = new AudioContext();
+
     // Set initial state to make it easier to reset to later
     this.initialState = {
-      tracks: {
-        debug: "./example/sample.wav"
-      },
+      context: audioContext,
+      tracks: {},
       trackLengths: {},
       seek: 0, // samples
       view: {
@@ -61,21 +64,21 @@ class App extends Component {
     return newPosition;
   }
 
-  simpleAddTracks(id, path) {
+  simpleAddTracks(id, file) {
 
     const { tracks } = this.state;
 
-    const newTrack = { [id]: path };
+    const newTrack = { [id]: file };
     const newTrackList = { ...tracks, ...newTrack };
     const stateChange = { tracks: newTrackList };
     // Set tracks state to be previous state plus new track
     this.setState(stateChange);
   }
 
-  handleTrackAdd(path) {
+  handleTrackAdd(file) {
     // TODO: Put overwriting of old paths here
     const id = shortid.generate();
-    this.simpleAddTracks(id, path);
+    this.simpleAddTracks(id, file);
   }
 
   /**
@@ -98,7 +101,7 @@ class App extends Component {
    */
   trackList() {
     // Breakout references for clarity and ease
-    const { tracks, view, seek } = this.state;
+    const { tracks, view, seek, context } = this.state;
     // Create list of tracks for iteration
     const trackIds = tracks && Object.keys(tracks);
     // Create an array containing <Track /> elements matching tracks in state
@@ -106,9 +109,10 @@ class App extends Component {
       trackIds.map(id => (
         <Track
           add={this.handleTrackAdd}
+          context={context}
+          file={tracks[id]}
           id={id}
           key={id}
-          path={tracks[id]}
           remove={this.handleTrackRemove}
           reportTrackLength={this.reportTrackLength}
           seek={seek}
@@ -151,18 +155,27 @@ class App extends Component {
 
   render() {
     // Breakout 2-layer-deep values for easy reference
-    const { seek, nextId } = this.state;
+    const { seek, nextId, tracks } = this.state;
 
     return (
       <div className="app">
-        <header>
-          <h1>VAM Editor</h1>
-        </header>
+        <Header>
+          <AddTrack handleTrackAdd={this.handleTrackAdd} nextId={nextId} />
+        </Header>
         <main>
           <div className="tracks">
             {this.trackList()}
           </div>
-          <AddTrack handleTrackAdd={this.handleTrackAdd} nextId={nextId} />
+          
+            {Object.keys(tracks).map((id) => {
+              const { path, type } = tracks[id];
+              return (
+                <audio autoPlay={false} id={id} key={id} controls>
+                  <source key={id} src={path} type={type} />
+                </audio>
+              );
+            })}
+
         </main>
         <footer>
           <SeekBar seek={seek} seekTo={this.seekTo} />

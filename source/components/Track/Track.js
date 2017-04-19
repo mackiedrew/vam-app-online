@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import "./Track.styl";
 
-// Libraries
-import { parse } from "path";
-
 // Helpers
 import { richReadWav } from "../../help/wav/wav";
 import { divisionBinarySearch } from "../../help/generic/generic";
 
 // Components
 import Waveform from "../../containers/Waveform/Waveform";
+import RemoveIcon from "../../images/remove.svg";
+import Loading from "../../containers/Loading/Loading";
 
 /**
  * <Track /> should take in a simple path to a to a file and generate logical divisions and pass
@@ -19,8 +18,7 @@ class Track extends Component {
   constructor(props) {
     super(props);
 
-    // Parse the file name of the track out of the full file path
-    const fileName = props.path && parse(props.path).base;
+    const fileName = props.file.name;
 
     // Format wrapper ID name for consistent reference
     this.wrapperID = `track-${props.id}`;
@@ -64,9 +62,9 @@ class Track extends Component {
    * Read important information from the wav file and place it into state. Or store an error.
    */
   readPath() {
-    const { path } = this.props;
-    return richReadWav(path)
-      .then(wavData => {
+    const { file } = this.props;
+    return richReadWav(file)
+      .then((wavData) => {
         this.setState({ ...wavData });
         return wavData;
       })
@@ -107,11 +105,12 @@ class Track extends Component {
         <div className="controls">
           <span className="name">{name}</span>
           <button className="remove" onClick={this.handleRemoveButton}>
-            Remove
+            <RemoveIcon height={24} width={24} />
           </button>
         </div>
         <div className="display">
-          {error ? <strong className="error">{error}</strong> : ""}
+          { maxAmplitude ? "" : <Loading /> }
+          { error ? <strong className="error">{error}</strong> : "" }
           <div className="seek-line" style={seekLineStyle} />
           <Waveform
             blocks={grains}

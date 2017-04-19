@@ -18,7 +18,8 @@ render(App);
 
 // Hot Module Replacement
 if (module.hot) {
+  const NextApp = require("./components/App/App").default;
   module.hot.accept("./components/App/App", () => {
-    render(App);
+    render(NextApp);
   });
 }
