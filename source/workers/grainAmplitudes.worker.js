@@ -3,10 +3,11 @@
 import registerPromiseWorker from "promise-worker/register";
 
 
-registerPromiseWorker(({ samples, grains, framesPerSample }) => {
+registerPromiseWorker((message) => {
+  const { samples, grains, framesPerSample } = message;
   const amplitudes = grains.map((grain, i) => {
     const totaledAmplitude = samples[i].reduce((a, b) => a + b , 0);
-    return totaledAmplitude / (grain.end - grain.start);
+    return totaledAmplitude / (grain.end - grain.start + 1);
   });
   const finalGrains = grains.map((grain, index) => {
     return {
@@ -16,5 +17,6 @@ registerPromiseWorker(({ samples, grains, framesPerSample }) => {
     }
   });
   const maxAmplitude = amplitudes.reduce((a, b) => a > b ? a : b, -Infinity);
-  return { grains: finalGrains, maxAmplitude};
+  const result = { grains: finalGrains, maxAmplitude};
+  return result;
 });

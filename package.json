@@ -13,7 +13,7 @@
     "clean:full": "rm -rf build/ coverage/ node_modules/",
     "build:electron": "./node_modules/.bin/webpack -p --config webpack.config.electron.babel.js",
     "build": "./node_modules/.bin/webpack -p",
-    "build:production": "NODE_ENV=production ./node_modules/.bin/webpack -p",
+    "build:production": "NODE_ENV=production ./node_modules/.bin/webpack",
     "watch": "yarn build -- --watch",
     "rebuild": "npm run clean && npm run build",
     "lint:javascript": "./node_modules/.bin/eslint ./",
@@ -26,7 +26,7 @@
     "start:electron": "npm run rebuild && (npm run electron & npm run watch)",
     "start": " yarn watch & ./node_modules/.bin/webpack-dev-server",
     "deploy:electron": "./node_modules/.bin/electron-packager . VAM --all --overwrite --out binaries/",
-    "deploy": "yarn run clean && yarn run build:production && gh-pages -d build"
+    "deploy": "yarn run clean && yarn run build:production && ./node_modules/.bin/gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -96,7 +96,6 @@
     "svgo": "0.7.2",
     "webpack": "2.3.3",
     "webpack-dev-server": "2.4.2",
-    "webpack-manifest-plugin": "^1.1.0",
     "worker-loader": "^0.8.0",
     "yarn": "0.22.0"
   }

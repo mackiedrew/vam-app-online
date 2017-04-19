@@ -15,7 +15,7 @@
   ],
 
   "moduleNameMapper": {
-    ".+\\.(css|styl)$": "<rootDir>/node_modules/jest-css-modules"
+    ".+\\.(css|svg|styl)$": "<rootDir>/node_modules/jest-css-modules"
   },
 
 

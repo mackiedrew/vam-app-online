@@ -4,6 +4,7 @@
 body
   margin 0
   padding 0
+  min-width 300px
   color $color-text-1
   font-family 'Franklin Gothic Medium', 'Arial Narrow', 'Arial', 'sans-serif'
 
@@ -47,18 +48,19 @@ audio
   main
     display flex
     flex-grow 1
-    overflow: auto
-
-    .filters
-      display inline-block
-      width 100px
-      background-color $color-lite
-      transition all 0.6s ease
-      overflow hidden
+    overflow auto
 
     .tracks
       display inline-block
       flex-grow 1
+
+    .no-tracks
+      flex-grow 1
+      font-size 30px
+      padding 20px 80px
+      font-weight 700
+      text-align center
+      opacity 0.2
 
   footer
     flex-shrink 0

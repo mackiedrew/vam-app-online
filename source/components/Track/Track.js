@@ -9,6 +9,11 @@ import { divisionBinarySearch } from "../../help/generic/generic";
 import Waveform from "../../containers/Waveform/Waveform";
 import RemoveIcon from "../../images/remove.svg";
 import Loading from "../../containers/Loading/Loading";
+import ToggleButton from "../../containers/ToggleButton/ToggleButton";
+import Unchecked from "../../images/radio_unchecked.svg";
+import Checked from "../../images/radio_checked.svg";
+import Mute from "../../images/mute.svg";
+import Unmute from "../../images/unmute.svg";
 
 /**
  * <Track /> should take in a simple path to a to a file and generate logical divisions and pass
@@ -96,19 +101,39 @@ class Track extends Component {
   render() {
     // Break out values for the sake of easier template reading
     const { name, grains, maxAmplitude, error } = this.state;
-    const { seekTo } = this.props;
+    const { seekTo, selected, selectTrack, id } = this.props;
     // Generate styles
     const seekLineStyle = this.generateSeekLineStyle();
+
+    const nameStyle = selected ? { fontWeight: 700 } : { fontWeight: 200 };
+    const displayStyle = selected ?
+      { borderTop: "2px solid rgba(255,193,7,1)", borderBottom: "2px solid rgba(255,193,7,1)" } :
+      { borderTop: "2px solid rgb(240, 240, 240)", borderBottom: "2px solid rgb(240, 240, 240)" };
 
     return (
       <div className="track" id={this.wrapperID}>
         <div className="controls">
-          <span className="name">{name}</span>
+          <div>
+            <ToggleButton
+              offContents={<Unchecked height={24} width={24} />}
+              offFunction={() => selectTrack(id)}
+              on={selected}
+              onContents={<Checked height={24} width={24} />}
+
+            />
+            <ToggleButton
+              offContents={<Mute height={24} width={24} />}
+              offFunction={false}
+              on={selected}
+              onContents={<Unmute height={24} width={24} />}
+            />
+          </div>
+          <span className="name" style={nameStyle}>{name}</span>
           <button className="remove" onClick={this.handleRemoveButton}>
             <RemoveIcon height={24} width={24} />
           </button>
         </div>
-        <div className="display">
+        <div className="display" style={displayStyle}>
           { maxAmplitude ? "" : <Loading /> }
           { error ? <strong className="error">{error}</strong> : "" }
           <div className="seek-line" style={seekLineStyle} />

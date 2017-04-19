@@ -57,8 +57,8 @@ class WaveBlock extends Component {
       <div className="wave-block" style={waveBlockStyle}>
         <button
           className="amplitude"
-          style={amplitudeStyle}
           onClick={this.handleClick}
+          style={amplitudeStyle}
         />
       </div>
     );

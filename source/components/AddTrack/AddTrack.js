@@ -30,7 +30,6 @@ class AddTrack extends Component {
 
   render() {
 
-    const { disabled } = this.props;
     const { id } = this.state;
 
     return (
@@ -39,11 +38,10 @@ class AddTrack extends Component {
         <input
           // accept only takes MIME types, these are MIME types accepted by Web Audio in Chrome
           accept="audio/wav,audio/mpeg,audio/ogg"
-          disabled={disabled}
           id={id}
           name={id}
-          type="file"
           onChange={this.handleOnChange}
+          type="file"
         />
       </div>
     );

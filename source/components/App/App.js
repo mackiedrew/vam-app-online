@@ -11,6 +11,8 @@ import Track from "../Track/Track";
 import AddTrack from "../AddTrack/AddTrack";
 import SeekBar from "../SeekBar/SeekBar";
 import Header from "../../containers/Header/Header";
+import Filters from "../Filters/Filters";
+import Settings from "../Settings/Settings";
 
 /**
  * Tracks should be the overall organizing structure, controlling controls, track communication,
@@ -26,7 +28,9 @@ class App extends Component {
 
     // Set initial state to make it easier to reset to later
     this.initialState = {
-      filterOpen: false,
+      selectedTrack: undefined,
+      filterOpens: false,
+      settingsOpens: false,
       context: audioContext,
       tracks: {},
       trackLengths: {},
@@ -47,6 +51,8 @@ class App extends Component {
     this.trackList = this.trackList.bind(this);
     this.reportTrackLength = this.reportTrackLength.bind(this);
     this.toggleFilter = this.toggleFilter.bind(this);
+    this.toggleSettings = this.toggleSettings.bind(this);
+    this.selectTrack = this.selectTrack.bind(this);
   }
 
   /**
@@ -77,16 +83,27 @@ class App extends Component {
     this.setState(stateChange);
   }
 
+  selectTrack(id) {
+    this.setState({ selectedTrack: id });
+  }
+
   handleTrackAdd(file) {
     // TODO: Put overwriting of old paths here
     const id = shortid.generate();
+    this.selectTrack(id);
     this.simpleAddTracks(id, file);
   }
 
   toggleFilter() {
-    const { filterOpen } = this.state;
-    this.setState({ filterOpen: !filterOpen });
+    const { filtersOpen } = this.state;
+    this.setState({ filtersOpen: !filtersOpen });
   }
+
+  toggleSettings() {
+    const { settingsOpen } = this.state;
+    this.setState({ settingsOpen: !settingsOpen });
+  }
+
 
   /**
    * Remove a track from the tracks array matching the provided track id.
@@ -108,25 +125,32 @@ class App extends Component {
    */
   trackList() {
     // Breakout references for clarity and ease
-    const { tracks, view, seek, context } = this.state;
+    const { tracks, view, seek, context, selectedTrack } = this.state;
     // Create list of tracks for iteration
     const trackIds = tracks && Object.keys(tracks);
     // Create an array containing <Track /> elements matching tracks in state
     const trackList = trackIds &&
-      trackIds.map(id => (
-        <Track
-          add={this.handleTrackAdd}
-          context={context}
-          file={tracks[id]}
-          id={id}
-          key={id}
-          remove={this.handleTrackRemove}
-          reportTrackLength={this.reportTrackLength}
-          seek={seek}
-          seekTo={this.seekTo}
-          view={view}
-        />
-      ));
+      trackIds.map(id => {
+        
+        const selected = selectedTrack === id;
+
+        return (
+          <Track
+            add={this.handleTrackAdd}
+            context={context}
+            file={tracks[id]}
+            id={id}
+            key={id}
+            remove={this.handleTrackRemove}
+            reportTrackLength={this.reportTrackLength}
+            seek={seek}
+            seekTo={this.seekTo}
+            selectTrack={this.selectTrack}
+            selected={selected}
+            view={view}
+          />
+        );
+      });
     return trackList;
   }
 
@@ -162,22 +186,24 @@ class App extends Component {
 
   render() {
     // Breakout 2-layer-deep values for easy reference
-    const { seek, nextId, tracks, filterOpen } = this.state;
-
-    const filterStyle = (open) => open ? { marginLeft: "0px" } : { marginLeft: "-100px" };
+    const { seek, nextId, tracks, filtersOpen, settingsOpen } = this.state;
 
     return (
       <div className="app">
-        <Header toggleFilter={this.toggleFilter}>
+        <Header toggleFilter={this.toggleFilter} toggleSettings={this.toggleSettings}>
           <AddTrack handleTrackAdd={this.handleTrackAdd} nextId={nextId} />
         </Header>
         <main>
           
-          <aside className="filters" style={filterStyle(filterOpen)}>
-            Filter!
-          </aside>
+          <Filters open={filtersOpen} />
 
           <section className="tracks">
+            {
+              Object.keys(tracks).length ? "" : 
+              <div className="no-tracks">
+                no tracks
+              </div>
+            }
             {this.trackList()}
             {Object.keys(tracks).map((id) => {
               const { path, type } = tracks[id];
@@ -188,6 +214,8 @@ class App extends Component {
               );
             })}
           </section>
+
+          <Settings open={settingsOpen} />
 
         </main>
         <footer>

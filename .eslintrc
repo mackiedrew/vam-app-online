@@ -46,7 +46,7 @@
     "react/jsx-first-prop-new-line": ["error", "multiline-multiprop"],
     "react/jsx-sort-props": ["error",
       {
-        "callbacksLast": true,
+        "callbacksLast": false,
         "shorthandLast": true,
         "ignoreCase": false,
         "noSortAlphabetically": false

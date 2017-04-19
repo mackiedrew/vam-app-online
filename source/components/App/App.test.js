@@ -1,9 +1,6 @@
-import Subject from './Tracks'
-import electron from 'electron'
+import Subject from './App'
 
-const remote = electron.remote
-
-describe('<Tracks /> structure', () => {
+describe('<App /> structure', () => {
 
   it('renders without crashing', () => {
     shallow(<Subject />)

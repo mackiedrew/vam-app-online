@@ -62,7 +62,6 @@ export const richReadWav = (file) => {
     const averageGrainLength = secondsToSamples(config.grains.temp);
     const grainPoints = logicalSegment(data, averageGrainLength);
     const framesPerSample = 2000;
-
     const samples = grainPoints.map((grain) => {
       const grainLength = grain.end - grain.start;
       const samples = Math.ceil(grainLength / framesPerSample);
