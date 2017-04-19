@@ -181,10 +181,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-__WEBPACK_IMPORTED_MODULE_0_promise_worker_register___default()(({ samples, grains, framesPerSample }) => {
+__WEBPACK_IMPORTED_MODULE_0_promise_worker_register___default()((message) => {
+  const { samples, grains, framesPerSample } = message;
   const amplitudes = grains.map((grain, i) => {
     const totaledAmplitude = samples[i].reduce((a, b) => a + b , 0);
-    return totaledAmplitude / (grain.end - grain.start);
+    return totaledAmplitude / (grain.end - grain.start + 1);
   });
   const finalGrains = grains.map((grain, index) => {
     return {
@@ -194,10 +195,10 @@ __WEBPACK_IMPORTED_MODULE_0_promise_worker_register___default()(({ samples, grai
     }
   });
   const maxAmplitude = amplitudes.reduce((a, b) => a > b ? a : b, -Infinity);
-  return { grains: finalGrains, maxAmplitude};
+  const result = { grains: finalGrains, maxAmplitude};
+  return result;
 });
 
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=bundle.js.map
