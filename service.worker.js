@@ -1,4 +1,4 @@
-var serviceWorkerOption = {"assets":["./20b6c47d173c42147658.worker.js","./f3a23bb47d8387dc6890.worker.js","./1df1b3c902249f81d44e.worker.js","./iconstats.json","./bundle.js"]};
+var serviceWorkerOption = {"assets":["./20b6c47d173c42147658.worker.js","./1df1b3c902249f81d44e.worker.js","./f3a23bb47d8387dc6890.worker.js","./iconstats.json","./bundle.js"]};
         
         /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
