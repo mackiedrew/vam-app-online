@@ -1,40 +1,31 @@
 import React, { Component } from "react";
 import "./AddTrack.styl";
 
-// Libraries
-import shortid from "shortid";
-
 // Components
-import AddIcon from "../../images/add.svg";
+import Icon from "../../containers/Icon/Icon";
 
 class AddTrack extends Component {
 
   constructor(props) {
     super(props);
-    
-    const uniqueId = shortid.generate();
-
-    this.state = {
-      id: uniqueId
-    };
-
     this.handleOnChange = this.handleOnChange.bind(this);
   }
 
   handleOnChange() {
-    const { handleTrackAdd } = this.props;
-    const { id } = this.state;
+    const { handleTrackAdd, id } = this.props;
     const selectedFile = document.getElementById(id).files[0];
     handleTrackAdd(selectedFile);
   }
 
   render() {
 
-    const { id } = this.state;
+    const { id } = this.props;
 
     return (
       <div className="add-track">
-        <label htmlFor={id}><AddIcon height={24} width={24} /></label>
+        <label htmlFor={id}>
+          <Icon icon="add_circle" />
+        </label>
         <input
           // accept only takes MIME types, these are MIME types accepted by Web Audio in Chrome
           accept="audio/wav,audio/mpeg,audio/ogg"

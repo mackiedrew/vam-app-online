@@ -2,9 +2,7 @@ import React from "react";
 import "./Header.styl";
 
 // Components
-import DownloadIcon from "../../images/download.svg";
-import FilterIcon from "../../images/filter.svg";
-import SettingsIcon from "../../images/settings.svg";
+import Icon from "../../containers/Icon/Icon";
 
 /**
  * The role of the <Waveform /> container is aggregate data, using libraries and provided data into
@@ -14,15 +12,15 @@ import SettingsIcon from "../../images/settings.svg";
 const Header = (props) =>
   <header className="header">
     <button onClick={props.toggleFilter}>
-      <FilterIcon height="24" width="24" />
+      <Icon icon="library_add" />
     </button>
     <h1>VAM</h1>
     <button>
-      <DownloadIcon height="24" width="24" />
+      <Icon icon="file_download" />
     </button>
     {props.children}
     <button onClick={props.toggleSettings}>
-      <SettingsIcon height="24" width="24" />
+      <Icon icon="settings" />
     </button>
   </header>;
 

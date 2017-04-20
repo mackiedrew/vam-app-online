@@ -6,7 +6,7 @@ import FaviconsWebpackPlugin from "favicons-webpack-plugin";
 import ServiceWorkerWebpackPlugin from "serviceworker-webpack-plugin";
 
 /// Constants ///
-const PORT = 7111;
+const PORT = 7117;
 const HOST = "localhost";
 const build_directory = "build";
 const source_directory = "source";

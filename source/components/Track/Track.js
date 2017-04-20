@@ -7,13 +7,9 @@ import { divisionBinarySearch } from "../../help/generic/generic";
 
 // Components
 import Waveform from "../../containers/Waveform/Waveform";
-import RemoveIcon from "../../images/remove.svg";
 import Loading from "../../containers/Loading/Loading";
 import ToggleButton from "../../containers/ToggleButton/ToggleButton";
-import Unchecked from "../../images/radio_unchecked.svg";
-import Checked from "../../images/radio_checked.svg";
-import Mute from "../../images/mute.svg";
-import Unmute from "../../images/unmute.svg";
+import Icon from "../../containers/Icon/Icon";
 
 /**
  * <Track /> should take in a simple path to a to a file and generate logical divisions and pass
@@ -98,10 +94,15 @@ class Track extends Component {
     this.props.remove(this.props.id);
   }
 
+  handleSelectTrack() {
+    const { selectTrack, id } = this.props;
+    selectTrack(id);
+  }
+
   render() {
     // Break out values for the sake of easier template reading
     const { name, grains, maxAmplitude, error } = this.state;
-    const { seekTo, selected, selectTrack, id } = this.props;
+    const { seekTo, selected } = this.props;
     // Generate styles
     const seekLineStyle = this.generateSeekLineStyle();
 
@@ -115,22 +116,22 @@ class Track extends Component {
         <div className="controls">
           <div>
             <ToggleButton
-              offContents={<Unchecked height={24} width={24} />}
-              offFunction={() => selectTrack(id)}
+              offContents={<Icon icon="radio_button_unchecked" />}
+              offFunction={this.handleSelectTrack}
               on={selected}
-              onContents={<Checked height={24} width={24} />}
+              onContents={<Icon icon="radio_button_checked" />}
 
             />
             <ToggleButton
-              offContents={<Mute height={24} width={24} />}
+              offContents={<Icon icon="volume_off" />}
               offFunction={false}
               on={selected}
-              onContents={<Unmute height={24} width={24} />}
+              onContents={<Icon icon="volume_up" />}
             />
           </div>
           <span className="name" style={nameStyle}>{name}</span>
           <button className="remove" onClick={this.handleRemoveButton}>
-            <RemoveIcon height={24} width={24} />
+            <Icon icon="delete_forever" />
           </button>
         </div>
         <div className="display" style={displayStyle}>

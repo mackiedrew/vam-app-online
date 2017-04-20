@@ -1,22 +1,21 @@
-// Constructive Imports
 import React, { Component } from "react";
 import "./App.styl";
 
-// Library Imports
+// Libraries
 import shortid from "shortid";
 import filterObj from "filter-obj";
 
-// Component Imports
-import Track from "../Track/Track";
-import AddTrack from "../AddTrack/AddTrack";
-import SeekBar from "../SeekBar/SeekBar";
+// Components
 import Header from "../../containers/Header/Header";
+import AddTrack from "../AddTrack/AddTrack";
 import Filters from "../Filters/Filters";
+import Tracks from "../Tracks/Tracks";
 import Settings from "../Settings/Settings";
+import SeekBar from "../SeekBar/SeekBar";
 
 /**
- * Tracks should be the overall organizing structure, controlling controls, track communication,
- * and editing invocations.
+ * This used to be called "Tracks" but was refactored to be the main app since everything was
+ * happening here anyway.
  */
 class App extends Component {
   constructor(props) {
@@ -25,12 +24,14 @@ class App extends Component {
 
     // Create audio context for editing
     const audioContext = new AudioContext();
+    const nextId = shortid.generate();
 
     // Set initial state to make it easier to reset to later
     this.initialState = {
       selectedTrack: undefined,
-      filterOpens: false,
-      settingsOpens: false,
+      nextId: nextId,
+      filtersOpen: false,
+      settingsOpen: false,
       context: audioContext,
       tracks: {},
       trackLengths: {},
@@ -48,7 +49,6 @@ class App extends Component {
     this.simpleAddTracks = this.simpleAddTracks.bind(this);
     this.handleTrackAdd = this.handleTrackAdd.bind(this);
     this.handleTrackRemove = this.handleTrackRemove.bind(this);
-    this.trackList = this.trackList.bind(this);
     this.reportTrackLength = this.reportTrackLength.bind(this);
     this.toggleFilter = this.toggleFilter.bind(this);
     this.toggleSettings = this.toggleSettings.bind(this);
@@ -89,9 +89,11 @@ class App extends Component {
 
   handleTrackAdd(file) {
     // TODO: Put overwriting of old paths here
-    const id = shortid.generate();
-    this.selectTrack(id);
-    this.simpleAddTracks(id, file);
+    const newId = this.state.nextId;
+    const nextId = shortid.generate();
+    this.setState({ nextId: nextId });
+    this.selectTrack(newId);
+    this.simpleAddTracks(newId, file);
   }
 
   toggleFilter() {
@@ -103,7 +105,6 @@ class App extends Component {
     const { settingsOpen } = this.state;
     this.setState({ settingsOpen: !settingsOpen });
   }
-
 
   /**
    * Remove a track from the tracks array matching the provided track id.
@@ -118,40 +119,6 @@ class App extends Component {
     const stateChange = { tracks: { ...newTracks } };
     // Merge new state object and the old state object
     this.setState(stateChange);
-  }
-
-  /**
-   * Generate a set of track elements to display within the main render() function.
-   */
-  trackList() {
-    // Breakout references for clarity and ease
-    const { tracks, view, seek, context, selectedTrack } = this.state;
-    // Create list of tracks for iteration
-    const trackIds = tracks && Object.keys(tracks);
-    // Create an array containing <Track /> elements matching tracks in state
-    const trackList = trackIds &&
-      trackIds.map(id => {
-        
-        const selected = selectedTrack === id;
-
-        return (
-          <Track
-            add={this.handleTrackAdd}
-            context={context}
-            file={tracks[id]}
-            id={id}
-            key={id}
-            remove={this.handleTrackRemove}
-            reportTrackLength={this.reportTrackLength}
-            seek={seek}
-            seekTo={this.seekTo}
-            selectTrack={this.selectTrack}
-            selected={selected}
-            view={view}
-          />
-        );
-      });
-    return trackList;
   }
 
   /**
@@ -186,41 +153,45 @@ class App extends Component {
 
   render() {
     // Breakout 2-layer-deep values for easy reference
-    const { seek, nextId, tracks, filtersOpen, settingsOpen } = this.state;
+    const {
+      nextId,
+      seek,
+      tracks,
+      filtersOpen,
+      settingsOpen,
+      selectedTrack,
+      view,
+      context
+    } = this.state;
 
     return (
       <div className="app">
+
         <Header toggleFilter={this.toggleFilter} toggleSettings={this.toggleSettings}>
-          <AddTrack handleTrackAdd={this.handleTrackAdd} nextId={nextId} />
+          <AddTrack handleTrackAdd={this.handleTrackAdd} id={nextId} />
         </Header>
-        <main>
-          
+
+        <main>  
           <Filters open={filtersOpen} />
-
-          <section className="tracks">
-            {
-              Object.keys(tracks).length ? "" : 
-              <div className="no-tracks">
-                no tracks
-              </div>
-            }
-            {this.trackList()}
-            {Object.keys(tracks).map((id) => {
-              const { path, type } = tracks[id];
-              return (
-                <audio autoPlay={false} id={id} key={id} controls>
-                  <source key={id} src={path} type={type} />
-                </audio>
-              );
-            })}
-          </section>
-
+          <Tracks
+            context={context}
+            handleTrackAdd={this.handleTrackAdd}
+            handleTrackRemove={this.handleTrackRemove}
+            reportTrackLength={this.reportTrackLength}
+            seek={seek}
+            seekTo={this.seekTo}
+            selectTrack={this.selectTrack}
+            selectedTrack={selectedTrack}
+            tracks={tracks}
+            view={view}
+          />
           <Settings open={settingsOpen} />
-
         </main>
+
         <footer>
           <SeekBar seek={seek} seekTo={this.seekTo} />
         </footer>
+
       </div>
     );
   }

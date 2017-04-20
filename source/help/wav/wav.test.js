@@ -1,4 +1,10 @@
-import { secondsToSamples, samplesToSeconds, decodeWav, readFile, richReadWav } from './wav'
+const wav = rewire('./source/help/wav/wav');
+
+class ReadWavWorkerMock {
+  constructor() {}
+}
+
+const ReadWavWorker = rewire("../../workers/readWav.worker.js");
 
 describe('secondsToSamples(seconds, sampleRate)', () => {
 
@@ -6,15 +12,15 @@ describe('secondsToSamples(seconds, sampleRate)', () => {
   const testSampleRate = 90123
 
   it('when provided with no values it returns 44100 [Hz]', () => {
-    expect(secondsToSamples()).toEqual(44100)
+    expect(wav.secondsToSamples()).toEqual(44100)
   })
 
   it('when provided with no sampleRate it returns seconds * 44100 [Hz]', () => {
-    expect(secondsToSamples(testSeconds)).toEqual(testSeconds * 44100)
+    expect(wav.secondsToSamples(testSeconds)).toEqual(testSeconds * 44100)
   })
 
   it('multiplies seconds by sampleRate', () => {
-    expect(secondsToSamples(testSeconds, testSampleRate)).toEqual(testSeconds * testSampleRate)
+    expect(wav.secondsToSamples(testSeconds, testSampleRate)).toEqual(testSeconds * testSampleRate)
   })
 
 })
@@ -25,15 +31,15 @@ describe('samplesToSeconds(samples, sampleRate)', () => {
   const testSampleRate = 90123
 
   it('when provided with no values it returns 1 / 44100 seconds', () => {
-    expect(samplesToSeconds()).toEqual(1 / 44100)
+    expect(wav.samplesToSeconds()).toEqual(1 / 44100)
   })
 
   it('when provided with no sampleRate it returns samples / 44100 [Hz]', () => {
-    expect(samplesToSeconds(testSamples)).toEqual(testSamples / 44100)
+    expect(wav.samplesToSeconds(testSamples)).toEqual(testSamples / 44100)
   })
 
   it('divides samples by sampleRate', () => {
-    expect(samplesToSeconds(testSamples, testSampleRate)).toEqual(testSamples / testSampleRate)
+    expect(wav.samplesToSeconds(testSamples, testSampleRate)).toEqual(testSamples / testSampleRate)
   })
 
 })
@@ -44,7 +50,7 @@ const sampleWavPath = './example/sample.wav'
 describe('readFile(filePath)', () => {
 
   it('returns a rejected promise if given bad file path', () => {
-    return readFile(badSampleWavPath)
+    return wav.readFile(badSampleWavPath)
     .then(
       (result) => expect(result).toBeFalsy(),
       (error) => expect(error).toBeTruthy()
@@ -52,7 +58,7 @@ describe('readFile(filePath)', () => {
   })
 
   it('returns a resolved promise if given a proper file path', () => {
-    return readFile(sampleWavPath)
+    return wav.readFile(sampleWavPath)
     .then(
       (result) => expect(result).toBeTruthy(),
       (error) => expect(error).toBeFalsy()
@@ -64,7 +70,7 @@ describe('readFile(filePath)', () => {
 describe('decodeWav(filePath)', () => {
   
   it('returns a rejected promise if given bad file path', () => {
-    return decodeWav(badSampleWavPath)
+    return wav.decodeWav(badSampleWavPath)
     .then(
       (result) => expect(result).toBeFalsy(),
       (error) => expect(error).toBeTruthy()
@@ -72,7 +78,7 @@ describe('decodeWav(filePath)', () => {
   })
 
   it('returns a resolved promise if given a proper file path', () => {
-    return decodeWav(sampleWavPath)
+    return wav.decodeWav(sampleWavPath)
     .then(
       (result) => expect(result).toBeTruthy(),
       (error) => expect(error).toBeFalsy()
@@ -80,7 +86,7 @@ describe('decodeWav(filePath)', () => {
   })
 
   it('returns a resolved promise if given a proper file path', () => {
-    return decodeWav(sampleWavPath)
+    return wav.decodeWav(sampleWavPath)
     .then(
       (result) => {
         expect(result.sampleRate).toBeTruthy()
@@ -95,7 +101,7 @@ describe('decodeWav(filePath)', () => {
 describe('richReadWav(filePath)', () => {
 
   it('returns a rejected promise if given bad file path', () => {
-    return richReadWav(badSampleWavPath)
+    return wav.richReadWav(badSampleWavPath)
     .then(
       (result) => expect(result).toBeFalsy(),
       (error) => expect(error).toBeTruthy()
@@ -103,7 +109,7 @@ describe('richReadWav(filePath)', () => {
   })
 
   it('returns a resolved promise if given a proper file path', () => {
-    return richReadWav(sampleWavPath)
+    return wav.richReadWav(sampleWavPath)
     .then(
       (result) => expect(result).toBeTruthy(),
       (error) => expect(error).toBeFalsy()

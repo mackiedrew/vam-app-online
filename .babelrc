@@ -14,7 +14,13 @@
 
   "env": {
     "test": {
-      "sourceMaps": "both"
+      "sourceMaps": "both",
+       "plugins": [
+        "react-hot-loader/babel",
+        "syntax-dynamic-import",
+        "transform-async-to-generator",
+        "rewire"
+      ]
     }
   }
   

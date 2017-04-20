@@ -6,13 +6,7 @@ import { secondsToSamples } from "../../help/wav/wav";
 
 // Components
 import ToggleButton from "../../containers/ToggleButton/ToggleButton";
-import PlayIcon from "../../images/play.svg";
-import PauseIcon from "../../images/pause.svg";
-
-import Replay10Icon from "../../images/replay10.svg";
-import Forward10Icon from "../../images/forward10.svg";
-import NextIcon from "../../images/next.svg";
-import PreviousIcon from "../../images/previous.svg";
+import Icon from "../../containers/Icon/Icon";
 
 
 /**
@@ -48,8 +42,8 @@ class SeekBar extends Component {
   leadingZeros(rawNumber, columns = 2) {
     const number = String(Math.round(rawNumber));
     const digits = number.length;
-    const neededZeros = columns - digits || 0;
-    const zeroes = new Array(neededZeros).fill("0");
+    const neededZeros = columns - digits;
+    const zeroes = neededZeros > 0 ? new Array(neededZeros).fill("0") : [];
     const allColumns = [...zeroes, number];
     const output = allColumns.reduce((a, b) => a + b, "");
     return output;
@@ -100,21 +94,21 @@ class SeekBar extends Component {
     return <div className="seek-bar">
         <div className="control-bar">
           <button className="seek-minus-10" onClick={this.handleMinus10}>
-            <Replay10Icon height={24} width={24} />
+            <Icon icon="replay_10" />
           </button>
           <button className="seek-minus-1" onClick={this.handleMinus1}>
-            <PreviousIcon height={24} width={24} />
+            <Icon icon="skip_previous" />
           </button>
           <ToggleButton
-            offContents={<PlayIcon height={24} width={24} />}
-            onContents={<PauseIcon height={24} width={24} />}
+            offContents={<Icon icon="play_arrow" />}
+            onContents={<Icon icon="pause" />}
             on
           />
           <button className="seek-plus-1" onClick={this.handlePlus1}>
-            <NextIcon height={24} width={24} />
+            <Icon icon="skip_next" />
           </button>
           <button className="seek-plus-10" onClick={this.handlePlus10}>
-            <Forward10Icon height={24} width={24} />
+            <Icon icon="forward_10" />
           </button>
         </div>
         <div className="indicators">

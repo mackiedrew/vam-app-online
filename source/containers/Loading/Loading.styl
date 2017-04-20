@@ -3,23 +3,26 @@ $animation-speed = 1.5s
 $number-of-bars = 10
 
 @keyframes resize
-  0%
-    height 100%
+
+  1%
+    height 1%
     filter: brightness(1.5)
 
   50%
-    height 1%
+    height 100%
+    filter: brightness(1.0)
 
   100%
-    height 100%
+    height 1%
+    filter: brightness(1.5)
 
 
 #loading
   position absolute
   display flex
-  margin 50px auto
+  margin 25px auto
   width 100%
-  height 100px
+  height 150px
   align-items center
 
   filter grayscale(0.75) brightness(1.2)
@@ -30,9 +33,8 @@ $number-of-bars = 10
     flex-grow 1
     animation-duration $animation-speed
     animation-iteration-count infinite
-    animation-direction alternate
     animation-name resize
-    animation-delay 1s
+    animation-delay 4s
     for i in (0..20)
       &:nth-child({i})
-        animation-delay i * 100ms
+        animation-delay i * 75ms

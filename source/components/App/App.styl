@@ -18,16 +18,17 @@ button
   background-color $color-main
   border 0
   padding 10px
-  transition all 0.2s ease
+  transition filter 0.2s ease
 
-  &:hover
-    transition all 0.2s ease
-    filter: brightness(1.2)
+  &hover
     cursor pointer
+    transition filter 0.2s ease
+    filter brightness(1.2)
+    
 
-  &:active
-    filter: brightness(0.8)
-    transition all 0.2s ease
+  &active
+    filter brightness(0.8)
+    transition filter 0.2s ease
 
 audio
   display none
@@ -49,18 +50,6 @@ audio
     display flex
     flex-grow 1
     overflow auto
-
-    .tracks
-      display inline-block
-      flex-grow 1
-
-    .no-tracks
-      flex-grow 1
-      font-size 30px
-      padding 20px 80px
-      font-weight 700
-      text-align center
-      opacity 0.2
 
   footer
     flex-shrink 0

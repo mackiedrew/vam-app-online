@@ -9,15 +9,13 @@
     ".": "<rootDir>/node_modules/babel-jest"
   },
 
-
   "snapshotSerializers": [
     "<rootDir>/node_modules/enzyme-to-json/serializer"
   ],
 
   "moduleNameMapper": {
-    ".+\\.(css|svg|styl)$": "<rootDir>/node_modules/jest-css-modules"
+    ".+\\.(css|styl)$": "<rootDir>/node_modules/jest-css-modules"
   },
-
 
   "unmockedModulePathPatterns": [
     "<rootDir>/node_modules/react"
@@ -35,6 +33,7 @@
     "!**/electron.js**",
     "!**/coverage/**",
     "!**/example/**",
+    "!**/source/workers/**",
     "!**/build/**",
     "!**/node_modules/**"
   ],
