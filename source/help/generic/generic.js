@@ -1,5 +1,10 @@
-// Libraries
-import range from "lodash.range";
+/**
+ * This generates an array with length of given size. With array entries being from zero to size
+ * minus one. Which makes it work well as a mappable object with a build-in index.
+ * @param {Number} size The eventual length of the array generated.
+ * @returns {Array} Array with keys from 0 to size-1
+ */
+export const range = (size) => [...Array(size).keys()];
 
 /**
  * Faster flooring method using a bitwise trick with better behavior than Math.floor().
@@ -30,7 +35,7 @@ export const ceiling = value => {
  */
 export const logicalSegment = (array, segmentSize) => {
   const totalSegments = ceiling(array.length / segmentSize);
-  const segmentsRange = range(0, totalSegments);
+  const segmentsRange = range(totalSegments);
   const starts = segmentsRange.map(segment => segment * segmentSize);
   // Good
   const ends = segmentsRange.map(segment => {

@@ -1,6 +1,7 @@
 @require '../../palette.styl'
 
 .track
+  overflow hidden
 
   .controls
     display flex
@@ -21,9 +22,14 @@
       overflow hidden
       
   .display
+    position relative
     width 100%
     background-color $color-divider
     overflow hidden
+    max-width 100%
+
+    & > div
+      max-width 100%
 
     .seek-line
       position relative

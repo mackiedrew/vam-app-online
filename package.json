@@ -9,10 +9,11 @@
   "description": "Electron implementation of VAM.",
   "main": "electron.js",
   "scripts": {
-    "watch": "./node_modules/.bin/webpack --watch",
     "clean": "rm -rf build/",
     "clean:full": "rm -rf build/ coverage/ node_modules/",
-    "build": "./node_modules/.bin/webpack -p",
+    "build": "./node_modules/.bin/webpack",
+    "build:production": "NODE_ENV=production ./node_modules/.bin/webpack",
+    "watch": "yarn build -- --watch",
     "rebuild": "npm run clean && npm run build",
     "lint:javascript": "./node_modules/.bin/eslint ./",
     "lint:stylus": "./node_modules/.bin/stylint ./source/",
@@ -20,17 +21,14 @@
     "lint": "yarn run lint:javascript && yarn run lint:stylus",
     "test": "./node_modules/.bin/jest --config .jestrc.json",
     "coverage": "./node_modules/.bin/codecov",
-    "electron": "./node_modules/.bin/electron .",
-    "start": "npm run rebuild && (npm run electron & npm run watch)",
-    "start:browser": "webpack-dev-server",
-    "deploy": "./node_modules/.bin/electron-packager . VAM --all --overwrite --out binaries/"
+    "start": " yarn watch & ./node_modules/.bin/webpack-dev-server",
+    "deploy": "yarn run clean && yarn run build:production && ./node_modules/.bin/gh-pages -d build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mackiedrew/vam-online.git"
   },
   "keywords": [
-    "electron",
     "react"
   ],
   "bugs": {
@@ -38,15 +36,13 @@
   },
   "homepage": "https://valence.audio/",
   "dependencies": {
-    "electron": "1.6.2",
-    "electron-reload": "1.1.0",
     "filter-obj": "1.1.0",
-    "lodash.range": "3.2.0",
+    "promise-worker": "1.1.1",
+    "promise-worker-transferable": "1.0.4",
     "react": "15.5.4",
     "react-dom": "15.5.4",
     "shortid": "2.2.8",
-    "wav-decoder": "1.1.0",
-    "wav-encoder": "1.1.0"
+    "wav-decoder": "1.1.0"
   },
   "devDependencies": {
     "babel-core": "6.24.1",
@@ -60,17 +56,15 @@
     "babel-preset-stage-0": "6.24.1",
     "codecov": "2.1.0",
     "css-loader": "0.28.0",
-    "electron-packager": "8.6.0",
-    "electron-rebuild": "1.5.7",
-    "enzyme": "2.8.2",
-    "electron-webpack-plugin": "1.2.2",
     "enzyme": "2.8.1",
     "enzyme-to-json": "1.5.1",
     "eslint": "3.19.0",
     "eslint-loader": "1.7.1",
     "eslint-plugin-jsx-a11y": "4.0.0",
     "eslint-plugin-react": "6.10.3",
+    "favicons-webpack-plugin": "0.0.7",
     "file-loader": "0.11.1",
+    "gh-pages": "0.12.0",
     "html-webpack-plugin": "2.28.0",
     "istanbul": "0.4.5",
     "jest": "19.0.2",
@@ -83,14 +77,17 @@
     "react-hot-loader": "3.0.0-beta.6",
     "react-svg-loader": "1.1.1",
     "react-test-renderer": "15.5.4",
+    "serviceworker-webpack-plugin": "0.2.1",
     "sinon": "2.1.0",
     "style-loader": "0.16.1",
     "stylint": "1.5.9",
     "stylus": "0.54.5",
     "stylus-loader": "3.0.1",
     "svgo": "0.7.2",
+    "web-audio-mock-api": "1.0.0",
     "webpack": "2.3.3",
     "webpack-dev-server": "2.4.2",
+    "worker-loader": "0.8.0",
     "yarn": "0.22.0"
   }
 }

@@ -1,15 +1,16 @@
+/* eslint-env node */
 import React, { Component } from "react";
 import "./Track.styl";
 
-// Libraries
-import { parse } from "path";
-
 // Helpers
-import { richReadWav } from "../../help/wav/wav";
+import wav from "../../help/wav/wav";
 import { divisionBinarySearch } from "../../help/generic/generic";
 
 // Components
 import Waveform from "../../containers/Waveform/Waveform";
+import Loading from "../../containers/Loading/Loading";
+import ToggleButton from "../../containers/ToggleButton/ToggleButton";
+import Icon from "../../containers/Icon/Icon";
 
 /**
  * <Track /> should take in a simple path to a to a file and generate logical divisions and pass
@@ -19,8 +20,7 @@ class Track extends Component {
   constructor(props) {
     super(props);
 
-    // Parse the file name of the track out of the full file path
-    const fileName = props.path && parse(props.path).base;
+    const fileName = props.file.name;
 
     // Format wrapper ID name for consistent reference
     this.wrapperID = `track-${props.id}`;
@@ -64,9 +64,9 @@ class Track extends Component {
    * Read important information from the wav file and place it into state. Or store an error.
    */
   readPath() {
-    const { path } = this.props;
-    return richReadWav(path)
-      .then(wavData => {
+    const { file } = this.props;
+    return wav.richReadWav(file)
+      .then((wavData) => {
         this.setState({ ...wavData });
         return wavData;
       })
@@ -95,23 +95,49 @@ class Track extends Component {
     this.props.remove(this.props.id);
   }
 
+  handleSelectTrack() {
+    const { selectTrack, id } = this.props;
+    selectTrack(id);
+  }
+
   render() {
     // Break out values for the sake of easier template reading
     const { name, grains, maxAmplitude, error } = this.state;
-    const { seekTo } = this.props;
+    const { seekTo, selected } = this.props;
     // Generate styles
     const seekLineStyle = this.generateSeekLineStyle();
+
+    const nameStyle = selected ? { fontWeight: 700 } : { fontWeight: 200 };
+    const displayStyle = selected ?
+      { borderTop: "2px solid rgba(255,193,7,1)", borderBottom: "2px solid rgba(255,193,7,1)" } :
+      { borderTop: "2px solid rgb(240, 240, 240)", borderBottom: "2px solid rgb(240, 240, 240)" };
 
     return (
       <div className="track" id={this.wrapperID}>
         <div className="controls">
-          <span className="name">{name}</span>
+          <div>
+            <ToggleButton
+              offContents={<Icon icon="radio_button_unchecked" />}
+              offFunction={this.handleSelectTrack}
+              on={selected}
+              onContents={<Icon icon="radio_button_checked" />}
+
+            />
+            <ToggleButton
+              offContents={<Icon icon="volume_off" />}
+              offFunction={false}
+              on={selected}
+              onContents={<Icon icon="volume_up" />}
+            />
+          </div>
+          <span className="name" style={nameStyle}>{name}</span>
           <button className="remove" onClick={this.handleRemoveButton}>
-            Remove
+            <Icon icon="delete_forever" />
           </button>
         </div>
-        <div className="display">
-          {error ? <strong className="error">{error}</strong> : ""}
+        <div className="display" style={displayStyle}>
+          { maxAmplitude ? "" : <Loading /> }
+          { error ? <strong className="error">{error}</strong> : "" }
           <div className="seek-line" style={seekLineStyle} />
           <Waveform
             blocks={grains}
