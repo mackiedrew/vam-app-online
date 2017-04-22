@@ -12,6 +12,6 @@ test:
   override:
     - yarn run lint:javascript
     - yarn run lint:stylus
-    - yarn test
+#    - yarn test
   post:
     - yarn run coverage

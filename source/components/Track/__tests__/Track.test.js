@@ -1,5 +1,5 @@
-import Subject from "./Track";
-import wav from "../../help/wav/wav";
+import Subject from "../Track";
+import wav from "../__mocks__/wav";
 
 const badSampleWavPath = "/XYZ123/ThisFileDoesNotExist.zip"
 const sampleWavPath = "./example/sample.wav"
