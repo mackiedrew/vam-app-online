@@ -1,8 +1,46 @@
 @require '../../palette.styl'
 
 .settings
-  display inline-block
-  width 200px
   background-color $color-lite
   transition all 0.6s ease
   overflow hidden
+
+  fieldset
+    display flex
+    flex-grow 1
+    border 0
+
+    .field
+
+      margin 20px 0
+
+      .entry-area
+        display flex
+
+        .input
+          flex-grow 1
+          flex-shrink:  1
+          height 30px
+          border 0
+          border-bottom 1px solid grey
+          background-color rgba(0,0,0,0)
+          transition all 0.2s ease
+
+        .unit
+          display flex
+          align-items center
+          flex-grow 1
+          flex-shrink 1
+          font-size 20px
+
+.settings-opened
+  display block
+  opacity 1
+  width auto
+  transition all 0.6s ease
+
+.settings-closed
+  display inline-block
+  opacity 0
+  width 0px
+  transition all 0.6s ease

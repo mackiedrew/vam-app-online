@@ -59,7 +59,7 @@ export const richReadWav = (file) => {
     const data = channelData[0];
     const trackLength = data.length;
     // Generate grains by logically segmenting the full array of samples
-    const averageGrainLength = secondsToSamples(config.grains.temp);
+    const averageGrainLength = secondsToSamples(config.grain.value);
     const grainPoints = logicalSegment(data, averageGrainLength);
     const framesPerSample = 2000;
     const samples = grainPoints.map((grain) => {

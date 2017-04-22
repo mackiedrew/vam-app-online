@@ -1,8 +1,9 @@
+/* eslint-env node */
 import React, { Component } from "react";
 import "./Track.styl";
 
 // Helpers
-import { richReadWav } from "../../help/wav/wav";
+import wav from "../../help/wav/wav";
 import { divisionBinarySearch } from "../../help/generic/generic";
 
 // Components
@@ -64,7 +65,7 @@ class Track extends Component {
    */
   readPath() {
     const { file } = this.props;
-    return richReadWav(file)
+    return wav.richReadWav(file)
       .then((wavData) => {
         this.setState({ ...wavData });
         return wavData;

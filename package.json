@@ -11,7 +11,6 @@
   "scripts": {
     "clean": "rm -rf build/",
     "clean:full": "rm -rf build/ coverage/ node_modules/",
-    "build:electron": "./node_modules/.bin/webpack -p --config webpack.config.electron.babel.js",
     "build": "./node_modules/.bin/webpack",
     "build:production": "NODE_ENV=production ./node_modules/.bin/webpack",
     "watch": "yarn build -- --watch",
@@ -22,10 +21,7 @@
     "lint": "yarn run lint:javascript && yarn run lint:stylus",
     "test": "./node_modules/.bin/jest --config .jestrc.json",
     "coverage": "./node_modules/.bin/codecov",
-    "electron": "./node_modules/.bin/electron .",
-    "start:electron": "npm run rebuild && (npm run electron & npm run watch)",
     "start": " yarn watch & ./node_modules/.bin/webpack-dev-server",
-    "deploy:electron": "./node_modules/.bin/electron-packager . VAM --all --overwrite --out binaries/",
     "deploy": "yarn run clean && yarn run build:production && ./node_modules/.bin/gh-pages -d build"
   },
   "repository": {
@@ -33,7 +29,6 @@
     "url": "git+https://github.com/mackiedrew/vam-online.git"
   },
   "keywords": [
-    "electron",
     "react"
   ],
   "bugs": {
@@ -41,8 +36,6 @@
   },
   "homepage": "https://valence.audio/",
   "dependencies": {
-    "electron": "1.6.2",
-    "electron-reload": "1.1.0",
     "filter-obj": "1.1.0",
     "promise-worker": "1.1.1",
     "promise-worker-transferable": "1.0.4",
@@ -55,7 +48,6 @@
     "babel-core": "6.24.1",
     "babel-jest": "19.0.0",
     "babel-loader": "6.4.1",
-    "babel-plugin-rewire": "^1.1.0",
     "babel-plugin-syntax-dynamic-import": "6.18.0",
     "babel-plugin-transform-async-to-generator": "6.24.1",
     "babel-polyfill": "6.23.0",
@@ -64,9 +56,6 @@
     "babel-preset-stage-0": "6.24.1",
     "codecov": "2.1.0",
     "css-loader": "0.28.0",
-    "electron-packager": "8.6.0",
-    "electron-rebuild": "1.5.7",
-    "electron-webpack-plugin": "1.2.2",
     "enzyme": "2.8.1",
     "enzyme-to-json": "1.5.1",
     "eslint": "3.19.0",
@@ -88,7 +77,6 @@
     "react-hot-loader": "3.0.0-beta.6",
     "react-svg-loader": "1.1.1",
     "react-test-renderer": "15.5.4",
-    "rewire": "^2.5.2",
     "serviceworker-webpack-plugin": "0.2.1",
     "sinon": "2.1.0",
     "style-loader": "0.16.1",

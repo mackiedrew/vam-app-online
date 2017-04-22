@@ -1,5 +1,5 @@
 import Subject from "./Track";
-import { richReadWav } from "../../help/wav/wav";
+import wav from "../../help/wav/wav";
 
 const badSampleWavPath = "/XYZ123/ThisFileDoesNotExist.zip"
 const sampleWavPath = "./example/sample.wav"
@@ -17,14 +17,16 @@ const mockProps = {
 
 describe("<Track />", () => {
 
-  global.richReadWav = (pass) => new Promise((resolve, reject) => {
-    if (pass) {
-      resolve("Wav Data")
-    }
-    reject("Test Error")
+  beforeEach(() => {
+    wav.richReadWav = jest.fn(() => new Promise(resolve => { resolve("Hello"); }));
   });
 
   describe("looks proper by", () => {
+
+    beforeEach(() => {
+      wav.richReadWav = jest.fn(() => new Promise(resolve => { resolve("Hello"); }));
+    });
+
     const wrapper = shallow(<Subject { ...mockProps } />)
 
     it("renders without crashing", () => {
@@ -58,6 +60,10 @@ describe("<Track />", () => {
   
 
   describe("generateSeekLineStyle()", () => {
+
+    beforeEach(() => {
+      wav.richReadWav = jest.fn(() => new Promise(resolve => { resolve("Hello"); }));
+    });
     
     it("falls back to trackLength when view.end isn\"t available", () => {
       const wrapper = shallow(<Subject { ...mockProps } view={ { start: 0, end: undefined } }/>)
@@ -65,9 +71,13 @@ describe("<Track />", () => {
       expect(result).toBe(false)
     })
 
-  })
+  });
 
   describe("sampleToGrain()", () => {
+
+    beforeEach(() => {
+      wav.richReadWav = jest.fn(() => new Promise(resolve => { resolve("Hello"); }));
+    });
     
     it("returns false when provided sample lower than 0", () => {
       const wrapper = shallow(<Subject { ...mockProps } />)
@@ -75,9 +85,13 @@ describe("<Track />", () => {
       expect(result).toBe(false)
     })
 
-  })
+  });
 
   describe("readPath()", () => {
+
+    beforeEach(() => {
+      wav.richReadWav = jest.fn(() => new Promise(resolve => { resolve("Hello"); }));
+    });
 
     it("returns a rejected promise that sets the `error` state of <Track />", () => {
       const wrapper = shallow(<Subject {...mockProps} path={badSampleWavPath} />)
@@ -87,7 +101,7 @@ describe("<Track />", () => {
           expect(wrapper.state("error")).toBeDefined()
         }
       )
-    })
+    });
 
     it("returns a resolved promise that sets the state of <Track />", () => {
       const wrapper = shallow(<Subject {...mockProps} path={sampleWavPath} />)
@@ -99,11 +113,15 @@ describe("<Track />", () => {
           expect(wrapper.state("grains").length).toBeGreaterThan(0)
         }
       )
-    })
+    });
 
-  })
+  });
 
   describe("remove track button", () => {
+
+    beforeEach(() => {
+      wav.richReadWav = jest.fn(() => new Promise(resolve => { resolve("Hello"); }));
+    });
 
     it("when clicked, remove() is called when button.remove clicked", () => {
       const handleRemoveMock = sinon.spy();

@@ -4,14 +4,12 @@ import sinon from "sinon";
 import React from "react";
 import ReactDOM from "react-dom";
 import WebAudioMock from "web-audio-mock-api";
-import rewire from "rewire";
 
 // Test Suite
 global.shallow = shallow;
 global.render = render;
 global.mount = mount;
 global.sinon = sinon;
-global.rewire = rewire;
 global.AudioContext = WebAudioMock.AudioContext;
 
 
