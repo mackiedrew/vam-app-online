@@ -50,11 +50,15 @@ class WaveBlock extends Component {
   }
 
   render() {
+    const { filler, more } = this.props;
     const amplitudeStyle = this.amplitudeStyle();
     const waveBlockStyle = this.waveBlockStyle();
 
     return (
-      <div className="wave-block" style={waveBlockStyle}>
+      <div className={`wave-block ${filler ? "filler" : ""} ${more ? "more" : ""}`} style={waveBlockStyle}>
+        <div className="note">
+          { filler ? "track ends" : ""}
+        </div>
         <button
           className="amplitude"
           onClick={this.handleClick}

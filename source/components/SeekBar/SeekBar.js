@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./SeekBar.styl";
 
 // Libraries
-import { secondsToSamples } from "../../help/wav/wav";
+import { secondsToSamples, samplesToTime } from "../../help/wav/wav";
 
 // Components
 import ToggleButton from "../../containers/ToggleButton/ToggleButton";
@@ -17,18 +17,6 @@ class SeekBar extends Component {
   constructor(props) {
     // Initialize extended class with passed props
     super(props);
-
-    // Set initial state to make it easier to reset to later
-    this.initialState = {
-      currentTime: {
-        ms: 0,
-        s: 0,
-        m: 0,
-        h: 0
-      }
-    };
-    // Reset state to initialState
-    this.state = this.initialState;
 
     // Bind functions to `this`
     this.seekSamples = this.seekSamples.bind(this);
@@ -85,10 +73,12 @@ class SeekBar extends Component {
 
   render() {
     // Break out values for the sake of easier template reading
-    const { currentTime: { ms, s, m, h } } = this.state;
+    const { seek, viewMagnify } = this.props;
+    const time = samplesToTime(seek);
+    const { ms, s, m, h } = time;
 
     // Construct new time string
-    const time = `${this.leadingZeros(h)}:${this.leadingZeros(m)}:` + 
+    const timeStamp = `${this.leadingZeros(h)}:${this.leadingZeros(m)}:` + 
       `${this.leadingZeros(s)}:${this.leadingZeros(ms, 3)}`;
 
     return <div className="seek-bar">
@@ -112,7 +102,14 @@ class SeekBar extends Component {
           </button>
         </div>
         <div className="indicators">
-          <div className="current-time">{time}</div>
+          <button className="zoom-in" onClick={() => viewMagnify(0.75)}>
+            <Icon icon="zoom_in" />
+          </button>
+          <button className="zoom-out" onClick={() => viewMagnify(1.5)}>
+            <Icon icon="zoom_out" />
+          </button>
+          <div className="current-time">{timeStamp}</div>
+
         </div>
       </div>;
   }

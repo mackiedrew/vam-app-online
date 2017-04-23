@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import "./Track.styl";
 
 // Helpers
-import wav from "../../help/wav/wav";
+import { richReadWav } from "../../help/wav/wav";
 import { divisionBinarySearch } from "../../help/generic/generic";
 
 // Components
@@ -47,6 +47,7 @@ class Track extends Component {
     this.readPath = this.readPath.bind(this);
     this.handleRemoveButton = this.handleRemoveButton.bind(this);
     this.generateSeekLineStyle = this.generateSeekLineStyle.bind(this);
+    this.handleSelectTrack = this.handleSelectTrack.bind(this);
   }
 
   /**
@@ -65,7 +66,7 @@ class Track extends Component {
    */
   readPath() {
     const { file } = this.props;
-    return wav.richReadWav(file)
+    return richReadWav(file)
       .then((wavData) => {
         this.setState({ ...wavData });
         return wavData;
@@ -103,7 +104,38 @@ class Track extends Component {
   render() {
     // Break out values for the sake of easier template reading
     const { name, grains, maxAmplitude, error } = this.state;
-    const { seekTo, selected } = this.props;
+    const { seekTo, selected, view } = this.props;
+
+
+    const grainsToShow = grains.length > 0 && (() => {
+      const lastGrainIndex = grains.length - 1; 
+      const firstGrainToShowIndex =  this.sampleToGrain(view.start);
+      const lastGrainToShowIndex =  this.sampleToGrain(view.end) || lastGrainIndex;
+      const firstGrainToShow = grains[firstGrainToShowIndex];
+      const lastGrainToShow = grains[lastGrainToShowIndex];
+      const moreStart = firstGrainToShowIndex !== 0;
+      const moreEnd = lastGrainIndex !== lastGrainToShowIndex;
+
+      const startFiller = [{
+        start: view.start,
+        end: firstGrainToShow.start,
+        filler: true,
+        more: moreStart,
+      }];
+      const endFiller = [{
+        start: lastGrainToShow.end,
+        end: view.end,
+        filler: true,
+        more: moreEnd,
+      }];
+      const grainsToShow = [
+        ...startFiller,
+        ...grains.slice(firstGrainToShowIndex, lastGrainToShowIndex + 1),
+        ...endFiller,
+      ];
+      return grainsToShow;
+    })();
+
     // Generate styles
     const seekLineStyle = this.generateSeekLineStyle();
 
@@ -140,9 +172,10 @@ class Track extends Component {
           { error ? <strong className="error">{error}</strong> : "" }
           <div className="seek-line" style={seekLineStyle} />
           <Waveform
-            blocks={grains}
+            blocks={grainsToShow}
             maxAmplitude={maxAmplitude}
             seekTo={seekTo}
+            view={view}
           />
         </div>
       </div>

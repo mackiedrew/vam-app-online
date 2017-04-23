@@ -1,7 +1,7 @@
 const configuration = {
   grain: {
     label: "Grain Time",
-    value: 1,
+    value: 20,
     unit: "s"
   }
 };

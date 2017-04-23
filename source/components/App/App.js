@@ -4,6 +4,7 @@ import "./App.styl";
 // Libraries
 import shortid from "shortid";
 import filterObj from "filter-obj";
+import { floor } from "../../help/generic/generic";
 
 // Components
 import Header from "../../containers/Header/Header";
@@ -37,8 +38,8 @@ class App extends Component {
       trackLengths: {},
       seek: 0, // samples
       view: {
-        start: 0,
-        end: undefined
+        start: 44100 * 60 * 0,
+        end: 44100 * 60 * 11,
       }
     };
     // Reset state to initialState
@@ -53,6 +54,8 @@ class App extends Component {
     this.toggleFilter = this.toggleFilter.bind(this);
     this.toggleSettings = this.toggleSettings.bind(this);
     this.selectTrack = this.selectTrack.bind(this);
+    this.setView = this.setView.bind(this);
+    this.viewMagnify = this.viewMagnify .bind(this);
   }
 
   /**
@@ -70,6 +73,37 @@ class App extends Component {
     const stateChanges = { seek: newPosition };
     this.setState(stateChanges);
     return newPosition;
+  }
+
+  setView({start, end}) {
+    const { trackLengths } = this.state;
+    const lengthList = Object.keys(trackLengths).map(key => trackLengths[key]);
+    const maxSample = Math.max(...lengthList);
+
+    const endCandidates = [1, end, maxSample * 2];
+    const endSorted = endCandidates.sort((a, b) => a - b);
+    const newEnd = floor(endSorted[1]);
+
+    const startCandidates = [0, start, newEnd - 1];
+    const startSorted = startCandidates.sort((a, b) => a - b);
+    const newStart = floor(startSorted[1]);
+
+    const newView = {start: newStart, end: newEnd};
+    const stateChanges = { view: newView };
+    this.setState(stateChanges);
+    return newView;
+  }
+
+  viewMagnify(factor) {
+    const { view } = this.state;
+    const { start, end } = view;
+
+    const newView = {
+      start: start,
+      end: end * factor,
+    };
+    const actualNewView = this.setView(newView);
+    return actualNewView;
   }
 
   simpleAddTracks(id, file) {
@@ -189,7 +223,7 @@ class App extends Component {
         </main>
 
         <footer>
-          <SeekBar seek={seek} seekTo={this.seekTo} />
+          <SeekBar seek={seek} seekTo={this.seekTo} viewMagnify={this.viewMagnify} />
         </footer>
 
       </div>

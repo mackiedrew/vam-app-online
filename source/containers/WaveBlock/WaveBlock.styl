@@ -1,12 +1,21 @@
 @require '../../palette.styl'
 
 .wave-block
+  position relative
   background-color $color-divider
   display flex
   flex-direction column
   justify-content center
   margin 0
   height 100%
+  overflow hidden
+
+  .note
+    position absolute
+    width 100%
+    text-align center
+    color darken($color-divider, 10)
+    margin-top -20px
 
   .amplitude
     display block
@@ -25,3 +34,18 @@
       filter brightness(1.1)
       transition all 0.2s ease
       cursor pointer
+
+.filler
+
+  &:hover
+    filter: brightness(1)
+
+  .amplitude
+    background-color darken($color-divider, 5)
+
+    &:hover
+      filter: brightness(1)
+
+
+.more 
+  background-color red
