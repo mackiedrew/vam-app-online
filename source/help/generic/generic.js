@@ -91,3 +91,14 @@ export const divisionBinarySearch = (targetValue, divisionArray) => {
     }
   }
 };
+
+
+export const leadingZeros = (rawNumber, columns = 2) => {
+  const number = String(Math.round(rawNumber));
+  const digits = number.length;
+  const neededZeros = columns - digits;
+  const zeroes = neededZeros > 0 ? new Array(neededZeros).fill("0") : [];
+  const allColumns = [...zeroes, number];
+  const output = allColumns.reduce((a, b) => a + b, "");
+  return output;
+};

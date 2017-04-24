@@ -3,6 +3,7 @@ import "./SeekBar.styl";
 
 // Libraries
 import { secondsToSamples, samplesToTime } from "../../help/wav/wav";
+import { leadingZeros } from "../../help/generic/generic";
 
 // Components
 import ToggleButton from "../../containers/ToggleButton/ToggleButton";
@@ -25,16 +26,6 @@ class SeekBar extends Component {
     this.handleMinus10 = this.handleMinus10.bind(this);
     this.handlePlus1 = this.handlePlus1.bind(this);
     this.handleMinus1 = this.handleMinus1.bind(this);
-  }
-
-  leadingZeros(rawNumber, columns = 2) {
-    const number = String(Math.round(rawNumber));
-    const digits = number.length;
-    const neededZeros = columns - digits;
-    const zeroes = neededZeros > 0 ? new Array(neededZeros).fill("0") : [];
-    const allColumns = [...zeroes, number];
-    const output = allColumns.reduce((a, b) => a + b, "");
-    return output;
   }
 
   /**
@@ -78,8 +69,8 @@ class SeekBar extends Component {
     const { ms, s, m, h } = time;
 
     // Construct new time string
-    const timeStamp = `${this.leadingZeros(h)}:${this.leadingZeros(m)}:` + 
-      `${this.leadingZeros(s)}:${this.leadingZeros(ms, 3)}`;
+    const timeStamp = `${leadingZeros(h)}:${leadingZeros(m)}:` + 
+      `${leadingZeros(s)}:${leadingZeros(ms, 3)}`;
 
     return <div className="seek-bar">
         <div className="control-bar">

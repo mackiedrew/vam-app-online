@@ -36,10 +36,11 @@ class App extends Component {
       context: audioContext,
       tracks: {},
       trackLengths: {},
+      mutedTracks: {},
       seek: 0, // samples
       view: {
         start: 44100 * 60 * 0,
-        end: 44100 * 60 * 11,
+        end: 44100 * 60 * 10,
       }
     };
     // Reset state to initialState
@@ -55,7 +56,19 @@ class App extends Component {
     this.toggleSettings = this.toggleSettings.bind(this);
     this.selectTrack = this.selectTrack.bind(this);
     this.setView = this.setView.bind(this);
-    this.viewMagnify = this.viewMagnify .bind(this);
+    this.viewMagnify = this.viewMagnify.bind(this);
+    this.toggleMute = this.toggleMute.bind(this);
+  }
+
+  toggleMute(id) {
+    const { mutedTracks } = this.state;
+    const muted = id in mutedTracks && mutedTracks[id];
+    const newMutedTracks = {
+      ...mutedTracks,
+      id: !muted,
+    };
+    const newState = { mutedTracks: newMutedTracks };
+    this.setState(newState);
   }
 
   /**
@@ -185,6 +198,7 @@ class App extends Component {
     return newTrackLengths;
   }
 
+
   render() {
     // Breakout 2-layer-deep values for easy reference
     const {
@@ -195,7 +209,8 @@ class App extends Component {
       settingsOpen,
       selectedTrack,
       view,
-      context
+      context,
+      mutedTracks
     } = this.state;
 
     return (
@@ -211,11 +226,13 @@ class App extends Component {
             context={context}
             handleTrackAdd={this.handleTrackAdd}
             handleTrackRemove={this.handleTrackRemove}
+            mutedTracks={mutedTracks}
             reportTrackLength={this.reportTrackLength}
             seek={seek}
             seekTo={this.seekTo}
             selectTrack={this.selectTrack}
             selectedTrack={selectedTrack}
+            toggleMute={this.toggleMute}
             tracks={tracks}
             view={view}
           />

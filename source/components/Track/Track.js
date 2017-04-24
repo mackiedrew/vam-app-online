@@ -104,7 +104,7 @@ class Track extends Component {
   render() {
     // Break out values for the sake of easier template reading
     const { name, grains, maxAmplitude, error } = this.state;
-    const { seekTo, selected, view } = this.props;
+    const { seekTo, selected, view, id, toggleMute } = this.props;
 
 
     const grainsToShow = grains.length > 0 && (() => {
@@ -157,9 +157,10 @@ class Track extends Component {
             />
             <ToggleButton
               offContents={<Icon icon="volume_off" />}
-              offFunction={false}
+              offFunction={() => toggleMute(id)}
               on={selected}
               onContents={<Icon icon="volume_up" />}
+              onFunction={() => toggleMute(id)}
             />
           </div>
           <span className="name" style={nameStyle}>{name}</span>
