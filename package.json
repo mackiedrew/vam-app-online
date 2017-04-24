@@ -38,7 +38,7 @@
   },
   "homepage": "https://valence.audio/",
   "dependencies": {
-    "electron": "1.6.2",
+    "electron": "1.6.6",
     "electron-reload": "1.1.0",
     "filter-obj": "1.1.0",
     "lodash.range": "3.2.0",
