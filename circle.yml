@@ -10,8 +10,9 @@ dependencies:
 
 test:
   override:
-    - yarn run lint:javascript
-    - yarn run lint:stylus
+    - yarn lint:javascript
+    - yarn lint:stylus
+    - yarn hint
 #    - yarn test
   post:
     - yarn run coverage
