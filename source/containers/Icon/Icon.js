@@ -1,9 +1,10 @@
 import React from "react";
 import "./Icon.styl";
 
-const Icon = ({icon}) =>
+const Icon = ({ icon }) => (
   <i className="material-icons icon-24">
     {icon}
-  </i>;
+  </i>
+);
 
 export default Icon;

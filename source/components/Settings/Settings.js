@@ -15,14 +15,19 @@ class Settings extends Component {
 
   generateFields() {
     return Object.keys(config).map((name) => {
-
       const {value, unit, label, type} = config[name];
 
       return (
         <div className="field" key={name}>
           <label htmlFor={name}>{label}</label>
           <div className="entry-area">
-            <input className="input" id={name} name={name} type={type} value={value} />
+            <input
+              className="input"
+              id={name}
+              name={name}
+              type="number"
+              value={value}
+            />
             <span className="unit">{unit}</span>
           </div>
         </div>
@@ -38,7 +43,7 @@ class Settings extends Component {
     return (
       <aside className={`settings ${extraClass}`}>
         <fieldset>
-          { this.generateFields() }
+          {this.generateFields()}
         </fieldset>
       </aside>
     );

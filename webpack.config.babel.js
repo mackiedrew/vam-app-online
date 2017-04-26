@@ -3,7 +3,7 @@ import webpack from "webpack";
 import { resolve, join } from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import FaviconsWebpackPlugin from "favicons-webpack-plugin";
-import ServiceWorkerWebpackPlugin from "serviceworker-webpack-plugin";
+import OfflinePlugin from "offline-plugin";
 
 /// Constants ///
 const PORT = 8080;
@@ -58,19 +58,12 @@ const FaviconsWebpackPluginConfig = new FaviconsWebpackPlugin({
   }
 });
 
-
-const ServiceWorkerWebpackPluginConfig = new ServiceWorkerWebpackPlugin({
-  entry: join(__dirname, "source/workers/service.worker.js"),
-  filename: "service.worker.js",
-  publicPath: ""
-});
-
 const developmentPlugins = [
   FaviconsWebpackPluginConfig,
-  ServiceWorkerWebpackPluginConfig,
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NamedModulesPlugin(),
-  HtmlWebpackPluginConfig
+  HtmlWebpackPluginConfig,
+  new OfflinePlugin()
 ];
 
 const productionPlugins = [
@@ -79,7 +72,6 @@ const productionPlugins = [
       NODE_ENV: JSON.stringify("production")
     }
   }),
-  ServiceWorkerWebpackPluginConfig,
   FaviconsWebpackPluginConfig,
   HtmlWebpackPluginConfig,
   new webpack.LoaderOptionsPlugin({
@@ -97,18 +89,20 @@ const productionPlugins = [
     },
     comments: false,
     exclude: [/\.worker\.js$/, /\.map\.js$/]
-  })
+  }),
+  new OfflinePlugin()
 ];
 
-const entry = isProduction ? "./index.js" : [
+const productionEntry = [
   "react-hot-loader/patch",
   `webpack-dev-server/client?http://${HOST}:${PORT}`,
   "webpack/hot/only-dev-server",
   "./index.js"
 ];
 
-const configuration = {
+const entry = isProduction ? "./index.js" : productionEntry;
 
+const configuration = {
   context: join(__dirname, source_directory),
 
   devtool: sourceMapType,

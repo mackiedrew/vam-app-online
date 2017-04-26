@@ -9,7 +9,6 @@ import { leadingZeros } from "../../help/generic/generic";
 import ToggleButton from "../../containers/ToggleButton/ToggleButton";
 import Icon from "../../containers/Icon/Icon";
 
-
 /**
  * SeekBar will handle the controls and logic, and maybe a UI for interacting with the current seek
  * position of the tracks. This will be represented by a sample #.
@@ -72,7 +71,8 @@ class SeekBar extends Component {
     const timeStamp = `${leadingZeros(h)}:${leadingZeros(m)}:` + 
       `${leadingZeros(s)}:${leadingZeros(ms, 3)}`;
 
-    return <div className="seek-bar">
+    return (
+      <div className="seek-bar">
         <div className="control-bar">
           <button className="seek-minus-10" onClick={this.handleMinus10}>
             <Icon icon="replay_10" />
@@ -104,7 +104,8 @@ class SeekBar extends Component {
           <div className="current-time">{timeStamp}</div>
 
         </div>
-      </div>;
+      </div>
+    );
   }
 }
 

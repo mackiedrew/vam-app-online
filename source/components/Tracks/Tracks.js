@@ -38,14 +38,14 @@ class Tracks extends Component {
       mutedTracks,
       toggleMute,
       selectTrack,
-      seekTo,
+      seekTo
     } = this.props;
     // Create list of tracks for iteration
     const trackIds = this.trackIds();
     // Create an array containing <Track /> elements matching tracks in state
-    const trackList = trackIds &&
-      trackIds.map((id) => {
-        
+    const trackList =
+      trackIds &&
+      trackIds.map(id => {
         const selected = selectedTrack === id;
         return (
           <Track
@@ -68,14 +68,15 @@ class Tracks extends Component {
       });
     return trackList;
   }
-
+  
   renderNoTracks() {
     const trackIds = this.trackIds();
     const tracksExist = trackIds.length > 0;
-    return tracksExist ? "" :
-      <div className="no-tracks">
-        no tracks
-      </div>;
+    return tracksExist
+      ? ""
+      : <div className="no-tracks">
+          no tracks
+        </div>;
   }
 
   render() {
