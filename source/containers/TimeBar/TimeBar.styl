@@ -5,14 +5,15 @@ $back-color = darken($color-dark, 5)
 
 .time-bar
   display flex
+  height 15px
   background-color $back-color
   color $main-color
-  height 15px
+
 
   .slice
-    font-size 12px;
+    overflow hidden
+    border-left 1px solid $main-color
+    font-size 12px
     min-width 0
     flex-grow 1
     flex-shrink 1
-    overflow hidden
-    border-left 1px solid $main-color

@@ -280,7 +280,6 @@ class App extends Component {
   render() {
     // Breakout 2-layer-deep values for easy reference
     const {
-      nextId,
       seek,
       tracks,
       filtersOpen,

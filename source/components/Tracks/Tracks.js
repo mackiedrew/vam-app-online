@@ -56,9 +56,9 @@ class Tracks extends Component {
             key={id}
             muted={mutedTracks[id]}
             remove={handleTrackRemove}
-            seekTo={seekTo}
             reportTrackLength={reportTrackLength}
             seek={seek}
+            seekTo={seekTo}
             selectTrack={selectTrack}
             selected={selected}
             toggleMute={toggleMute}
