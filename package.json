@@ -51,8 +51,6 @@
       "!**/index.js**",
       "!**/coverage/**",
       "!**/example/**",
-      "!**/source/workers/**",
-      "!**/source/help/wav/**",
       "!**/build/**",
       "!**/node_modules/**"
     ],
