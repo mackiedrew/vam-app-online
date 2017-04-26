@@ -449,6 +449,5 @@ __WEBPACK_IMPORTED_MODULE_0_promise_worker_transferable_register___default()((fi
   }).then(buffer => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_wav_decoder__["decode"])(buffer));
 });
 
-
 /***/ })
 /******/ ]);

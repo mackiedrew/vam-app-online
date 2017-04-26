@@ -180,7 +180,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-
 __WEBPACK_IMPORTED_MODULE_0_promise_worker_register___default()((message) => {
   const { samples, grains, framesPerSample } = message;
   const amplitudes = grains.map((grain, i) => {
