@@ -24,6 +24,55 @@
     "start": " yarn watch & ./node_modules/.bin/webpack-dev-server",
     "deploy": "yarn run clean && yarn run build:production && ./node_modules/.bin/gh-pages -d build"
   },
+  "jest": {
+    "verbose": true,
+
+    "setupFiles": [
+      "./jestSetup.js"
+    ],
+    
+    "transform": {
+      ".": "<rootDir>/node_modules/babel-jest"
+    },
+
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/enzyme-to-json/serializer"
+    ],
+
+    "moduleNameMapper": {
+      ".+\\.(css|styl)$": "<rootDir>/node_modules/jest-css-modules"
+    },
+
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react"
+    ],
+    
+    "collectCoverage": true,
+    
+    "coverageDirectory": "<rootDir>/coverage/",
+    
+    "collectCoverageFrom" : [
+      "**/*.js",
+      "!**/webpack.config.*.js**",
+      "!**/jestSetup.js**",
+      "!**/index.js**",
+      "!**/coverage/**",
+      "!**/example/**",
+      "!**/source/workers/**",
+      "!**/source/help/wav/**",
+      "!**/build/**",
+      "!**/node_modules/**"
+    ],
+    
+    "coverageThreshold": {
+      "global": {
+        "branches": 75,
+        "functions": 95,
+        "lines": 95,
+        "statements": 95
+      }
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mackiedrew/vam-online.git"
