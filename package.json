@@ -129,7 +129,7 @@
     "svgo": "0.7.2",
     "web-audio-mock-api": "1.0.0",
     "webpack": "2.3.3",
-    "webpack-dev-server": "2.4.2",
+    "webpack-dev-server": "2.4.5",
     "worker-loader": "0.8.0",
     "yarn": "0.22.0"
   }
