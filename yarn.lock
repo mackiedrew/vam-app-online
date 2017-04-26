@@ -3991,6 +3991,10 @@ kew@~0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/kew/-/kew-0.7.0.tgz#79d93d2d33363d6fdd2970b335d9141ad591d79b"
 
+keyboardjs@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/keyboardjs/-/keyboardjs-2.3.3.tgz#57527a4905dce72dea838ef5d8b166bf9c99bd82"
+
 kind-of@^3.0.2:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-3.1.0.tgz#475d698a5e49ff5e53d14e3e732429dc8bf4cf47"

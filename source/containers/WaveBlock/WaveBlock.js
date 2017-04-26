@@ -30,9 +30,11 @@ class WaveBlock extends Component {
    * - height is calculated as % of total
    */
   amplitudeStyle() {
+    const { selected } = this.props;
     const fillPercentage = this.relativeAmplitude();
     const height = `${fillPercentage * 100}%`;
-    return { height };
+    const opacity = selected ? "1.0" : "0.5";
+    return { height, opacity };
   }
 
   /**
@@ -57,7 +59,7 @@ class WaveBlock extends Component {
     return (
       <div className={`wave-block ${filler ? "filler" : ""} ${more ? "more" : ""}`} style={waveBlockStyle}>
         <div className="note">
-          { filler ? "track ends" : ""}
+          { more ? "more..." : filler ? "track ends" : ""}
         </div>
         <button
           className="amplitude"

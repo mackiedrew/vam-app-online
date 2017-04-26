@@ -2,9 +2,14 @@
 import React, { Component } from "react";
 import "./Track.styl";
 
+// Library
+import keyboard from "keyboardjs";
+
 // Helpers
 import { richReadWav } from "../../help/wav/wav";
 import { divisionBinarySearch } from "../../help/generic/generic";
+
+import config from "../../config";
 
 // Components
 import Waveform from "../../containers/Waveform/Waveform";
@@ -48,6 +53,31 @@ class Track extends Component {
     this.handleRemoveButton = this.handleRemoveButton.bind(this);
     this.generateSeekLineStyle = this.generateSeekLineStyle.bind(this);
     this.handleSelectTrack = this.handleSelectTrack.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+  }
+
+  componentDidMount() {
+    keyboard.bind(config.next.value, () => {
+      if (this.props.selected) {
+        const { seekTo, seek } = this.props;
+        const currentGrainIndex = this.sampleToGrain(seek);
+        const nextGrainIndex = currentGrainIndex + 1;
+        const nextGrain = this.state.grains[nextGrainIndex];
+        const startOfNextGrain = nextGrain.start;
+        seekTo(startOfNextGrain);
+      }
+    });
+
+    keyboard.bind(config.previous.value, () => {
+      if (this.props.selected) {
+        const { seekTo, seek } = this.props;
+        const currentGrainIndex = this.sampleToGrain(seek);
+        const nextGrainIndex = currentGrainIndex - 1;
+        const nextGrain = this.state.grains[nextGrainIndex];
+        const startOfNextGrain = nextGrain.start;
+        seekTo(startOfNextGrain);
+      }
+    });
   }
 
   /**
@@ -104,7 +134,7 @@ class Track extends Component {
   render() {
     // Break out values for the sake of easier template reading
     const { name, grains, maxAmplitude, error } = this.state;
-    const { seekTo, selected, view, id, toggleMute } = this.props;
+    const { seekTo, selected, view, id, toggleMute, muted } = this.props;
 
 
     const grainsToShow = grains.length > 0 && (() => {
@@ -156,10 +186,10 @@ class Track extends Component {
 
             />
             <ToggleButton
-              offContents={<Icon icon="volume_off" />}
+              offContents={<Icon icon="volume_up" />}
               offFunction={() => toggleMute(id)}
-              on={selected}
-              onContents={<Icon icon="volume_up" />}
+              on={muted}
+              onContents={<Icon icon="volume_off" />}
               onFunction={() => toggleMute(id)}
             />
           </div>

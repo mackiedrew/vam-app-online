@@ -64,7 +64,7 @@ class SeekBar extends Component {
 
   render() {
     // Break out values for the sake of easier template reading
-    const { seek, viewMagnify } = this.props;
+    const { seek, viewMagnify, togglePlay, playing } = this.props;
     const time = samplesToTime(seek);
     const { ms, s, m, h } = time;
 
@@ -82,8 +82,10 @@ class SeekBar extends Component {
           </button>
           <ToggleButton
             offContents={<Icon icon="play_arrow" />}
+            offFunction={() => togglePlay()}
+            on={playing}
             onContents={<Icon icon="pause" />}
-            on
+            onFunction={() => togglePlay()}
           />
           <button className="seek-plus-1" onClick={this.handlePlus1}>
             <Icon icon="skip_next" />

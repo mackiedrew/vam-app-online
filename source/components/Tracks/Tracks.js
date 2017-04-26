@@ -47,19 +47,18 @@ class Tracks extends Component {
       trackIds.map((id) => {
         
         const selected = selectedTrack === id;
-
         return (
           <Track
             add={handleTrackAdd}
             context={context}
-            file={tracks[id]}
+            file={tracks[id].file}
             id={id}
             key={id}
             muted={mutedTracks[id]}
             remove={handleTrackRemove}
+            seekTo={seekTo}
             reportTrackLength={reportTrackLength}
             seek={seek}
-            seekTo={seekTo}
             selectTrack={selectTrack}
             selected={selected}
             toggleMute={toggleMute}
@@ -80,11 +79,18 @@ class Tracks extends Component {
   }
 
   render() {
-    const { view, tracks } = this.props;
+    const { view, tracks, playing, reportSeek, reportPaused, selectedTrack, mutedTracks } = this.props;
     return (
       <section className="tracks">
         <TimeBar view={view} />
-        <AudioManager tracks={tracks} />
+        <AudioManager
+          mutedTracks={mutedTracks}
+          playing={playing}
+          reportPaused={reportPaused}
+          reportSeek={reportSeek}
+          selectedTrack={selectedTrack}
+          tracks={tracks} 
+        />
         { this.renderNoTracks() }
         { this.renderTrackList() }
       </section>

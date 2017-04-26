@@ -1,14 +1,18 @@
 @require '../../palette.styl'
 
+$main-color = rgba(255, 255, 255, 0.5)
+$back-color = darken($color-dark, 5)
+
 .time-bar
   display flex
-  background-color darken($color-dark, 10)
-  color white
-  height 25px
+  background-color $back-color
+  color $main-color
+  height 15px
 
   .slice
+    font-size 12px;
     min-width 0
     flex-grow 1
     flex-shrink 1
     overflow hidden
-    border-left 1px solid white;
+    border-left 1px solid $main-color

@@ -2,7 +2,6 @@
 
 import registerPromiseWorker from "promise-worker/register";
 
-
 registerPromiseWorker((message) => {
   const { samples, grains, framesPerSample } = message;
   const amplitudes = grains.map((grain, i) => {

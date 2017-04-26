@@ -14,7 +14,8 @@ class AddTrack extends Component {
   handleOnChange() {
     const { handleTrackAdd, id } = this.props;
     const selectedFile = document.getElementById(id).files[0];
-    handleTrackAdd(selectedFile);
+    const selectedFileURL = URL.createObjectURL(selectedFile);
+    handleTrackAdd({ file: selectedFile, url: selectedFileURL});
   }
 
   render() {
