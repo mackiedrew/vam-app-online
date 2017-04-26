@@ -8,7 +8,6 @@ import { secondsToSamples } from "../../help/wav/wav";
 import ToggleButton from "../../containers/ToggleButton/ToggleButton";
 import Icon from "../../containers/Icon/Icon";
 
-
 /**
  * SeekBar will handle the controls and logic, and maybe a UI for interacting with the current seek
  * position of the tracks. This will be represented by a sample #.
@@ -88,10 +87,12 @@ class SeekBar extends Component {
     const { currentTime: { ms, s, m, h } } = this.state;
 
     // Construct new time string
-    const time = `${this.leadingZeros(h)}:${this.leadingZeros(m)}:` + 
+    const time =
+      `${this.leadingZeros(h)}:${this.leadingZeros(m)}:` +
       `${this.leadingZeros(s)}:${this.leadingZeros(ms, 3)}`;
 
-    return <div className="seek-bar">
+    return (
+      <div className="seek-bar">
         <div className="control-bar">
           <button className="seek-minus-10" onClick={this.handleMinus10}>
             <Icon icon="replay_10" />
@@ -114,7 +115,8 @@ class SeekBar extends Component {
         <div className="indicators">
           <div className="current-time">{time}</div>
         </div>
-      </div>;
+      </div>
+    );
   }
 }
 

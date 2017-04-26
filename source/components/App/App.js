@@ -73,7 +73,6 @@ class App extends Component {
   }
 
   simpleAddTracks(id, file) {
-
     const { tracks } = this.state;
 
     const newTrack = { [id]: file };
@@ -166,12 +165,13 @@ class App extends Component {
 
     return (
       <div className="app">
-
-        <Header toggleFilter={this.toggleFilter} toggleSettings={this.toggleSettings}>
+        <Header
+          toggleFilter={this.toggleFilter}
+          toggleSettings={this.toggleSettings}
+        >
           <AddTrack handleTrackAdd={this.handleTrackAdd} id={nextId} />
         </Header>
-
-        <main>  
+        <main>
           <Filters open={filtersOpen} />
           <Tracks
             context={context}

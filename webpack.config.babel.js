@@ -58,7 +58,6 @@ const FaviconsWebpackPluginConfig = new FaviconsWebpackPlugin({
   }
 });
 
-
 const ServiceWorkerWebpackPluginConfig = new ServiceWorkerWebpackPlugin({
   entry: join(__dirname, "source/workers/service.worker.js"),
   filename: "service.worker.js",
@@ -100,15 +99,16 @@ const productionPlugins = [
   })
 ];
 
-const entry = isProduction ? "./index.js" : [
+const productionEntry = [
   "react-hot-loader/patch",
   `webpack-dev-server/client?http://${HOST}:${PORT}`,
   "webpack/hot/only-dev-server",
   "./index.js"
 ];
 
-const configuration = {
+const entry = isProduction ? "./index.js" : productionEntry;
 
+const configuration = {
   context: join(__dirname, source_directory),
 
   devtool: sourceMapType,

@@ -32,12 +32,10 @@ export const samplesToSeconds = (samples = 1, sampleRate = 44100) =>
  * Reads and returns a promise containing the file buffer.
  * @param {File} file
  */
-export const readFile = (file) => {
-
+export const readFile = file => {
   const worker = new ReadWavWorker();
   const promiseWorker = new ObjectPromiseWorker(worker);
   return promiseWorker.postMessage(file);
-
 };
 
 /**
@@ -53,7 +51,7 @@ export const decodeWav = file => {
  * readWav() function.
  * @param {String} filePath Absolute full path to the wav file, including filename.ext
  */
-export const richReadWav = (file) => {
+export const richReadWav = file => {
   return readFile(file).then(({ sampleRate, channelData }) => {
     // Break out data for easy reference
     const data = channelData[0];
@@ -62,11 +60,11 @@ export const richReadWav = (file) => {
     const averageGrainLength = secondsToSamples(config.grain.value);
     const grainPoints = logicalSegment(data, averageGrainLength);
     const framesPerSample = 2000;
-    const samples = grainPoints.map((grain) => {
+    const samples = grainPoints.map(grain => {
       const grainLength = grain.end - grain.start;
       const samples = Math.ceil(grainLength / framesPerSample);
       const sampleRange = [...Array(samples).keys()];
-      const collectedSamples = sampleRange.map((i) => {
+      const collectedSamples = sampleRange.map(i => {
         const frameNumber = grain.start + i * framesPerSample;
         const sample = Math.abs(data[frameNumber]);
         return sample;
@@ -77,19 +75,17 @@ export const richReadWav = (file) => {
     const worker = new GrainAmplitudeWorker();
     const promiseWorker = new PromiseWorker(worker);
     return promiseWorker
-    .postMessage({ samples, grains: grainPoints, framesPerSample })
-    .then((response) => {
+      .postMessage({ samples, grains: grainPoints, framesPerSample })
+      .then(response => {
+        const { grains, maxAmplitude } = response;
 
-      const { grains, maxAmplitude } = response;
-
-      const richData = {
-        sampleRate,
-        trackLength,
-        grains,
-        maxAmplitude
-      };
-      return richData;
-    });
-
+        const richData = {
+          sampleRate,
+          trackLength,
+          grains,
+          maxAmplitude
+        };
+        return richData;
+      });
   });
 };

@@ -7,7 +7,7 @@ class Filters extends Component {
     super(props);
   }
 
-  filterStyle (open) {
+  filterStyle(open) {
     return open ? { marginLeft: "0px" } : { marginLeft: "-100px" };
   }
 

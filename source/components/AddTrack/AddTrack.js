@@ -5,7 +5,6 @@ import "./AddTrack.styl";
 import Icon from "../../containers/Icon/Icon";
 
 class AddTrack extends Component {
-
   constructor(props) {
     super(props);
     this.handleOnChange = this.handleOnChange.bind(this);
@@ -18,7 +17,6 @@ class AddTrack extends Component {
   }
 
   render() {
-
     const { id } = this.props;
 
     return (

@@ -4,7 +4,7 @@
  * @param {Number} size The eventual length of the array generated.
  * @returns {Array} Array with keys from 0 to size-1
  */
-export const range = (size) => [...Array(size).keys()];
+export const range = size => [...Array(size).keys()];
 
 /**
  * Faster flooring method using a bitwise trick with better behavior than Math.floor().

@@ -6,7 +6,7 @@ import { AppContainer } from "react-hot-loader";
 import App from "./components/App/App";
 import runtime from "serviceworker-webpack-plugin/lib/runtime";
 
-const render = (Component) => {
+const render = Component => {
   ReactDOM.render(
     <AppContainer>
       <Component />

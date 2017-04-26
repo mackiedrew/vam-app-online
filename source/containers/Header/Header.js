@@ -9,7 +9,7 @@ import Icon from "../../containers/Icon/Icon";
  * a pretty display format. It should not do a lot of the heavy lifting, most of it should be given
  * to a library for processing or provided directly through the props.
  */
-const Header = (props) =>
+const Header = props => (
   <header className="header">
     <button onClick={props.toggleFilter}>
       <Icon icon="library_add" />
@@ -22,6 +22,7 @@ const Header = (props) =>
     <button onClick={props.toggleSettings}>
       <Icon icon="settings" />
     </button>
-  </header>;
+  </header>
+);
 
 export default Header;
