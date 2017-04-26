@@ -38,6 +38,7 @@ class AudioManager extends Component {
       tracks &&
       allTrackIds.map(id => {
         const { url, file } = tracks[id];
+        console.log(tracks[id])
         const { type } = file;
         const muted = mutedTracks[id];
         return (

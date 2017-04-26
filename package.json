@@ -22,7 +22,7 @@
     "hint": "./node_modules/.bin/jshint",
     "test": "./node_modules/.bin/jest",
     "coverage": "./node_modules/.bin/codecov -t eb51943d-60b7-41f2-ba0c-4e3dc0ea802d",
-    "start": " yarn watch & ./node_modules/.bin/webpack-dev-server",
+    "start": "rm -rf build/*.js && (yarn watch & ./node_modules/.bin/webpack-dev-server)",
     "deploy": "yarn run clean && yarn run build:production && ./node_modules/.bin/gh-pages -d build"
   },
   "jest": {

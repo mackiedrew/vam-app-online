@@ -195,11 +195,9 @@ class App extends Component {
     return actualNewView;
   }
 
-  simpleAddTracks(id, file) {
+  simpleAddTracks(newTracks) {
     const { tracks } = this.state;
-
-    const newTrack = { [id]: file };
-    const newTrackList = { ...tracks, ...newTrack };
+    const newTrackList = { ...tracks, ...newTracks };
     const stateChange = { tracks: newTrackList };
     // Set tracks state to be previous state plus new track
     this.setState(stateChange);
@@ -209,13 +207,23 @@ class App extends Component {
     this.setState({ selectedTrack: id });
   }
 
-  handleTrackAdd(file) {
-    // TODO: Put overwriting of old paths here
-    const newId = this.state.nextId;
+  handleTrackAdd(files) {
+    // Add all selected files
+    const newIds = files.map(() => shortid.generate());
+    const newTracks = newIds.reduce((tracks, id, i) => ({
+      ...tracks,
+      [id]: files[i],
+    }), {});
+
+    this.simpleAddTracks(newTracks);
+
+    // Set the current track to the last file added.
+    const currentTrackId = newIds.reverse()[0];
+    this.selectTrack(currentTrackId);
+
+    // Provide AddTrack with new id after addition.
     const nextId = shortid.generate();
     this.setState({ nextId: nextId });
-    this.selectTrack(newId);
-    this.simpleAddTracks(newId, file);
   }
 
   toggleFilter() {
