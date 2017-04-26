@@ -16,3 +16,8 @@ test:
     - yarn test
   post:
     - yarn run coverage
+
+general:
+  branches:
+    ignore:
+      - gh-pages
