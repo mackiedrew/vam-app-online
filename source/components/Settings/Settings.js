@@ -14,8 +14,8 @@ class Settings extends Component {
   }
 
   generateFields() {
-    return Object.keys(config).map(name => {
-      const { value, unit, label } = config[name];
+    return Object.keys(config).map((name) => {
+      const {value, unit, label, type} = config[name];
 
       return (
         <div className="field" key={name}>

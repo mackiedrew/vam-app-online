@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import "./SeekBar.styl";
 
 // Libraries
-import { secondsToSamples } from "../../help/wav/wav";
+import { secondsToSamples, samplesToTime } from "../../help/wav/wav";
+import { leadingZeros } from "../../help/generic/generic";
 
 // Components
 import ToggleButton from "../../containers/ToggleButton/ToggleButton";
@@ -17,18 +18,6 @@ class SeekBar extends Component {
     // Initialize extended class with passed props
     super(props);
 
-    // Set initial state to make it easier to reset to later
-    this.initialState = {
-      currentTime: {
-        ms: 0,
-        s: 0,
-        m: 0,
-        h: 0
-      }
-    };
-    // Reset state to initialState
-    this.state = this.initialState;
-
     // Bind functions to `this`
     this.seekSamples = this.seekSamples.bind(this);
     this.seekSeconds = this.seekSeconds.bind(this);
@@ -36,16 +25,6 @@ class SeekBar extends Component {
     this.handleMinus10 = this.handleMinus10.bind(this);
     this.handlePlus1 = this.handlePlus1.bind(this);
     this.handleMinus1 = this.handleMinus1.bind(this);
-  }
-
-  leadingZeros(rawNumber, columns = 2) {
-    const number = String(Math.round(rawNumber));
-    const digits = number.length;
-    const neededZeros = columns - digits;
-    const zeroes = neededZeros > 0 ? new Array(neededZeros).fill("0") : [];
-    const allColumns = [...zeroes, number];
-    const output = allColumns.reduce((a, b) => a + b, "");
-    return output;
   }
 
   /**
@@ -84,12 +63,13 @@ class SeekBar extends Component {
 
   render() {
     // Break out values for the sake of easier template reading
-    const { currentTime: { ms, s, m, h } } = this.state;
+    const { seek, viewMagnify, togglePlay, playing } = this.props;
+    const time = samplesToTime(seek);
+    const { ms, s, m, h } = time;
 
     // Construct new time string
-    const time =
-      `${this.leadingZeros(h)}:${this.leadingZeros(m)}:` +
-      `${this.leadingZeros(s)}:${this.leadingZeros(ms, 3)}`;
+    const timeStamp = `${leadingZeros(h)}:${leadingZeros(m)}:` + 
+      `${leadingZeros(s)}:${leadingZeros(ms, 3)}`;
 
     return (
       <div className="seek-bar">
@@ -102,8 +82,10 @@ class SeekBar extends Component {
           </button>
           <ToggleButton
             offContents={<Icon icon="play_arrow" />}
+            offFunction={() => togglePlay()}
+            on={playing}
             onContents={<Icon icon="pause" />}
-            on
+            onFunction={() => togglePlay()}
           />
           <button className="seek-plus-1" onClick={this.handlePlus1}>
             <Icon icon="skip_next" />
@@ -113,7 +95,14 @@ class SeekBar extends Component {
           </button>
         </div>
         <div className="indicators">
-          <div className="current-time">{time}</div>
+          <button className="zoom-in" onClick={() => viewMagnify(0.75)}>
+            <Icon icon="zoom_in" />
+          </button>
+          <button className="zoom-out" onClick={() => viewMagnify(1.5)}>
+            <Icon icon="zoom_out" />
+          </button>
+          <div className="current-time">{timeStamp}</div>
+
         </div>
       </div>
     );

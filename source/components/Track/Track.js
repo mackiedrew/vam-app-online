@@ -2,9 +2,14 @@
 import React, { Component } from "react";
 import "./Track.styl";
 
+// Library
+import keyboard from "keyboardjs";
+
 // Helpers
 import { richReadWav } from "../../help/wav/wav";
 import { divisionBinarySearch } from "../../help/generic/generic";
+
+import config from "../../config";
 
 // Components
 import Waveform from "../../containers/Waveform/Waveform";
@@ -47,6 +52,32 @@ class Track extends Component {
     this.readPath = this.readPath.bind(this);
     this.handleRemoveButton = this.handleRemoveButton.bind(this);
     this.generateSeekLineStyle = this.generateSeekLineStyle.bind(this);
+    this.handleSelectTrack = this.handleSelectTrack.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+  }
+
+  componentDidMount() {
+    keyboard.bind(config.next.value, () => {
+      if (this.props.selected) {
+        const { seekTo, seek } = this.props;
+        const currentGrainIndex = this.sampleToGrain(seek);
+        const nextGrainIndex = currentGrainIndex + 1;
+        const nextGrain = this.state.grains[nextGrainIndex];
+        const startOfNextGrain = nextGrain.start;
+        seekTo(startOfNextGrain);
+      }
+    });
+
+    keyboard.bind(config.previous.value, () => {
+      if (this.props.selected) {
+        const { seekTo, seek } = this.props;
+        const currentGrainIndex = this.sampleToGrain(seek);
+        const nextGrainIndex = currentGrainIndex - 1;
+        const nextGrain = this.state.grains[nextGrainIndex];
+        const startOfNextGrain = nextGrain.start;
+        seekTo(startOfNextGrain);
+      }
+    });
   }
 
   /**
@@ -66,7 +97,7 @@ class Track extends Component {
   readPath() {
     const { file } = this.props;
     return richReadWav(file)
-      .then(wavData => {
+      .then((wavData) => {
         this.setState({ ...wavData });
         return wavData;
       })
@@ -103,7 +134,38 @@ class Track extends Component {
   render() {
     // Break out values for the sake of easier template reading
     const { name, grains, maxAmplitude, error } = this.state;
-    const { seekTo, selected } = this.props;
+    const { seekTo, selected, view, id, toggleMute, muted } = this.props;
+
+
+    const grainsToShow = grains.length > 0 && (() => {
+      const lastGrainIndex = grains.length - 1; 
+      const firstGrainToShowIndex =  this.sampleToGrain(view.start);
+      const lastGrainToShowIndex =  this.sampleToGrain(view.end) || lastGrainIndex;
+      const firstGrainToShow = grains[firstGrainToShowIndex];
+      const lastGrainToShow = grains[lastGrainToShowIndex];
+      const moreStart = firstGrainToShowIndex !== 0;
+      const moreEnd = lastGrainIndex !== lastGrainToShowIndex;
+
+      const startFiller = [{
+        start: view.start,
+        end: firstGrainToShow.start,
+        filler: true,
+        more: moreStart,
+      }];
+      const endFiller = [{
+        start: lastGrainToShow.end,
+        end: view.end,
+        filler: true,
+        more: moreEnd,
+      }];
+      const grainsToShow = [
+        ...startFiller,
+        ...grains.slice(firstGrainToShowIndex, lastGrainToShowIndex + 1),
+        ...endFiller,
+      ];
+      return grainsToShow;
+    })();
+
     // Generate styles
     const seekLineStyle = this.generateSeekLineStyle();
 
@@ -129,10 +191,11 @@ class Track extends Component {
               onContents={<Icon icon="radio_button_checked" />}
             />
             <ToggleButton
-              offContents={<Icon icon="volume_off" />}
-              offFunction={false}
-              on={selected}
-              onContents={<Icon icon="volume_up" />}
+              offContents={<Icon icon="volume_up" />}
+              offFunction={() => toggleMute(id)}
+              on={muted}
+              onContents={<Icon icon="volume_off" />}
+              onFunction={() => toggleMute(id)}
             />
           </div>
           <span className="name" style={nameStyle}>{name}</span>
@@ -145,9 +208,10 @@ class Track extends Component {
           {error ? <strong className="error">{error}</strong> : ""}
           <div className="seek-line" style={seekLineStyle} />
           <Waveform
-            blocks={grains}
+            blocks={grainsToShow}
             maxAmplitude={maxAmplitude}
             seekTo={seekTo}
+            view={view}
           />
         </div>
       </div>

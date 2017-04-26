@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import "./App.styl";
 
+import config from "../../config";
+
 // Libraries
 import shortid from "shortid";
+import keyboard from "keyboardjs";
 import filterObj from "filter-obj";
+import { samplesToSeconds } from "../../help/wav/wav";
+import { floor } from "../../help/generic/generic";
 
 // Components
 import Header from "../../containers/Header/Header";
@@ -28,6 +33,7 @@ class App extends Component {
 
     // Set initial state to make it easier to reset to later
     this.initialState = {
+      playing: false,
       selectedTrack: undefined,
       nextId: nextId,
       filtersOpen: false,
@@ -35,10 +41,11 @@ class App extends Component {
       context: audioContext,
       tracks: {},
       trackLengths: {},
+      mutedTracks: {},
       seek: 0, // samples
       view: {
-        start: 0,
-        end: undefined
+        start: 44100 * 60 * 0,
+        end: 44100 * 60 * 10,
       }
     };
     // Reset state to initialState
@@ -53,6 +60,93 @@ class App extends Component {
     this.toggleFilter = this.toggleFilter.bind(this);
     this.toggleSettings = this.toggleSettings.bind(this);
     this.selectTrack = this.selectTrack.bind(this);
+    this.setView = this.setView.bind(this);
+    this.viewMagnify = this.viewMagnify.bind(this);
+    this.toggleMute = this.toggleMute.bind(this);
+    this.togglePlay = this.togglePlay.bind(this);
+    this.reportSeek = this.reportSeek.bind(this);
+    this.reportPaused = this.reportPaused.bind(this);
+    this.play = this.play.bind(this);
+    this.pause = this.pause.bind(this);
+    this.setTracks = this.setTracks.bind(this);
+    this.getAudioTags = this.getAudioTags.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.muteTrack = this.muteTrack.bind(this);
+  }
+
+  componentDidMount() {
+    keyboard.bind([config.play.value, "space"], this.togglePlay);
+  }
+
+  togglePlay() {
+    const { playing } = this.state;
+    playing ? this.pause() : this.play();
+    this.setState({ playing: !playing });
+  }
+
+  getAudioTag(id) {
+    const audioTag = document.getElementById(`audio-manager-${id}`);
+    return audioTag;
+  }
+
+  muteTrack(id, muted) {
+    const audioTag = document.getElementById(`audio-manager-${id}`);
+    audioTag.mute = muted;
+  }
+
+  getAudioTags() {
+    const { tracks } = this.state;
+    const tracksIds = Object.keys(tracks);
+    const audioTags = tracksIds.map(this.getAudioTag);
+    return audioTags;
+  }
+
+  play() {
+    const audioTags = this.getAudioTags();
+    this.reportPaused(false);
+    audioTags.forEach((tag) => tag.play());
+  }
+
+  pause() {
+    const audioTags = this.getAudioTags();
+    this.reportPaused(true);
+    audioTags.forEach((tag) => tag.pause());
+  }
+
+  toggleMute(id) {
+    const { mutedTracks } = this.state;
+    const muted = id in mutedTracks && mutedTracks[id];
+    this.muteTrack(id, !muted);
+    const newMutedTracks = {
+      ...mutedTracks,
+      [id]: !muted,
+    };
+    const newState = { mutedTracks: newMutedTracks };
+    this.setState(newState);
+  }
+
+
+  reportSeek(sample) {
+    const stateChanges = { seek: sample };
+    this.setState(stateChanges);
+  }
+
+  reportPaused(paused) {
+    const stateChanges = { playing: !paused };
+    this.setState(stateChanges);
+  }
+
+  setTracks(sample = 0) {
+    const audioTags = this.getAudioTags();
+    const seconds = samplesToSeconds(sample);
+    audioTags.forEach((tag) => tag.currentTime = seconds);
+    return seconds;
+  }
+
+  enforce() {
+    
+    const { seek } = this.state;
+    this.setTracks(seek);
   }
 
   /**
@@ -67,9 +161,40 @@ class App extends Component {
     const candidatePositions = [0, sample, maxSample];
     const sortedPositions = candidatePositions.sort((a, b) => a - b);
     const newPosition = sortedPositions[1];
-    const stateChanges = { seek: newPosition };
-    this.setState(stateChanges);
+    this.reportSeek(newPosition);
+    this.setTracks(newPosition);
     return newPosition;
+  }
+
+  setView({start, end}) {
+    const { trackLengths } = this.state;
+    const lengthList = Object.keys(trackLengths).map(key => trackLengths[key]);
+    const maxSample = Math.max(...lengthList);
+
+    const endCandidates = [1, end, maxSample * 2];
+    const endSorted = endCandidates.sort((a, b) => a - b);
+    const newEnd = floor(endSorted[1]);
+
+    const startCandidates = [0, start, newEnd - 1];
+    const startSorted = startCandidates.sort((a, b) => a - b);
+    const newStart = floor(startSorted[1]);
+
+    const newView = {start: newStart, end: newEnd};
+    const stateChanges = { view: newView };
+    this.setState(stateChanges);
+    return newView;
+  }
+
+  viewMagnify(factor) {
+    const { view } = this.state;
+    const { start, end } = view;
+
+    const newView = {
+      start: start,
+      end: end * factor,
+    };
+    const actualNewView = this.setView(newView);
+    return actualNewView;
   }
 
   simpleAddTracks(id, file) {
@@ -150,17 +275,19 @@ class App extends Component {
     return newTrackLengths;
   }
 
+
   render() {
     // Breakout 2-layer-deep values for easy reference
     const {
-      nextId,
       seek,
       tracks,
       filtersOpen,
       settingsOpen,
       selectedTrack,
+      playing,
       view,
-      context
+      context,
+      mutedTracks
     } = this.state;
 
     return (
@@ -177,11 +304,16 @@ class App extends Component {
             context={context}
             handleTrackAdd={this.handleTrackAdd}
             handleTrackRemove={this.handleTrackRemove}
+            mutedTracks={mutedTracks}
+            playing={playing}
+            reportPaused={this.reportPaused}
+            reportSeek={this.reportSeek}
             reportTrackLength={this.reportTrackLength}
             seek={seek}
             seekTo={this.seekTo}
             selectTrack={this.selectTrack}
             selectedTrack={selectedTrack}
+            toggleMute={this.toggleMute}
             tracks={tracks}
             view={view}
           />
@@ -189,7 +321,13 @@ class App extends Component {
         </main>
 
         <footer>
-          <SeekBar seek={seek} seekTo={this.seekTo} />
+          <SeekBar
+            playing={playing}
+            seek={seek}
+            seekTo={this.seekTo}
+            togglePlay={this.togglePlay}
+            viewMagnify={this.viewMagnify}
+          />
         </footer>
 
       </div>
