@@ -1,9 +1,11 @@
+/* eslint-env node */
+
 // Libraries
-import { decode } from "wav-decoder";
 import PromiseWorker from "promise-worker";
 import ObjectPromiseWorker from "promise-worker-transferable";
 import GrainAmplitudeWorker from "../../workers/grainAmplitudes.worker.js";
 import ReadWavWorker from "../../workers/readWav.worker.js";
+
 // Helpers
 import { logicalSegment } from "../generic/generic";
 
@@ -36,14 +38,6 @@ export const readFile = file => {
   const worker = new ReadWavWorker();
   const promiseWorker = new ObjectPromiseWorker(worker);
   return promiseWorker.postMessage(file);
-};
-
-/**
- * Reads and returns a promise containing the data within the wav files decoded by `wav-decoder`.
- * @param {String} filePath Absolute full path to the wav file, including filename.ext
- */
-export const decodeWav = file => {
-  return readFile(file).then(buffer => decode(buffer));
 };
 
 /**
