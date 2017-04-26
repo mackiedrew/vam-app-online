@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import "./Track.styl";
 
 // Helpers
-import wav from "../../help/wav/wav";
+import { richReadWav } from "../../help/wav/wav";
 import { divisionBinarySearch } from "../../help/generic/generic";
 
 // Components
@@ -65,8 +65,7 @@ class Track extends Component {
    */
   readPath() {
     const { file } = this.props;
-    return wav
-      .richReadWav(file)
+    return richReadWav(file)
       .then(wavData => {
         this.setState({ ...wavData });
         return wavData;

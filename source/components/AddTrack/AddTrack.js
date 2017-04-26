@@ -10,10 +10,15 @@ class AddTrack extends Component {
     this.handleOnChange = this.handleOnChange.bind(this);
   }
 
+  // Handles change change in upload location.
   handleOnChange() {
     const { handleTrackAdd, id } = this.props;
-    const selectedFile = document.getElementById(id).files[0];
+    const inputTag = document.getElementById(id);
+    const selectedFile = inputTag.files[0];
     handleTrackAdd(selectedFile);
+    inputTag.type = "";
+    inputTag.value = "";
+    inputTag.type = "file";
   }
 
   render() {
