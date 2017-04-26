@@ -13,6 +13,6 @@ test:
     - yarn lint:javascript
     - yarn lint:stylus
     - yarn hint
-#    - yarn test
+    - yarn test
   post:
     - yarn run coverage
