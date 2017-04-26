@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -73,7 +73,7 @@
 "use strict";
 
 
-var isPromise = __webpack_require__(2);
+var isPromise = __webpack_require__(3);
 
 function registerPromiseWorker(callback) {
 
@@ -384,10 +384,39 @@ function createReader(dataView) {
 
 module.exports.decode = decode;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _register = __webpack_require__(0);
+
+var _register2 = _interopRequireDefault(_register);
+
+var _wavDecoder = __webpack_require__(1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* eslint-disable */
+
+(0, _register2.default)(function (file) {
+  return new Promise(function (resolve) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      resolve(reader.result);
+    };
+    reader.readAsArrayBuffer(file);
+  }).then(function (buffer) {
+    return (0, _wavDecoder.decode)(buffer);
+  });
+});
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports) {
 
 module.exports = isPromise;
@@ -398,7 +427,7 @@ function isPromise(obj) {
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports) {
 
 var g;
@@ -423,31 +452,6 @@ try {
 
 module.exports = g;
 
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_promise_worker_transferable_register__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_promise_worker_transferable_register___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_promise_worker_transferable_register__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_wav_decoder__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_wav_decoder___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_wav_decoder__);
-/* eslint-disable */
-
-
-
-
-__WEBPACK_IMPORTED_MODULE_0_promise_worker_transferable_register___default()((file) => {
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      resolve(reader.result);
-    };
-    reader.readAsArrayBuffer(file);
-  }).then(buffer => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_wav_decoder__["decode"])(buffer));
-});
 
 /***/ })
 /******/ ]);

@@ -73,7 +73,59 @@
 "use strict";
 
 
-var isPromise = __webpack_require__(1);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var configuration = {
+  grain: {
+    label: "Grain Time",
+    value: 5,
+    unit: "s",
+    type: "number"
+  },
+  quietCutoff: {
+    label: "Quietness Threshold",
+    value: 10,
+    unit: "%",
+    type: "number"
+  },
+  play: {
+    label: "Play/Pause Key",
+    value: "p",
+    type: "text"
+  },
+  next: {
+    label: "Next Grain Key",
+    value: "e",
+    type: "text"
+  },
+  previous: {
+    label: "Previous Grain Key",
+    value: "q",
+    type: "text"
+  },
+  nextTrack: {
+    label: "Next Track Key",
+    value: "j",
+    type: "text"
+  },
+  previousTrack: {
+    label: "Previous Track Key",
+    value: "k",
+    type: "text"
+  }
+};
+
+exports.default = configuration;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isPromise = __webpack_require__(3);
 
 function parseJsonSafely(str) {
   try {
@@ -158,7 +210,62 @@ function registerPromiseWorker(callback) {
 module.exports = registerPromiseWorker;
 
 /***/ }),
-/* 1 */
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /* eslint-disable */
+
+var _register = __webpack_require__(1);
+
+var _register2 = _interopRequireDefault(_register);
+
+var _config = __webpack_require__(0);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _register2.default)(function (message) {
+  var samples = message.samples,
+      grains = message.grains,
+      framesPerSample = message.framesPerSample;
+
+  var amplitudes = grains.map(function (grain, i) {
+    var totaledAmplitude = samples[i].reduce(function (a, b) {
+      return a + b;
+    }, 0);
+    return totaledAmplitude / (grain.end - grain.start + 1);
+  });
+  var simpleGrains = grains.map(function (grain, index) {
+    return {
+      start: grain.start,
+      end: grain.end,
+      amplitude: amplitudes[index]
+    };
+  });
+  var maxAmplitude = amplitudes.reduce(function (a, b) {
+    return a > b ? a : b;
+  }, -Infinity);
+  var finalGrains = simpleGrains.map(function (grain) {
+    var amplitudePercentage = grain.amplitude / maxAmplitude;
+    var cutoffPercentage = _config2.default.quietCutoff.value / 100;
+    var quiet = amplitudePercentage <= cutoffPercentage;
+    return _extends({}, grain, {
+      quiet: quiet
+    });
+  });
+  var result = {
+    grains: finalGrains,
+    maxAmplitude: maxAmplitude
+  };
+  return result;
+});
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports) {
 
 module.exports = isPromise;
@@ -166,37 +273,6 @@ module.exports = isPromise;
 function isPromise(obj) {
   return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
 }
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_promise_worker_register__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_promise_worker_register___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_promise_worker_register__);
-/* eslint-disable */
-
-
-
-__WEBPACK_IMPORTED_MODULE_0_promise_worker_register___default()((message) => {
-  const { samples, grains, framesPerSample } = message;
-  const amplitudes = grains.map((grain, i) => {
-    const totaledAmplitude = samples[i].reduce((a, b) => a + b , 0);
-    return totaledAmplitude / (grain.end - grain.start + 1);
-  });
-  const finalGrains = grains.map((grain, index) => {
-    return {
-      start: grain.start,
-      end: grain.end,
-      amplitude: amplitudes[index]
-    }
-  });
-  const maxAmplitude = amplitudes.reduce((a, b) => a > b ? a : b, -Infinity);
-  const result = { grains: finalGrains, maxAmplitude};
-  return result;
-});
 
 
 /***/ })
