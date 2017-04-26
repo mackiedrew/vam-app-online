@@ -2,7 +2,13 @@ import React, { Component } from "react";
 import "./SeekBar.styl";
 
 // Libraries
-import { secondsToSamples } from "../../help/wav/wav";
+import { secondsToSamples, samplesToTime } from "../../help/wav/wav";
+import { leadingZeros } from "../../help/generic/generic";
+
+// Components
+import ToggleButton from "../../containers/ToggleButton/ToggleButton";
+import Icon from "../../containers/Icon/Icon";
+
 
 /**
  * SeekBar will handle the controls and logic, and maybe a UI for interacting with the current seek
@@ -12,13 +18,6 @@ class SeekBar extends Component {
   constructor(props) {
     // Initialize extended class with passed props
     super(props);
-
-    // Set initial state to make it easier to reset to later
-    this.initialState = {
-      currentTime: "00:00:00" // seconds
-    };
-    // Reset state to initialState
-    this.state = this.initialState;
 
     // Bind functions to `this`
     this.seekSamples = this.seekSamples.bind(this);
@@ -65,29 +64,47 @@ class SeekBar extends Component {
 
   render() {
     // Break out values for the sake of easier template reading
-    const { currentTime } = this.state;
-    const { seek } = this.props;
+    const { seek, viewMagnify, togglePlay, playing } = this.props;
+    const time = samplesToTime(seek);
+    const { ms, s, m, h } = time;
 
-    return (
-      <div className="seek-bar">
+    // Construct new time string
+    const timeStamp = `${leadingZeros(h)}:${leadingZeros(m)}:` + 
+      `${leadingZeros(s)}:${leadingZeros(ms, 3)}`;
+
+    return <div className="seek-bar">
         <div className="control-bar">
           <button className="seek-minus-10" onClick={this.handleMinus10}>
-            -10
+            <Icon icon="replay_10" />
           </button>
           <button className="seek-minus-1" onClick={this.handleMinus1}>
-            -1
+            <Icon icon="skip_previous" />
           </button>
-          <button className="seek-plus-1" onClick={this.handlePlus1}>+1</button>
+          <ToggleButton
+            offContents={<Icon icon="play_arrow" />}
+            offFunction={() => togglePlay()}
+            on={playing}
+            onContents={<Icon icon="pause" />}
+            onFunction={() => togglePlay()}
+          />
+          <button className="seek-plus-1" onClick={this.handlePlus1}>
+            <Icon icon="skip_next" />
+          </button>
           <button className="seek-plus-10" onClick={this.handlePlus10}>
-            +10
+            <Icon icon="forward_10" />
           </button>
         </div>
         <div className="indicators">
-          <div className="current-sample">Sample: {seek}</div>
-          <div className="current-time">Time: {currentTime}</div>
+          <button className="zoom-in" onClick={() => viewMagnify(0.75)}>
+            <Icon icon="zoom_in" />
+          </button>
+          <button className="zoom-out" onClick={() => viewMagnify(1.5)}>
+            <Icon icon="zoom_out" />
+          </button>
+          <div className="current-time">{timeStamp}</div>
+
         </div>
-      </div>
-    );
+      </div>;
   }
 }
 

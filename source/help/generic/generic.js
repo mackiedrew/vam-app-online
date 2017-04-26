@@ -1,5 +1,10 @@
-// Libraries
-import range from "lodash.range";
+/**
+ * This generates an array with length of given size. With array entries being from zero to size
+ * minus one. Which makes it work well as a mappable object with a build-in index.
+ * @param {Number} size The eventual length of the array generated.
+ * @returns {Array} Array with keys from 0 to size-1
+ */
+export const range = (size) => [...Array(size).keys()];
 
 /**
  * Faster flooring method using a bitwise trick with better behavior than Math.floor().
@@ -30,7 +35,7 @@ export const ceiling = value => {
  */
 export const logicalSegment = (array, segmentSize) => {
   const totalSegments = ceiling(array.length / segmentSize);
-  const segmentsRange = range(0, totalSegments);
+  const segmentsRange = range(totalSegments);
   const starts = segmentsRange.map(segment => segment * segmentSize);
   // Good
   const ends = segmentsRange.map(segment => {
@@ -85,4 +90,35 @@ export const divisionBinarySearch = (targetValue, divisionArray) => {
       low = middle + 1;
     }
   }
+};
+
+
+export const leadingZeros = (rawNumber, columns = 2) => {
+  const number = String(Math.round(rawNumber));
+  const digits = number.length;
+  const neededZeros = columns - digits;
+  const zeroes = neededZeros > 0 ? new Array(neededZeros).fill("0") : [];
+  const allColumns = [...zeroes, number];
+  const output = allColumns.reduce((a, b) => a + b, "");
+  return output;
+};
+
+export const intersect = (one, two) => {
+  const isOneSmaller = one.length < two.length;
+  const smallerObject = isOneSmaller ? one : two;
+  const largerObject = isOneSmaller ? two : one;
+  const smallerObjectKeys = Object.keys(smallerObject);
+  const isShared = smallerObjectKeys.map((key) => key in largerObject);
+  const intersection = smallerObjectKeys.reduce((current, key) =>
+    isShared[key] ? {...current, key: one[key]} : current
+    , {});
+  return intersection;
+};
+
+export const difference = (minuend, subtrahend) => {
+  const intersection = intersect(minuend, subtrahend);
+  const minuendKeys = Object.keys(minuend);
+  const differenceKeys = minuendKeys.filter((key) => !(key in intersection));
+  const difference = differenceKeys.reduce((total, key) => ({ ...total, key: minuend[key] }), {});
+  return difference;
 };
