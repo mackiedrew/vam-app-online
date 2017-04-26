@@ -3,6 +3,8 @@ import "./Tracks.styl";
 
 // Components
 import Track from "../Track/Track";
+import TimeBar from "../../containers/TimeBar/TimeBar";
+import AudioManager from "../../components/AudioManager/AudioManager";
 
 class Tracks extends Component {
   constructor(props) {
@@ -12,7 +14,6 @@ class Tracks extends Component {
     // Bind functions to `this`
     this.trackIds = this.trackIds.bind(this);
     this.renderTrackList = this.renderTrackList.bind(this);
-    this.renderAudioTags = this.renderAudioTags.bind(this);
   }
 
   trackIds() {
@@ -34,6 +35,8 @@ class Tracks extends Component {
       reportTrackLength,
       handleTrackRemove,
       handleTrackAdd,
+      mutedTracks,
+      toggleMute,
       selectTrack,
       seekTo
     } = this.props;
@@ -44,41 +47,28 @@ class Tracks extends Component {
       trackIds &&
       trackIds.map(id => {
         const selected = selectedTrack === id;
-
         return (
           <Track
             add={handleTrackAdd}
             context={context}
-            file={tracks[id]}
+            file={tracks[id].file}
             id={id}
             key={id}
+            muted={mutedTracks[id]}
             remove={handleTrackRemove}
             reportTrackLength={reportTrackLength}
             seek={seek}
             seekTo={seekTo}
             selectTrack={selectTrack}
             selected={selected}
+            toggleMute={toggleMute}
             view={view}
           />
         );
       });
     return trackList;
   }
-
-  renderAudioTags() {
-    const { tracks } = this.props;
-    const trackIds = tracks && this.trackIds();
-
-    return trackIds.map(id => {
-      const { path, type } = tracks[id];
-      return (
-        <audio autoPlay={false} id={id} key={id} controls>
-          <source key={id} src={path} type={type} />
-        </audio>
-      );
-    });
-  }
-
+  
   renderNoTracks() {
     const trackIds = this.trackIds();
     const tracksExist = trackIds.length > 0;
@@ -90,11 +80,20 @@ class Tracks extends Component {
   }
 
   render() {
+    const { view, tracks, playing, reportSeek, reportPaused, selectedTrack, mutedTracks } = this.props;
     return (
       <section className="tracks">
-        {this.renderNoTracks()}
-        {this.renderTrackList()}
-        {this.renderAudioTags()}
+        <TimeBar view={view} />
+        <AudioManager
+          mutedTracks={mutedTracks}
+          playing={playing}
+          reportPaused={reportPaused}
+          reportSeek={reportSeek}
+          selectedTrack={selectedTrack}
+          tracks={tracks} 
+        />
+        { this.renderNoTracks() }
+        { this.renderTrackList() }
       </section>
     );
   }

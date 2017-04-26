@@ -7,7 +7,7 @@ import GrainAmplitudeWorker from "../../workers/grainAmplitudes.worker.js";
 import ReadWavWorker from "../../workers/readWav.worker.js";
 
 // Helpers
-import { logicalSegment } from "../generic/generic";
+import { logicalSegment, floor } from "../generic/generic";
 
 // Load configuration file
 import config from "../../config.js";
@@ -29,6 +29,43 @@ export const secondsToSamples = (seconds = 1, sampleRate = 44100) =>
  */
 export const samplesToSeconds = (samples = 1, sampleRate = 44100) =>
   samples / sampleRate;
+
+export const samplesToMilliseconds = (samples = 1, sampleRate = 44100) =>
+  (samples / sampleRate) * 1000;
+
+export const samplesToMinutes = (samples = 1, sampleRate = 44100) =>
+  (samples / sampleRate) / 60;
+
+export const samplesToHours = (samples = 1, sampleRate = 44100) =>
+  (samples / sampleRate) / 3600;
+
+export const hoursToSamples = (hours = 1, sampleRate = 44100) =>
+  hours * 3600 * sampleRate;
+
+export const minutesToSamples = (minutes = 1, sampleRate = 44100) =>
+  minutes * 60 * sampleRate;
+
+export const millisecondsToSamples = (milliseconds = 1, sampleRate = 44100) =>
+   milliseconds * 1000 * sampleRate;
+
+export const samplesToTime = (samples, sampleRate = 44100) => {
+  
+  let remainingSamples = samples;
+
+  const h = floor(samplesToHours(remainingSamples, sampleRate));
+  remainingSamples -= hoursToSamples(h, sampleRate);
+
+  const m = floor(samplesToMinutes(remainingSamples, sampleRate));
+  remainingSamples -= minutesToSamples(m, sampleRate);
+
+  const s = floor(samplesToSeconds(remainingSamples, sampleRate));
+  remainingSamples -= secondsToSamples(s, sampleRate);
+
+  const ms = floor(samplesToMilliseconds(remainingSamples, sampleRate));
+  remainingSamples -= millisecondsToSamples(s, sampleRate);
+
+  return { h, m, s, ms};
+};
 
 /**
  * Reads and returns a promise containing the file buffer.
