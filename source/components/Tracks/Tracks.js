@@ -35,14 +35,14 @@ class Tracks extends Component {
       handleTrackRemove,
       handleTrackAdd,
       selectTrack,
-      seekTo,
+      seekTo
     } = this.props;
     // Create list of tracks for iteration
     const trackIds = this.trackIds();
     // Create an array containing <Track /> elements matching tracks in state
-    const trackList = trackIds &&
-      trackIds.map((id) => {
-        
+    const trackList =
+      trackIds &&
+      trackIds.map(id => {
         const selected = selectedTrack === id;
 
         return (
@@ -69,7 +69,7 @@ class Tracks extends Component {
     const { tracks } = this.props;
     const trackIds = tracks && this.trackIds();
 
-    return trackIds.map((id) => {
+    return trackIds.map(id => {
       const { path, type } = tracks[id];
       return (
         <audio autoPlay={false} id={id} key={id} controls>
@@ -82,18 +82,19 @@ class Tracks extends Component {
   renderNoTracks() {
     const trackIds = this.trackIds();
     const tracksExist = trackIds.length > 0;
-    return tracksExist ? "" :
-      <div className="no-tracks">
-        no tracks
-      </div>;
+    return tracksExist
+      ? ""
+      : <div className="no-tracks">
+          no tracks
+        </div>;
   }
 
   render() {
     return (
       <section className="tracks">
-        { this.renderNoTracks() }
-        { this.renderTrackList() }
-        { this.renderAudioTags() }
+        {this.renderNoTracks()}
+        {this.renderTrackList()}
+        {this.renderAudioTags()}
       </section>
     );
   }

@@ -4,9 +4,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
 import App from "./components/App/App";
-import runtime from "serviceworker-webpack-plugin/lib/runtime";
+import * as OfflinePluginRuntime from "offline-plugin/runtime";
 
-const render = (Component) => {
+const render = Component => {
   ReactDOM.render(
     <AppContainer>
       <Component />
@@ -26,6 +26,4 @@ if (module.hot) {
 }
 
 // Service Worker
-if ("serviceWorker" in navigator) {
-  runtime.register();
-}
+OfflinePluginRuntime.install();

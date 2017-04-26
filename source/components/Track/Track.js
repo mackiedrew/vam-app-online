@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import "./Track.styl";
 
 // Helpers
-import wav from "../../help/wav/wav";
+import { richReadWav } from "../../help/wav/wav";
 import { divisionBinarySearch } from "../../help/generic/generic";
 
 // Components
@@ -65,8 +65,8 @@ class Track extends Component {
    */
   readPath() {
     const { file } = this.props;
-    return wav.richReadWav(file)
-      .then((wavData) => {
+    return richReadWav(file)
+      .then(wavData => {
         this.setState({ ...wavData });
         return wavData;
       })
@@ -108,9 +108,15 @@ class Track extends Component {
     const seekLineStyle = this.generateSeekLineStyle();
 
     const nameStyle = selected ? { fontWeight: 700 } : { fontWeight: 200 };
-    const displayStyle = selected ?
-      { borderTop: "2px solid rgba(255,193,7,1)", borderBottom: "2px solid rgba(255,193,7,1)" } :
-      { borderTop: "2px solid rgb(240, 240, 240)", borderBottom: "2px solid rgb(240, 240, 240)" };
+    const selectedStyle = {
+      borderTop: "2px solid rgba(255,193,7,1)",
+      borderBottom: "2px solid rgba(255,193,7,1)"
+    };
+    const unselectedStyle = {
+      borderTop: "2px solid rgb(240, 240, 240)",
+      borderBottom: "2px solid rgb(240, 240, 240)"
+    };
+    const displayStyle = selected ? selectedStyle : unselectedStyle;
 
     return (
       <div className="track" id={this.wrapperID}>
@@ -121,7 +127,6 @@ class Track extends Component {
               offFunction={this.handleSelectTrack}
               on={selected}
               onContents={<Icon icon="radio_button_checked" />}
-
             />
             <ToggleButton
               offContents={<Icon icon="volume_off" />}
@@ -136,8 +141,8 @@ class Track extends Component {
           </button>
         </div>
         <div className="display" style={displayStyle}>
-          { maxAmplitude ? "" : <Loading /> }
-          { error ? <strong className="error">{error}</strong> : "" }
+          {maxAmplitude ? "" : <Loading />}
+          {error ? <strong className="error">{error}</strong> : ""}
           <div className="seek-line" style={seekLineStyle} />
           <Waveform
             blocks={grains}

@@ -12,7 +12,6 @@ class WaveBlock extends Component {
     this.relativeAmplitude = this.relativeAmplitude.bind(this);
     this.amplitudeStyle = this.amplitudeStyle.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    
   }
 
   /**
