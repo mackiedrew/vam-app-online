@@ -56,9 +56,12 @@ class WaveBlock extends Component {
     const waveBlockStyle = this.waveBlockStyle();
 
     return (
-      <div className={`wave-block ${filler ? "filler" : ""} ${more ? "more" : ""}`} style={waveBlockStyle}>
+      <div
+        className={`wave-block ${filler ? "filler" : ""} ${more ? "more" : ""}`}
+        style={waveBlockStyle}
+      >
         <div className="note">
-          { more ? "more..." : filler ? "track ends" : ""}
+          {more ? "more..." : filler ? "track ends" : ""}
         </div>
         <button
           className="amplitude"

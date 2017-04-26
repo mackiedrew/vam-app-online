@@ -68,7 +68,8 @@ class SeekBar extends Component {
     const { ms, s, m, h } = time;
 
     // Construct new time string
-    const timeStamp = `${leadingZeros(h)}:${leadingZeros(m)}:` + 
+    const timeStamp =
+      `${leadingZeros(h)}:${leadingZeros(m)}:` +
       `${leadingZeros(s)}:${leadingZeros(ms, 3)}`;
 
     return (

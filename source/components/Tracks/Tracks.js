@@ -68,7 +68,7 @@ class Tracks extends Component {
       });
     return trackList;
   }
-  
+
   renderNoTracks() {
     const trackIds = this.trackIds();
     const tracksExist = trackIds.length > 0;
@@ -80,7 +80,15 @@ class Tracks extends Component {
   }
 
   render() {
-    const { view, tracks, playing, reportSeek, reportPaused, selectedTrack, mutedTracks } = this.props;
+    const {
+      view,
+      tracks,
+      playing,
+      reportSeek,
+      reportPaused,
+      selectedTrack,
+      mutedTracks
+    } = this.props;
     return (
       <section className="tracks">
         <TimeBar view={view} />
@@ -90,10 +98,10 @@ class Tracks extends Component {
           reportPaused={reportPaused}
           reportSeek={reportSeek}
           selectedTrack={selectedTrack}
-          tracks={tracks} 
+          tracks={tracks}
         />
-        { this.renderNoTracks() }
-        { this.renderTrackList() }
+        {this.renderNoTracks()}
+        {this.renderTrackList()}
       </section>
     );
   }
