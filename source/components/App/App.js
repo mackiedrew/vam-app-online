@@ -72,10 +72,38 @@ class App extends Component {
     this.getAudioTags = this.getAudioTags.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.muteTrack = this.muteTrack.bind(this);
+    this.selectNextTrack = this.selectNextTrack.bind(this);
+    this.selectPreviousTrack = this.selectPreviousTrack.bind(this);
+  }
+
+  selectNextTrack() {
+    const { tracks, selectedTrack } = this.state;
+    const trackIds = Object.keys(tracks);
+    const selectedTrackIndex = trackIds.indexOf(selectedTrack);
+    const maxTrackIndex = trackIds.length - 1;
+    const isLastTrack = selectedTrackIndex >= maxTrackIndex;
+    const nextTrackIndex = isLastTrack ? 0 : selectedTrackIndex + 1;
+    const nextTrackId = trackIds[nextTrackIndex];
+    this.selectTrack(nextTrackId);
+  }
+
+  selectPreviousTrack() {
+    const { tracks, selectedTrack } = this.state;
+    const trackIds = Object.keys(tracks);
+    const selectedTrackIndex = trackIds.indexOf(selectedTrack);
+    const maxTrackIndex = trackIds.length - 1;
+    const isFirstTrack = selectedTrackIndex <= 0;
+    const previousTrackIndex = isFirstTrack
+      ? maxTrackIndex
+      : selectedTrackIndex - 1;
+    const previousTrackId = trackIds[previousTrackIndex];
+    this.selectTrack(previousTrackId);
   }
 
   componentDidMount() {
     keyboard.bind([config.play.value, "space"], this.togglePlay);
+    keyboard.bind(config.nextTrack.value, this.selectNextTrack);
+    keyboard.bind(config.previousTrack.value, this.selectPreviousTrack);
   }
 
   togglePlay() {
@@ -210,10 +238,13 @@ class App extends Component {
   handleTrackAdd(files) {
     // Add all selected files
     const newIds = files.map(() => shortid.generate());
-    const newTracks = newIds.reduce((tracks, id, i) => ({
-      ...tracks,
-      [id]: files[i],
-    }), {});
+    const newTracks = newIds.reduce(
+      (tracks, id, i) => ({
+        ...tracks,
+        [id]: files[i]
+      }),
+      {}
+    );
 
     this.simpleAddTracks(newTracks);
 

@@ -217,6 +217,7 @@ class Track extends Component {
             blocks={grainsToShow}
             maxAmplitude={maxAmplitude}
             seekTo={seekTo}
+            selected={selected}
             view={view}
           />
         </div>

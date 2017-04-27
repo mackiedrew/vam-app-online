@@ -196,7 +196,7 @@ const configuration = {
       {
         test: /\.worker\.js$/,
         exclude: /node_modules/,
-        loader: ["worker-loader"]
+        loader: ["worker-loader", "babel-loader"]
       }
     ]
   },

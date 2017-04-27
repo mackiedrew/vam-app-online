@@ -4,7 +4,7 @@ import "./TimeBar.styl";
 import { samplesToTime, samplesToSeconds } from "../../help/wav/wav";
 import { range, leadingZeros } from "../../help/generic/generic";
 
-const Slice = ({ sample, sampleSpan }) => {
+export const Slice = ({ sample, sampleSpan }) => {
   const { h, m, s, ms } = samplesToTime(sample);
   const H = leadingZeros(h, 2);
   const M = leadingZeros(m, 2);

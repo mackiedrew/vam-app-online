@@ -21,6 +21,10 @@ describe('<WaveBlock /> structure', () => {
     expect(wrapper.find('button.amplitude')).toHaveLength(1)
   })
 
+  it('renders without crashing when quiet', () => {
+    shallow(<Subject {...mockProps} quiet />)
+  })
+
 })
 
 describe('<WaveBlock /> display math', () => {
