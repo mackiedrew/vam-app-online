@@ -19,9 +19,10 @@ class WaveBlock extends Component {
    * - uses flex-grow to determine proportion of waveform to grow to fill
    */
   waveBlockStyle() {
-    const { start, end } = this.props;
+    const { start, end, quiet } = this.props;
     const length = end - start;
-    return { flexGrow: length };
+    const backgroundColor = quiet ? "rgb(240, 230, 230)" : "rgb(240, 240, 240)";
+    return { flexGrow: length, backgroundColor };
   }
 
   /**
@@ -32,7 +33,7 @@ class WaveBlock extends Component {
     const { selected } = this.props;
     const fillPercentage = this.relativeAmplitude();
     const height = `${fillPercentage * 100}%`;
-    const opacity = selected ? "1.0" : "0.5";
+    const opacity = selected ? "1.0" : "0.4";
     return { height, opacity };
   }
 
@@ -56,9 +57,12 @@ class WaveBlock extends Component {
     const waveBlockStyle = this.waveBlockStyle();
 
     return (
-      <div className={`wave-block ${filler ? "filler" : ""} ${more ? "more" : ""}`} style={waveBlockStyle}>
+      <div
+        className={`wave-block ${filler ? "filler" : ""} ${more ? "more" : ""}`}
+        style={waveBlockStyle}
+      >
         <div className="note">
-          { more ? "more..." : filler ? "track ends" : ""}
+          {more ? "more..." : filler ? "track ends" : ""}
         </div>
         <button
           className="amplitude"

@@ -14,8 +14,8 @@ class Settings extends Component {
   }
 
   generateFields() {
-    return Object.keys(config).map((name) => {
-      const {value, unit, label, type} = config[name];
+    return Object.keys(config).map(name => {
+      const { value, unit, label, type } = config[name];
 
       return (
         <div className="field" key={name}>
@@ -25,7 +25,7 @@ class Settings extends Component {
               className="input"
               id={name}
               name={name}
-              type="number"
+              type={type}
               value={value}
             />
             <span className="unit">{unit}</span>

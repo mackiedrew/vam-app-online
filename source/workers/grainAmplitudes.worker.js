@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import registerPromiseWorker from "promise-worker/register";
+import config from "../config";
 
 registerPromiseWorker((message) => {
   const { samples, grains, framesPerSample } = message;
@@ -8,7 +9,7 @@ registerPromiseWorker((message) => {
     const totaledAmplitude = samples[i].reduce((a, b) => a + b , 0);
     return totaledAmplitude / (grain.end - grain.start + 1);
   });
-  const finalGrains = grains.map((grain, index) => {
+  const simpleGrains = grains.map((grain, index) => {
     return {
       start: grain.start,
       end: grain.end,
@@ -16,6 +17,18 @@ registerPromiseWorker((message) => {
     }
   });
   const maxAmplitude = amplitudes.reduce((a, b) => a > b ? a : b, -Infinity);
-  const result = { grains: finalGrains, maxAmplitude};
+  const finalGrains = simpleGrains.map((grain) => {
+    const amplitudePercentage = grain.amplitude / maxAmplitude;
+    const cutoffPercentage = config.quietCutoff.value / 100;
+    const quiet = amplitudePercentage <= cutoffPercentage;
+    return {
+      ...grain,
+      quiet
+    };
+  })
+  const result = {
+    grains: finalGrains,
+    maxAmplitude: maxAmplitude,
+  };
   return result;
 });
