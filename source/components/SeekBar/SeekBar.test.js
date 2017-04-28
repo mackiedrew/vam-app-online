@@ -56,24 +56,6 @@ describe('<SeekBar /> function seekSample(samples)', () => {
 
 })
 
-describe('<SeekBar /> function leadingsZeros()', () => {
-
-  const mockSeek = 44100 * 30 // 30 seconds
-
-  it('returns the same number as a string when column is lower than the digits in the number', () => {
-    const subject = shallow(<Subject seek={mockSeek} />)
-    const result = subject.instance().leadingZeros(1000, 1)
-    expect(result).toBe("1000")
-  })
-
-  it('returns a properly padded number', () => {
-    const subject = shallow(<Subject seek={mockSeek} />)
-    const result = subject.instance().leadingZeros(10, 4)
-    expect(result).toBe("0010")
-  })
-
-})
-
 describe('<SeekBar /> click handle function', () => {
   
   const mockSeek = 44100 * 30 // 30 seconds

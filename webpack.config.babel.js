@@ -27,7 +27,7 @@ const FaviconsWebpackPluginConfig = new FaviconsWebpackPlugin({
   // Your source logo
   logo: "./images/logo.png",
   // The prefix for all image files (might be a folder or a name)
-  prefix: "./",
+  prefix: "./images/",
   // Emit all stats of the generated icons
   emitStats: true,
   // The name of the json containing all favicon information
@@ -196,7 +196,7 @@ const configuration = {
       {
         test: /\.worker\.js$/,
         exclude: /node_modules/,
-        loader: ["worker-loader"]
+        loader: ["worker-loader", "babel-loader"]
       }
     ]
   },
