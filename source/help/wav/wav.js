@@ -1,9 +1,13 @@
+/* eslint-env node */
+
 // Libraries
-import fs from "fs";
-import { decode } from "wav-decoder";
+import PromiseWorker from "promise-worker";
+import ObjectPromiseWorker from "promise-worker-transferable";
+import GrainAmplitudeWorker from "../../workers/grainAmplitudes.worker.js";
+import ReadWavWorker from "../../workers/readWav.worker.js";
 
 // Helpers
-import { logicalSegment } from "../generic/generic";
+import { logicalSegment, floor } from "../generic/generic";
 
 // Load configuration file
 import config from "../../config.js";
@@ -26,27 +30,50 @@ export const secondsToSamples = (seconds = 1, sampleRate = 44100) =>
 export const samplesToSeconds = (samples = 1, sampleRate = 44100) =>
   samples / sampleRate;
 
-/**
- * Reads and returns a promise containing the file buffer.
- * @param {String} filePath Absolute full path to the wav file, including filename.ext
- */
-export const readFile = filePath => {
-  return new Promise((resolve, reject) => {
-    fs.readFile(filePath, (error, buffer) => {
-      if (error) {
-        return reject(error);
-      }
-      return resolve(buffer);
-    });
-  });
+export const samplesToMilliseconds = (samples = 1, sampleRate = 44100) =>
+  samples / sampleRate * 1000;
+
+export const samplesToMinutes = (samples = 1, sampleRate = 44100) =>
+  samples / sampleRate / 60;
+
+export const samplesToHours = (samples = 1, sampleRate = 44100) =>
+  samples / sampleRate / 3600;
+
+export const hoursToSamples = (hours = 1, sampleRate = 44100) =>
+  hours * 3600 * sampleRate;
+
+export const minutesToSamples = (minutes = 1, sampleRate = 44100) =>
+  minutes * 60 * sampleRate;
+
+export const millisecondsToSamples = (milliseconds = 1, sampleRate = 44100) =>
+  milliseconds * 1000 * sampleRate;
+
+export const samplesToTime = (samples, sampleRate = 44100) => {
+  let remainingSamples = samples;
+
+  const h = floor(samplesToHours(remainingSamples, sampleRate));
+  remainingSamples -= hoursToSamples(h, sampleRate);
+
+  const m = floor(samplesToMinutes(remainingSamples, sampleRate));
+  remainingSamples -= minutesToSamples(m, sampleRate);
+
+  const s = floor(samplesToSeconds(remainingSamples, sampleRate));
+  remainingSamples -= secondsToSamples(s, sampleRate);
+
+  const ms = floor(samplesToMilliseconds(remainingSamples, sampleRate));
+  remainingSamples -= millisecondsToSamples(s, sampleRate);
+
+  return { h, m, s, ms };
 };
 
 /**
- * Reads and returns a promise containing the data within the wav files decoded by `wav-decoder`.
- * @param {String} filePath Absolute full path to the wav file, including filename.ext
+ * Reads and returns a promise containing the file buffer.
+ * @param {File} file
  */
-export const decodeWav = filePath => {
-  return readFile(filePath).then(buffer => decode(buffer));
+export const readFile = file => {
+  const worker = new ReadWavWorker();
+  const promiseWorker = new ObjectPromiseWorker(worker);
+  return promiseWorker.postMessage(file);
 };
 
 /**
@@ -54,35 +81,41 @@ export const decodeWav = filePath => {
  * readWav() function.
  * @param {String} filePath Absolute full path to the wav file, including filename.ext
  */
-export const richReadWav = filePath => {
-  return decodeWav(filePath).then(({ sampleRate, channelData }) => {
+export const richReadWav = file => {
+  return readFile(file).then(({ sampleRate, channelData }) => {
     // Break out data for easy reference
     const data = channelData[0];
     const trackLength = data.length;
-
     // Generate grains by logically segmenting the full array of samples
-    const grainLength = secondsToSamples(config.grains.temp);
-    const grainPoints = logicalSegment(data, grainLength);
-
-    // Calculate mean amplitude of each grain
-    const sampleAmplitudes = data.map(value => Math.abs(value));
-    const grainAmplitudes = grainPoints.map(({ start, end }) => {
-      const grainSamples = sampleAmplitudes.slice(start, end);
-      const sum = grainSamples.reduce((a, b) => a + b, 0);
-      const numberOfSamples = end - start;
-      const mean = sum / numberOfSamples;
-      return mean;
+    const averageGrainLength = secondsToSamples(config.grain.value);
+    const grainPoints = logicalSegment(data, averageGrainLength);
+    const framesPerSample = 2000;
+    const samples = grainPoints.map(grain => {
+      const grainLength = grain.end - grain.start;
+      const samples = Math.ceil(grainLength / framesPerSample);
+      const sampleRange = [...Array(samples).keys()];
+      const collectedSamples = sampleRange.map(i => {
+        const frameNumber = grain.start + i * framesPerSample;
+        const sample = Math.abs(data[frameNumber]);
+        return sample;
+      });
+      return collectedSamples;
     });
 
-    // Stitch grainPoints and grainAmplitudes together
-    const grains = grainPoints.map((grain, index) => ({
-      ...grain,
-      amplitude: grainAmplitudes[index]
-    }));
+    const worker = new GrainAmplitudeWorker();
+    const promiseWorker = new PromiseWorker(worker);
+    return promiseWorker
+      .postMessage({ samples, grains: grainPoints, framesPerSample })
+      .then(response => {
+        const { grains, maxAmplitude } = response;
 
-    // Calculate track amplitude information
-    const maxAmplitude = Math.max(...grainAmplitudes);
-
-    return { sampleRate, trackLength, grains, maxAmplitude };
+        const richData = {
+          sampleRate,
+          trackLength,
+          grains,
+          maxAmplitude
+        };
+        return richData;
+      });
   });
 };

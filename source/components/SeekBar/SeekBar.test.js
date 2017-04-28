@@ -16,10 +16,6 @@ describe('<SeekBar /> structure', () => {
     expect(wrapper.find('div.indicators')).toHaveLength(1)
   })
 
-  it('renders a div with class: `current-sample`', () => {
-    expect(wrapper.find('div.current-sample')).toHaveLength(1)
-  })
-
   it('renders a div with class: `current-time`', () => {
     expect(wrapper.find('div.current-time')).toHaveLength(1)
   })
@@ -64,6 +60,22 @@ describe('<SeekBar /> click handle function', () => {
   
   const mockSeek = 44100 * 30 // 30 seconds
   const mockSamples = 20000
+
+
+  it('seekSeconds() calls the function provided by props.seekTo, exactly once.', () => {
+    const mockSeekTo = sinon.spy()
+    const wrapper = shallow(<Subject seek={mockSeek} seekTo={mockSeekTo} />)
+    wrapper.instance().seekSeconds(30)
+    expect(mockSeekTo.calledOnce).toBe(true)
+  })
+
+
+  it('seekSeconds(seconds, samples) calls the function provided by props.seekTo.', () => {
+    const mockSeekTo = sinon.spy()
+    const wrapper = shallow(<Subject seek={mockSeek} seekTo={mockSeekTo} />)
+    wrapper.instance().seekSeconds(30, 44100)
+    expect(mockSeekTo.calledOnce).toBe(true)
+  })
 
   it('handlePlus10() calls the function provided by props.seekTo, exactly once.', () => {
     const mockSeekTo = sinon.spy()

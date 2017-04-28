@@ -21,7 +21,8 @@
 
   "plugins": [
     "react",
-    "jsx-a11y"
+    "jsx-a11y",
+    "prettier"
   ],
 
   "rules": {
@@ -30,6 +31,7 @@
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
     "react/forbid-elements": ["error", { "forbid": ["b"] }],
     "react/no-danger": "error",
     "react/no-danger-with-children": "error",
@@ -45,7 +47,7 @@
     "react/jsx-first-prop-new-line": ["error", "multiline-multiprop"],
     "react/jsx-sort-props": ["error",
       {
-        "callbacksLast": true,
+        "callbacksLast": false,
         "shorthandLast": true,
         "ignoreCase": false,
         "noSortAlphabetically": false
@@ -79,7 +81,8 @@
     "jsx-a11y/onclick-has-focus": "error",
     "jsx-a11y/role-has-required-aria-props": "error",
     "jsx-a11y/scope": "error",
-    "jsx-a11y/tabindex-no-positive": "error"
+    "jsx-a11y/tabindex-no-positive": "error",
+    "prettier/prettier": "warn"
   }
 
 }

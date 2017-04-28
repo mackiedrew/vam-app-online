@@ -11,6 +11,7 @@ class WaveBlock extends Component {
     // Bind functions to `this`
     this.relativeAmplitude = this.relativeAmplitude.bind(this);
     this.amplitudeStyle = this.amplitudeStyle.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   /**
@@ -18,9 +19,10 @@ class WaveBlock extends Component {
    * - uses flex-grow to determine proportion of waveform to grow to fill
    */
   waveBlockStyle() {
-    const { start, end } = this.props;
+    const { start, end, quiet } = this.props;
     const length = end - start;
-    return { flexGrow: length };
+    const backgroundColor = quiet ? "rgb(240, 230, 230)" : "rgb(240, 240, 240)";
+    return { flexGrow: length, backgroundColor };
   }
 
   /**
@@ -28,9 +30,11 @@ class WaveBlock extends Component {
    * - height is calculated as % of total
    */
   amplitudeStyle() {
+    const { selected } = this.props;
     const fillPercentage = this.relativeAmplitude();
     const height = `${fillPercentage * 100}%`;
-    return { height };
+    const opacity = selected ? "1.0" : "0.4";
+    return { height, opacity };
   }
 
   /**
@@ -48,15 +52,22 @@ class WaveBlock extends Component {
   }
 
   render() {
+    const { filler, more } = this.props;
     const amplitudeStyle = this.amplitudeStyle();
     const waveBlockStyle = this.waveBlockStyle();
 
     return (
-      <div className="wave-block" style={waveBlockStyle}>
+      <div
+        className={`wave-block ${filler ? "filler" : ""} ${more ? "more" : ""}`}
+        style={waveBlockStyle}
+      >
+        <div className="note">
+          {more ? "more..." : filler ? "track ends" : ""}
+        </div>
         <button
           className="amplitude"
-          style={amplitudeStyle}
           onClick={this.handleClick}
+          style={amplitudeStyle}
         />
       </div>
     );

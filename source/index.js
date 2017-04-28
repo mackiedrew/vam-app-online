@@ -3,7 +3,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
-import App from "./containers/App/App";
+import App from "./components/App/App";
+import * as OfflinePluginRuntime from "offline-plugin/runtime";
 
 const render = Component => {
   ReactDOM.render(
@@ -18,7 +19,11 @@ render(App);
 
 // Hot Module Replacement
 if (module.hot) {
-  module.hot.accept("./containers/App/App", () => {
-    render(App);
+  const NextApp = require("./components/App/App").default;
+  module.hot.accept("./components/App/App", () => {
+    render(NextApp);
   });
 }
+
+// Service Worker
+OfflinePluginRuntime.install();
