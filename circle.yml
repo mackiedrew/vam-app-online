@@ -10,12 +10,14 @@ dependencies:
 
 test:
   override:
+    - yarn build
+    - yarn build:production
     - yarn lint:javascript
     - yarn lint:stylus
     - yarn hint
     - yarn test
   post:
-    - yarn run coverage
+    - yarn coverage
 
 general:
   branches:
