@@ -45,7 +45,7 @@ class App extends Component {
       seek: 0, // samples
       view: {
         start: 44100 * 60 * 0,
-        end: 44100 * 60 * 10,
+        end: 44100 * 60 * 10
       }
     };
     // Reset state to initialState
@@ -72,10 +72,52 @@ class App extends Component {
     this.getAudioTags = this.getAudioTags.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.muteTrack = this.muteTrack.bind(this);
+    this.selectNextTrack = this.selectNextTrack.bind(this);
+    this.selectPreviousTrack = this.selectPreviousTrack.bind(this);
+    this.shiftView = this.shiftView.bind(this);
+  }
+
+  shiftView(viewFactor) {
+    const { view } = this.state;
+    const { start, end } = view;
+    const viewRange = end - start;
+    const viewShift = viewFactor * viewRange;
+    const newStart = start + viewShift;
+    const newEnd = end + viewShift;
+    const newView = { start: newStart, end: newEnd };
+    const stateChange = { view: newView };
+    this.setState(stateChange);
+    return newView;
+  }
+
+  selectNextTrack() {
+    const { tracks, selectedTrack } = this.state;
+    const trackIds = Object.keys(tracks);
+    const selectedTrackIndex = trackIds.indexOf(selectedTrack);
+    const maxTrackIndex = trackIds.length - 1;
+    const isLastTrack = selectedTrackIndex >= maxTrackIndex;
+    const nextTrackIndex = isLastTrack ? 0 : selectedTrackIndex + 1;
+    const nextTrackId = trackIds[nextTrackIndex];
+    this.selectTrack(nextTrackId);
+  }
+
+  selectPreviousTrack() {
+    const { tracks, selectedTrack } = this.state;
+    const trackIds = Object.keys(tracks);
+    const selectedTrackIndex = trackIds.indexOf(selectedTrack);
+    const maxTrackIndex = trackIds.length - 1;
+    const isFirstTrack = selectedTrackIndex <= 0;
+    const previousTrackIndex = isFirstTrack
+      ? maxTrackIndex
+      : selectedTrackIndex - 1;
+    const previousTrackId = trackIds[previousTrackIndex];
+    this.selectTrack(previousTrackId);
   }
 
   componentDidMount() {
     keyboard.bind([config.play.value, "space"], this.togglePlay);
+    keyboard.bind(config.nextTrack.value, this.selectNextTrack);
+    keyboard.bind(config.previousTrack.value, this.selectPreviousTrack);
   }
 
   togglePlay() {
@@ -104,13 +146,13 @@ class App extends Component {
   play() {
     const audioTags = this.getAudioTags();
     this.reportPaused(false);
-    audioTags.forEach((tag) => tag.play());
+    audioTags.forEach(tag => tag.play());
   }
 
   pause() {
     const audioTags = this.getAudioTags();
     this.reportPaused(true);
-    audioTags.forEach((tag) => tag.pause());
+    audioTags.forEach(tag => tag.pause());
   }
 
   toggleMute(id) {
@@ -119,12 +161,11 @@ class App extends Component {
     this.muteTrack(id, !muted);
     const newMutedTracks = {
       ...mutedTracks,
-      [id]: !muted,
+      [id]: !muted
     };
     const newState = { mutedTracks: newMutedTracks };
     this.setState(newState);
   }
-
 
   reportSeek(sample) {
     const stateChanges = { seek: sample };
@@ -139,12 +180,11 @@ class App extends Component {
   setTracks(sample = 0) {
     const audioTags = this.getAudioTags();
     const seconds = samplesToSeconds(sample);
-    audioTags.forEach((tag) => tag.currentTime = seconds);
+    audioTags.forEach(tag => (tag.currentTime = seconds));
     return seconds;
   }
 
   enforce() {
-    
     const { seek } = this.state;
     this.setTracks(seek);
   }
@@ -166,7 +206,7 @@ class App extends Component {
     return newPosition;
   }
 
-  setView({start, end}) {
+  setView({ start, end }) {
     const { trackLengths } = this.state;
     const lengthList = Object.keys(trackLengths).map(key => trackLengths[key]);
     const maxSample = Math.max(...lengthList);
@@ -179,7 +219,7 @@ class App extends Component {
     const startSorted = startCandidates.sort((a, b) => a - b);
     const newStart = floor(startSorted[1]);
 
-    const newView = {start: newStart, end: newEnd};
+    const newView = { start: newStart, end: newEnd };
     const stateChanges = { view: newView };
     this.setState(stateChanges);
     return newView;
@@ -191,17 +231,15 @@ class App extends Component {
 
     const newView = {
       start: start,
-      end: end * factor,
+      end: end * factor
     };
     const actualNewView = this.setView(newView);
     return actualNewView;
   }
 
-  simpleAddTracks(id, file) {
+  simpleAddTracks(newTracks) {
     const { tracks } = this.state;
-
-    const newTrack = { [id]: file };
-    const newTrackList = { ...tracks, ...newTrack };
+    const newTrackList = { ...tracks, ...newTracks };
     const stateChange = { tracks: newTrackList };
     // Set tracks state to be previous state plus new track
     this.setState(stateChange);
@@ -211,13 +249,26 @@ class App extends Component {
     this.setState({ selectedTrack: id });
   }
 
-  handleTrackAdd(file) {
-    // TODO: Put overwriting of old paths here
-    const newId = this.state.nextId;
+  handleTrackAdd(files) {
+    // Add all selected files
+    const newIds = files.map(() => shortid.generate());
+    const newTracks = newIds.reduce(
+      (tracks, id, i) => ({
+        ...tracks,
+        [id]: files[i]
+      }),
+      {}
+    );
+
+    this.simpleAddTracks(newTracks);
+
+    // Set the current track to the last file added.
+    const currentTrackId = newIds.reverse()[0];
+    this.selectTrack(currentTrackId);
+
+    // Provide AddTrack with new id after addition.
     const nextId = shortid.generate();
     this.setState({ nextId: nextId });
-    this.selectTrack(newId);
-    this.simpleAddTracks(newId, file);
   }
 
   toggleFilter() {
@@ -275,10 +326,10 @@ class App extends Component {
     return newTrackLengths;
   }
 
-
   render() {
     // Breakout 2-layer-deep values for easy reference
     const {
+      nextId,
       seek,
       tracks,
       filtersOpen,
@@ -325,6 +376,7 @@ class App extends Component {
             playing={playing}
             seek={seek}
             seekTo={this.seekTo}
+            shiftView={this.shiftView}
             togglePlay={this.togglePlay}
             viewMagnify={this.viewMagnify}
           />

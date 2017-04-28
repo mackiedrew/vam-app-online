@@ -11,8 +11,8 @@ import WaveBlock from "../WaveBlock/WaveBlock";
  */
 const Waveform = ({ blocks, maxAmplitude, seekTo, selected }) => (
   <div className="waveform">
-    {
-      blocks && blocks.map(({ start, end, amplitude, filler, more }, index) => (
+    {blocks &&
+      blocks.map(({ start, end, amplitude, filler, more, quiet }, index) => (
         <WaveBlock
           amplitude={amplitude}
           end={end}
@@ -20,6 +20,7 @@ const Waveform = ({ blocks, maxAmplitude, seekTo, selected }) => (
           key={index}
           maxAmplitude={maxAmplitude}
           more={more}
+          quiet={quiet}
           seekTo={seekTo}
           selected={selected}
           start={start}

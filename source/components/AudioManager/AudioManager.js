@@ -13,7 +13,6 @@ class AudioManager extends Component {
 
   componentDidMount() {
     this.timer = setInterval(this.tick, 200);
-
   }
 
   componentWillUnmount() {
@@ -35,16 +34,18 @@ class AudioManager extends Component {
     const { tracks, mutedTracks } = this.props;
     const allTrackIds = tracks && Object.keys(tracks);
 
-    const audioTags = tracks && allTrackIds.map((id) => {
-      const { url, file } = tracks[id];
-      const { type } = file;
-      const muted = mutedTracks[id];
-      return (
-        <audio id={`audio-manager-${id}`} key={id} muted={muted}>
-          <source src={url} type={type}></source>
-        </audio>
-      );
-    });
+    const audioTags =
+      tracks &&
+      allTrackIds.map(id => {
+        const { url, file } = tracks[id];
+        const { type } = file;
+        const muted = mutedTracks[id];
+        return (
+          <audio id={`audio-manager-${id}`} key={id} muted={muted}>
+            <source src={url} type={type} />
+          </audio>
+        );
+      });
 
     return (
       <div className="audio-manager">
