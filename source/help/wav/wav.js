@@ -31,13 +31,13 @@ export const samplesToSeconds = (samples = 1, sampleRate = 44100) =>
   samples / sampleRate;
 
 export const samplesToMilliseconds = (samples = 1, sampleRate = 44100) =>
-  (samples / sampleRate) * 1000;
+  samples / sampleRate * 1000;
 
 export const samplesToMinutes = (samples = 1, sampleRate = 44100) =>
-  (samples / sampleRate) / 60;
+  samples / sampleRate / 60;
 
 export const samplesToHours = (samples = 1, sampleRate = 44100) =>
-  (samples / sampleRate) / 3600;
+  samples / sampleRate / 3600;
 
 export const hoursToSamples = (hours = 1, sampleRate = 44100) =>
   hours * 3600 * sampleRate;
@@ -46,10 +46,9 @@ export const minutesToSamples = (minutes = 1, sampleRate = 44100) =>
   minutes * 60 * sampleRate;
 
 export const millisecondsToSamples = (milliseconds = 1, sampleRate = 44100) =>
-   milliseconds * 1000 * sampleRate;
+  milliseconds * 1000 * sampleRate;
 
 export const samplesToTime = (samples, sampleRate = 44100) => {
-  
   let remainingSamples = samples;
 
   const h = floor(samplesToHours(remainingSamples, sampleRate));
@@ -64,7 +63,7 @@ export const samplesToTime = (samples, sampleRate = 44100) => {
   const ms = floor(samplesToMilliseconds(remainingSamples, sampleRate));
   remainingSamples -= millisecondsToSamples(s, sampleRate);
 
-  return { h, m, s, ms};
+  return { h, m, s, ms };
 };
 
 /**
