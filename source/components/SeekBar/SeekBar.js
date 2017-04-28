@@ -25,6 +25,8 @@ class SeekBar extends Component {
     this.handleMinus10 = this.handleMinus10.bind(this);
     this.handlePlus1 = this.handlePlus1.bind(this);
     this.handleMinus1 = this.handleMinus1.bind(this);
+    this.handleViewNext = this.handleViewNext.bind(this);
+    this.handleViewPrevious = this.handleViewPrevious.bind(this);
   }
 
   /**
@@ -59,6 +61,14 @@ class SeekBar extends Component {
   }
   handleMinus1() {
     this.seekSeconds(-1);
+  }
+
+  handleViewNext() {
+    this.props.shiftView(1.0);
+  }
+
+  handleViewPrevious() {
+    this.props.shiftView(-1.0);
   }
 
   render() {
@@ -96,6 +106,12 @@ class SeekBar extends Component {
           </button>
         </div>
         <div className="indicators">
+          <button className="view-previous" onClick={this.handleViewPrevious}>
+            <Icon icon="navigate_before" />
+          </button>
+          <button className="view-next" onClick={this.handleViewNext}>
+            <Icon icon="navigate_next" />
+          </button>
           <button className="zoom-in" onClick={() => viewMagnify(0.75)}>
             <Icon icon="zoom_in" />
           </button>

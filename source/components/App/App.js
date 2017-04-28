@@ -74,6 +74,20 @@ class App extends Component {
     this.muteTrack = this.muteTrack.bind(this);
     this.selectNextTrack = this.selectNextTrack.bind(this);
     this.selectPreviousTrack = this.selectPreviousTrack.bind(this);
+    this.shiftView = this.shiftView.bind(this);
+  }
+
+  shiftView(viewFactor) {
+    const { view } = this.state;
+    const { start, end } = view;
+    const viewRange = end - start;
+    const viewShift = viewFactor * viewRange;
+    const newStart = start + viewShift;
+    const newEnd = end + viewShift;
+    const newView = { start: newStart, end: newEnd };
+    const stateChange = { view: newView };
+    this.setState(stateChange);
+    return newView;
   }
 
   selectNextTrack() {
@@ -362,6 +376,7 @@ class App extends Component {
             playing={playing}
             seek={seek}
             seekTo={this.seekTo}
+            shiftView={this.shiftView}
             togglePlay={this.togglePlay}
             viewMagnify={this.viewMagnify}
           />
