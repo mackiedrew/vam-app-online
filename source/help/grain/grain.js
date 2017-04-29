@@ -2,7 +2,8 @@
  * File should contain all functions for working with grains with an emphasis on pure functions.
  */
 
-import { divisionBinarySearch } from "../generic/generic";
+import { logicalSegment, divisionBinarySearch } from "../generic/generic";
+import { secondsToSamples } from "../wav/wav";
 
 /**
  * Splits a single grain object into two adjacent grain objects that maintain any additional grain
@@ -69,4 +70,37 @@ export const splitGrain = (grains, splitPoint) => {
   const splitGrain = splitGrainIntoTwo(targetGrain, splitPoint);
   const newGrains = [...leftSide, ...splitGrain, ...rightSide];
   return newGrains;
+};
+
+/**
+ * Logically segments grains into equally spaced components. This is hopefully temporary.
+ * @param {Array} data Only used to get the length of the array.
+ * @param {Number} secondsPerGrain Number of seconds per grain, the end grain may be shorter.
+ */
+export const createEquallySpacedGrains = (data, secondsPerGrain) => {
+  const grainLength = secondsToSamples(secondsPerGrain);
+  const grains = logicalSegment(data, grainLength);
+  return grains;
+};
+
+/**
+ * Get a certain number of samples (or cases to not be confused with audio samples) from provided
+ * grains. This can be used to get a representative sample of a segment of audio.
+ * @param {Array} grains 
+ * @param {Array} data 
+ * @param {Number} caseRate 
+ */
+export const createSampleCases = (grains, data, caseRate) => {
+  const samples = grains.map(grain => {
+    const grainLength = grain.end - grain.start;
+    const samples = Math.ceil(grainLength / caseRate);
+    const sampleRange = [...Array(samples).keys()];
+    const collectedSamples = sampleRange.map(i => {
+      const frameNumber = grain.start + i * caseRate;
+      const sample = Math.abs(data[frameNumber]);
+      return sample;
+    });
+    return collectedSamples;
+  });
+  return samples;
 };

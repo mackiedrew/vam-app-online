@@ -105,5 +105,39 @@ describe('<SeekBar /> click handle function', () => {
     expect(mockSeekTo.calledOnce).toBe(true)
   })
 
+  it('handleViewNext() calls the function provided exactly once.', () => {
+    const mockFunctionProp = sinon.spy()
+    const subject = shallow(<Subject seek={mockSeek} shiftView={mockFunctionProp} />)
+    subject.instance().handleViewNext()
+    expect(mockFunctionProp.calledOnce).toBe(true)
+  })
+
+  it('handleViewPrevious() calls the function provided exactly once.', () => {
+    const mockFunctionProp = sinon.spy()
+    const subject = shallow(<Subject seek={mockSeek} shiftView={mockFunctionProp} />)
+    subject.instance().handleViewPrevious()
+    expect(mockFunctionProp.calledOnce).toBe(true)
+  })
+
+  it('handleZoomIn() calls the function provided exactly once.', () => {
+    const mockFunctionProp = sinon.spy()
+    const subject = shallow(<Subject seek={mockSeek} viewMagnify={mockFunctionProp} />)
+    subject.instance().handleZoomIn()
+    expect(mockFunctionProp.calledOnce).toBe(true)
+  })
+
+  it('handleZoomOut() calls the function provided exactly once.', () => {
+    const mockFunctionProp = sinon.spy()
+    const subject = shallow(<Subject seek={mockSeek} viewMagnify={mockFunctionProp} />)
+    subject.instance().handleZoomOut()
+    expect(mockFunctionProp.calledOnce).toBe(true)
+  })
+
+  it('handleTogglePlay() calls the function provided exactly once.', () => {
+    const mockFunctionProp = sinon.spy()
+    const subject = shallow(<Subject seek={mockSeek} togglePlay={mockFunctionProp} />)
+    subject.instance().handleTogglePlay()
+    expect(mockFunctionProp.calledOnce).toBe(true)
+  })
 
 })

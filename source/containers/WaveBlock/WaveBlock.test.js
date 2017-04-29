@@ -25,6 +25,18 @@ describe('<WaveBlock /> structure', () => {
     shallow(<Subject {...mockProps} quiet />)
   })
 
+  it('renders without crashing when selected', () => {
+    shallow(<Subject {...mockProps} selected />)
+  })
+
+  it('renders without crashing when filler', () => {
+    shallow(<Subject {...mockProps} filler />)
+  })
+
+  it('renders without crashing when more', () => {
+    shallow(<Subject {...mockProps} more />)
+  })
+
 })
 
 describe('<WaveBlock /> display math', () => {

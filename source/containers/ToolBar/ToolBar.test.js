@@ -1,14 +1,17 @@
 import Subject from "./ToolBar";
 
-const mockProps = {
-  view: {
-    start: 0,
-    end: 44100 * 10, // 10 seconds
-  }
-}
+describe("<ToolBar />", () => {
 
-describe("<TimeBar />", () => {
   it("renders without crashing", () => {
-    const wrapper = shallow(<Subject />);
+    const subject = shallow(<Subject />);
   });
+
+  it("calls handleSplit prop once when handleSplit function is called", () => {
+    const mockHandleSplit = sinon.spy();
+    const subject = shallow(<Subject handleSplit={mockHandleSplit} />);
+    subject.instance().handleSplit();
+    const mockCalled = mockHandleSplit.called;
+    expect(mockCalled).toBe(true);
+  });
+
 });

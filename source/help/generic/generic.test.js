@@ -1,4 +1,16 @@
-import { floor, ceiling, mergeZip, logicalSegment, divisionBinarySearch } from './generic'
+import {
+  floor,
+  mergeZip,
+  logicalSegment,
+  leadingZeros,
+  divisionBinarySearch,
+  max,
+  add,
+  mean,
+  zipObjectArray,
+  random,
+  range,
+} from './generic'
 
 describe('floor(value)', () => {
 
@@ -16,25 +28,9 @@ describe('floor(value)', () => {
 
 })
 
-describe('ceiling(value)', () => {
+describe("logicalSegment()", () => {
 
-  it('rounds a positive number closer to zero', () => {
-    expect(ceiling(5.1)).toEqual(6)
-  })
-
-  it('rounds a negative number closer to zero', () => {
-    expect(ceiling(-5.1)).toEqual(-6)
-  })
-  
-  it('rounds zero, by doing nothing', () => {
-    expect(ceiling(0)).toEqual(0)
-  })
-
-})
-
-const testArray = [0, 1, 0, 1, 0, -1, 0, 1, 1]
-
-describe('logicalSegment(array, segmentSize)', () => {
+  const testArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
   it('generates the correct number of segments', () => {
     expect(logicalSegment(testArray, 2).length).toEqual(5)
@@ -69,7 +65,7 @@ describe('logicalSegment(array, segmentSize)', () => {
     const segmentMean = segmentLengthsTotal / (segments.length - 1)
     expect(segmentMean).toEqual(segmentSize)
 
-    const danglingLength = segmentLengthsTotal - testArray.length
+    const danglingLength = segmentLengthsTotal - (testArray.length - 1)
     expect(segmentLengths[segmentLengths.length - 1]).toEqual(danglingLength)
   })
 
@@ -81,7 +77,7 @@ describe('logicalSegment(array, segmentSize)', () => {
       const previousEnd = segments[index].end
       expect(start).toEqual(previousEnd)
     })
-    expect(segments[segments.length - 1].end).toEqual(testArray.length)
+    expect(segments[segments.length - 1].end).toEqual(testArray.length - 1)
   })
 
 })
@@ -150,5 +146,152 @@ describe('divisionBinarySearch()', () => {
     const result = divisionBinarySearch(79, mockDivisionArray)
     expect(result).toBe(5)
   })
+
+})
+
+describe("max()", () => {
+  
+  const testArray = [-10, 0, 10];
+
+  it("returns a single Number", () => {
+    const result = max(testArray);
+    expect(typeof result).toBe("number");
+  });
+
+
+  it("returns a single Number when passed an array with a single number", () => {
+    const result = max([10]);
+    expect(result).toBe(10)
+  });
+
+  it("returns a the highest number in the array", () => {
+    const result = max(testArray);
+    expect(result).toBe(10)
+  });
+
+});
+
+describe("add()", () => {
+  
+  const testArray = [-5, 0, 10];
+
+  it("returns a single Number", () => {
+    const result = add(testArray);
+    expect(typeof result).toBe("number");
+  });
+
+
+  it("returns a the same Number when passed an array with a single number", () => {
+    const result = add([10]);
+    expect(result).toBe(10)
+  });
+
+  it("returns the added array", () => {
+    const expectedResult = 5;
+    const result = add(testArray);
+    expect(result).toBe(expectedResult);
+  });
+
+});
+
+describe("mean()", () => {
+  
+  const testArray = [-5, 0, 10, 20, 0];
+
+  it("returns a single Number", () => {
+    const result = mean(testArray);
+    expect(typeof result).toBe("number");
+  });
+
+
+  it("returns a the same Number when passed an array with a single number", () => {
+    const result = mean([10]);
+    expect(result).toBe(10)
+  });
+
+  it("returns the accurate mean average of an array", () => {
+    const expectedResult = 5;
+    const result = mean(testArray);
+    expect(result).toBe(expectedResult);
+  });
+
+});
+
+describe("zipObjectArray()", () => {
+  
+  const testArray = [{ test1: "ABC", test2: "123" }, { test1: "DEF", test2: "456" }];
+  const testKey = "addedKey";
+  const testValues = ["dog", "cat"];
+
+  it("returns an array of original length", () => {
+    const result = zipObjectArray(testArray, testKey, testValues);
+    const expectedLength = 2;
+    expect(result.length).toBe(2);
+  });
+
+  it("returns an array with each entry containing a new key", () => {
+    const result = zipObjectArray(testArray, testKey, testValues);
+    const expectedLength = 2;
+    result.forEach((entry) => {
+      expect(testKey in entry).toBe(true);
+    });
+  });
+
+  it("returns an array with each entry containing a new key, even when provided no values", () => {
+    const result = zipObjectArray(testArray, testKey, []);
+    const expectedLength = 2;
+    result.forEach((entry) => {
+      expect(testKey in entry).toBe(true);
+    });
+  });
+
+});
+
+describe("random()", () => {
+
+  it("returns a number between provided minimum and maximum", () => {
+    const testMin = -10;
+    const testMax = 10;
+    const testRange = range(100);
+    testRange.forEach(() => {
+      const result = random(testMin, testMax);
+      expect(result).toBeGreaterThanOrEqual(testMin);
+      expect(result).toBeLessThan(testMax);
+    })
+  });
+
+});
+
+
+describe("leadingZeros()", () => {
+  
+  it("doesn't affect a number larger than columns provided (default columns).", () => {
+    const test = 1300
+    const result = leadingZeros(test);
+    const expectedResult = String(test);
+    expect(result).toBe(expectedResult);
+  });
+
+  it("doesn't affect a number larger than columns provided.", () => {
+    const test = 1300
+    const result = leadingZeros(test, 3);
+    const expectedResult = String(test);
+    expect(result).toBe(expectedResult);
+  });
+
+  it("returns appropriate length string with default columns", () => {
+    const test = 3
+    const result = leadingZeros(test);
+    const expectedResult = "03"
+    expect(result.length).toBe(expectedResult.length);
+  });
+
+  it("returns appropriate length string", () => {
+    const test = 1300
+    const result = leadingZeros(test, 8);
+    const expectedResult = "00001300"
+    expect(result.length).toBe(expectedResult.length);
+  });
+
 
 })

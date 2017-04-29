@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import "./ToolBar.styl";
 
 // Components
@@ -8,12 +8,26 @@ import Icon from "../Icon/Icon";
  * Toolbar should display currently selected tool in mouse or keyboard mode. And allow for tool
  * selection as well.
  */
-const ToolBar = () =>
-  <div className="tool-bar">
-    <button className="split_grain">
-      <Icon icon="call_split" size={16} />
-    </button>
-  </div>;
+class ToolBar extends Component {
+  constructor(props) {
+    super(props);
+    this.handleSplit = this.handleSplit.bind(this);
+  }
 
+  handleSplit() {
+    const { handleSplit } = this.props;
+    handleSplit();
+  }
+
+  render() {
+    return (
+      <div className="tool-bar">
+        <button className="split-grain" onClick={this.handleSplit}>
+          <Icon icon="call_split" size={16} />
+        </button>
+      </div>
+    );
+  }
+}
 
 export default ToolBar;

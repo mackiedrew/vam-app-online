@@ -1,4 +1,9 @@
-import { splitGrainIntoTwo, splitGrain } from "./grain";
+import {
+  splitGrainIntoTwo,
+  splitGrain,
+  createEquallySpacedGrains
+} from "./grain";
+import { samplesToSeconds } from "../wav/wav";
 
 const mockSimpleGrain = {
   start: 4000,
@@ -119,6 +124,24 @@ describe("splitGrain()", () => {
     const splitPoint = 1500;
     const result = splitGrain(mockGrains, splitPoint);
     expect(result.length).toEqual(expectedLength);
+  });
+
+});
+
+describe("createEquallySpacedGrains()", () => {
+
+  const testData = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+  it("returns an array", () => {
+    const result = createEquallySpacedGrains(testData, 2);
+    expect(typeof result).toBe("object");
+  });
+
+  it("returns an array of appropriate length", () => {
+    const resultEven = createEquallySpacedGrains(testData, samplesToSeconds(2));
+    const resultDangle = createEquallySpacedGrains(testData, samplesToSeconds(4));
+    expect(resultDangle.length).toBe(3);
+    expect(resultEven.length).toBe(5);
   });
 
 });

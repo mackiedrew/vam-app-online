@@ -7,7 +7,8 @@ import GrainAmplitudeWorker from "../../workers/grainAmplitudes.worker.js";
 import ReadWavWorker from "../../workers/readWav.worker.js";
 
 // Helpers
-import { logicalSegment, floor } from "../generic/generic";
+import { floor } from "../generic/generic";
+import { createSampleCases, createEquallySpacedGrains } from "../grain/grain";
 
 // Load configuration file
 import config from "../../config.js";
@@ -86,29 +87,14 @@ export const richReadWav = file => {
     // Break out data for easy reference
     const data = channelData[0];
     const trackLength = data.length;
-    // Generate grains by logically segmenting the full array of samples
-    const averageGrainLength = secondsToSamples(config.grain.value);
-    const grainPoints = logicalSegment(data, averageGrainLength);
-    const framesPerSample = 2000;
-    const samples = grainPoints.map(grain => {
-      const grainLength = grain.end - grain.start;
-      const samples = Math.ceil(grainLength / framesPerSample);
-      const sampleRange = [...Array(samples).keys()];
-      const collectedSamples = sampleRange.map(i => {
-        const frameNumber = grain.start + i * framesPerSample;
-        const sample = Math.abs(data[frameNumber]);
-        return sample;
-      });
-      return collectedSamples;
-    });
-
+    const protoGrains = createEquallySpacedGrains(data, config.grain.value);
+    const cases = createSampleCases(protoGrains, data, 2000);
     const worker = new GrainAmplitudeWorker();
     const promiseWorker = new PromiseWorker(worker);
     return promiseWorker
-      .postMessage({ samples, grains: grainPoints, framesPerSample })
+      .postMessage({ cases, grains: protoGrains })
       .then(response => {
         const { grains, maxAmplitude } = response;
-
         const richData = {
           sampleRate,
           trackLength,
