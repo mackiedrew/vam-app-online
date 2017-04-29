@@ -407,12 +407,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   return new Promise(function (resolve) {
     var reader = new FileReader();
     reader.onload = function () {
-      resolve(reader.result);
+      return resolve(reader.result);
     };
     reader.readAsArrayBuffer(file);
-  }).then(function (buffer) {
-    return (0, _wavDecoder.decode)(buffer);
-  });
+  }).then(_wavDecoder.decode);
 });
 
 /***/ }),
