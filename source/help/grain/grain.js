@@ -90,12 +90,12 @@ export const createEquallySpacedGrains = (data, secondsPerGrain) => {
   return grains;
 };
 
-
 /**
  * Calculates the difference between start and end for every supplied grain.
  * @param {Array} grains Grain objects with keys start and end.
  */
-export const grainLengths = (grains) => grains.map(({start, end}) => end - start);
+export const grainLengths = grains =>
+  grains.map(({ start, end }) => end - start);
 
 /**
  * Get a certain number of samples (or cases to not be confused with audio samples) from provided
@@ -108,7 +108,7 @@ export const createSampleCases = (grains, data, caseRate) => {
   const lengths = grainLengths(grains);
   const casesPerGrain = lengths.map(l => Math.ceil(l / caseRate));
   const rangePerGrain = casesPerGrain.map(range);
-  const cases = grains.map(({start, end}, i) => {
+  const cases = grains.map(({ start, end }, i) => {
     const casesIndexes = rangePerGrain[i].map(() => random(start, end));
     const collectedSignedData = casesIndexes.map(i => data[i]);
     const collectedData = collectedSignedData.map(Math.abs);
@@ -137,6 +137,6 @@ export const isGrainQuiet = ({ amplitude }, cutOff, maxAmplitude) => {
 export const areGrainsQuiet = (grains, cutOff) => {
   const amplitudes = getKeyFromObjectArray(grains, "amplitude");
   const maxAmplitude = max(amplitudes);
-  const quiet = grains.map((grain) => isGrainQuiet(grain, cutOff, maxAmplitude));
+  const quiet = grains.map(grain => isGrainQuiet(grain, cutOff, maxAmplitude));
   return quiet;
 };

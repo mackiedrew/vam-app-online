@@ -25,18 +25,22 @@ export const readFile = file => {
  * @param {String} filePath Absolute full path to the wav file, including filename.ext
  */
 export const richReadWav = (file, grainSize) => {
-  const richDataPromise = readFile(file).then(({ sampleRate, channelData }) => 
-    ({ data: channelData[0], trackLength: channelData[0].length, sampleRate }))
-  .then(({ data, trackLength, sampleRate }) => {
-    const protoGrains = createEquallySpacedGrains(data, grainSize);
-    const cases = createSampleCases(protoGrains, data, 2000);
-    const worker = new GrainAmplitudeWorker();
-    const promiseWorker = new PromiseWorker(worker);
-    return promiseWorker
-      .postMessage({ cases, protoGrains })
-      .then(({ grains, maxAmplitude }) => {
-        return { sampleRate, trackLength, grains, maxAmplitude };
-      });
-  });
+  const richDataPromise = readFile(file)
+    .then(({ sampleRate, channelData }) => ({
+      data: channelData[0],
+      trackLength: channelData[0].length,
+      sampleRate
+    }))
+    .then(({ data, trackLength, sampleRate }) => {
+      const protoGrains = createEquallySpacedGrains(data, grainSize);
+      const cases = createSampleCases(protoGrains, data, 2000);
+      const worker = new GrainAmplitudeWorker();
+      const promiseWorker = new PromiseWorker(worker);
+      return promiseWorker
+        .postMessage({ cases, protoGrains })
+        .then(({ grains, maxAmplitude }) => {
+          return { sampleRate, trackLength, grains, maxAmplitude };
+        });
+    });
   return richDataPromise;
 };

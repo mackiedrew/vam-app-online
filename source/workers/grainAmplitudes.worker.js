@@ -9,7 +9,7 @@ registerPromiseWorker(({ protoGrains, cases }) => {
   
   // Add amplitudes to grains
   const amplitudes = cases.map(mean);
-  const simpleGrains = zipObjectArray(grains, "amplitude", amplitudes);
+  const simpleGrains = zipObjectArray(protoGrains, "amplitude", amplitudes);
 
   // Add quietness to grains
   const quietnessCutoff =  config.quietCutoff.value / 100
