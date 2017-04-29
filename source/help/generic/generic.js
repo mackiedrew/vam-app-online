@@ -129,3 +129,12 @@ export const zipObjectArray = (array, key, values) => {
  * @param {Number} max Maximum possible value (exclusive).
  */
 export const random = (min, max) => floor(Math.random() * (max - min)) + min;
+
+/**
+ * Pulls the provided key from each object in the provided array, should return undefined if it
+ * doesn't exist in that object.
+ * @param {Array} array Array of objects with keys contained.
+ * @param {String} key Object key to take from each array entry.
+ */
+export const getKeyFromObjectArray = (array, key) =>
+  array.map(entry => entry[key] || undefined);

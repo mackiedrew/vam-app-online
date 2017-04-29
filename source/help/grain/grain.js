@@ -2,8 +2,15 @@
  * File should contain all functions for working with grains with an emphasis on pure functions.
  */
 
-import { logicalSegment, divisionBinarySearch } from "../generic/generic";
-import { secondsToSamples } from "../wav/wav";
+import {
+  logicalSegment,
+  divisionBinarySearch,
+  random,
+  range,
+  getKeyFromObjectArray,
+  max
+} from "../generic/generic";
+import { secondsToSamples } from "../convert/convert";
 
 /**
  * Splits a single grain object into two adjacent grain objects that maintain any additional grain
@@ -83,24 +90,53 @@ export const createEquallySpacedGrains = (data, secondsPerGrain) => {
   return grains;
 };
 
+
+/**
+ * Calculates the difference between start and end for every supplied grain.
+ * @param {Array} grains Grain objects with keys start and end.
+ */
+export const grainLengths = (grains) => grains.map(({start, end}) => end - start);
+
 /**
  * Get a certain number of samples (or cases to not be confused with audio samples) from provided
  * grains. This can be used to get a representative sample of a segment of audio.
- * @param {Array} grains 
- * @param {Array} data 
- * @param {Number} caseRate 
+ * @param {Array} grains Grain objects with keys start and end.
+ * @param {Array} data Original data to pull samples from, grains should be generated from this.
+ * @param {Number} caseRate Per how many data points should there be a sample case?
  */
 export const createSampleCases = (grains, data, caseRate) => {
-  const samples = grains.map(grain => {
-    const grainLength = grain.end - grain.start;
-    const samples = Math.ceil(grainLength / caseRate);
-    const sampleRange = [...Array(samples).keys()];
-    const collectedSamples = sampleRange.map(i => {
-      const frameNumber = grain.start + i * caseRate;
-      const sample = Math.abs(data[frameNumber]);
-      return sample;
-    });
-    return collectedSamples;
+  const lengths = grainLengths(grains);
+  const casesPerGrain = lengths.map(l => Math.ceil(l / caseRate));
+  const rangePerGrain = casesPerGrain.map(range);
+  const cases = grains.map(({start, end}, i) => {
+    const casesIndexes = rangePerGrain[i].map(() => random(start, end));
+    const collectedSignedData = casesIndexes.map(i => data[i]);
+    const collectedData = collectedSignedData.map(Math.abs);
+    return collectedData;
   });
-  return samples;
+  return cases;
+};
+
+/**
+ * This will contain whatever our current quietness calculation algorithm should be.
+ * @param {Object} grain Grain containing at least the amplitude key.
+ * @param {Number} cutOff Percentage (0 to 1) threshold that of which below, is considered quiet.
+ * @param {Number} maxAmplitude Maximum amplitude of the track.
+ */
+export const isGrainQuiet = ({ amplitude }, cutOff, maxAmplitude) => {
+  const amplitudePercentage = amplitude / maxAmplitude;
+  const quiet = amplitudePercentage <= cutOff;
+  return quiet;
+};
+
+/**
+ * Checks against an array of grains to see if the grains match criteria to be "quiet".
+ * @param {Array} grains Grains array containing objects with at least the amplitude key.
+ * @param {Number} cutOff Percentage (0 to 1) threshold that of which below, is considered quiet.
+ */
+export const areGrainsQuiet = (grains, cutOff) => {
+  const amplitudes = getKeyFromObjectArray(grains, "amplitude");
+  const maxAmplitude = max(amplitudes);
+  const quiet = grains.map((grain) => isGrainQuiet(grain, cutOff, maxAmplitude));
+  return quiet;
 };

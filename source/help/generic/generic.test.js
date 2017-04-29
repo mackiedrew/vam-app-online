@@ -10,6 +10,7 @@ import {
   zipObjectArray,
   random,
   range,
+  getKeyFromObjectArray
 } from './generic'
 
 describe('floor(value)', () => {
@@ -295,3 +296,23 @@ describe("leadingZeros()", () => {
 
 
 })
+
+describe("getKeyFromObjectArray()", () => {
+  
+  const testArray = [{ test1: "ABC", test2: "123" }, { test1: "DEF", test2: "456" }];
+
+  const testHoleArray = [{ test1: "ABC" }, { test1: "DEF", test2: "456" }];
+
+  it("returns an array of original length", () => {
+    const result = getKeyFromObjectArray(testArray, "test2");
+    const expectedLength = testArray.length;
+    expect(result.length).toBe(expectedLength);
+  });
+
+  it("returns an array of original length, even if there is no key for an entry", () => {
+    const result = getKeyFromObjectArray(testHoleArray, "test2");
+    const expectedLength = testArray.length;
+    expect(result.length).toBe(expectedLength);
+  });
+
+});

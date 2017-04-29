@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./SeekBar.styl";
 
 // Libraries
-import { secondsToSamples, samplesToTime } from "../../help/wav/wav";
+import { secondsToSamples, samplesToTime } from "../../help/convert/convert";
 import { leadingZeros } from "../../help/generic/generic";
 
 // Components

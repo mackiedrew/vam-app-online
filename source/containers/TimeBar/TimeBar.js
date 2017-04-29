@@ -1,7 +1,7 @@
 import React from "react";
 import "./TimeBar.styl";
 
-import { samplesToTime, samplesToSeconds } from "../../help/wav/wav";
+import { samplesToTime, samplesToSeconds } from "../../help/convert/convert";
 import { range, leadingZeros } from "../../help/generic/generic";
 
 export const Slice = ({ sample, sampleSpan }) => {

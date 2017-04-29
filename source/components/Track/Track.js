@@ -94,9 +94,10 @@ class Track extends Component {
   /**
    * Read important information from the wav file and place it into state. Or store an error.
    */
+
   readPath() {
     const { file } = this.props;
-    return richReadWav(file)
+    return richReadWav(file, config.grain.value)
       .then(wavData => {
         this.setState({ ...wavData });
         return wavData;

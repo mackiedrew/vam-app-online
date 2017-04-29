@@ -1,9 +1,13 @@
 import {
   splitGrainIntoTwo,
   splitGrain,
-  createEquallySpacedGrains
+  createEquallySpacedGrains,
+  grainLengths,
+  createSampleCases,
+  isGrainQuiet,
+  areGrainsQuiet
 } from "./grain";
-import { samplesToSeconds } from "../wav/wav";
+import { samplesToSeconds } from "../convert/convert";
 
 const mockSimpleGrain = {
   start: 4000,
@@ -142,6 +146,93 @@ describe("createEquallySpacedGrains()", () => {
     const resultDangle = createEquallySpacedGrains(testData, samplesToSeconds(4));
     expect(resultDangle.length).toBe(3);
     expect(resultEven.length).toBe(5);
+  });
+
+});
+
+describe("grainLengths()", () => {
+
+  const testGrains = [
+    { start: 0, end: 10 },
+    { start: 10, end: 20 },
+    { start: 20, end: 30 },
+    { start: 30, end: 40 },
+    { start: 40, end: 50 }
+  ]
+
+  it("returns an array", () => {
+    const result = grainLengths(testGrains);
+    expect(typeof result).toBe("object");
+  });
+
+  it("returns an array with same length as original", () => {
+    const originalLength = testGrains.length;
+    const result = grainLengths(testGrains);
+    expect(result.length).toBe(originalLength);
+  });
+
+});
+
+describe("createSampleCases()", () => {
+
+  const testGrains = [
+    { start: 0, end: 2 },
+    { start: 2, end: 4 },
+    { start: 4, end: 6 },
+    { start: 6, end: 8 }
+  ];
+  const testData = [0, 1, 2, 3, 4, 5, 6, 7];
+
+  it("returns an array", () => {
+    const result = createSampleCases(testGrains, testData, 1);
+    expect(typeof result).toBe("object");
+  });
+
+  it("returns an array with same length as original grains array", () => {
+    const result = createSampleCases(testGrains, testData, 1);
+    expect(result.length).toBe(testGrains.length);
+  });
+
+});
+
+describe("isGrainQuiet()", () => {
+
+  const testLoudGrain = { amplitude: 0.5 }
+  const testQuietGrain = { amplitude: 0.1 }
+  const testCutOff = 0.3;
+  const testMaxAmplitude = 1.0;
+
+  it("returns false if the grain amplitude is above threshold", () => {
+    const result = isGrainQuiet(testLoudGrain, testCutOff, testMaxAmplitude);
+    expect(result).toBe(false);
+  });
+
+  it("returns true if the grain amplitude is below threshold", () => {
+    const result = isGrainQuiet(testQuietGrain, testCutOff, testMaxAmplitude);
+    expect(result).toBe(true);
+  });
+
+});
+
+describe("areGrainsQuiet()", () => {
+
+  const testGrains = [
+    { start: 0, end: 2, amplitude: 0.2 },
+    { start: 2, end: 4, amplitude: 0.4 },
+    { start: 4, end: 6, amplitude: 0.6 },
+    { start: 6, end: 8, amplitude: 0.8 }
+  ];
+  const testCutOff = 0.5;
+
+  it("returns an array", () => {
+    const result = areGrainsQuiet(testGrains, testCutOff);
+    expect(typeof result).toBe("object");
+  });
+
+
+  it("returns array the same length of original grains array", () => {
+    const result = areGrainsQuiet(testGrains, testCutOff);
+    expect(result.length).toBe(testGrains.length);
   });
 
 });
