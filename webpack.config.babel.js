@@ -6,7 +6,7 @@ import FaviconsWebpackPlugin from "favicons-webpack-plugin";
 import OfflinePlugin from "offline-plugin";
 
 /// Constants ///
-const PORT = 8080;
+const PORT = 7000;
 const HOST = "localhost";
 const build_directory = "build";
 const source_directory = "source";

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./SeekBar.styl";
 
 // Libraries
-import { secondsToSamples, samplesToTime } from "../../help/wav/wav";
+import { secondsToSamples, samplesToTime } from "../../help/convert/convert";
 import { leadingZeros } from "../../help/generic/generic";
 
 // Components
@@ -62,18 +62,24 @@ class SeekBar extends Component {
   handleMinus1() {
     this.seekSeconds(-1);
   }
-
   handleViewNext() {
     this.props.shiftView(1.0);
   }
-
   handleViewPrevious() {
     this.props.shiftView(-1.0);
   }
-
+  handleZoomIn() {
+    this.props.viewMagnify(0.75);
+  }
+  handleZoomOut() {
+    this.props.viewMagnify(1.50);
+  }
+  handleTogglePlay() {
+    this.props.togglePlay();
+  }
   render() {
     // Break out values for the sake of easier template reading
-    const { seek, viewMagnify, togglePlay, playing } = this.props;
+    const { seek, playing } = this.props;
     const time = samplesToTime(seek);
     const { ms, s, m, h } = time;
 
@@ -93,10 +99,10 @@ class SeekBar extends Component {
           </button>
           <ToggleButton
             offContents={<Icon icon="play_arrow" />}
-            offFunction={() => togglePlay()}
+            offFunction={this.handleTogglePlay}
             on={playing}
             onContents={<Icon icon="pause" />}
-            onFunction={() => togglePlay()}
+            onFunction={this.handleTogglePlay}
           />
           <button className="seek-plus-1" onClick={this.handlePlus1}>
             <Icon icon="skip_next" />
@@ -112,10 +118,10 @@ class SeekBar extends Component {
           <button className="view-next" onClick={this.handleViewNext}>
             <Icon icon="navigate_next" />
           </button>
-          <button className="zoom-in" onClick={() => viewMagnify(0.75)}>
+          <button className="zoom-in" onClick={this.handleZoomIn}>
             <Icon icon="zoom_in" />
           </button>
-          <button className="zoom-out" onClick={() => viewMagnify(1.5)}>
+          <button className="zoom-out" onClick={this.handleZoomOut}>
             <Icon icon="zoom_out" />
           </button>
           <div className="current-time">{timeStamp}</div>

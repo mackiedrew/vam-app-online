@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { secondsToSamples } from "../../help/wav/wav";
+import { secondsToSamples } from "../../help/convert/convert";
 import { floor } from "../../help/generic/generic";
 
 class AudioManager extends Component {

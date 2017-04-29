@@ -7,23 +7,23 @@
 export const range = size => [...Array(size).keys()];
 
 /**
+ * Calculate the max value of all the entries in an array
+ * @param {Array} array Array of values to determine the max array size.
+ */
+export const max = array => Math.max(...array);
+
+/**
+ * Adds all the elements of an array together
+ * @param {Array} array Array of values to add
+ */
+export const add = array => array.reduce((a, b) => a + b, 0);
+
+/**
  * Faster flooring method using a bitwise trick with better behavior than Math.floor().
  * Will round both positive and negative numbers closer to zero.
  * @param {Number} value The value to be rounded closer to zero.
  */
 export const floor = value => ~~value;
-
-/**
- * Leverages the faster floor into a ceiling function.
- * Will round both positive and negative numbers away from zero.
- * @param {Number} value The value to be rounded away from zero.
- */
-export const ceiling = value => {
-  if (value === 0) {
-    return 0;
-  }
-  return value > 0 ? floor(value) + 1 : floor(value) - 1;
-};
 
 /**
  * Creates an array of 'segments' that contain two values: start and end.
@@ -34,13 +34,12 @@ export const ceiling = value => {
  * @param {Number} segmentSize Integer, number of array elements per segment (inclusive).
  */
 export const logicalSegment = (array, segmentSize) => {
-  const totalSegments = ceiling(array.length / segmentSize);
+  const totalSegments = Math.ceil(array.length / segmentSize);
   const segmentsRange = range(totalSegments);
   const starts = segmentsRange.map(segment => segment * segmentSize);
-  // Good
   const ends = segmentsRange.map(segment => {
     return segment === totalSegments - 1
-      ? array.length
+      ? array.length - 1
       : (segment + 1) * segmentSize;
   });
   const segments = segmentsRange.map(segment => ({
@@ -102,26 +101,40 @@ export const leadingZeros = (rawNumber, columns = 2) => {
   return output;
 };
 
-export const intersect = (one, two) => {
-  const isOneSmaller = one.length < two.length;
-  const smallerObject = isOneSmaller ? one : two;
-  const largerObject = isOneSmaller ? two : one;
-  const smallerObjectKeys = Object.keys(smallerObject);
-  const isShared = smallerObjectKeys.map(key => key in largerObject);
-  const intersection = smallerObjectKeys.reduce(
-    (current, key) => (isShared[key] ? { ...current, key: one[key] } : current),
-    {}
-  );
-  return intersection;
+/**
+ * Figure out the mean average of the elements in an array.
+ * @param {Array} array Array to find the mean of.
+ */
+export const mean = array => add(array) / array.length;
+
+/**
+ * Adds a new key with given values to an existing array of object.
+ * @param {Array} array Original array to add the values to under the given key.
+ * @param {String} key The key name that the values should be added to the array as.
+ * @param {String} values A hopefully length-matched array of values to add to the arry.
+ */
+export const zipObjectArray = (array, key, values) => {
+  const newArray = array.map((object, index) => {
+    return {
+      ...object,
+      [key]: values[index] || undefined
+    };
+  });
+  return newArray;
 };
 
-export const difference = (minuend, subtrahend) => {
-  const intersection = intersect(minuend, subtrahend);
-  const minuendKeys = Object.keys(minuend);
-  const differenceKeys = minuendKeys.filter(key => !(key in intersection));
-  const difference = differenceKeys.reduce(
-    (total, key) => ({ ...total, key: minuend[key] }),
-    {}
-  );
-  return difference;
-};
+/**
+ * Get a random integer from provided minimum and maximum number. This will produce an integer.
+ * @param {Number} min Minimum possible value (inclusive).
+ * @param {Number} max Maximum possible value (exclusive).
+ */
+export const random = (min, max) => floor(Math.random() * (max - min)) + min;
+
+/**
+ * Pulls the provided key from each object in the provided array, should return undefined if it
+ * doesn't exist in that object.
+ * @param {Array} array Array of objects with keys contained.
+ * @param {String} key Object key to take from each array entry.
+ */
+export const getKeyFromObjectArray = (array, key) =>
+  array.map(entry => entry[key] || undefined);

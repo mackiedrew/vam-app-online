@@ -1,34 +1,24 @@
 /* eslint-disable */
 
 import registerPromiseWorker from "promise-worker/register";
+import { mean, zipObjectArray, max } from "../help/generic/generic";
+import { areGrainsQuiet } from "../help/grain/grain";
 import config from "../config";
 
-registerPromiseWorker((message) => {
-  const { samples, grains, framesPerSample } = message;
-  const amplitudes = grains.map((grain, i) => {
-    const totaledAmplitude = samples[i].reduce((a, b) => a + b , 0);
-    return totaledAmplitude / (grain.end - grain.start + 1);
-  });
-  const simpleGrains = grains.map((grain, index) => {
-    return {
-      start: grain.start,
-      end: grain.end,
-      amplitude: amplitudes[index]
-    }
-  });
-  const maxAmplitude = amplitudes.reduce((a, b) => a > b ? a : b, -Infinity);
-  const finalGrains = simpleGrains.map((grain) => {
-    const amplitudePercentage = grain.amplitude / maxAmplitude;
-    const cutoffPercentage = config.quietCutoff.value / 100;
-    const quiet = amplitudePercentage <= cutoffPercentage;
-    return {
-      ...grain,
-      quiet
-    };
-  })
-  const result = {
-    grains: finalGrains,
-    maxAmplitude: maxAmplitude,
-  };
+registerPromiseWorker(({ protoGrains, cases }) => {
+  
+  // Add amplitudes to grains
+  const amplitudes = cases.map(mean);
+  const simpleGrains = zipObjectArray(protoGrains, "amplitude", amplitudes);
+
+  // Add quietness to grains
+  const quietnessCutoff =  config.quietCutoff.value / 100
+  const quietGrains = areGrainsQuiet(simpleGrains, quietnessCutoff);
+  const finalGrains = zipObjectArray(simpleGrains, "quiet", quietGrains); 
+
+  // Calculate max amplitude
+  const maxAmplitude = max(amplitudes);
+
+  const result = { grains: finalGrains, maxAmplitude: maxAmplitude };
   return result;
 });

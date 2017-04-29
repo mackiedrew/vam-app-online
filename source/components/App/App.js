@@ -7,7 +7,7 @@ import config from "../../config";
 import shortid from "shortid";
 import keyboard from "keyboardjs";
 import filterObj from "filter-obj";
-import { samplesToSeconds } from "../../help/wav/wav";
+import { samplesToSeconds } from "../../help/convert/convert";
 import { floor } from "../../help/generic/generic";
 
 // Components

@@ -3,6 +3,7 @@ import "./Header.styl";
 
 // Components
 import Icon from "../../containers/Icon/Icon";
+import ToolBar from "../../containers/ToolBar/ToolBar";
 
 /**
  * The role of the <Waveform /> container is aggregate data, using libraries and provided data into
@@ -11,17 +12,20 @@ import Icon from "../../containers/Icon/Icon";
  */
 const Header = props => (
   <header className="header">
-    <button onClick={props.toggleFilter}>
-      <Icon icon="library_add" />
-    </button>
-    <h1>VAM</h1>
-    <button>
-      <Icon icon="file_download" />
-    </button>
-    {props.children}
-    <button onClick={props.toggleSettings}>
-      <Icon icon="settings" />
-    </button>
+    <div className="main-bar">
+      <button onClick={props.toggleFilter}>
+        <Icon icon="library_add" />
+      </button>
+      <h1>VAM</h1>
+      <button>
+        <Icon icon="file_download" />
+      </button>
+      {props.children}
+      <button onClick={props.toggleSettings}>
+        <Icon icon="settings" />
+      </button>
+    </div>
+    <ToolBar />
   </header>
 );
 
