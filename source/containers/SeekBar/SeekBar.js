@@ -6,8 +6,8 @@ import { secondsToSamples, samplesToTime } from "../../help/convert/convert";
 import { leadingZeros } from "../../help/generic/generic";
 
 // Components
-import ToggleButton from "../../containers/ToggleButton/ToggleButton";
-import Icon from "../../containers/Icon/Icon";
+import ToggleButton from "../../components/ToggleButton/ToggleButton";
+import Icon from "../../components/Icon/Icon";
 
 /**
  * SeekBar will handle the controls and logic, and maybe a UI for interacting with the current seek

@@ -5,7 +5,7 @@ import "./AddTrack.styl";
 import { range } from "../../help/generic/generic";
 
 // Components
-import Icon from "../../containers/Icon/Icon";
+import Icon from "../../components/Icon/Icon";
 
 class AddTrack extends Component {
   constructor(props) {

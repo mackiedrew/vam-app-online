@@ -1,12 +1,12 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import "./Settings.styl";
-
-import config from "../../config";
 
 class Settings extends Component {
   constructor(props) {
     // Initialize extended class with passed props
     super(props);
+    this.generateFields = this.generateFields.bind(this);
   }
 
   settingsClass(open) {
@@ -14,8 +14,9 @@ class Settings extends Component {
   }
 
   generateFields() {
-    return Object.keys(config).map(name => {
-      const { value, unit, label, type } = config[name];
+    const { settings } = this.props;
+    return Object.keys(settings).map(name => {
+      const { value, unit, label, type } = settings[name];
 
       return (
         <div className="field" key={name}>
@@ -50,4 +51,11 @@ class Settings extends Component {
   }
 }
 
-export default Settings;
+const mapStateToProps = state => {
+  return {
+    open: state.ui.settingsOpen,
+    settings: state.settings
+  };
+};
+
+export default connect(mapStateToProps)(Settings);

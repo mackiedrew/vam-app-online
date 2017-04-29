@@ -1,5 +1,6 @@
 /* eslint-env node */
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import "./Track.styl";
 
 // Library
@@ -12,10 +13,10 @@ import { divisionBinarySearch } from "../../help/generic/generic";
 import config from "../../config";
 
 // Components
-import Waveform from "../../containers/Waveform/Waveform";
-import Loading from "../../containers/Loading/Loading";
-import ToggleButton from "../../containers/ToggleButton/ToggleButton";
-import Icon from "../../containers/Icon/Icon";
+import Waveform from "../../components/Waveform/Waveform";
+import Loading from "../../components/Loading/Loading";
+import ToggleButton from "../../components/ToggleButton/ToggleButton";
+import Icon from "../../components/Icon/Icon";
 
 /**
  * <Track /> should take in a simple path to a to a file and generate logical divisions and pass
@@ -96,8 +97,8 @@ class Track extends Component {
    */
 
   readPath() {
-    const { file } = this.props;
-    return richReadWav(file, config.grain.value)
+    const { file, grainSize } = this.props;
+    return richReadWav(file, grainSize)
       .then(wavData => {
         this.setState({ ...wavData });
         return wavData;
@@ -227,4 +228,10 @@ class Track extends Component {
   }
 }
 
-export default Track;
+const mapStateToProps = state => {
+  return {
+    grainSize: state.settings.grain.value
+  };
+};
+
+export default connect(mapStateToProps)(Track);

@@ -1,9 +1,13 @@
 import React from "react";
+import { connect } from "react-redux";
 import "./Header.styl";
 
 // Components
-import Icon from "../../containers/Icon/Icon";
-import ToolBar from "../../containers/ToolBar/ToolBar";
+import Icon from "../../components/Icon/Icon";
+import ToolBar from "../../components/ToolBar/ToolBar";
+
+// Action Creators
+import { toggleSettings, toggleFilters } from "../../actions/ui";
 
 /**
  * The role of the <Waveform /> container is aggregate data, using libraries and provided data into
@@ -13,7 +17,7 @@ import ToolBar from "../../containers/ToolBar/ToolBar";
 const Header = props => (
   <header className="header">
     <div className="main-bar">
-      <button onClick={props.toggleFilter}>
+      <button onClick={props.toggleFilters}>
         <Icon icon="library_add" />
       </button>
       <h1>VAM</h1>
@@ -29,4 +33,16 @@ const Header = props => (
   </header>
 );
 
-export default Header;
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleSettings: () => {
+      dispatch(toggleSettings());
+    },
+    toggleFilters: () => {
+      dispatch(toggleFilters());
+    }
+  };
+};
+
+
+export default connect(null, mapDispatchToProps)(Header);
