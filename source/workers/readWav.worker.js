@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import registerPromiseWorker from "promise-worker-transferable/register";
 import { decode } from "wav-decoder";
 
