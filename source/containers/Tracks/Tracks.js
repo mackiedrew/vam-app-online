@@ -3,8 +3,8 @@ import "./Tracks.styl";
 
 // Components
 import Track from "../Track/Track";
-import TimeBar from "../../containers/TimeBar/TimeBar";
-import AudioManager from "../../components/AudioManager/AudioManager";
+import TimeBar from "../../components/TimeBar/TimeBar";
+import AudioManager from "../AudioManager/AudioManager";
 
 class Tracks extends Component {
   constructor(props) {

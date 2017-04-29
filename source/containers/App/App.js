@@ -11,7 +11,7 @@ import { samplesToSeconds } from "../../help/convert/convert";
 import { floor } from "../../help/generic/generic";
 
 // Components
-import Header from "../../containers/Header/Header";
+import Header from "../Header/Header";
 import AddTrack from "../AddTrack/AddTrack";
 import Filters from "../Filters/Filters";
 import Tracks from "../Tracks/Tracks";
@@ -36,8 +36,6 @@ class App extends Component {
       playing: false,
       selectedTrack: undefined,
       nextId: nextId,
-      filtersOpen: false,
-      settingsOpen: false,
       context: audioContext,
       tracks: {},
       trackLengths: {},
@@ -57,8 +55,6 @@ class App extends Component {
     this.handleTrackAdd = this.handleTrackAdd.bind(this);
     this.handleTrackRemove = this.handleTrackRemove.bind(this);
     this.reportTrackLength = this.reportTrackLength.bind(this);
-    this.toggleFilter = this.toggleFilter.bind(this);
-    this.toggleSettings = this.toggleSettings.bind(this);
     this.selectTrack = this.selectTrack.bind(this);
     this.setView = this.setView.bind(this);
     this.viewMagnify = this.viewMagnify.bind(this);
@@ -270,17 +266,6 @@ class App extends Component {
     const nextId = shortid.generate();
     this.setState({ nextId: nextId });
   }
-
-  toggleFilter() {
-    const { filtersOpen } = this.state;
-    this.setState({ filtersOpen: !filtersOpen });
-  }
-
-  toggleSettings() {
-    const { settingsOpen } = this.state;
-    this.setState({ settingsOpen: !settingsOpen });
-  }
-
   /**
    * Remove a track from the tracks array matching the provided track id.
    * @param {String} idToRemove ID to remove from the tracks list
@@ -332,8 +317,6 @@ class App extends Component {
       nextId,
       seek,
       tracks,
-      filtersOpen,
-      settingsOpen,
       selectedTrack,
       playing,
       view,
@@ -343,14 +326,11 @@ class App extends Component {
 
     return (
       <div className="app">
-        <Header
-          toggleFilter={this.toggleFilter}
-          toggleSettings={this.toggleSettings}
-        >
+        <Header>
           <AddTrack handleTrackAdd={this.handleTrackAdd} id={nextId} />
         </Header>
         <main>
-          <Filters open={filtersOpen} />
+          <Filters />
           <Tracks
             context={context}
             handleTrackAdd={this.handleTrackAdd}
@@ -368,7 +348,7 @@ class App extends Component {
             tracks={tracks}
             view={view}
           />
-          <Settings open={settingsOpen} />
+          <Settings />
         </main>
 
         <footer>

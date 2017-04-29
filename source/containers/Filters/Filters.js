@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import "./Filters.styl";
 
 class Filters extends Component {
@@ -23,4 +24,10 @@ class Filters extends Component {
   }
 }
 
-export default Filters;
+const mapStateToProps = state => {
+  return {
+    open: state.ui.filtersOpen
+  };
+};
+
+export default connect(mapStateToProps)(Filters);
