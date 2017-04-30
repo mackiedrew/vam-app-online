@@ -131,6 +131,6 @@
     "webpack": "2.4.1",
     "webpack-dev-server": "2.4.5",
     "worker-loader": "0.8.0",
-    "yarn": "0.22.0"
+    "yarn": "0.23.3"
   }
 }
