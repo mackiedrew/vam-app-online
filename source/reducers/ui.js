@@ -1,45 +1,18 @@
-import {
-  SHOW_SETTINGS,
-  HIDE_SETTINGS,
-  TOGGLE_SETTINGS,
-  SHOW_FILTERS,
-  HIDE_FILTERS,
-  TOGGLE_FILTERS
-} from "../actions/ui";
+import { TOGGLE_SETTINGS_MENU, TOGGLE_FILTERS_MENU } from "../constants/actionTypes";
 
 const DEFAULT_STATE = {
-  settingsOpen: false,
+  settingsOpen: true,
   filtersOpen: false
 };
 
 const UIReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
-  case SHOW_SETTINGS:
-    return {
-      ...state,
-      settingsOpen: true
-    };
-  case HIDE_SETTINGS:
-    return {
-      ...state,
-      settingsOpen: false
-    };
-  case TOGGLE_SETTINGS:
+  case TOGGLE_SETTINGS_MENU:
     return {
       ...state,
       settingsOpen: !state.settingsOpen
     };
-  case SHOW_FILTERS:
-    return {
-      ...state,
-      filtersOpen: true
-    };
-  case HIDE_FILTERS:
-    return {
-      ...state,
-      filtersOpen: false
-    };
-  case TOGGLE_FILTERS:
+  case TOGGLE_FILTERS_MENU:
     return {
       ...state,
       filtersOpen: !state.filtersOpen

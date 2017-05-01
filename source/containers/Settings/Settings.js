@@ -1,12 +1,24 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import "./Settings.styl";
+
+// Action creators
+import changeSettingValue from "../../actions/changeSettingValue";
 
 class Settings extends Component {
   constructor(props) {
     // Initialize extended class with passed props
     super(props);
     this.generateFields = this.generateFields.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event, settingName) {
+    const { changeSetting } = this.props;
+    const { value } = event.target;
+    event.preventDefault();
+    changeSetting(settingName, value);
   }
 
   settingsClass(open) {
@@ -26,6 +38,7 @@ class Settings extends Component {
               className="input"
               id={name}
               name={name}
+              onChange={event => this.handleChange(event, name)}
               type={type}
               value={value}
             />
@@ -58,4 +71,10 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Settings);
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    changeSetting: changeSettingValue
+  }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

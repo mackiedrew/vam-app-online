@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import "./Tracks.styl";
 
 // Components
@@ -107,4 +108,10 @@ class Tracks extends Component {
   }
 }
 
-export default Tracks;
+const mapStateToProps = state => {
+  return {
+    view: state.tracks.view
+  };
+};
+
+export default connect(mapStateToProps)(Tracks);
