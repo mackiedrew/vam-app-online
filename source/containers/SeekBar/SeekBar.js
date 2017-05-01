@@ -1,5 +1,14 @@
+// Render
 import React, { Component } from "react";
 import "./SeekBar.styl";
+
+// State
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+// Actions
+import magnifyView from "../../actions/magnifyView";
+import shiftView from "../../actions/shiftView";
 
 // Libraries
 import { secondsToSamples, samplesToTime } from "../../help/convert/convert";
@@ -27,6 +36,8 @@ class SeekBar extends Component {
     this.handleMinus1 = this.handleMinus1.bind(this);
     this.handleViewNext = this.handleViewNext.bind(this);
     this.handleViewPrevious = this.handleViewPrevious.bind(this);
+    this.handleZoomIn = this.handleZoomIn.bind(this);
+    this.handleZoomOut = this.handleZoomOut.bind(this);
   }
 
   /**
@@ -69,10 +80,10 @@ class SeekBar extends Component {
     this.props.shiftView(-1.0);
   }
   handleZoomIn() {
-    this.props.viewMagnify(0.75);
+    this.props.magnifyView(0.75);
   }
   handleZoomOut() {
-    this.props.viewMagnify(1.50);
+    this.props.magnifyView(1.50);
   }
   handleTogglePlay() {
     this.props.togglePlay();
@@ -132,4 +143,11 @@ class SeekBar extends Component {
   }
 }
 
-export default SeekBar;
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    magnifyView: magnifyView,
+    shiftView: shiftView
+  }, dispatch);
+};
+
+export default connect(null, mapDispatchToProps)(SeekBar);

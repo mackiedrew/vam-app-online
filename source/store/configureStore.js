@@ -1,10 +1,12 @@
 /* eslint-env node */
 
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 import rootReducer from "../reducers";
 
 const configureStore = initialState => {
-  const store = createStore(
+  const createStoreWithMiddleWare = applyMiddleware(thunk)(createStore);
+  const store = createStoreWithMiddleWare(
     rootReducer,
     initialState,
     window.devToolsExtension ? window.devToolsExtension() : undefined

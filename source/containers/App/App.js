@@ -1,6 +1,12 @@
+// Render
 import React, { Component } from "react";
 import "./App.styl";
 
+// State
+import { connect } from "react-redux";
+
+
+// Load Configuration File
 import config from "../../config";
 
 // Libraries
@@ -40,11 +46,6 @@ class App extends Component {
       tracks: {},
       trackLengths: {},
       mutedTracks: {},
-      seek: 0, // samples
-      view: {
-        start: 44100 * 60 * 0,
-        end: 44100 * 60 * 10
-      }
     };
     // Reset state to initialState
     this.state = this.initialState;
@@ -56,8 +57,6 @@ class App extends Component {
     this.handleTrackRemove = this.handleTrackRemove.bind(this);
     this.reportTrackLength = this.reportTrackLength.bind(this);
     this.selectTrack = this.selectTrack.bind(this);
-    this.setView = this.setView.bind(this);
-    this.viewMagnify = this.viewMagnify.bind(this);
     this.toggleMute = this.toggleMute.bind(this);
     this.togglePlay = this.togglePlay.bind(this);
     this.reportSeek = this.reportSeek.bind(this);
@@ -70,20 +69,6 @@ class App extends Component {
     this.muteTrack = this.muteTrack.bind(this);
     this.selectNextTrack = this.selectNextTrack.bind(this);
     this.selectPreviousTrack = this.selectPreviousTrack.bind(this);
-    this.shiftView = this.shiftView.bind(this);
-  }
-
-  shiftView(viewFactor) {
-    const { view } = this.state;
-    const { start, end } = view;
-    const viewRange = end - start;
-    const viewShift = viewFactor * viewRange;
-    const newStart = start + viewShift;
-    const newEnd = end + viewShift;
-    const newView = { start: newStart, end: newEnd };
-    const stateChange = { view: newView };
-    this.setState(stateChange);
-    return newView;
   }
 
   selectNextTrack() {
@@ -221,18 +206,6 @@ class App extends Component {
     return newView;
   }
 
-  viewMagnify(factor) {
-    const { view } = this.state;
-    const { start, end } = view;
-
-    const newView = {
-      start: start,
-      end: end * factor
-    };
-    const actualNewView = this.setView(newView);
-    return actualNewView;
-  }
-
   simpleAddTracks(newTracks) {
     const { tracks } = this.state;
     const newTrackList = { ...tracks, ...newTracks };
@@ -319,7 +292,6 @@ class App extends Component {
       tracks,
       selectedTrack,
       playing,
-      view,
       context,
       mutedTracks
     } = this.state;
@@ -346,7 +318,6 @@ class App extends Component {
             selectedTrack={selectedTrack}
             toggleMute={this.toggleMute}
             tracks={tracks}
-            view={view}
           />
           <Settings />
         </main>
@@ -356,9 +327,7 @@ class App extends Component {
             playing={playing}
             seek={seek}
             seekTo={this.seekTo}
-            shiftView={this.shiftView}
             togglePlay={this.togglePlay}
-            viewMagnify={this.viewMagnify}
           />
         </footer>
 

@@ -1,13 +1,19 @@
+// Render
 import React from "react";
-import { connect } from "react-redux";
 import "./Header.styl";
+
+// State
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+// Actions
+import toggleFiltersMenu from "../../actions/toggleFiltersMenu";
+import toggleSettingsMenu from "../../actions/toggleSettingsMenu";
 
 // Components
 import Icon from "../../components/Icon/Icon";
 import ToolBar from "../../components/ToolBar/ToolBar";
 
-// Action Creators
-import { toggleSettings, toggleFilters } from "../../actions/ui";
 
 /**
  * The role of the <Waveform /> container is aggregate data, using libraries and provided data into
@@ -17,7 +23,7 @@ import { toggleSettings, toggleFilters } from "../../actions/ui";
 const Header = props => (
   <header className="header">
     <div className="main-bar">
-      <button onClick={props.toggleFilters}>
+      <button onClick={props.toggleFiltersMenu}>
         <Icon icon="library_add" />
       </button>
       <h1>VAM</h1>
@@ -25,7 +31,7 @@ const Header = props => (
         <Icon icon="file_download" />
       </button>
       {props.children}
-      <button onClick={props.toggleSettings}>
+      <button onClick={props.toggleSettingsMenu}>
         <Icon icon="settings" />
       </button>
     </div>
@@ -34,15 +40,10 @@ const Header = props => (
 );
 
 const mapDispatchToProps = dispatch => {
-  return {
-    toggleSettings: () => {
-      dispatch(toggleSettings());
-    },
-    toggleFilters: () => {
-      dispatch(toggleFilters());
-    }
-  };
+  return bindActionCreators({
+    toggleFiltersMenu: toggleFiltersMenu,
+    toggleSettingsMenu: toggleSettingsMenu
+  }, dispatch);
 };
-
 
 export default connect(null, mapDispatchToProps)(Header);

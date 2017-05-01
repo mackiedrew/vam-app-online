@@ -1,5 +1,7 @@
+// Render
 import React, { Component } from "react";
 
+// Libraries
 import { secondsToSamples } from "../../help/convert/convert";
 import { floor } from "../../help/generic/generic";
 

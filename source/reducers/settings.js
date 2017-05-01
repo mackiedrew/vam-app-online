@@ -1,21 +1,16 @@
-import { RESET_SETTINGS, CHANGE_SETTING_VALUE } from "../actions/settings";
+import { CHANGE_SETTING_VALUE } from "../constants/actionTypes";
 
 // Configuration file is the default state.
 import config from "../config";
 
 const DEFAULT_STATE = { ...config };
 
-const SettingsReducer = (state = DEFAULT_STATE, action) => {
-  switch (action.type) {
-  case RESET_SETTINGS:
-    return DEFAULT_STATE;
+const SettingsReducer = (state = DEFAULT_STATE, { type, payload }) => {
+  switch (type) {
   case CHANGE_SETTING_VALUE:
     return {
       ...state,
-      [action.setting]: {
-        ...state[action.setting],
-        value: action.value,
-      }
+      [payload.name]: payload.value
     };
   default:
     return state;
