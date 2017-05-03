@@ -75,7 +75,6 @@
   },
   "homepage": "https://valence.audio/",
   "dependencies": {
-    "filter-obj": "1.1.0",
     "keyboardjs": "^2.3.3",
     "promise-worker": "1.1.1",
     "promise-worker-transferable": "1.0.4",
@@ -84,6 +83,7 @@
     "react-redux": "^5.0.4",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
+    "reselect": "^3.0.0",
     "shortid": "2.2.8",
     "wav-decoder": "1.1.0"
   },

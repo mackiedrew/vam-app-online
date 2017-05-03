@@ -1,15 +1,14 @@
 import registerPromiseWorker from "promise-worker/register";
 import { mean, zipObjectArray, max } from "../help/generic/generic";
 import { areGrainsQuiet } from "../help/grain/grain";
-import config from "../config";
 
-registerPromiseWorker(({ protoGrains, cases }) => {
+registerPromiseWorker(({ protoGrains, quietCutoff, cases }) => {
   // Add amplitudes to grains
   const amplitudes = cases.map(mean);
   const simpleGrains = zipObjectArray(protoGrains, "amplitude", amplitudes);
 
   // Add quietness to grains
-  const quietnessCutoff = config.quietCutoff.value / 100;
+  const quietnessCutoff = quietCutoff / 100;
   const quietGrains = areGrainsQuiet(simpleGrains, quietnessCutoff);
   const finalGrains = zipObjectArray(simpleGrains, "quiet", quietGrains);
 

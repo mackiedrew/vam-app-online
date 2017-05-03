@@ -1,6 +1,9 @@
 // Render
 import React, { Component } from "react";
 
+// State
+import { connect } from "react-redux";
+
 // Libraries
 import { secondsToSamples } from "../../help/convert/convert";
 import { floor } from "../../help/generic/generic";
@@ -57,4 +60,4 @@ class AudioManager extends Component {
   }
 }
 
-export default AudioManager;
+export default connect()(AudioManager);

@@ -138,3 +138,13 @@ export const random = (min, max) => floor(Math.random() * (max - min)) + min;
  */
 export const getKeyFromObjectArray = (array, key) =>
   array.map(entry => entry[key] || undefined);
+
+/**
+ * Removes top level keys from an object and flattens it into an array.
+ * @param {Object} object Object to convert into an array.
+ */
+export const objectToArray = object => {
+  const keys = Object.keys(object);
+  const array = keys.map(key => object[key]);
+  return array;
+};
