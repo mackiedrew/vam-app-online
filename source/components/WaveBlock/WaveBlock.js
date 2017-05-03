@@ -47,8 +47,8 @@ class WaveBlock extends Component {
 
   // onClick handlers
   handleClick() {
-    const { start, seekTo } = this.props;
-    seekTo(start);
+    const { start, setSeekPosition } = this.props;
+    setSeekPosition(start);
   }
 
   render() {

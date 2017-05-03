@@ -72,9 +72,12 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({
-    changeSetting: changeSettingValue
-  }, dispatch);
+  return bindActionCreators(
+    {
+      changeSetting: changeSettingValue
+    },
+    dispatch
+  );
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

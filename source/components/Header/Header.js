@@ -2,18 +2,10 @@
 import React from "react";
 import "./Header.styl";
 
-// State
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-
-// Actions
-import toggleFiltersMenu from "../../actions/toggleFiltersMenu";
-import toggleSettingsMenu from "../../actions/toggleSettingsMenu";
-
 // Components
 import Icon from "../../components/Icon/Icon";
 import ToolBar from "../../components/ToolBar/ToolBar";
-
+import AddTrack from "../../containers/AddTrack/AddTrack";
 
 /**
  * The role of the <Waveform /> container is aggregate data, using libraries and provided data into
@@ -30,7 +22,7 @@ const Header = props => (
       <button>
         <Icon icon="file_download" />
       </button>
-      {props.children}
+      <AddTrack />
       <button onClick={props.toggleSettingsMenu}>
         <Icon icon="settings" />
       </button>
@@ -39,11 +31,4 @@ const Header = props => (
   </header>
 );
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({
-    toggleFiltersMenu: toggleFiltersMenu,
-    toggleSettingsMenu: toggleSettingsMenu
-  }, dispatch);
-};
-
-export default connect(null, mapDispatchToProps)(Header);
+export default Header;

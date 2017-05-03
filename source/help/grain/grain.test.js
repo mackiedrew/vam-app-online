@@ -5,7 +5,8 @@ import {
   grainLengths,
   createSampleCases,
   isGrainQuiet,
-  areGrainsQuiet
+  areGrainsQuiet,
+  grainIndexesInView
 } from "./grain";
 import { samplesToSeconds } from "../convert/convert";
 
@@ -236,3 +237,79 @@ describe("areGrainsQuiet()", () => {
   });
 
 });
+
+describe("areGrainsQuiet()", () => {
+
+  const testGrains = [
+    { start: 0, end: 2, amplitude: 0.2 },
+    { start: 2, end: 4, amplitude: 0.4 },
+    { start: 4, end: 6, amplitude: 0.6 },
+    { start: 6, end: 8, amplitude: 0.8 }
+  ];
+  const testCutOff = 0.5;
+
+  it("returns an array", () => {
+    const result = areGrainsQuiet(testGrains, testCutOff);
+    expect(typeof result).toBe("object");
+  });
+
+
+  it("returns array the same length of original grains array", () => {
+    const result = areGrainsQuiet(testGrains, testCutOff);
+    expect(result.length).toBe(testGrains.length);
+  });
+
+});
+
+describe("grainIndexesInView()", () => {
+
+  const testGrains = [
+    { start: 0, end: 2 },
+    { start: 2, end: 4 },
+    { start: 4, end: 6 },
+    { start: 6, end: 8 }
+  ];
+  const testView = {
+    start: 2,
+    end: 5
+  }
+  const testGrainsLength = testGrains[testGrains.length - 1].end;
+  const basicResult = grainIndexesInView(testGrains, testView, testGrainsLength);
+
+  it("returns an array with startIndex and endIndex", () => {
+    expect(basicResult.startIndex).toBeDefined();
+    expect(basicResult.endIndex).toBeDefined();
+  });
+
+  it("returns an array with startIndex being less than or equal to endIndex", () => {
+    expect(basicResult.startIndex).toBeLessThanOrEqual(basicResult.endIndex);
+  });
+
+  it("returns full array indexes when provided with a view equal to span of grains", () => {
+    const fullView = {
+      start: 0,
+      end: 8
+    };
+    const result = grainIndexesInView(testGrains, fullView, testGrainsLength);
+    expect(result.startIndex).toBe(0);
+    expect(result.endIndex).toBe(3);
+  });
+
+  it("returns full array indexes when view.end is beyond end of grains", () => {
+    const extraView = {
+      start: 0,
+      end: 70
+    };
+    const result = grainIndexesInView(testGrains, extraView, 70);
+    expect(result.startIndex).toBe(0);
+    expect(result.endIndex).toBe(3);
+  });
+
+  it("returns expected grain indexes in typical conditions", () => {
+    const result = grainIndexesInView(testGrains, testView, testGrainsLength);
+    expect(result.startIndex).toBe(1);
+    expect(result.endIndex).toBe(1);
+  });
+
+});
+

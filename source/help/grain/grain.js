@@ -140,3 +140,66 @@ export const areGrainsQuiet = (grains, cutOff) => {
   const quiet = grains.map(grain => isGrainQuiet(grain, cutOff, maxAmplitude));
   return quiet;
 };
+
+
+/**
+ * Figures out the indexes of grains contained within the provided view.
+ * @param {Array} grains Entire array of grains.
+ * @param {Object} view Which frames (samples) should be seen, with start and end keys.
+ * @param {Number} trackLength How many frames (samples) are in the provided track.
+ * @return {Array} Returns an object containing two keys, startIndex and endIndex, which indicate
+ * (inclusively) the grains that are fully within the view window.
+ */
+export const grainIndexesInView = (grains, { start, end }, trackLength) => {
+  const startIndex = divisionBinarySearch(start - 1, grains, trackLength);
+  const lastIndex = grains.length - 1;
+  const endIndex = divisionBinarySearch(end, grains, trackLength) || lastIndex;
+  const indexesInView = { startIndex, endIndex };
+  return indexesInView;
+};
+
+/**
+ * 
+ * @param {Array} grains Entire array of grains.
+ * @param {Object} view Which frames (samples) should be seen, with start and end keys.
+ * @param {Number} trackLength How many frames (samples) are in the provided track.
+ * @return {Array} Returns a list of grains that need to be show with included filler grains.
+ */
+export const determineWhichGrainsToShow = (grains, view, trackLength) => {
+  const { start, end } = view;
+  const { startIndex, endIndex } = grainIndexesInView(grains, view, trackLength);
+  
+  // Start Filler Grain
+  const firstGrainToShow = grains[startIndex];
+  const moreStart = startIndex !== 0;
+  const startFiller = [
+    {
+      start: start,
+      end: firstGrainToShow.start,
+      filler: true,
+      more: moreStart
+    }
+  ];
+
+  // End Filler Grain
+  const lastGrainToShow = grains[endIndex];
+  const lastGrainIndex = grains.length - 1;
+  const moreEnd = lastGrainIndex !== endIndex;
+  const endFiller = [
+    {
+      start: lastGrainToShow.end,
+      end: end,
+      filler: true,
+      more: moreEnd
+    }
+  ];
+  
+  const grainsToInclude = grains.slice(startIndex, endIndex + 1);
+
+  const grainsToShow = [
+    ...startFiller,
+    ...grainsToInclude,
+    ...endFiller
+  ];
+  return grainsToShow;
+};

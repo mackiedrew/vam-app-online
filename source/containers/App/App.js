@@ -4,25 +4,26 @@ import "./App.styl";
 
 // State
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
+// Actions
+import generateNextTrackId from "../../actions/generateNextTrackId";
+import selectedTrackShift from "../../actions/selectedTrackShift";
+import toggleFiltersMenu from "../../actions/toggleFiltersMenu";
+import toggleSettingsMenu from "../../actions/toggleSettingsMenu";
 
-// Load Configuration File
-import config from "../../config";
+// Selectors
+import longestTrackLength from "../../selectors/longestTrackLength";
 
 // Libraries
-import shortid from "shortid";
 import keyboard from "keyboardjs";
-import filterObj from "filter-obj";
-import { samplesToSeconds } from "../../help/convert/convert";
-import { floor } from "../../help/generic/generic";
 
 // Components
-import Header from "../Header/Header";
-import AddTrack from "../AddTrack/AddTrack";
-import Filters from "../Filters/Filters";
-import Tracks from "../Tracks/Tracks";
-import Settings from "../Settings/Settings";
-import SeekBar from "../SeekBar/SeekBar";
+import Header from "../../components/Header/Header";
+import Filters from "../../components/Filters/Filters";
+import Tracks from "../../components/Tracks/Tracks";
+import Settings from "../../containers/Settings/Settings";
+import SeekBar from "../../containers/SeekBar/SeekBar";
 
 /**
  * This used to be called "Tracks" but was refactored to be the main app since everything was
@@ -30,310 +31,68 @@ import SeekBar from "../SeekBar/SeekBar";
  */
 class App extends Component {
   constructor(props) {
-    // Construct extended class `Component` with passed props
     super(props);
-
-    // Create audio context for editing
-    const audioContext = new AudioContext();
-    const nextId = shortid.generate();
-
-    // Set initial state to make it easier to reset to later
-    this.initialState = {
-      playing: false,
-      selectedTrack: undefined,
-      nextId: nextId,
-      context: audioContext,
-      tracks: {},
-      trackLengths: {},
-      mutedTracks: {},
-    };
-    // Reset state to initialState
-    this.state = this.initialState;
-
-    // Bind functions to `this`
-    this.seekTo = this.seekTo.bind(this);
-    this.simpleAddTracks = this.simpleAddTracks.bind(this);
-    this.handleTrackAdd = this.handleTrackAdd.bind(this);
-    this.handleTrackRemove = this.handleTrackRemove.bind(this);
-    this.reportTrackLength = this.reportTrackLength.bind(this);
-    this.selectTrack = this.selectTrack.bind(this);
-    this.toggleMute = this.toggleMute.bind(this);
-    this.togglePlay = this.togglePlay.bind(this);
-    this.reportSeek = this.reportSeek.bind(this);
-    this.reportPaused = this.reportPaused.bind(this);
-    this.play = this.play.bind(this);
-    this.pause = this.pause.bind(this);
-    this.setTracks = this.setTracks.bind(this);
-    this.getAudioTags = this.getAudioTags.bind(this);
+    props.generateNextTrackId();
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.muteTrack = this.muteTrack.bind(this);
-    this.selectNextTrack = this.selectNextTrack.bind(this);
-    this.selectPreviousTrack = this.selectPreviousTrack.bind(this);
-  }
-
-  selectNextTrack() {
-    const { tracks, selectedTrack } = this.state;
-    const trackIds = Object.keys(tracks);
-    const selectedTrackIndex = trackIds.indexOf(selectedTrack);
-    const maxTrackIndex = trackIds.length - 1;
-    const isLastTrack = selectedTrackIndex >= maxTrackIndex;
-    const nextTrackIndex = isLastTrack ? 0 : selectedTrackIndex + 1;
-    const nextTrackId = trackIds[nextTrackIndex];
-    this.selectTrack(nextTrackId);
-  }
-
-  selectPreviousTrack() {
-    const { tracks, selectedTrack } = this.state;
-    const trackIds = Object.keys(tracks);
-    const selectedTrackIndex = trackIds.indexOf(selectedTrack);
-    const maxTrackIndex = trackIds.length - 1;
-    const isFirstTrack = selectedTrackIndex <= 0;
-    const previousTrackIndex = isFirstTrack
-      ? maxTrackIndex
-      : selectedTrackIndex - 1;
-    const previousTrackId = trackIds[previousTrackIndex];
-    this.selectTrack(previousTrackId);
   }
 
   componentDidMount() {
-    keyboard.bind([config.play.value, "space"], this.togglePlay);
-    keyboard.bind(config.nextTrack.value, this.selectNextTrack);
-    keyboard.bind(config.previousTrack.value, this.selectPreviousTrack);
-  }
-
-  togglePlay() {
-    const { playing } = this.state;
-    playing ? this.pause() : this.play();
-    this.setState({ playing: !playing });
-  }
-
-  getAudioTag(id) {
-    const audioTag = document.getElementById(`audio-manager-${id}`);
-    return audioTag;
-  }
-
-  muteTrack(id, muted) {
-    const audioTag = document.getElementById(`audio-manager-${id}`);
-    audioTag.mute = muted;
-  }
-
-  getAudioTags() {
-    const { tracks } = this.state;
-    const tracksIds = Object.keys(tracks);
-    const audioTags = tracksIds.map(this.getAudioTag);
-    return audioTags;
-  }
-
-  play() {
-    const audioTags = this.getAudioTags();
-    this.reportPaused(false);
-    audioTags.forEach(tag => tag.play());
-  }
-
-  pause() {
-    const audioTags = this.getAudioTags();
-    this.reportPaused(true);
-    audioTags.forEach(tag => tag.pause());
-  }
-
-  toggleMute(id) {
-    const { mutedTracks } = this.state;
-    const muted = id in mutedTracks && mutedTracks[id];
-    this.muteTrack(id, !muted);
-    const newMutedTracks = {
-      ...mutedTracks,
-      [id]: !muted
-    };
-    const newState = { mutedTracks: newMutedTracks };
-    this.setState(newState);
-  }
-
-  reportSeek(sample) {
-    const stateChanges = { seek: sample };
-    this.setState(stateChanges);
-  }
-
-  reportPaused(paused) {
-    const stateChanges = { playing: !paused };
-    this.setState(stateChanges);
-  }
-
-  setTracks(sample = 0) {
-    const audioTags = this.getAudioTags();
-    const seconds = samplesToSeconds(sample);
-    audioTags.forEach(tag => (tag.currentTime = seconds));
-    return seconds;
-  }
-
-  enforce() {
-    const { seek } = this.state;
-    this.setTracks(seek);
-  }
-
-  /**
-   * Move the seeking cursor to a specified location.
-   * @param {Number} sample Integer to move the seeking cursor to, must be integer.
-   */
-  seekTo(sample = 0) {
-    const { trackLengths } = this.state;
-    const lengthList = Object.keys(trackLengths).map(key => trackLengths[key]);
-    const maxSample = Math.max(...lengthList);
-    // Check if sample is less than 0, indexes do not go that low. No upper-bound check yet.
-    const candidatePositions = [0, sample, maxSample];
-    const sortedPositions = candidatePositions.sort((a, b) => a - b);
-    const newPosition = sortedPositions[1];
-    this.reportSeek(newPosition);
-    this.setTracks(newPosition);
-    return newPosition;
-  }
-
-  setView({ start, end }) {
-    const { trackLengths } = this.state;
-    const lengthList = Object.keys(trackLengths).map(key => trackLengths[key]);
-    const maxSample = Math.max(...lengthList);
-
-    const endCandidates = [1, end, maxSample * 2];
-    const endSorted = endCandidates.sort((a, b) => a - b);
-    const newEnd = floor(endSorted[1]);
-
-    const startCandidates = [0, start, newEnd - 1];
-    const startSorted = startCandidates.sort((a, b) => a - b);
-    const newStart = floor(startSorted[1]);
-
-    const newView = { start: newStart, end: newEnd };
-    const stateChanges = { view: newView };
-    this.setState(stateChanges);
-    return newView;
-  }
-
-  simpleAddTracks(newTracks) {
-    const { tracks } = this.state;
-    const newTrackList = { ...tracks, ...newTracks };
-    const stateChange = { tracks: newTrackList };
-    // Set tracks state to be previous state plus new track
-    this.setState(stateChange);
-  }
-
-  selectTrack(id) {
-    this.setState({ selectedTrack: id });
-  }
-
-  handleTrackAdd(files) {
-    // Add all selected files
-    const newIds = files.map(() => shortid.generate());
-    const newTracks = newIds.reduce(
-      (tracks, id, i) => ({
-        ...tracks,
-        [id]: files[i]
-      }),
-      {}
-    );
-
-    this.simpleAddTracks(newTracks);
-
-    // Set the current track to the last file added.
-    const currentTrackId = newIds.reverse()[0];
-    this.selectTrack(currentTrackId);
-
-    // Provide AddTrack with new id after addition.
-    const nextId = shortid.generate();
-    this.setState({ nextId: nextId });
-  }
-  /**
-   * Remove a track from the tracks array matching the provided track id.
-   * @param {String} idToRemove ID to remove from the tracks list
-   */
-  handleTrackRemove(idToRemove = "") {
-    // Simple reference to state of tracks
-    const { tracks } = this.state;
-    // Allow track to remain if it's index does not equal that of the index to remove
-    const newTracks = filterObj(tracks, id => id !== idToRemove);
-    // Create a 'needs to change' object including all but the specified index
-    const stateChange = { tracks: { ...newTracks } };
-    // Merge new state object and the old state object
-    this.setState(stateChange);
-  }
-
-  /**
-   * Reporting track length is kind of ugly right now. But basically, the <Track /> will load the 
-   * information about their individual files, then report back to the parent. Every time this sort
-   * of update is done, it checks to make sure track lengths match existing trackIds. I do this to
-   * prevent the state nesting that is frowned upon these days. 
-   * @param {String} trackId ID string value from the 'tracks' state list reporting the new length
-   * @param {Number} trackLength track length being reported from the trackID
-   */
-  reportTrackLength(trackId, trackLength) {
-    // Breakout 2-layer-deep values for easy reference
-    const { tracks, trackLengths } = this.state;
-    // Determine the tracks that still exist, then recreate the track lengths array from that
-    const stateTrackIds = Object.keys(tracks);
-    // Create an object containing existing tracks with their lengths
-    const updatedStateTrackLengths = stateTrackIds.reduce(
-      (object, id) => ({ ...object, [id]: trackLengths[id] }),
-      {}
-    );
-    // Generate new object containing track lengths that should exist and the new value
-    const newTrackLengths = {
-      ...updatedStateTrackLengths,
-      [trackId]: trackLength
-    };
-    const stateChange = { trackLengths: newTrackLengths };
-    // Change state of track lengths
-    this.setState(stateChange);
-    // Return for flexibility and testing
-    return newTrackLengths;
+    const { settings, selectedTrackShift } = this.props;
+    const { play, nextTrack, previousTrack } = settings;
+    keyboard.bind([play.value, "space"], this.togglePlay);
+    keyboard.bind(nextTrack.value, () => selectedTrackShift(1));
+    keyboard.bind(previousTrack.value, () => selectedTrackShift(-1));
   }
 
   render() {
-    // Breakout 2-layer-deep values for easy reference
     const {
-      nextId,
-      seek,
-      tracks,
-      selectedTrack,
-      playing,
-      context,
-      mutedTracks
-    } = this.state;
+      filtersOpen,
+      trackList,
+      toggleSettingsMenu,
+      toggleFiltersMenu,
+      view
+    } = this.props;
 
     return (
       <div className="app">
-        <Header>
-          <AddTrack handleTrackAdd={this.handleTrackAdd} id={nextId} />
-        </Header>
+        <Header
+          toggleFiltersMenu={toggleFiltersMenu}
+          toggleSettingsMenu={toggleSettingsMenu}
+        />
         <main>
-          <Filters />
-          <Tracks
-            context={context}
-            handleTrackAdd={this.handleTrackAdd}
-            handleTrackRemove={this.handleTrackRemove}
-            mutedTracks={mutedTracks}
-            playing={playing}
-            reportPaused={this.reportPaused}
-            reportSeek={this.reportSeek}
-            reportTrackLength={this.reportTrackLength}
-            seek={seek}
-            seekTo={this.seekTo}
-            selectTrack={this.selectTrack}
-            selectedTrack={selectedTrack}
-            toggleMute={this.toggleMute}
-            tracks={tracks}
-          />
+          <Filters open={filtersOpen} />
+          <Tracks trackList={trackList} view={view} />
           <Settings />
         </main>
-
         <footer>
-          <SeekBar
-            playing={playing}
-            seek={seek}
-            seekTo={this.seekTo}
-            togglePlay={this.togglePlay}
-          />
+          <SeekBar />
         </footer>
-
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    seekPosition: state.tracks.seekPosition,
+    filtersOpen: state.ui.filtersOpen,
+    settings: state.settings,
+    trackList: state.tracks.trackList,
+    view: state.tracks.view
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      toggleFiltersMenu: toggleFiltersMenu,
+      toggleSettingsMenu: toggleSettingsMenu,
+      generateNextTrackId: generateNextTrackId,
+      selectedTrackShift: selectedTrackShift,
+      longestTrackLength: longestTrackLength
+    },
+    dispatch
+  );
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

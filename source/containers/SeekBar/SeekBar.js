@@ -144,10 +144,13 @@ class SeekBar extends Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({
-    magnifyView: magnifyView,
-    shiftView: shiftView
-  }, dispatch);
+  return bindActionCreators(
+    {
+      magnifyView: magnifyView,
+      shiftView: shiftView
+    },
+    dispatch
+  );
 };
 
 export default connect(null, mapDispatchToProps)(SeekBar);
