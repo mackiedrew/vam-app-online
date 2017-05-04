@@ -2,7 +2,7 @@ import registerPromiseWorker from "promise-worker/register";
 import { mean, zipObjectArray, max } from "../help/generic";
 import { areGrainsQuiet } from "../help/grain";
 
-registerPromiseWorker(({ protoGrains, quietCutoff, cases }) => {
+export default registerPromiseWorker(({ protoGrains, quietCutoff, cases }) => {
   // Add amplitudes to grains
   const amplitudes = cases.map(mean);
   const simpleGrains = zipObjectArray(protoGrains, "amplitude", amplitudes);

@@ -80,6 +80,7 @@ export const divisionBinarySearch = (targetValue, divisionArray) => {
   // Search bounds for binary search, when they are equal, the value is found
   let low = 0;
   let high = divisionArray.length;
+  // eslint-disable-next-line fp/no-loops
   while (low <= high) {
     // Middle is the current search point, keep bisecting to search
     const middle = floor(low + (high - low) / 2);
