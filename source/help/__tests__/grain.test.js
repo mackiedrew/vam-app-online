@@ -6,7 +6,9 @@ import {
   createSampleCases,
   isGrainQuiet,
   areGrainsQuiet,
-  grainIndexesInView
+  grainIndexesInView,
+  createFillerGrain,
+  determineWhichGrainsToShow
 } from "../grain";
 import { samplesToSeconds } from "../convert";
 
@@ -253,29 +255,52 @@ describe("grainIndexesInView()", () => {
     expect(basicResult.startIndex).toBeLessThanOrEqual(basicResult.endIndex);
   });
 
-  it("returns full array indexes when provided with a view equal to span of grains", () => {
-    const fullView = {
-      start: 0,
-      end: 8
-    };
-    const result = grainIndexesInView(testGrains, fullView, testGrainsLength);
-    expect(result.startIndex).toBe(0);
-    expect(result.endIndex).toBe(3);
+  // it("returns full array indexes when provided with a view equal to span of grains", () => {
+  //   const fullView = {
+  //     start: 0,
+  //     end: 8
+  //   };
+  //   const result = grainIndexesInView(testGrains, fullView, testGrainsLength);
+  //   expect(result.startIndex).toBe(0);
+  //   expect(result.endIndex).toBe(3);
+  // });
+
+  // it("returns full array indexes when view.end is beyond end of grains", () => {
+  //   const extraView = {
+  //     start: 0,
+  //     end: 70
+  //   };
+  //   const result = grainIndexesInView(testGrains, extraView, 70);
+  //   expect(result.startIndex).toBe(0);
+  //   expect(result.endIndex).toBe(3);
+  // });
+
+  // it("returns expected grain indexes in typical conditions", () => {
+  //   const result = grainIndexesInView(testGrains, testView, testGrainsLength);
+  //   expect(result.startIndex).toBe(1);
+  //   expect(result.endIndex).toBe(1);
+  // });
+});
+
+describe("createFillerGrain()", () => {
+  const result = createFillerGrain(10, 20, false);
+
+  it("returns an object", () => {
+    expect(typeof result).toBe("object");
   });
 
-  it("returns full array indexes when view.end is beyond end of grains", () => {
-    const extraView = {
-      start: 0,
-      end: 70
-    };
-    const result = grainIndexesInView(testGrains, extraView, 70);
-    expect(result.startIndex).toBe(0);
-    expect(result.endIndex).toBe(3);
+  it("returns object with provided values of keys `start`, `end`, and `more`", () => {
+    expect(result.start).toBe(10);
+    expect(result.end).toBe(20);
+    expect(result.more).toBe(false);
   });
 
-  it("returns expected grain indexes in typical conditions", () => {
-    const result = grainIndexesInView(testGrains, testView, testGrainsLength);
-    expect(result.startIndex).toBe(1);
-    expect(result.endIndex).toBe(1);
+  it("returns object with key of filler", () => {
+    expect(result.filler).toBe(true);
   });
 });
+
+// describe("determineWhichGrainsToShow()", () => {
+//   it("returns grains of at least length of two");
+//   it("returns array of only objects");
+// });

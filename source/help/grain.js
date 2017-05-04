@@ -1,14 +1,15 @@
 /**
  * File should contain all functions for working with grains with an emphasis on pure functions.
  */
-
 import {
   logicalSegment,
   divisionBinarySearch,
   random,
   range,
   getKeyFromObjectArray,
-  max
+  max,
+  zipObjectArray,
+  mean
 } from "./generic";
 import { secondsToSamples } from "./convert";
 
@@ -158,12 +159,27 @@ export const areGrainsQuiet = (grains, cutOff) => {
  * (inclusively) the grains that are fully within the view window.
  */
 export const grainIndexesInView = (grains, { start, end }, trackLength) => {
-  const startIndex = divisionBinarySearch(start - 1, grains, trackLength);
+  const startIndex = divisionBinarySearch(start, grains, trackLength);
   const lastIndex = grains.length - 1;
   const endIndex = divisionBinarySearch(end, grains, trackLength) || lastIndex;
   const indexesInView = { startIndex, endIndex };
   return indexesInView;
 };
+
+/**
+ * Creates a standard filler-type grain provided basic information.
+ * 
+ * @param {number} start Inclusive index of the start of the track.
+ * @param {number} end Exclusive index of the end of the track.
+ * @param {boolean} more Whether there is more track to the non-track-facing side of the grain.
+ * @returns {Object} Object containing all provided values plus a true key of `filler`.
+ */
+export const createFillerGrain = (start, end, more) => ({
+  start,
+  end,
+  more,
+  filler: true
+});
 
 /**
  * 
@@ -184,30 +200,42 @@ export const determineWhichGrainsToShow = (grains, view, trackLength) => {
   // Start Filler Grain
   const firstGrainToShow = grains[startIndex];
   const moreStart = startIndex !== 0;
-  const startFiller = [
-    {
-      start: start,
-      end: firstGrainToShow.start,
-      filler: true,
-      more: moreStart
-    }
-  ];
+  const startFiller = createFillerGrain(
+    start,
+    firstGrainToShow.start,
+    moreStart
+  );
 
   // End Filler Grain
   const lastGrainToShow = grains[endIndex];
   const lastGrainIndex = grains.length - 1;
   const moreEnd = lastGrainIndex !== endIndex;
-  const endFiller = [
-    {
-      start: lastGrainToShow.end,
-      end: end,
-      filler: true,
-      more: moreEnd
-    }
-  ];
+  const endFiller = createFillerGrain(
+    lastGrainToShow.end,
+    end,
+    moreEnd
+  );
 
   const grainsToInclude = grains.slice(startIndex, endIndex + 1);
 
-  const grainsToShow = [...startFiller, ...grainsToInclude, ...endFiller];
+  const grainsToShow = [startFiller, ...grainsToInclude, endFiller];
   return grainsToShow;
 };
+
+export const amplitudeCalculator = ({ protoGrains, quietCutoff, cases }) => {
+  // Add amplitudes to grains
+  const amplitudes = cases.map(mean);
+  const simpleGrains = zipObjectArray(protoGrains, "amplitude", amplitudes);
+
+  // Add quietness to grains
+  const quietnessCutoff = quietCutoff / 100;
+  const quietGrains = areGrainsQuiet(simpleGrains, quietnessCutoff);
+  const finalGrains = zipObjectArray(simpleGrains, "quiet", quietGrains);
+
+  // Calculate max amplitude
+  const maxAmplitude = max(amplitudes);
+
+  const result = { grains: finalGrains, maxAmplitude: maxAmplitude };
+  return result;
+};
+

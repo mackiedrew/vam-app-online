@@ -1,37 +1,21 @@
-import Subject from "../Waveform";
+import Subject from "../Tracks";
 
-const mockProps = {
-  blocks: [
-    {
-      start: 0,
-      end: 3,
-      amplitude: 4
-    }
-  ],
-  maxAmplitude: 10
+const mockPropsNoTracks = {
+  view: { start: 0, end: 10 },
+  trackList: []
 };
 
-describe("<Waveform /> structure", () => {
-  it("renders without crashing with no grains", () => {
-    shallow(<Subject />);
+const mockPropsWithTracks = {
+  view: { start: 0, end: 10 },
+  trackList: [{ id: "track1" }, { id: "track2" }]
+};
+
+describe("<Tracks />", () => {
+  it("renders without crashing without tracks", () => {
+    shallow(<Subject {...mockPropsNoTracks} />);
   });
 
-  it("renders without crashing with some grains", () => {
-    shallow(<Subject {...mockProps} />);
-  });
-
-  it("renders as a div with class: `waveform`", () => {
-    const wrapper = shallow(<Subject />);
-    expect(wrapper.is("div.waveform")).toEqual(true);
-  });
-
-  it("renders with no <WaveBlock />s when no blocks are supplied", () => {
-    const wrapper = shallow(<Subject />);
-    expect(wrapper.find("WaveBlock")).toHaveLength(0);
-  });
-
-  it("renders with a single <WaveBlock> when provided with one block", () => {
-    const wrapper = shallow(<Subject {...mockProps} />);
-    expect(wrapper.find("WaveBlock")).toHaveLength(1);
+  it("renders without crashing with tracks", () => {
+    shallow(<Subject {...mockPropsWithTracks} />);
   });
 });

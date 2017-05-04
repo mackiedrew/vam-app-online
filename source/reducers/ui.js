@@ -3,7 +3,7 @@ import {
   TOGGLE_FILTERS_MENU
 } from "../constants/actionTypes";
 
-const DEFAULT_STATE = {
+export const DEFAULT_STATE = {
   settingsOpen: false,
   filtersOpen: false
 };
