@@ -1,12 +1,6 @@
-/* eslint-disable */
-
 import registerPromiseWorker from "promise-worker-transferable/register";
-import { decode } from "wav-decoder";
+import { readArrayBufferPromise } from "../help/fileRead";
 
-registerPromiseWorker(file => {
-  return new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.readAsArrayBuffer(file);
-  }).then(decode);
-});
+const worker = registerPromiseWorker(readArrayBufferPromise);
+
+export default worker;
