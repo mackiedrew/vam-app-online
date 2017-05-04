@@ -2,13 +2,18 @@
   
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "jest/globals": true,
+    "node": true
   },
 
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:jsx-a11y/recommended"
+    "plugin:jsx-a11y/recommended",
+    "plugin:jest/recommended",
+    "plugin:unicorn/recommended",
+    "plugin:import/errors"
   ],
 
   "parserOptions": {
@@ -22,12 +27,26 @@
   "plugins": [
     "react",
     "jsx-a11y",
-    "prettier"
+    "jest",
+    "jsdoc",
+    "prettier",
+    "security",
+    "unicorn",
+    "dependencies",
+    "eslint-comments",
+    "import",
+    "fp"
   ],
+
+  "globals": {
+    "sinon": false,
+    "shallow": false,
+    "global": true
+  },
 
   "rules": {
     "eol-last": ["error", "always"],
-    "indent": ["error", 2],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
@@ -43,6 +62,7 @@
     "react/prop-types": 0,
     "react/jsx-boolean-value": "error",
     "react/jsx-closing-bracket-location": "error",
+    "react/react-in-jsx-scope": 0,
     "react/jsx-equals-spacing": "error",
     "react/jsx-first-prop-new-line": ["error", "multiline-multiprop"],
     "react/jsx-sort-props": ["error",
@@ -82,6 +102,52 @@
     "jsx-a11y/role-has-required-aria-props": "error",
     "jsx-a11y/scope": "error",
     "jsx-a11y/tabindex-no-positive": "error",
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jsdoc/check-param-names": 1,
+    "jsdoc/check-tag-names": 1,
+    "jsdoc/check-types": 1,
+    "jsdoc/newline-after-description": 1,
+    "jsdoc/require-description-complete-sentence": 1,
+    "jsdoc/require-hyphen-before-param-description": 0,
+    "jsdoc/require-param": 1,
+    "jsdoc/require-param-description": 1,
+    "jsdoc/require-param-type": 1,
+    "jsdoc/require-returns-description": 1,
+    "jsdoc/require-returns-type": 1,
+    "security/detect-unsafe-regex": 2,
+    "security/detect-buffer-noassert": 2,
+    "security/detect-child-process": 2,
+    "security/detect-disable-mustache-escape": 2,
+    "security/detect-eval-with-expression": 2,
+    "security/detect-no-csrf-before-method-override": 2,
+    "security/detect-non-literal-fs-filename": 2,
+    "security/detect-non-literal-regexp": 2,
+    "security/detect-non-literal-require": 2,
+    "security/detect-object-injection": 0,
+    "security/detect-possible-timing-attacks": 2,
+    "security/detect-pseudoRandomBytes": 2,
+    "unicorn/filename-case": 0,
+    "dependencies/case-sensitive": 1,
+    "dependencies/no-cycles": 1,
+    "dependencies/no-unresolved": 1,
+    "dependencies/require-json-ext": 1,
+    "eslint-comments/disable-enable-pair": "error",
+    "eslint-comments/no-duplicate-disable": "error",
+    "eslint-comments/no-unlimited-disable": "error",
+    "eslint-comments/no-unused-disable": "error",
+    "eslint-comments/no-unused-enable": "error",
+    "fp/no-arguments": "error",
+    "fp/no-delete": "error",
+    "fp/no-events": "error",
+    "fp/no-get-set": "error",
+    "fp/no-loops": "error",
+    "fp/no-mutating-assign": "error",
+    "fp/no-proxy": "error",
+    "fp/no-rest-parameters": "error",
+    "fp/no-valueof-field": "error",
+    "no-var": "error",
     "prettier/prettier": "warn"
   }
 

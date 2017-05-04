@@ -1,0 +1,24 @@
+@require './palette.styl'
+
+.seek-bar
+  display flex
+  justify-content space-between
+  background-color $color-main
+  align-items stretch
+  
+  .indicators
+    display flex
+
+    div
+      display flex
+      align-items center
+      padding 14px 15px
+      color $color-white
+      background-color $color-dark
+      font-family Courier, monospace
+
+  .control-bar
+    display inline-block
+    
+    button
+      display inline-block

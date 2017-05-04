@@ -2,9 +2,3 @@
 node_modules/
 coverage/
 build/
-binaries/
-
-# Files
-*.test.js
-jestSetup.js
-webpack.config.js
