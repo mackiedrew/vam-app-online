@@ -57,9 +57,11 @@ describe("<WaveBlock /> display math", () => {
 
 describe("<WaveBlock /> handleClick()", () => {
   it("calls seekTo() function one time", () => {
-    const mockSeekTo = sinon.spy();
-    const wrapper = shallow(<Subject {...mockProps} seekTo={mockSeekTo} />);
+    const mockSetSeekPosition = sinon.spy();
+    const wrapper = shallow(
+      <Subject {...mockProps} setSeekPosition={mockSetSeekPosition} />
+    );
     wrapper.instance().handleClick();
-    expect(mockSeekTo.called).toEqual(true);
+    expect(mockSetSeekPosition.called).toEqual(true);
   });
 });

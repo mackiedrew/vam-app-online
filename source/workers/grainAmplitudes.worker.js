@@ -1,20 +1,7 @@
 import registerPromiseWorker from "promise-worker/register";
-import { mean, zipObjectArray, max } from "../help/generic";
-import { areGrainsQuiet } from "../help/grain";
+import { amplitudeCalculator } from "../help/grain";
 
-export default registerPromiseWorker(({ protoGrains, quietCutoff, cases }) => {
-  // Add amplitudes to grains
-  const amplitudes = cases.map(mean);
-  const simpleGrains = zipObjectArray(protoGrains, "amplitude", amplitudes);
+// Register Promise Worker
+const worker = registerPromiseWorker(amplitudeCalculator);
 
-  // Add quietness to grains
-  const quietnessCutoff = quietCutoff / 100;
-  const quietGrains = areGrainsQuiet(simpleGrains, quietnessCutoff);
-  const finalGrains = zipObjectArray(simpleGrains, "quiet", quietGrains);
-
-  // Calculate max amplitude
-  const maxAmplitude = max(amplitudes);
-
-  const result = { grains: finalGrains, maxAmplitude: maxAmplitude };
-  return result;
-});
+export default worker;

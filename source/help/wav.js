@@ -3,8 +3,6 @@ import PromiseWorker from "promise-worker";
 import ObjectPromiseWorker from "promise-worker-transferable";
 import GrainAmplitudeWorker from "../workers/grainAmplitudes.worker.js";
 import ReadWavWorker from "../workers/readWav.worker.js";
-
-// Helpers
 import { createSampleCases, createEquallySpacedGrains } from "./grain";
 
 export const readFile = (url, filename) => {
