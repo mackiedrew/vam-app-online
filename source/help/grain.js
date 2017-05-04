@@ -210,11 +210,7 @@ export const determineWhichGrainsToShow = (grains, view, trackLength) => {
   const lastGrainToShow = grains[endIndex];
   const lastGrainIndex = grains.length - 1;
   const moreEnd = lastGrainIndex !== endIndex;
-  const endFiller = createFillerGrain(
-    lastGrainToShow.end,
-    end,
-    moreEnd
-  );
+  const endFiller = createFillerGrain(lastGrainToShow.end, end, moreEnd);
 
   const grainsToInclude = grains.slice(startIndex, endIndex + 1);
 
@@ -238,4 +234,3 @@ export const amplitudeCalculator = ({ protoGrains, quietCutoff, cases }) => {
   const result = { grains: finalGrains, maxAmplitude: maxAmplitude };
   return result;
 };
-
