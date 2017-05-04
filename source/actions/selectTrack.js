@@ -1,16 +1,11 @@
-// Action Types
+// Action Type
 import { SELECT_TRACK } from "../constants/actionTypes";
 
-// Action Creator
-const selectTrackAsync = payload => {
-  return { type: SELECT_TRACK, payload };
-};
-
-// Thunk
-const selectTrack = id => {
-  return dispatch => {
-    dispatch(selectTrackAsync(id));
-  };
-};
+/**
+ * Action creator: creates an action that sets selectedTrack to provided ID.
+ * @param {String} payload The track ID of the track you want to select.
+ * @returns {Object} Action: sets selectedTrack to provided ID.
+ */
+const selectTrack = payload => ({ type: SELECT_TRACK, payload });
 
 export default selectTrack;

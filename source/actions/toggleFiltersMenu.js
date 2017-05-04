@@ -1,13 +1,10 @@
+// Action Type
 import { TOGGLE_FILTERS_MENU } from "../constants/actionTypes";
 
-// Action Creator
-const toggleFiltersMenuAsync = () => ({ type: TOGGLE_FILTERS_MENU });
-
-// Thunk
-const toggleFiltersMenu = () => {
-  return dispatch => {
-    dispatch(toggleFiltersMenuAsync());
-  };
-};
+/**
+ * Action creator: creates an action that toggles whether the filters menu is open.
+ * @returns {Object} Action: toggles whether the filters menu is open.
+ */
+const toggleFiltersMenu = () => ({ type: TOGGLE_FILTERS_MENU });
 
 export default toggleFiltersMenu;

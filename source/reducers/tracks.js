@@ -7,13 +7,15 @@ import {
   ADD_TRACK,
   SELECT_TRACK,
   SELECTED_TRACK_SHIFT,
-  TOGGLE_TRACK_MUTE,
+  TOGGLE_TRACK_MUTED,
   REMOVE_TRACK,
   SET_TRACK_SAMPLE_RATE,
   SET_TRACK_FILE_NAME,
   SET_TRACK_GRAINS,
   SET_TRACK_LENGTH,
-  SET_TRACK_MAX_AMPLITUDE
+  SET_TRACK_MAX_AMPLITUDE,
+  SHIFT_SEEK_POSITION,
+  TOGGLE_CURRENTLY_PLAYING
 } from "../constants/actionTypes";
 
 // Initial State
@@ -42,6 +44,11 @@ const TracksReducer = (state = DEFAULT_STATE, { type, payload }) => {
       return {
         ...state,
         seekPosition: payload
+      };
+    case SHIFT_SEEK_POSITION:
+      return {
+        ...state,
+        seekPosition: state.seekPosition + payload
       };
     case SET_VIEW:
       return {
@@ -76,14 +83,14 @@ const TracksReducer = (state = DEFAULT_STATE, { type, payload }) => {
         ...state,
         selectedTrack: payload
       };
-    case TOGGLE_TRACK_MUTE:
+    case TOGGLE_TRACK_MUTED:
       return {
         ...state,
         trackList: {
           ...state.trackList,
           [payload]: {
             ...state.trackList[payload],
-            muted: !state.trackList[payload].mute
+            muted: !state.trackList[payload].muted
           }
         }
       };

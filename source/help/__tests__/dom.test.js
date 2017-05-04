@@ -1,4 +1,4 @@
-import { clearFileInput } from "./dom";
+import { clearFileInput } from "../dom";
 
 describe("clearFileInput()", () => {
 

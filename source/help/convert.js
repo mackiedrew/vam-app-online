@@ -1,4 +1,4 @@
-import { floor } from "../generic/generic";
+import { floor } from "./generic";
 
 /**
  * Converts seconds to samples, given a sample rate. Both have defaults so if you provide not params

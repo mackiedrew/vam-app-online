@@ -8,7 +8,7 @@ import {
   minutesToSamples,
   hoursToSamples,
   samplesToTime
-} from "./convert.js";
+} from "../convert.js";
 
 const testSamples = 44100 * 3;
 const testSampleRate = 500;

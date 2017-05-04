@@ -9,3 +9,15 @@ export const clearFileInput = inputTag => {
   inputTag.value = "";
   inputTag.type = "file";
 };
+
+/**
+ * Simple wrapper of document.getElementById.
+ * @param {String} id Id of element you want to get.
+ * @returns {HTMLElement}
+ */
+export const getElementById = id => document.getElementById(id);
+
+export const playElement = element => element.play();
+export const pauseElement = element => element.pause();
+export const setElementCurrentTime = (element, time) =>
+  (element.currentTime = time);

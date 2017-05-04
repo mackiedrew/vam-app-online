@@ -7,8 +7,8 @@ import {
   isGrainQuiet,
   areGrainsQuiet,
   grainIndexesInView
-} from "./grain";
-import { samplesToSeconds } from "../convert/convert";
+} from "../grain";
+import { samplesToSeconds } from "../convert";
 
 const mockSimpleGrain = {
   start: 4000,

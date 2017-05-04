@@ -1,6 +1,6 @@
 import registerPromiseWorker from "promise-worker/register";
-import { mean, zipObjectArray, max } from "../help/generic/generic";
-import { areGrainsQuiet } from "../help/grain/grain";
+import { mean, zipObjectArray, max } from "../help/generic";
+import { areGrainsQuiet } from "../help/grain";
 
 registerPromiseWorker(({ protoGrains, quietCutoff, cases }) => {
   // Add amplitudes to grains

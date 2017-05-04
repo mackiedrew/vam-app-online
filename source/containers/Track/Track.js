@@ -15,8 +15,8 @@ import setTrackMaxAmplitude from "../../actions/setTrackMaxAmplitude";
 import setSeekPosition from "../../actions/setSeekPosition";
 
 // Helpers
-import { richReadWav } from "../../help/wav/wav";
-import { determineWhichGrainsToShow } from "../../help/grain/grain";
+import { richReadWav } from "../../help/wav";
+import { determineWhichGrainsToShow } from "../../help/grain";
 
 // Components
 import Waveform from "../../components/Waveform/Waveform";
@@ -89,7 +89,9 @@ class Track extends Component {
     const { grains, maxAmplitude, fileName } = track;
     const selected = selectedTrack === id;
 
-    const grainsToShow = grains ? determineWhichGrainsToShow(grains, view, length) : grains;
+    const grainsToShow = grains
+      ? determineWhichGrainsToShow(grains, view, length)
+      : grains;
 
     // Generate styles
     const seekLineStyle = this.generateSeekLineStyle(view, seekPosition);

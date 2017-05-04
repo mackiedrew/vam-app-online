@@ -1,8 +1,8 @@
 import React from "react";
 import "./TimeBar.styl";
 
-import { samplesToTime, samplesToSeconds } from "../../help/convert/convert";
-import { range, leadingZeros } from "../../help/generic/generic";
+import { samplesToTime, samplesToSeconds } from "../../help/convert";
+import { range, leadingZeros } from "../../help/generic";
 
 export const Slice = ({ sample, sampleSpan }) => {
   const { h, m, s, ms } = samplesToTime(sample);

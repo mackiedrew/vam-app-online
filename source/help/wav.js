@@ -3,11 +3,11 @@
 // Libraries
 import PromiseWorker from "promise-worker";
 import ObjectPromiseWorker from "promise-worker-transferable";
-import GrainAmplitudeWorker from "../../workers/grainAmplitudes.worker.js";
-import ReadWavWorker from "../../workers/readWav.worker.js";
+import GrainAmplitudeWorker from "../workers/grainAmplitudes.worker.js";
+import ReadWavWorker from "../workers/readWav.worker.js";
 
 // Helpers
-import { createSampleCases, createEquallySpacedGrains } from "../grain/grain";
+import { createSampleCases, createEquallySpacedGrains } from "./grain";
 
 /**
  * Reads and returns a promise containing the file buffer.

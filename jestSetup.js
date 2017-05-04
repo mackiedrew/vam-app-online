@@ -4,6 +4,7 @@ import sinon from "sinon";
 import React from "react";
 import ReactDOM from "react-dom";
 import WebAudioMock from "web-audio-mock-api";
+import mockery from "mockery";
 
 // Test Suite
 global.shallow = shallow;
@@ -11,7 +12,7 @@ global.render = render;
 global.mount = mount;
 global.sinon = sinon;
 global.AudioContext = WebAudioMock.AudioContext;
-
+global.mockery = mockery;
 
 // Framework
 global.React = React;
