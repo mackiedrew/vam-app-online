@@ -1,5 +1,3 @@
-/* eslint-env node */
-
 // Libraries
 import PromiseWorker from "promise-worker";
 import ObjectPromiseWorker from "promise-worker-transferable";

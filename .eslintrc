@@ -3,7 +3,8 @@
   "env": {
     "browser": true,
     "es6": true,
-    "jest/globals": true
+    "jest/globals": true,
+    "node": true
   },
 
   "extends": [
@@ -11,7 +12,8 @@
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:jest/recommended",
-    "plugin:unicorn/recommended"
+    "plugin:unicorn/recommended",
+    "plugin:import/errors"
   ],
 
   "parserOptions": {
@@ -29,7 +31,11 @@
     "jsdoc",
     "prettier",
     "security",
-    "unicorn"
+    "unicorn",
+    "dependencies",
+    "eslint-comments",
+    "import",
+    "fp"
   ],
 
   "globals": {
@@ -123,6 +129,25 @@
     "security/detect-possible-timing-attacks": 2,
     "security/detect-pseudoRandomBytes": 2,
     "unicorn/filename-case": 0,
+    "dependencies/case-sensitive": 1,
+    "dependencies/no-cycles": 1,
+    "dependencies/no-unresolved": 1,
+    "dependencies/require-json-ext": 1,
+    "eslint-comments/disable-enable-pair": "error",
+    "eslint-comments/no-duplicate-disable": "error",
+    "eslint-comments/no-unlimited-disable": "error",
+    "eslint-comments/no-unused-disable": "error",
+    "eslint-comments/no-unused-enable": "error",
+    "fp/no-arguments": "error",
+    "fp/no-delete": "error",
+    "fp/no-events": "error",
+    "fp/no-get-set": "error",
+    "fp/no-loops": "error",
+    "fp/no-mutating-assign": "error",
+    "fp/no-proxy": "error",
+    "fp/no-rest-parameters": "error",
+    "fp/no-valueof-field": "error",
+    "no-var": "error",
     "prettier/prettier": "warn"
   }
 
