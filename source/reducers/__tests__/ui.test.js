@@ -43,5 +43,4 @@ describe("ui reducer", () => {
     const secondResult = reducer(firstResult, mockAction);
     expect(secondResult).toEqual(DEFAULT_STATE);
   });
-
 });

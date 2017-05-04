@@ -7,8 +7,7 @@ import {
   isGrainQuiet,
   areGrainsQuiet,
   grainIndexesInView,
-  createFillerGrain,
-  determineWhichGrainsToShow
+  createFillerGrain
 } from "../grain";
 import { samplesToSeconds } from "../convert";
 
