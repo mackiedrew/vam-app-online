@@ -1,7 +1,7 @@
 import React from "react";
 import "./Loading.styl";
 
-import { range } from "../../help/generic/generic";
+import { range } from "../../help/generic";
 
 const bars = 20;
 

@@ -11,8 +11,9 @@ import {
   random,
   range,
   getKeyFromObjectArray,
-  objectToArray
-} from './generic'
+  objectToArray,
+  clamp
+} from '../generic'
 
 describe('floor(value)', () => {
 
@@ -331,6 +332,33 @@ describe("objectToArray()", () => {
     const result = objectToArray(testObject);
     const expectedLength = result.length;
     expect(result.length).toBe(expectedLength);
+  });
+
+});
+
+describe("clamp()", () => {
+
+
+  it("returns a number", () => {
+    const result = clamp(5, 0, 10);
+    expect(typeof result).toBe("number");
+  });
+
+  it("returns lower bound if the provided value is equal to the lower bound.", () => {
+    const lowerBound = 0;
+    const result = clamp(lowerBound, lowerBound, 10);
+    expect(result).toBe(lowerBound);
+  });
+
+  it("returns upper bound if the provided value is equal to the upper bound.", () => {
+    const upperBound = 10;
+    const result = clamp(0, upperBound, upperBound);
+    expect(result).toBe(upperBound);
+  });
+
+  it("returns proper value even when provided with alphabetically differently sorted numbers.", () => {
+    const result = clamp(0, 1, 10);
+    expect(result).toBe(1);
   });
 
 });

@@ -2716,10 +2716,6 @@ fill-range@^2.1.0:
     repeat-element "^1.1.2"
     repeat-string "^1.5.2"
 
-filter-obj@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/filter-obj/-/filter-obj-1.1.0.tgz#9b311112bc6c6127a16e016c6c5d7f19e0805c5b"
-
 finalhandler@~1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/finalhandler/-/finalhandler-1.0.1.tgz#bcd15d1689c0e5ed729b6f7f541a6df984117db8"
@@ -4437,6 +4433,10 @@ mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdi
   dependencies:
     minimist "0.0.8"
 
+mockery@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/mockery/-/mockery-2.0.0.tgz#0569a11a1848461fdc347cf8cca2df2f3129bc03"
+
 modify-babel-preset@^1.0.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/modify-babel-preset/-/modify-babel-preset-1.2.0.tgz#d1b7c8c24896e19dbc4847347213e6b7144d1bc7"
@@ -5713,6 +5713,10 @@ reduce-function-call@^1.0.1:
   resolved "https://registry.yarnpkg.com/reduce-function-call/-/reduce-function-call-1.0.2.tgz#5a200bf92e0e37751752fe45b0ab330fd4b6be99"
   dependencies:
     balanced-match "^0.4.2"
+
+redux-mock-store@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/redux-mock-store/-/redux-mock-store-1.2.3.tgz#1b3ad299da91cb41ba30d68e3b6f024475fb9e1b"
 
 redux-thunk@^2.2.0:
   version "2.2.0"

@@ -9,8 +9,8 @@ import {
   range,
   getKeyFromObjectArray,
   max
-} from "../generic/generic";
-import { secondsToSamples } from "../convert/convert";
+} from "./generic";
+import { secondsToSamples } from "./convert";
 
 /**
  * Splits a single grain object into two adjacent grain objects that maintain any additional grain

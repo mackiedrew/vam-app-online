@@ -9,7 +9,7 @@ import { bindActionCreators } from "redux";
 // Actions
 import selectTrack from "../../actions/selectTrack";
 import removeTrack from "../../actions/removeTrack";
-import toggleTrackMute from "../../actions/toggleTrackMute";
+import toggleTrackMuted from "../../actions/toggleTrackMuted";
 
 // Components
 import ToggleButton from "../../components/ToggleButton/ToggleButton";
@@ -33,7 +33,7 @@ class TrackControls extends Component {
   }
 
   handleToggleMute() {
-    this.props.toggleMute(this.props.id);
+    this.props.toggleMuted(this.props.id);
   }
 
   render() {
@@ -82,7 +82,7 @@ const mapDispatchToProps = dispatch => {
     {
       selectTrack: selectTrack,
       removeTrack: removeTrack,
-      toggleMute: toggleTrackMute
+      toggleMuted: toggleTrackMuted
     },
     dispatch
   );

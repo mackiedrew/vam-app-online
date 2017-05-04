@@ -2,10 +2,10 @@
 import { createSelector } from "reselect";
 
 // Libraries
-import objectToArray from "../help/generic/generic";
+import { objectToArray } from "../help/generic";
 
 // Create functions that return portions of state
-const trackList = state => state.trackList;
+const trackList = state => state.tracks.trackList;
 
 const trackLengths = createSelector(trackList, list => {
   const trackArray = objectToArray(list);
@@ -13,7 +13,7 @@ const trackLengths = createSelector(trackList, list => {
   const numberOfGrains = grainsList.map(grains => grains.length);
   const finalGrainIndexes = numberOfGrains.map(x => x - 1);
   const finalGrains = finalGrainIndexes.map((i, t) => trackList[t].grains[i]);
-  const lastFrames = finalGrains(grain => grain.end);
+  const lastFrames = finalGrains.map(grain => grain.end);
   const trackIds = Object.keys(trackList);
   const lastFramesWithIds = trackIds.map((id, i) => ({ [id]: lastFrames[i] }));
   return lastFramesWithIds;

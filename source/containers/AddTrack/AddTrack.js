@@ -10,8 +10,8 @@ import { bindActionCreators } from "redux";
 import addTrack from "../../actions/addTrack";
 
 // Libraries
-import { range } from "../../help/generic/generic";
-import { clearFileInput } from "../../help/dom/dom";
+import { range } from "../../help/generic";
+import { clearFileInput } from "../../help/dom";
 
 // Components
 import Icon from "../../components/Icon/Icon";
@@ -37,7 +37,8 @@ class AddTrack extends Component {
     );
     const newTrackList = fileRange.map(i => ({
       fileName: selectedFiles[i].name,
-      url: selectedFileURLs[i]
+      url: selectedFileURLs[i],
+      type: selectedFiles[i].type
     }));
     newTrackList.forEach(addTrack);
     clearFileInput(inputTag);

@@ -148,3 +148,17 @@ export const objectToArray = object => {
   const array = keys.map(key => object[key]);
   return array;
 };
+
+
+/**
+ * Provided with 3 values it will always return the middle value. Effectively it allows for an upper
+ * and lower bound to be set, and if the value is outside of these bounds, the corresponding bound
+ * is returned instead. Lower and upper bounds are inclusive.
+ * @param {Number} value Value to ensure is between bounds.
+ * @param {Number} lower Inclusive lower limit/bound.
+ * @param {Number} upper Inclusive upper limit/bound.
+ * @returns {Number} Returns the clamped number.
+ */
+export const clamp = (value, lower, upper) => {
+  return [value, lower, upper].sort((a, b) => a - b)[1];
+};

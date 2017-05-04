@@ -9,10 +9,12 @@ import { bindActionCreators } from "redux";
 // Actions
 import magnifyView from "../../actions/magnifyView";
 import shiftView from "../../actions/shiftView";
+import shiftSeekPosition from "../../actions/shiftSeekPosition";
+import toggleCurrentlyPlaying from "../../actions/toggleCurrentlyPlaying";
 
 // Libraries
-import { secondsToSamples, samplesToTime } from "../../help/convert/convert";
-import { leadingZeros } from "../../help/generic/generic";
+import { secondsToSamples, samplesToTime } from "../../help/convert";
+import { leadingZeros } from "../../help/generic";
 
 // Components
 import ToggleButton from "../../components/ToggleButton/ToggleButton";
@@ -28,26 +30,14 @@ class SeekBar extends Component {
     super(props);
 
     // Bind functions to `this`
-    this.seekSamples = this.seekSamples.bind(this);
     this.seekSeconds = this.seekSeconds.bind(this);
-    this.handlePlus10 = this.handlePlus10.bind(this);
-    this.handleMinus10 = this.handleMinus10.bind(this);
     this.handlePlus1 = this.handlePlus1.bind(this);
     this.handleMinus1 = this.handleMinus1.bind(this);
     this.handleViewNext = this.handleViewNext.bind(this);
     this.handleViewPrevious = this.handleViewPrevious.bind(this);
     this.handleZoomIn = this.handleZoomIn.bind(this);
     this.handleZoomOut = this.handleZoomOut.bind(this);
-  }
-
-  /**
-   * Move the seek value by given samples.
-   * @param {Number} samples Number of samples to move seek by.
-   */
-  seekSamples(samples) {
-    const { seek, seekTo } = this.props;
-    const newSeek = seek + samples;
-    return seekTo(newSeek);
+    this.handleTogglePlay = this.handleTogglePlay.bind(this);
   }
 
   /**
@@ -56,17 +46,11 @@ class SeekBar extends Component {
    * @param {Number} sampleRate Sample rate of the audio clip you are working with.
    */
   seekSeconds(seconds, sampleRate = 44100) {
-    const samples = secondsToSamples(seconds, sampleRate);
-    return this.seekSamples(samples);
+    const frames = secondsToSamples(seconds, sampleRate);
+    return this.props.shiftSeekPosition(frames);
   }
 
   // Click handle functions for different buttons
-  handlePlus10() {
-    this.seekSeconds(10);
-  }
-  handleMinus10() {
-    this.seekSeconds(-10);
-  }
   handlePlus1() {
     this.seekSeconds(1);
   }
@@ -86,12 +70,12 @@ class SeekBar extends Component {
     this.props.magnifyView(1.50);
   }
   handleTogglePlay() {
-    this.props.togglePlay();
+    this.props.toggleCurrentlyPlaying();
   }
   render() {
     // Break out values for the sake of easier template reading
-    const { seek, playing } = this.props;
-    const time = samplesToTime(seek);
+    const { seekPosition, currentlyPlaying } = this.props;
+    const time = samplesToTime(seekPosition);
     const { ms, s, m, h } = time;
 
     // Construct new time string
@@ -102,24 +86,18 @@ class SeekBar extends Component {
     return (
       <div className="seek-bar">
         <div className="control-bar">
-          <button className="seek-minus-10" onClick={this.handleMinus10}>
-            <Icon icon="replay_10" />
-          </button>
           <button className="seek-minus-1" onClick={this.handleMinus1}>
             <Icon icon="skip_previous" />
           </button>
           <ToggleButton
             offContents={<Icon icon="play_arrow" />}
             offFunction={this.handleTogglePlay}
-            on={playing}
+            on={currentlyPlaying}
             onContents={<Icon icon="pause" />}
             onFunction={this.handleTogglePlay}
           />
           <button className="seek-plus-1" onClick={this.handlePlus1}>
             <Icon icon="skip_next" />
-          </button>
-          <button className="seek-plus-10" onClick={this.handlePlus10}>
-            <Icon icon="forward_10" />
           </button>
         </div>
         <div className="indicators">
@@ -143,14 +121,23 @@ class SeekBar extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    seekPosition: state.tracks.seekPosition,
+    currentlyPlaying: state.tracks.currentlyPlaying
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       magnifyView: magnifyView,
-      shiftView: shiftView
+      shiftView: shiftView,
+      shiftSeekPosition: shiftSeekPosition,
+      toggleCurrentlyPlaying: toggleCurrentlyPlaying
     },
     dispatch
   );
 };
 
-export default connect(null, mapDispatchToProps)(SeekBar);
+export default connect(mapStateToProps, mapDispatchToProps)(SeekBar);
