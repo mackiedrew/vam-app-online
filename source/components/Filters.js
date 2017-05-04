@@ -5,9 +5,11 @@ export const filtersStyle = open => {
   return open ? { marginLeft: "0px" } : { marginLeft: "-100px" };
 };
 
-const Filters = props => {
+const Filters = ({ open }) => {
+  const style = filtersStyle(open);
+
   return (
-    <aside className="filters" style={filtersStyle(props.open)}>
+    <aside className="filters" style={style}>
       Filter!
     </aside>
   );

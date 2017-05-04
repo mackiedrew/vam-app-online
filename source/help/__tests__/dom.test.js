@@ -1,7 +1,6 @@
 import { clearFileInput } from "../dom";
 
 describe("clearFileInput()", () => {
-
   it("clears the value attribute of passed object", () => {
     const mockTag = {
       type: "file",
@@ -11,5 +10,4 @@ describe("clearFileInput()", () => {
     expect(mockTag.type).toBe("file");
     expect(mockTag.value).toBe("");
   });
-
 });

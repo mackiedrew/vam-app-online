@@ -1,13 +1,12 @@
-import Subject from '../Filters'
+import Subject from "../Filters";
 
 describe("<Filters />", () => {
-  
   describe("renders without crashing", () => {
     it("while closed", () => {
-      shallow(<Subject />)
+      shallow(<Subject />);
     });
     it("while open", () => {
-      shallow(<Subject open />)
+      shallow(<Subject open />);
     });
   });
 });
