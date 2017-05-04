@@ -2,7 +2,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
-import App from "./containers/App/App";
+import App from "./containers/App";
 import * as OfflinePluginRuntime from "offline-plugin/runtime";
 import { Provider } from "react-redux";
 import configureStore from "./store/configureStore";
@@ -24,8 +24,8 @@ render(App);
 
 // Hot Module Replacement
 if (module.hot) {
-  const NextApp = require("./containers/App/App").default;
-  module.hot.accept("./containers/App/App", () => {
+  const NextApp = require("./containers/App").default;
+  module.hot.accept("./containers/App", () => {
     render(NextApp);
   });
 }
