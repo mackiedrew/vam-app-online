@@ -11,6 +11,8 @@ import AddTrack from "../containers/AddTrack";
  * The role of the <Waveform /> container is aggregate data, using libraries and provided data into
  * a pretty display format. It should not do a lot of the heavy lifting, most of it should be given
  * to a library for processing or provided directly through the props.
+ * 
+ * @param {Object} props Provided properties from react JSX.
  */
 const Header = props => (
   <header className="header">

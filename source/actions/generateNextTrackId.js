@@ -6,7 +6,8 @@ import { generate } from "shortid";
 
 /**
  * Action creator: creates an action that sets the nextTrackID.
- * @param {String} id The id to set newTrackId to.
+ * 
+ * @param {string} id The id to set newTrackId to.
  * @returns {Object} Action: sets the nextTrackID.
  */
 export const setNextTrackId = id => ({

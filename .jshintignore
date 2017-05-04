@@ -2,5 +2,3 @@ example/
 node_modules/
 coverage/
 build/
-jestSetup.js
-*.test.js

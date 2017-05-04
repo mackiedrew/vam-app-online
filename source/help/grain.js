@@ -16,8 +16,9 @@ import { secondsToSamples } from "./convert";
  * Splits a single grain object into two adjacent grain objects that maintain any additional grain
  * meta data of the original grain. Should also return the same grain if splitPoint is out of 
  * bounds: grain.start == splitPint, or splitPoint is not within the grain.
+ * 
  * @param {Object} grain Contains 'start' and 'end' keys.
- * @param {Number} splitPoint The value of the sample this grain should be split at.
+ * @param {number} splitPoint The value of the sample this grain should be split at.
  */
 export const splitGrainIntoTwo = (grain, splitPoint) => {
   const pointTooLow = splitPoint <= grain.start;
@@ -52,8 +53,9 @@ export const splitGrainIntoTwo = (grain, splitPoint) => {
  * Finds the location of a sample within an array of grains, isolates the grain that the sample
  * belongs to, and if the sample is within the grains range and is not a on a cut point between
  * grains it will return a new grains array containing the new split grains instead of original.
+ * 
  * @param {Array} grains An array containing all of the grains in a range.
- * @param {Number} splitPoint The value of the sample this grain should be split at.
+ * @param {number} splitPoint The value of the sample this grain should be split at.
  */
 export const splitGrain = (grains, splitPoint) => {
   // Isolate samples for quick exit check.
@@ -81,8 +83,9 @@ export const splitGrain = (grains, splitPoint) => {
 
 /**
  * Logically segments grains into equally spaced components. This is hopefully temporary.
+ * 
  * @param {Array} data Only used to get the length of the array.
- * @param {Number} secondsPerGrain Number of seconds per grain, the end grain may be shorter.
+ * @param {number} secondsPerGrain Number of seconds per grain, the end grain may be shorter.
  */
 export const createEquallySpacedGrains = (data, secondsPerGrain) => {
   const grainLength = secondsToSamples(secondsPerGrain);
@@ -92,6 +95,7 @@ export const createEquallySpacedGrains = (data, secondsPerGrain) => {
 
 /**
  * Calculates the difference between start and end for every supplied grain.
+ * 
  * @param {Array} grains Grain objects with keys start and end.
  */
 export const grainLengths = grains =>
@@ -100,9 +104,10 @@ export const grainLengths = grains =>
 /**
  * Get a certain number of samples (or cases to not be confused with audio samples) from provided
  * grains. This can be used to get a representative sample of a segment of audio.
+ * 
  * @param {Array} grains Grain objects with keys start and end.
  * @param {Array} data Original data to pull samples from, grains should be generated from this.
- * @param {Number} caseRate Per how many data points should there be a sample case?
+ * @param {number} caseRate Per how many data points should there be a sample case.
  */
 export const createSampleCases = (grains, data, caseRate) => {
   const lengths = grainLengths(grains);
@@ -119,9 +124,10 @@ export const createSampleCases = (grains, data, caseRate) => {
 
 /**
  * This will contain whatever our current quietness calculation algorithm should be.
+ * 
  * @param {Object} grain Grain containing at least the amplitude key.
- * @param {Number} cutOff Percentage (0 to 1) threshold that of which below, is considered quiet.
- * @param {Number} maxAmplitude Maximum amplitude of the track.
+ * @param {number} cutOff Percentage (0 to 1) threshold that of which below, is considered quiet.
+ * @param {number} maxAmplitude Maximum amplitude of the track.
  */
 export const isGrainQuiet = ({ amplitude }, cutOff, maxAmplitude) => {
   const amplitudePercentage = amplitude / maxAmplitude;
@@ -131,8 +137,9 @@ export const isGrainQuiet = ({ amplitude }, cutOff, maxAmplitude) => {
 
 /**
  * Checks against an array of grains to see if the grains match criteria to be "quiet".
+ * 
  * @param {Array} grains Grains array containing objects with at least the amplitude key.
- * @param {Number} cutOff Percentage (0 to 1) threshold that of which below, is considered quiet.
+ * @param {number} cutOff Percentage (0 to 1) threshold that of which below, is considered quiet.
  */
 export const areGrainsQuiet = (grains, cutOff) => {
   const amplitudes = getKeyFromObjectArray(grains, "amplitude");
@@ -141,13 +148,13 @@ export const areGrainsQuiet = (grains, cutOff) => {
   return quiet;
 };
 
-
 /**
  * Figures out the indexes of grains contained within the provided view.
+ * 
  * @param {Array} grains Entire array of grains.
  * @param {Object} view Which frames (samples) should be seen, with start and end keys.
- * @param {Number} trackLength How many frames (samples) are in the provided track.
- * @return {Array} Returns an object containing two keys, startIndex and endIndex, which indicate
+ * @param {number} trackLength How many frames (samples) are in the provided track.
+ * @returns {Array} Returns an object containing two keys, startIndex and endIndex, which indicate
  * (inclusively) the grains that are fully within the view window.
  */
 export const grainIndexesInView = (grains, { start, end }, trackLength) => {
@@ -160,15 +167,20 @@ export const grainIndexesInView = (grains, { start, end }, trackLength) => {
 
 /**
  * 
+ * 
  * @param {Array} grains Entire array of grains.
  * @param {Object} view Which frames (samples) should be seen, with start and end keys.
- * @param {Number} trackLength How many frames (samples) are in the provided track.
- * @return {Array} Returns a list of grains that need to be show with included filler grains.
+ * @param {number} trackLength How many frames (samples) are in the provided track.
+ * @returns {Array} Returns a list of grains that need to be show with included filler grains.
  */
 export const determineWhichGrainsToShow = (grains, view, trackLength) => {
   const { start, end } = view;
-  const { startIndex, endIndex } = grainIndexesInView(grains, view, trackLength);
-  
+  const { startIndex, endIndex } = grainIndexesInView(
+    grains,
+    view,
+    trackLength
+  );
+
   // Start Filler Grain
   const firstGrainToShow = grains[startIndex];
   const moreStart = startIndex !== 0;
@@ -193,13 +205,9 @@ export const determineWhichGrainsToShow = (grains, view, trackLength) => {
       more: moreEnd
     }
   ];
-  
+
   const grainsToInclude = grains.slice(startIndex, endIndex + 1);
 
-  const grainsToShow = [
-    ...startFiller,
-    ...grainsToInclude,
-    ...endFiller
-  ];
+  const grainsToShow = [...startFiller, ...grainsToInclude, ...endFiller];
   return grainsToShow;
 };

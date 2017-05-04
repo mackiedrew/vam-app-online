@@ -1,9 +1,8 @@
 import Subject from "../ToolBar";
 
 describe("<ToolBar />", () => {
-
   it("renders without crashing", () => {
-    const subject = shallow(<Subject />);
+    shallow(<Subject />);
   });
 
   it("calls handleSplit prop once when handleSplit function is called", () => {
@@ -13,5 +12,4 @@ describe("<ToolBar />", () => {
     const mockCalled = mockHandleSplit.called;
     expect(mockCalled).toBe(true);
   });
-
 });

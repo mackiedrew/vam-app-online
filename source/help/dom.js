@@ -1,6 +1,7 @@
 /**
  * Reset the file contents through this silly hack. It's illegal to change file input manually for
  * any reason, so I set the type to a changeable type, reset the value, then change it back.
+ * 
  * @param {HTMLInputElement} inputTag Input tag, typically retrieved through getElementById().
  * @returns {null} This does not return anything.
  */
@@ -12,8 +13,9 @@ export const clearFileInput = inputTag => {
 
 /**
  * Simple wrapper of document.getElementById.
- * @param {String} id Id of element you want to get.
- * @returns {HTMLElement}
+ * 
+ * @param {string} id Id of element you want to get.
+ * @returns {HTMLElement} HTML element matching the provided ID.
  */
 export const getElementById = id => document.getElementById(id);
 

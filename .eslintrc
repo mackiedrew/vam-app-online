@@ -2,13 +2,16 @@
   
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "jest/globals": true
   },
 
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:jsx-a11y/recommended"
+    "plugin:jsx-a11y/recommended",
+    "plugin:jest/recommended",
+    "plugin:unicorn/recommended"
   ],
 
   "parserOptions": {
@@ -22,8 +25,18 @@
   "plugins": [
     "react",
     "jsx-a11y",
-    "prettier"
+    "jest",
+    "jsdoc",
+    "prettier",
+    "security",
+    "unicorn"
   ],
+
+  "globals": {
+    "sinon": false,
+    "shallow": false,
+    "global": true
+  },
 
   "rules": {
     "eol-last": ["error", "always"],
@@ -43,6 +56,7 @@
     "react/prop-types": 0,
     "react/jsx-boolean-value": "error",
     "react/jsx-closing-bracket-location": "error",
+    "react/react-in-jsx-scope": 0,
     "react/jsx-equals-spacing": "error",
     "react/jsx-first-prop-new-line": ["error", "multiline-multiprop"],
     "react/jsx-sort-props": ["error",
@@ -82,6 +96,33 @@
     "jsx-a11y/role-has-required-aria-props": "error",
     "jsx-a11y/scope": "error",
     "jsx-a11y/tabindex-no-positive": "error",
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jsdoc/check-param-names": 1,
+    "jsdoc/check-tag-names": 1,
+    "jsdoc/check-types": 1,
+    "jsdoc/newline-after-description": 1,
+    "jsdoc/require-description-complete-sentence": 1,
+    "jsdoc/require-hyphen-before-param-description": 0,
+    "jsdoc/require-param": 1,
+    "jsdoc/require-param-description": 1,
+    "jsdoc/require-param-type": 1,
+    "jsdoc/require-returns-description": 1,
+    "jsdoc/require-returns-type": 1,
+    "security/detect-unsafe-regex": 2,
+    "security/detect-buffer-noassert": 2,
+    "security/detect-child-process": 2,
+    "security/detect-disable-mustache-escape": 2,
+    "security/detect-eval-with-expression": 2,
+    "security/detect-no-csrf-before-method-override": 2,
+    "security/detect-non-literal-fs-filename": 2,
+    "security/detect-non-literal-regexp": 2,
+    "security/detect-non-literal-require": 2,
+    "security/detect-object-injection": 0,
+    "security/detect-possible-timing-attacks": 2,
+    "security/detect-pseudoRandomBytes": 2,
+    "unicorn/filename-case": 0,
     "prettier/prettier": "warn"
   }
 

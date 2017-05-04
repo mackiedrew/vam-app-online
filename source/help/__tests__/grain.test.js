@@ -12,14 +12,14 @@ import { samplesToSeconds } from "../convert";
 
 const mockSimpleGrain = {
   start: 4000,
-  end: 8001,
-}
+  end: 8001
+};
 
 const mockMetaGrain = {
   start: 4000,
   end: 8001,
   meta: true
-}
+};
 
 const mockGrains = [
   {
@@ -37,11 +37,10 @@ const mockGrains = [
   {
     start: 3001,
     end: 4001
-  },
+  }
 ];
 
 describe("splitGrainIntoTwo()", () => {
-
   it("returns the original grain if splitPoint significantly too low", () => {
     const splitPoint = 2000;
     const result = splitGrainIntoTwo(mockSimpleGrain, splitPoint)[0];
@@ -76,7 +75,7 @@ describe("splitGrainIntoTwo()", () => {
   it("returns an array with properly split grains", () => {
     const splitPoint = 6000;
     const { start, end } = mockSimpleGrain;
-    const [ left, right ] = splitGrainIntoTwo(mockSimpleGrain, splitPoint);
+    const [left, right] = splitGrainIntoTwo(mockSimpleGrain, splitPoint);
     expect(left.start).toBe(start);
     expect(left.end).toBe(splitPoint);
     expect(right.start).toBe(splitPoint);
@@ -85,16 +84,14 @@ describe("splitGrainIntoTwo()", () => {
 
   it("returns an array with two split grains containing meta data of original", () => {
     const splitPoint = 6000;
-    const [ left, right ] = splitGrainIntoTwo(mockMetaGrain, splitPoint);
+    const [left, right] = splitGrainIntoTwo(mockMetaGrain, splitPoint);
     expect(left.meta).toBe(true);
     expect(right.meta).toBe(true);
   });
-
 });
 
 describe("splitGrain()", () => {
-
- it("returns the original grains array if splitPoint significantly too low", () => {
+  it("returns the original grains array if splitPoint significantly too low", () => {
     const splitPoint = -1000;
     const result = splitGrain(mockGrains, splitPoint);
     expect(result).toBe(mockGrains);
@@ -130,11 +127,9 @@ describe("splitGrain()", () => {
     const result = splitGrain(mockGrains, splitPoint);
     expect(result.length).toEqual(expectedLength);
   });
-
 });
 
 describe("createEquallySpacedGrains()", () => {
-
   const testData = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   it("returns an array", () => {
@@ -144,22 +139,23 @@ describe("createEquallySpacedGrains()", () => {
 
   it("returns an array of appropriate length", () => {
     const resultEven = createEquallySpacedGrains(testData, samplesToSeconds(2));
-    const resultDangle = createEquallySpacedGrains(testData, samplesToSeconds(4));
+    const resultDangle = createEquallySpacedGrains(
+      testData,
+      samplesToSeconds(4)
+    );
     expect(resultDangle.length).toBe(3);
     expect(resultEven.length).toBe(5);
   });
-
 });
 
 describe("grainLengths()", () => {
-
   const testGrains = [
     { start: 0, end: 10 },
     { start: 10, end: 20 },
     { start: 20, end: 30 },
     { start: 30, end: 40 },
     { start: 40, end: 50 }
-  ]
+  ];
 
   it("returns an array", () => {
     const result = grainLengths(testGrains);
@@ -171,11 +167,9 @@ describe("grainLengths()", () => {
     const result = grainLengths(testGrains);
     expect(result.length).toBe(originalLength);
   });
-
 });
 
 describe("createSampleCases()", () => {
-
   const testGrains = [
     { start: 0, end: 2 },
     { start: 2, end: 4 },
@@ -193,13 +187,11 @@ describe("createSampleCases()", () => {
     const result = createSampleCases(testGrains, testData, 1);
     expect(result.length).toBe(testGrains.length);
   });
-
 });
 
 describe("isGrainQuiet()", () => {
-
-  const testLoudGrain = { amplitude: 0.5 }
-  const testQuietGrain = { amplitude: 0.1 }
+  const testLoudGrain = { amplitude: 0.5 };
+  const testQuietGrain = { amplitude: 0.1 };
   const testCutOff = 0.3;
   const testMaxAmplitude = 1.0;
 
@@ -212,11 +204,9 @@ describe("isGrainQuiet()", () => {
     const result = isGrainQuiet(testQuietGrain, testCutOff, testMaxAmplitude);
     expect(result).toBe(true);
   });
-
 });
 
 describe("areGrainsQuiet()", () => {
-
   const testGrains = [
     { start: 0, end: 2, amplitude: 0.2 },
     { start: 2, end: 4, amplitude: 0.4 },
@@ -230,39 +220,13 @@ describe("areGrainsQuiet()", () => {
     expect(typeof result).toBe("object");
   });
 
-
   it("returns array the same length of original grains array", () => {
     const result = areGrainsQuiet(testGrains, testCutOff);
     expect(result.length).toBe(testGrains.length);
   });
-
-});
-
-describe("areGrainsQuiet()", () => {
-
-  const testGrains = [
-    { start: 0, end: 2, amplitude: 0.2 },
-    { start: 2, end: 4, amplitude: 0.4 },
-    { start: 4, end: 6, amplitude: 0.6 },
-    { start: 6, end: 8, amplitude: 0.8 }
-  ];
-  const testCutOff = 0.5;
-
-  it("returns an array", () => {
-    const result = areGrainsQuiet(testGrains, testCutOff);
-    expect(typeof result).toBe("object");
-  });
-
-
-  it("returns array the same length of original grains array", () => {
-    const result = areGrainsQuiet(testGrains, testCutOff);
-    expect(result.length).toBe(testGrains.length);
-  });
-
 });
 
 describe("grainIndexesInView()", () => {
-
   const testGrains = [
     { start: 0, end: 2 },
     { start: 2, end: 4 },
@@ -272,9 +236,13 @@ describe("grainIndexesInView()", () => {
   const testView = {
     start: 2,
     end: 5
-  }
+  };
   const testGrainsLength = testGrains[testGrains.length - 1].end;
-  const basicResult = grainIndexesInView(testGrains, testView, testGrainsLength);
+  const basicResult = grainIndexesInView(
+    testGrains,
+    testView,
+    testGrainsLength
+  );
 
   it("returns an array with startIndex and endIndex", () => {
     expect(basicResult.startIndex).toBeDefined();
@@ -310,6 +278,4 @@ describe("grainIndexesInView()", () => {
     expect(result.startIndex).toBe(1);
     expect(result.endIndex).toBe(1);
   });
-
 });
-

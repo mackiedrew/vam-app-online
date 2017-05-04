@@ -9,10 +9,6 @@ import ReadWavWorker from "../workers/readWav.worker.js";
 // Helpers
 import { createSampleCases, createEquallySpacedGrains } from "./grain";
 
-/**
- * Reads and returns a promise containing the file buffer.
- * @param {File} file
- */
 export const readFile = (url, filename) => {
   return fetch(url).then(response => response.blob()).then(blob => {
     const file = new File([blob], filename);
@@ -22,11 +18,6 @@ export const readFile = (url, filename) => {
   });
 };
 
-/**
- * Ugly function, but currently gathers information that is much more processed than the simple 
- * readWav() function.
- * @param {String} filePath Absolute full path to the wav file, including filename.ext
- */
 export const richReadWav = (url, filename, grainSize, quietCutoff) => {
   const richDataPromise = readFile(url)
     .then(({ sampleRate, channelData }) => ({

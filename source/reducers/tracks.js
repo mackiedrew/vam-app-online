@@ -149,6 +149,11 @@ const TracksReducer = (state = DEFAULT_STATE, { type, payload }) => {
           }
         }
       };
+    case TOGGLE_CURRENTLY_PLAYING:
+      return {
+        ...state,
+        currentlyPlaying: !state.currentlyPlaying
+      };
     default:
       return state;
   }

@@ -68,6 +68,10 @@ class Track extends Component {
   /**
    * Generate the in-line style object for programmatically determining the position of the
    * the seek line based on some % left of the screen taking into account the viewport.
+   * 
+   * @param {Object} view An object containing at least start and end keys.
+   * @param {number} seekPosition Value of current position of seek in frames (aka samples).
+   * @returns {Object} The new style object for in-line styling.
    */
   generateSeekLineStyle({ start, end }, seekPosition) {
     const seekPercentageInView = (seekPosition - start) / end * 100;

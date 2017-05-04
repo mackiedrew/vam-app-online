@@ -16,7 +16,7 @@ class WaveBlock extends Component {
 
   /**
    * Figures out the programmatic style of the total wave-block.
-   * - uses flex-grow to determine proportion of waveform to grow to fill
+   * - uses flex-grow to determine proportion of waveform to grow to fill.
    */
   waveBlockStyle() {
     const { start, end, quiet } = this.props;
@@ -27,7 +27,7 @@ class WaveBlock extends Component {
 
   /**
    * Figures out the programmatic style of the amplitude button.
-   * - height is calculated as % of total
+   * - height is calculated as % of total.
    */
   amplitudeStyle() {
     const { selected } = this.props;
@@ -38,7 +38,8 @@ class WaveBlock extends Component {
   }
 
   /**
-   * Relative amplitude is the % of maximum amplitude, this is used to calculate the waveform height
+   * Relative amplitude is the % of maximum amplitude,
+   * this is used to calculate the waveform height.
    */
   relativeAmplitude() {
     const { amplitude, maxAmplitude } = this.props;

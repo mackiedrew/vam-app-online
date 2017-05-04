@@ -42,8 +42,9 @@ class SeekBar extends Component {
 
   /**
    * Move the seek value by given seconds and rate.
-   * @param {Number} seconds Number of seconds to move seek by;
-   * @param {Number} sampleRate Sample rate of the audio clip you are working with.
+   * 
+   * @param {number} seconds Number of seconds to move seek by.
+   * @param {number} sampleRate Sample rate of the audio clip you are working with.
    */
   seekSeconds(seconds, sampleRate = 44100) {
     const frames = secondsToSamples(seconds, sampleRate);

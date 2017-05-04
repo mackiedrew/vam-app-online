@@ -19,6 +19,6 @@ global.React = React;
 global.ReactDOM = ReactDOM;
 
 // Fail tests on any warning
-console.error = (message) => {
-   throw new Error(message);
+console.error = message => {
+  throw new Error(message);
 };
