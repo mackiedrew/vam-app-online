@@ -16,8 +16,9 @@ export const setNextTrackId = id => ({
 });
 
 /**
- * This is a redux thunk.
- * Generate a new track ID and set the state's newTrackId to that newly generated ID.
+ * Thunk: Generate a new track ID and set the state's newTrackId to that newly generated ID.
+ * 
+ * @returns {Function} Action creator that generates new track id and sets it to nextTrackId.
  */
 const generateNextTrackId = () => {
   const nextTrackId = generate();

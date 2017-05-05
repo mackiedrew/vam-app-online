@@ -6,7 +6,6 @@ import {
   GENERATE_NEXT_TRACK_ID,
   ADD_TRACK,
   SELECT_TRACK,
-  SELECTED_TRACK_SHIFT,
   TOGGLE_TRACK_MUTED,
   REMOVE_TRACK,
   SET_TRACK_SAMPLE_RATE,
@@ -74,11 +73,6 @@ const TracksReducer = (state = DEFAULT_STATE, { type, payload }) => {
         trackList: payload
       };
     case SELECT_TRACK:
-      return {
-        ...state,
-        selectedTrack: payload
-      };
-    case SELECTED_TRACK_SHIFT:
       return {
         ...state,
         selectedTrack: payload
