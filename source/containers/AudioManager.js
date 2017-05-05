@@ -7,7 +7,6 @@ import { bindActionCreators } from "redux";
 
 // Actions
 import setSeekPosition from "../actions/setSeekPosition";
-import setCurrentlyPlaying from "../actions/setCurrentlyPlaying";
 
 // Libraries
 import { secondsToSamples } from "../help/convert";
@@ -60,18 +59,17 @@ export class AudioManager extends Component {
   }
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
   return {
     trackList: state.tracks.trackList,
     selectedTrack: state.tracks.selectedTrack
   };
 };
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      setSeekPosition: setSeekPosition,
-      setCurrentlyPlaying: setCurrentlyPlaying
+      setSeekPosition: setSeekPosition
     },
     dispatch
   );
