@@ -8,15 +8,8 @@ import { bindActionCreators } from "redux";
 
 // Actions
 import generateNextTrackId from "../actions/generateNextTrackId";
-import selectedTrackShift from "../actions/selectedTrackShift";
 import toggleFiltersMenu from "../actions/toggleFiltersMenu";
 import toggleSettingsMenu from "../actions/toggleSettingsMenu";
-
-// Selectors
-import longestTrackLength from "../selectors/longestTrackLength";
-
-// Libraries
-import keyboard from "keyboardjs";
 
 // Components
 import Header from "../components/Header";
@@ -29,19 +22,10 @@ import SeekBar from "../containers/SeekBar";
  * This used to be called "Tracks" but was refactored to be the main app since everything was
  * happening here anyway.
  */
-class App extends Component {
+export class App extends Component {
   constructor(props) {
     super(props);
     props.generateNextTrackId();
-    this.componentDidMount = this.componentDidMount.bind(this);
-  }
-
-  componentDidMount() {
-    const { settings, selectedTrackShift } = this.props;
-    const { play, nextTrack, previousTrack } = settings;
-    keyboard.bind([play.value, "space"], this.togglePlay);
-    keyboard.bind(nextTrack.value, () => selectedTrackShift(1));
-    keyboard.bind(previousTrack.value, () => selectedTrackShift(-1));
   }
 
   render() {
@@ -72,24 +56,22 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
   return {
     seekPosition: state.tracks.seekPosition,
-    filtersOpen: state.ui.filtersOpen,
-    settings: state.settings,
     trackList: state.tracks.trackList,
-    view: state.tracks.view
+    view: state.tracks.view,
+    filtersOpen: state.ui.filtersOpen,
+    settings: state.settings
   };
 };
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       toggleFiltersMenu: toggleFiltersMenu,
       toggleSettingsMenu: toggleSettingsMenu,
-      generateNextTrackId: generateNextTrackId,
-      selectedTrackShift: selectedTrackShift,
-      longestTrackLength: longestTrackLength
+      generateNextTrackId: generateNextTrackId
     },
     dispatch
   );

@@ -1,80 +1,83 @@
+// Render
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import "../styles/Settings.styl";
 
-// Action creators
-import changeSettingValue from "../actions/changeSettingValue";
+// State
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-class Settings extends Component {
+// Actions
+import changeSettingValue from "../actions/changeSettingValue";
+import setOperationHotkey from "../actions/setOperationHotkey";
+
+// Components
+import SettingsField from "../components/SettingsField";
+
+export class Settings extends Component {
   constructor(props) {
-    // Initialize extended class with passed props
     super(props);
-    this.generateFields = this.generateFields.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleSettingsChange = this.handleSettingsChange.bind(this);
+    this.handleHotkeyChange = this.handleHotkeyChange.bind(this);
   }
 
-  handleChange(event, settingName) {
+  handleSettingsChange(event, settingName) {
     const { changeSetting } = this.props;
     const { value } = event.target;
     event.preventDefault();
     changeSetting(settingName, value);
   }
 
+  handleHotkeyChange(event, operationName) {
+    const { changeHotkey } = this.props;
+    const { value } = event.target;
+    event.preventDefault();
+    changeHotkey(operationName, value);
+  }
+
   settingsClass(open) {
     return open ? "settings-open" : "settings-closed";
   }
 
-  generateFields() {
-    const { settings } = this.props;
-    return Object.keys(settings).map(name => {
-      const { value, unit, label, type } = settings[name];
-
-      return (
-        <div className="field" key={name}>
-          <label htmlFor={name}>{label}</label>
-          <div className="entry-area">
-            <input
-              className="input"
-              id={name}
-              name={name}
-              onChange={event => this.handleChange(event, name)}
-              type={type}
-              value={value}
-            />
-            <span className="unit">{unit}</span>
-          </div>
-        </div>
-      );
-    });
+  generateFields(fields, handleChange) {
+    return Object.keys(fields).map(name => (
+      <SettingsField
+        field={fields[name]}
+        handleChange={handleChange}
+        key={name}
+        name={name}
+      />
+    ));
   }
 
   render() {
     // Break out values for the sake of easier template reading
-    const { open } = this.props;
+    const { open, hotkeys, settings } = this.props;
     const extraClass = this.settingsClass(open);
 
     return (
       <aside className={`settings ${extraClass}`}>
         <fieldset>
-          {this.generateFields()}
+          {this.generateFields(settings, this.handleSettingsChange)}
+          {this.generateFields(hotkeys, this.handleHotkeyChange)}
         </fieldset>
       </aside>
     );
   }
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
   return {
     open: state.ui.settingsOpen,
-    settings: state.settings
+    settings: state.settings,
+    hotkeys: state.keyboard
   };
 };
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      changeSetting: changeSettingValue
+      changeSetting: changeSettingValue,
+      changeHotkey: setOperationHotkey
     },
     dispatch
   );

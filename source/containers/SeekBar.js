@@ -24,7 +24,7 @@ import Icon from "../components/Icon";
  * SeekBar will handle the controls and logic, and maybe a UI for interacting with the current seek
  * position of the tracks. This will be represented by a sample #.
  */
-class SeekBar extends Component {
+export class SeekBar extends Component {
   constructor(props) {
     // Initialize extended class with passed props
     super(props);

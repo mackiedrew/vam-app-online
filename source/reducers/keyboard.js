@@ -1,11 +1,11 @@
-// Actions
-import { CHANGE_SETTING_VALUE } from "../constants/actionTypes";
+// Actions Types
+import { SET_OPERATION_HOTKEY } from "../constants/actionTypes";
 
 // Settings configuration file is the default state.
-import settings from "../constants/settings";
+import hotkeys from "../constants/hotkeys";
 
 // Initial State
-export const DEFAULT_STATE = { ...settings };
+export const DEFAULT_STATE = { ...hotkeys };
 
 /**
  * Reduces action into the state of the object.
@@ -14,13 +14,13 @@ export const DEFAULT_STATE = { ...settings };
  * @param {Object} action Action to be applied to the reducer.
  * @returns {Object} New state object, updated with action.
  */
-const SettingsReducer = (state = DEFAULT_STATE, { type, payload }) => {
+const KeyboardReducer = (state = DEFAULT_STATE, { type, payload }) => {
   switch (type) {
-    case CHANGE_SETTING_VALUE:
+    case SET_OPERATION_HOTKEY:
       return {
         ...state,
-        [payload.setting]: {
-          ...state[payload.setting],
+        [payload.operation]: {
+          ...state[payload.operation],
           value: payload.value
         }
       };
@@ -29,4 +29,4 @@ const SettingsReducer = (state = DEFAULT_STATE, { type, payload }) => {
   }
 };
 
-export default SettingsReducer;
+export default KeyboardReducer;

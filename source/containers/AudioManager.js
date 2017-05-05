@@ -14,7 +14,7 @@ import { secondsToSamples } from "../help/convert";
 import { floor } from "../help/generic";
 import { getElementById } from "../help/dom";
 
-class AudioManager extends Component {
+export class AudioManager extends Component {
   constructor(props) {
     super(props);
     this.tick = this.tick.bind(this);

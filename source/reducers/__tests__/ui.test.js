@@ -14,9 +14,15 @@ describe("ui reducer", () => {
     expect(result).toEqual(expected);
   });
 
-  it("should not the initial state when the state is not defined", () => {
+  it("should not the initial state when the state is null", () => {
     const result = reducer(null, {});
     const expected = null;
+    expect(result).toEqual(expected);
+  });
+
+  it("should not the initial state when the state is not defined", () => {
+    const result = reducer(undefined, {});
+    const expected = DEFAULT_STATE;
     expect(result).toEqual(expected);
   });
 

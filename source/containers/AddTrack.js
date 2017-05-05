@@ -11,24 +11,20 @@ import addTrack from "../actions/addTrack";
 
 // Libraries
 import { range } from "../help/generic";
-import { clearFileInput } from "../help/dom";
+import { clearFileInput, getElementById } from "../help/dom";
 
 // Components
 import Icon from "../components/Icon";
 
-class AddTrack extends Component {
+export class AddTrack extends Component {
   constructor(props) {
     super(props);
     this.handleOnChange = this.handleOnChange.bind(this);
   }
 
-  // Handles change change in upload location.
   handleOnChange() {
-    // Breakout deeper than 1-level references
     const { addTrack, nextTrackId } = this.props;
-    // Find the file input tag by ID to read file from it.
-    const inputTag = document.getElementById(nextTrackId);
-    // Construct easy object for adding tracks to the system.
+    const inputTag = getElementById(nextTrackId);
     const selectedFiles = inputTag.files;
     const numberOfFiles = selectedFiles.length;
     const fileRange = range(numberOfFiles);
@@ -66,13 +62,13 @@ class AddTrack extends Component {
   }
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
   return {
     nextTrackId: state.tracks.nextTrackId
   };
 };
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       addTrack: addTrack

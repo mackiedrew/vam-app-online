@@ -1,4 +1,4 @@
-// Actions
+// Action Types
 import {
   SET_SEEK_POSITION,
   SET_VIEW,
@@ -19,7 +19,7 @@ import {
 } from "../constants/actionTypes";
 
 // Initial State
-const DEFAULT_STATE = {
+export const DEFAULT_STATE = {
   seekPosition: 0,
   trackList: {},
   nextTrackId: "track1",

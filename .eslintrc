@@ -32,7 +32,6 @@
     "prettier",
     "security",
     "unicorn",
-    "dependencies",
     "eslint-comments",
     "import",
     "fp"
@@ -129,10 +128,6 @@
     "security/detect-possible-timing-attacks": 2,
     "security/detect-pseudoRandomBytes": 2,
     "unicorn/filename-case": 0,
-    "dependencies/case-sensitive": 1,
-    "dependencies/no-cycles": 1,
-    "dependencies/no-unresolved": 1,
-    "dependencies/require-json-ext": 1,
     "eslint-comments/disable-enable-pair": "error",
     "eslint-comments/no-duplicate-disable": "error",
     "eslint-comments/no-unlimited-disable": "error",
