@@ -1,5 +1,7 @@
 import { SET_CURRENTLY_PLAYING } from "../../constants/actionTypes";
-import setCurrentlyPlaying, { setCurrentlyPlayingSimple } from "../setCurrentlyPlaying";
+import setCurrentlyPlaying, {
+  setCurrentlyPlayingSimple
+} from "../setCurrentlyPlaying";
 
 describe("setCurrentlyPlayingSimple() action creator", () => {
   it("should create an action to set the currentlyPlaying state", () => {
@@ -7,7 +9,6 @@ describe("setCurrentlyPlayingSimple() action creator", () => {
     const result = setCurrentlyPlayingSimple(false);
     expect(result).toEqual(expectedAction);
   });
-
 });
 
 describe("setCurrentlyPlaying() Thunk", () => {
@@ -23,5 +24,4 @@ describe("setCurrentlyPlaying() Thunk", () => {
     setCurrentlyPlaying(true)(dispatch, getState);
     expect(dispatch.calledWith(expectedAction)).toBe(true);
   });
-
 });

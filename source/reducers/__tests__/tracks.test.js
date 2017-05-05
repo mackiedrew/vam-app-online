@@ -245,6 +245,4 @@ describe("tracks reducer", () => {
     };
     expect(result).toEqual(expected);
   });
-  
-
 });

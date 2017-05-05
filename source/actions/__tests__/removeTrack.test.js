@@ -11,7 +11,6 @@ describe("removeTrackSimple() action creator", () => {
 });
 
 describe("removeTrack() Thunk", () => {
-
   it("returns a function", () => {
     const result = removeTrack();
     expect(typeof result).toBe("function");
