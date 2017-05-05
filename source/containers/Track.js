@@ -118,17 +118,17 @@ export class Track extends Component {
   }
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
   return {
-    settings: state.settings,
     seekPosition: state.tracks.seekPosition,
-    selectedTrack: state.tracks.selectedTrack,
     trackList: state.tracks.trackList,
-    view: state.tracks.view
+    selectedTrack: state.tracks.selectedTrack,
+    view: state.tracks.view,
+    settings: state.settings
   };
 };
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       setTrackSampleRate: setTrackSampleRate,
