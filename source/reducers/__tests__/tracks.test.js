@@ -6,7 +6,6 @@ import {
   GENERATE_NEXT_TRACK_ID,
   ADD_TRACK,
   SELECT_TRACK,
-  SELECTED_TRACK_SHIFT,
   TOGGLE_TRACK_MUTED,
   REMOVE_TRACK,
   SET_TRACK_SAMPLE_RATE,
@@ -123,19 +122,6 @@ describe("tracks reducer", () => {
     const expected = {
       ...DEFAULT_STATE,
       trackList: { "123ABC": { trackContents: "lots" } }
-    };
-    expect(result).toEqual(expected);
-  });
-
-  it("should handle SELECTED_TRACK_SHIFT", () => {
-    const mockAction = {
-      type: SELECTED_TRACK_SHIFT,
-      payload: "123ABC"
-    };
-    const result = reducer(DEFAULT_STATE, mockAction);
-    const expected = {
-      ...DEFAULT_STATE,
-      selectedTrack: "123ABC"
     };
     expect(result).toEqual(expected);
   });
