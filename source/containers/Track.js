@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 // Actions
-import setTrackFileName from "../actions/setTrackFileName";
 import setTrackSampleRate from "../actions/setTrackSampleRate";
 import setTrackGrains from "../actions/setTrackGrains";
 import setTrackLength from "../actions/setTrackLength";
@@ -27,7 +26,7 @@ import Loading from "../components/Loading";
  * <Track /> should take in a simple path to a to a file and generate logical divisions and pass
  * down any display options to allow
  */
-class Track extends Component {
+export class Track extends Component {
   constructor(props) {
     super(props);
 
@@ -119,20 +118,19 @@ class Track extends Component {
   }
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
   return {
-    settings: state.settings,
     seekPosition: state.tracks.seekPosition,
-    selectedTrack: state.tracks.selectedTrack,
     trackList: state.tracks.trackList,
-    view: state.tracks.view
+    selectedTrack: state.tracks.selectedTrack,
+    view: state.tracks.view,
+    settings: state.settings
   };
 };
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      setTrackFileName: setTrackFileName,
       setTrackSampleRate: setTrackSampleRate,
       setTrackGrains: setTrackGrains,
       setTrackLength: setTrackLength,

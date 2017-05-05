@@ -1,12 +1,22 @@
-// Action Types
+// Action Type
 import { REMOVE_TRACK } from "../constants/actionTypes";
 
-// Action Creator
-const removeTrackAsync = payload => {
-  return { type: REMOVE_TRACK, payload };
+/**
+ * Action creator: creates an action that sets a new track list to delete a track.
+ * 
+ * @param {Object} newTrackList An entire new track list to swap in for the old one.
+ * @returns {Object} Action: removes track by setting the track list to a new object.
+ */
+export const removeTrackSimple = newTrackList => {
+  return { type: REMOVE_TRACK, payload: newTrackList };
 };
 
-// Thunk
+/**
+ * Thunk: removes a track from the track list.
+ * 
+ * @param {Object} trackId Which track to remove by ID.
+ * @returns {Function} Action creator that removes a track from the track list. 
+ */
 const removeTrack = trackId => {
   return (dispatch, getState) => {
     const { trackList } = getState().tracks;
@@ -16,7 +26,7 @@ const removeTrack = trackId => {
       (current, id) => ({ ...current, [id]: trackList[id] }),
       {}
     );
-    dispatch(removeTrackAsync(newTrackList));
+    dispatch(removeTrackSimple(newTrackList));
   };
 };
 

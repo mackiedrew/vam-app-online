@@ -15,7 +15,7 @@ import toggleTrackMuted from "../actions/toggleTrackMuted";
 import ToggleButton from "../components/ToggleButton";
 import Icon from "../components/Icon";
 
-class TrackControls extends Component {
+export class TrackControls extends Component {
   constructor(props) {
     super(props);
     this.handleRemoveButton = this.handleRemoveButton.bind(this);
@@ -40,7 +40,7 @@ class TrackControls extends Component {
     const { name, selectedTrack, id, trackList } = this.props;
 
     const selected = id === selectedTrack;
-    const muted = trackList[id].muted;
+    const { muted } = trackList[id];
 
     return (
       <div className="track-controls">
@@ -68,16 +68,15 @@ class TrackControls extends Component {
   }
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
   return {
-    settings: state.settings,
     seekPosition: state.tracks.seekPosition,
     selectedTrack: state.tracks.selectedTrack,
     trackList: state.tracks.trackList
   };
 };
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       selectTrack: selectTrack,

@@ -1,23 +1,25 @@
-// Libraries
-import { playElement, pauseElement, getElementById } from "../help/dom";
-
-// Action Types
+// Action Type
 import { SET_CURRENTLY_PLAYING } from "../constants/actionTypes";
 
-// Action Creator
-const setCurrentlyPlayingAsync = payload => {
-  return { type: SET_CURRENTLY_PLAYING, payload };
+/**
+ * Action creator: creates an action that sets the playing state of the tracks.
+ * 
+ * @param {boolean} isPlaying Whether or not the track is playing.
+ * @returns {Object} Action: sets the playing state of the tracks.
+ */
+export const setCurrentlyPlayingSimple = isPlaying => {
+  return { type: SET_CURRENTLY_PLAYING, payload: isPlaying };
 };
 
-// Thunk
+/**
+ * Thunk: Sets currently playing state.
+ * 
+ * @param {boolean} isPlaying Whether or not the track is playing.
+ * @returns {Function} Action creator that sets currently playing state.
+ */
 const setCurrentlyPlaying = isPlaying => {
-  return (dispatch, getState) => {
-    const { trackList } = getState().tracks;
-    const trackIds = Object.keys(trackList);
-    const audioTagIds = trackIds.map(id => `audio-manager-${id}`);
-    const audioTags = audioTagIds.map(getElementById);
-    dispatch(setCurrentlyPlayingAsync(isPlaying));
-    isPlaying ? audioTags.map(playElement) : audioTagIds.map(pauseElement);
+  return dispatch => {
+    dispatch(setCurrentlyPlayingSimple(isPlaying));
   };
 };
 
