@@ -15,7 +15,7 @@ test:
     - yarn lint:javascript
     - yarn lint:stylus
     - yarn hint
-    - yarn test
+    - yarn unit
   post:
     - yarn coverage
 
