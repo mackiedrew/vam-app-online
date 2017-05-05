@@ -1,7 +1,6 @@
 import { mapStateToProps, mapDispatchToProps } from "../AudioManager";
 
 describe("<Track />", () => {
-
   describe("mapStateToProps()", () => {
     const mockState = {
       tracks: {
@@ -11,10 +10,7 @@ describe("<Track />", () => {
     };
 
     it("returns object with expected properties", () => {
-      const {
-        selectedTrack,
-        trackList
-      } = mapStateToProps(mockState);
+      const { selectedTrack, trackList } = mapStateToProps(mockState);
       expect(trackList).toBe(1);
       expect(selectedTrack).toBe(2);
     });

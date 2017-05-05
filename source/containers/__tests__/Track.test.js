@@ -33,7 +33,6 @@ import { mapStateToProps, mapDispatchToProps } from "../Track";
 // };
 
 describe("<Track />", () => {
-
   // it("renders without crashing", () => {
   //   const subject = shallow(<Subject {...mockProps} />);
   //   expect(subject.is("div.track")).toBe(true);
