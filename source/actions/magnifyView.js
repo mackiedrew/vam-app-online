@@ -2,7 +2,7 @@ import { MAGNIFY_VIEW } from "../constants/actionTypes";
 import setView from "./setView";
 
 // Action Creator
-const magnifyViewAsync = () => {
+const magnifyViewLabel = () => {
   return { type: MAGNIFY_VIEW };
 };
 
@@ -15,7 +15,7 @@ const magnifyView = magnificationFactor => {
       ...view,
       end: newEnd
     };
-    dispatch(magnifyViewAsync());
+    dispatch(magnifyViewLabel());
     dispatch(setView(newView));
   };
 };
