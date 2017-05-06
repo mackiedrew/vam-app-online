@@ -120,7 +120,7 @@
     "gh-pages": "0.12.0",
     "html-webpack-plugin": "2.28.0",
     "istanbul": "0.4.5",
-    "jest": "19.0.2",
+    "jest": "20.0.0",
     "jest-cli": "19.0.2",
     "jest-css-modules": "1.1.0",
     "jshint": "2.9.4",
@@ -140,7 +140,7 @@
     "stylus": "0.54.5",
     "stylus-loader": "3.0.1",
     "svgo": "0.7.2",
-    "webpack": "2.5.0",
+    "webpack": "2.5.1",
     "webpack-dev-server": "2.4.5",
     "worker-loader": "0.8.0",
     "yarn": "0.23.3"
