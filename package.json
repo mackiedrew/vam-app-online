@@ -108,7 +108,7 @@
     "eslint-plugin-eslint-comments": "1.0.0",
     "eslint-plugin-fp": "2.3.0",
     "eslint-plugin-import": "2.2.0",
-    "eslint-plugin-jest": "19.0.1",
+    "eslint-plugin-jest": "20.0.0",
     "eslint-plugin-jsdoc": "3.0.2",
     "eslint-plugin-jsx-a11y": "5.0.0",
     "eslint-plugin-prettier": "2.0.1",
