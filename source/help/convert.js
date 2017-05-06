@@ -4,11 +4,14 @@
 import { floor } from "./generic";
 
 /**
- * Converts seconds to samples, given a sample rate. Both have defaults so if you provide not params
- * it will simply provide a typical conversion factor. This is intentionally over-verbose.
+ * Converts seconds to samples, given a sample rate. Both have defaults so if
+ * you provide not params it will simply provide a typical conversion factor.
+ * This is intentionally over-verbose.
  * 
- * @param {number} seconds This should be pretty clear. 1/60 of a minute, 1000 milliseconds.
- * @param {number} sampleRate Number of samples per seconds, default is 44100Hz or 44.1kHz.
+ * @param {number} seconds This should be pretty clear. 1/60 of a minute, 1000
+ * milliseconds.
+ * @param {number} sampleRate Number of samples per seconds, default is 44100Hz
+ * or 44.1kHz.
  */
 export const secondsToSamples = (
   seconds: number = 1,
@@ -16,11 +19,13 @@ export const secondsToSamples = (
 ): number => seconds * sampleRate;
 
 /**
- * Converts samples to seconds, given a sample rate. Both have defaults so if you provide not params
- * it will simply provide a typical conversion factor. This is intentionally over-verbose.
+ * Converts samples to seconds, given a sample rate. Both have defaults so if
+ * you provide not params it will simply provide a typical conversion factor.
+ * This is intentionally over-verbose.
  * 
  * @param {number} samples Number of samples for the given sample rate.
- * @param {number} sampleRate Number of samples per seconds, default is 44100Hz or 44.1kHz.
+ * @param {number} sampleRate Number of samples per seconds, default is 44100Hz
+ * or 44.1kHz.
  */
 export const samplesToSeconds = (
   samples: number = 1,
@@ -28,11 +33,12 @@ export const samplesToSeconds = (
 ): number => samples / sampleRate;
 
 /**
- * Converts samples to milliseconds, given a sample rate. Both have defaults so if you provide
- * not params it will simply provide a typical conversion factor.
+ * Converts samples to milliseconds, given a sample rate. Both have defaults so
+ * if you provide not params it will simply provide a typical conversion factor.
  * 
  * @param {number} samples Number of samples for the given sample rate.
- * @param {number} sampleRate Number of samples per seconds, default is 44100Hz or 44.1kHz.
+ * @param {number} sampleRate Number of samples per seconds, default is 44100Hz
+ * or 44.1kHz.
  */
 export const samplesToMilliseconds = (
   samples: number = 1,

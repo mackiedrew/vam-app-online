@@ -72,8 +72,8 @@
     "threshold": 40,
     "excludeGlob": [
       "./node_modules/**",
-      "**/__tests__/",
-      "./**/__tests__/**"
+      "*.test.js",
+      "**/__tests__/**"
     ],
     "includeGlob": [
       "./source/**"
