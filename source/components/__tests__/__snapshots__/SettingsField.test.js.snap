@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SettingsField /> renders correctly with a number-type field 1`] = `
+<div
+  className="settings-field"
+>
+  <label
+    htmlFor="grain"
+  >
+    Grain Time
+  </label>
+  <div
+    className="entry-area"
+  >
+    <input
+      className="input"
+      id="grain"
+      name="grain"
+      onChange={[Function]}
+      type="number"
+      value={5}
+    />
+    <span
+      className="unit"
+    >
+      s
+    </span>
+  </div>
+</div>
+`;
+
+exports[`<SettingsField /> renders correctly with a text-type field 1`] = `
+<div
+  className="settings-field"
+>
+  <label
+    htmlFor="name"
+  >
+    What's your name?
+  </label>
+  <div
+    className="entry-area"
+  >
+    <input
+      className="input"
+      id="name"
+      name="name"
+      onChange={[Function]}
+      type="text"
+      value="Mackie Drew"
+    />
+    <span
+      className="unit"
+    />
+  </div>
+</div>
+`;

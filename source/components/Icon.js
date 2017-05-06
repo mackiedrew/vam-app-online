@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/Icon.styl";
 
 /**
- * Interfaces with the Google icons font to display a standard icon.
+ * Loads Google Icons-font to display a standard icon.
  * 
  * @param {Object} props Including icon and size (in px) of the displayed icon. 
  */

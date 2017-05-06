@@ -8,16 +8,14 @@ import ToolBar from "../components/ToolBar";
 import AddTrack from "../containers/AddTrack";
 
 /**
- * The role of the <Waveform /> container is aggregate data, using libraries and provided data into
- * a pretty display format. It should not do a lot of the heavy lifting, most of it should be given
- * to a library for processing or provided directly through the props.
+ * Loads the header containing some higher level functions, especially those concerning UI.
  * 
- * @param {Object} props Provided properties from react JSX.
+ * @param {Object} props Pass button functions down in props.
  */
-const Header = props => (
+const Header = ({ toggleFiltersMenu, toggleSettingsMenu }) => (
   <header className="header">
     <div className="main-bar">
-      <button onClick={props.toggleFiltersMenu}>
+      <button className="toggle-filters" onClick={toggleFiltersMenu}>
         <Icon icon="library_add" />
       </button>
       <h1>VAM</h1>
@@ -25,7 +23,7 @@ const Header = props => (
         <Icon icon="file_download" />
       </button>
       <AddTrack />
-      <button onClick={props.toggleSettingsMenu}>
+      <button className="toggle-settings" onClick={toggleSettingsMenu}>
         <Icon icon="settings" />
       </button>
     </div>

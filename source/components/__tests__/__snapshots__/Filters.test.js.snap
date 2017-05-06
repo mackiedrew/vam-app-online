@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Filters /> renders correctly while closed 1`] = `
+<aside
+  className="filters"
+  style={
+    Object {
+      "marginLeft": "-100px",
+    }
+  }
+>
+  Filter!
+</aside>
+`;
+
+exports[`<Filters /> renders correctly while open 1`] = `
+<aside
+  className="filters"
+  style={
+    Object {
+      "marginLeft": "0px",
+    }
+  }
+>
+  Filter!
+</aside>
+`;

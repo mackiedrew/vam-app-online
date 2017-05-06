@@ -1,9 +1,11 @@
 // Libraries
 import PromiseWorker from "promise-worker";
 import ObjectPromiseWorker from "promise-worker-transferable";
+import { createSampleCases, createEquallySpacedGrains } from "./grain";
+
+// Workers
 import GrainAmplitudeWorker from "../workers/grainAmplitudes.worker.js";
 import ReadWavWorker from "../workers/readWav.worker.js";
-import { createSampleCases, createEquallySpacedGrains } from "./grain";
 
 export const readFile = (url, filename) => {
   return fetch(url).then(response => response.blob()).then(blob => {

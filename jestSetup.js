@@ -1,5 +1,6 @@
 // Make functions available in all test files without importing
 import { shallow, render, mount } from "enzyme";
+import renderer from "react-test-renderer";
 import sinon from "sinon";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -9,6 +10,7 @@ global.shallow = shallow;
 global.render = render;
 global.mount = mount;
 global.sinon = sinon;
+global.renderer = renderer;
 
 // Framework
 global.React = React;

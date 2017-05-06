@@ -1,6 +1,8 @@
+// Render
 import React from "react";
 import "../styles/TimeBar.styl";
 
+// Helpers
 import { samplesToTime, samplesToSeconds } from "../help/convert";
 import { range, leadingZeros } from "../help/generic";
 

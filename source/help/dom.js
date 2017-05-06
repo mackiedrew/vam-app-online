@@ -3,7 +3,7 @@
  * any reason, so I set the type to a changeable type, reset the value, then change it back.
  * 
  * @param {HTMLInputElement} inputTag Input tag, typically retrieved through getElementById().
- * @returns {null} This does not return anything.
+ * @returns {null} Does not return anything.
  */
 export const clearFileInput = inputTag => {
   inputTag.type = "";
@@ -19,7 +19,28 @@ export const clearFileInput = inputTag => {
  */
 export const getElementById = id => document.getElementById(id);
 
+/**
+ * Simple function to allow easy mapping of an array for element.play().
+ * 
+ * @param {HTMLElement} element HTML element, almost certainly a media element.
+ * @returns {null} Does not return anything.
+ */
 export const playElement = element => element.play();
+
+/**
+ * Simple function to allow easy mapping of an array for element.pause().
+ * 
+ * @param {HTMLElement} element HTML element, almost certainly a media element.
+ * @returns {null} Does not return anything.
+ */
 export const pauseElement = element => element.pause();
+
+/**
+ * Simple function to allow easy mapping of an array for setting the time.
+ * 
+ * @param {HTMLElement} element HTML element, almost certainly a media element.
+ * @param {number} time Time in seconds that the current time of the provided element should be.
+ * @returns {null} Does not return anything.
+ */
 export const setElementCurrentTime = (element, time) =>
   (element.currentTime = time);

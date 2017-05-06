@@ -7,8 +7,7 @@ import "../styles/SettingsField.styl";
  * 
  * @param {Object} props Provided properties from react JSX.
  */
-const SettingsField = props => {
-  const { name, field, handleChange } = props;
+const SettingsField = ({ name, field, handleChange }) => {
   const { value, unit, label, type } = field;
 
   return (

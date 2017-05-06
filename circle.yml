@@ -16,6 +16,7 @@ test:
     - yarn lint:stylus
     - yarn hint
     - yarn unit
+    - yarn flow
   post:
     - yarn coverage
 

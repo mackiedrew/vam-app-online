@@ -1,0 +1,14 @@
+[ignore]
+.*/node_modules/.*
+.*/coverage/.*
+.*/example/.*
+.*/build/.*
+.*/__tests__/.*
+.*/__mocks__/.*
+
+[include]
+.*/source/.*
+
+[libs]
+
+[options]

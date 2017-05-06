@@ -1,4 +1,5 @@
 {
+  "parser": "babel-eslint",
   
   "env": {
     "browser": true,
@@ -13,7 +14,8 @@
     "plugin:jsx-a11y/recommended",
     "plugin:jest/recommended",
     "plugin:unicorn/recommended",
-    "plugin:import/errors"
+    "plugin:import/errors",
+    "plugin:flowtype/recommended"
   ],
 
   "parserOptions": {
@@ -34,13 +36,15 @@
     "unicorn",
     "eslint-comments",
     "import",
-    "fp"
+    "fp",
+    "flowtype"
   ],
 
   "globals": {
     "sinon": false,
     "shallow": false,
-    "global": true
+    "global": true,
+    "renderer": false
   },
 
   "rules": {
