@@ -17,6 +17,7 @@ test:
     - yarn hint
     - yarn unit
     - yarn flow
+    - yarn coverage:flow
   post:
     - yarn coverage
 
