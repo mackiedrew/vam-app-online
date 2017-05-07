@@ -1,11 +1,15 @@
+// @flow
+
 /**
- * Reset the file contents through this silly hack. It's illegal to change file input manually for
- * any reason, so I set the type to a changeable type, reset the value, then change it back.
+ * Reset the file contents through this silly hack. It's illegal to change file
+ * input manually for any reason, so I set the type to a changeable type, reset
+ * the value, then change it back.
  * 
- * @param {HTMLInputElement} inputTag Input tag, typically retrieved through getElementById().
- * @returns {null} Does not return anything.
+ * @param {HTMLInputElement} inputTag Input tag, typically retrieved through
+ * getElementById().
+ * @returns {undefined} Does not return anything.
  */
-export const clearFileInput = inputTag => {
+export const clearFileInput = (inputTag: HTMLInputElement): void => {
   inputTag.type = "";
   inputTag.value = "";
   inputTag.type = "file";
@@ -17,30 +21,37 @@ export const clearFileInput = inputTag => {
  * @param {string} id Id of element you want to get.
  * @returns {HTMLElement} HTML element matching the provided ID.
  */
-export const getElementById = id => document.getElementById(id);
+export const getElementById = (id: string): HTMLElement | null =>
+  document.getElementById(id);
 
 /**
  * Simple function to allow easy mapping of an array for element.play().
  * 
- * @param {HTMLElement} element HTML element, almost certainly a media element.
- * @returns {null} Does not return anything.
+ * @param {HTMLAudioElement} element Audio tag.
+ * @returns {undefined} Does not return anything.
  */
-export const playElement = element => element.play();
+export const playElement = (element: HTMLAudioElement): void => element.play();
 
 /**
  * Simple function to allow easy mapping of an array for element.pause().
  * 
- * @param {HTMLElement} element HTML element, almost certainly a media element.
- * @returns {null} Does not return anything.
+ * @param {HTMLAudioElement} element Audio tag.
+ * @returns {undefined} Does not return anything.
  */
-export const pauseElement = element => element.pause();
+export const pauseElement = (element: HTMLAudioElement): void =>
+  element.pause();
 
 /**
  * Simple function to allow easy mapping of an array for setting the time.
  * 
- * @param {HTMLElement} element HTML element, almost certainly a media element.
- * @param {number} time Time in seconds that the current time of the provided element should be.
- * @returns {null} Does not return anything.
+ * @param {HTMLAudioElement} element Audio tag.
+ * @param {number} time Time in seconds that the current time of the provided
+ * element should be.
+ * @returns {undefined} Does not return anything.
  */
-export const setElementCurrentTime = (element, time) =>
-  (element.currentTime = time);
+export const setElementCurrentTime = (
+  element: HTMLAudioElement,
+  time: number
+): void => {
+  element.currentTime = time;
+};

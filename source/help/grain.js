@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * File should contain all functions for working with grains with an emphasis on pure functions.
  */
@@ -11,54 +13,74 @@ import {
   zipObjectArray,
   mean
 } from "./generic";
+
+// Helpers
 import { secondsToSamples } from "./convert";
 
+// Types
+import type {
+  grainType,
+  grainArray,
+  mixedArray,
+  numberArray,
+  numberArrayArray
+} from "../constants/flowTypes";
+
 /**
- * Splits a single grain object into two adjacent grain objects that maintain any additional grain
- * meta data of the original grain. Should also return the same grain if splitPoint is out of 
- * bounds: grain.start == splitPint, or splitPoint is not within the grain.
+ * Splits a single grain object into two adjacent grain objects that maintain
+ * any additional grain meta data of the original grain. Should also return the
+ * same grain if splitPoint is out of bounds: grain.start == splitPint, or
+ * splitPoint is not within the grain.
  * 
  * @param {Object} grain Contains 'start' and 'end' keys.
- * @param {number} splitPoint The value of the sample this grain should be split at.
+ * @param {number} splitPoint Value of the sample this grain should be split at.
+ * @returns {Array} Containing either one or two grains.
  */
-export const splitGrainIntoTwo = (grain, splitPoint) => {
-  const pointTooLow = splitPoint <= grain.start;
+export const splitGrainIntoTwo = (
+  grain: grainType,
+  splitPoint: number
+): [grainType, grainType] | [grainType] => {
+  const pointTooLow: boolean = splitPoint <= grain.start;
   // grain.end minus one because it is exclusive
-  const pointTooHigh = splitPoint >= grain.end - 1;
+  const pointTooHigh: boolean = splitPoint >= grain.end - 1;
   // Quick exit
   if (pointTooLow || pointTooHigh) {
     return [grain];
   }
   // Determine new start and end points.
-  const leftStart = grain.start;
-  const leftEnd = splitPoint;
-  const rightStart = splitPoint;
-  const rightEnd = grain.end;
-  // Create new grains, ensure copying extra keys that may have existed in original grain
-  const leftGrain = {
+  const leftStart: number = grain.start;
+  const leftEnd: number = splitPoint;
+  const rightStart: number = splitPoint;
+  const rightEnd: number = grain.end;
+  // Create new grains
+  const leftGrain: grainType = {
     ...grain,
     start: leftStart,
     end: leftEnd
   };
-  const rightGrain = {
+  const rightGrain: grainType = {
     ...grain,
     start: rightStart,
     end: rightEnd
   };
   // Create array to return grains in order.
-  const splitGrain = [leftGrain, rightGrain];
-  return splitGrain;
+  return [leftGrain, rightGrain];
 };
 
 /**
- * Finds the location of a sample within an array of grains, isolates the grain that the sample
- * belongs to, and if the sample is within the grains range and is not a on a cut point between
- * grains it will return a new grains array containing the new split grains instead of original.
+ * Finds the location of a sample within an array of grains, isolates the grain
+ * that the sample belongs to, and if the sample is within the grains range and
+ * is not a on a cut point between grains it will return a new grains array
+ * containing the new split grains instead of original.
  * 
  * @param {Array} grains An array containing all of the grains in a range.
- * @param {number} splitPoint The value of the sample this grain should be split at.
+ * @param {number} splitPoint Value of the sample this grain should be split at.
+ * @returns {Array} Containing either one or two grains.
  */
-export const splitGrain = (grains, splitPoint) => {
+export const splitGrain = (
+  grains: grainArray,
+  splitPoint: number
+): grainArray => {
   // Isolate samples for quick exit check.
   const firstSample = grains[0].start;
   const lastGrainIndex = grains.length - 1;
@@ -83,12 +105,18 @@ export const splitGrain = (grains, splitPoint) => {
 };
 
 /**
- * Logically segments grains into equally spaced components. This is hopefully temporary.
+ * Logically segments grains into equally spaced components.
+ * This is hopefully temporary.
  * 
  * @param {Array} data Only used to get the length of the array.
- * @param {number} secondsPerGrain Number of seconds per grain, the end grain may be shorter.
+ * @param {number} secondsPerGrain Number of seconds per grain, the end grain
+ * may be shorter.
+ * @returns {Array} Containing freshly minted grains.
  */
-export const createEquallySpacedGrains = (data, secondsPerGrain) => {
+export const createEquallySpacedGrains = (
+  data: mixedArray,
+  secondsPerGrain: number
+): grainArray => {
   const grainLength = secondsToSamples(secondsPerGrain);
   const grains = logicalSegment(data, grainLength);
   return grains;
@@ -98,19 +126,27 @@ export const createEquallySpacedGrains = (data, secondsPerGrain) => {
  * Calculates the difference between start and end for every supplied grain.
  * 
  * @param {Array} grains Grain objects with keys start and end.
+ * @returns {Array} Containing the lengths of the grains.
  */
-export const grainLengths = grains =>
+export const grainLengths = (grains: grainArray): numberArray =>
   grains.map(({ start, end }) => end - start);
 
 /**
- * Get a certain number of samples (or cases to not be confused with audio samples) from provided
- * grains. This can be used to get a representative sample of a segment of audio.
+ * Get a certain number of samples (or cases to not be confused with audio
+ * samples) from provided grains. This can be used to get a representative
+ * sample of a segment of audio.
  * 
  * @param {Array} grains Grain objects with keys start and end.
- * @param {Array} data Original data to pull samples from, grains should be generated from this.
- * @param {number} caseRate Per how many data points should there be a sample case.
+ * @param {Array} data Original data to pull samples from, grains should be
+ * generated from this.
+ * @param {number} caseRate How many data should there be per sample case.
+ * @returns {Array} Array of arrays of numbers which are the sample cases.
  */
-export const createSampleCases = (grains, data, caseRate) => {
+export const createSampleCases = (
+  grains: grainArray,
+  data: mixedArray,
+  caseRate: number
+): numberArrayArray => {
   const lengths = grainLengths(grains);
   const casesPerGrain = lengths.map(l => Math.ceil(l / caseRate));
   const rangePerGrain = casesPerGrain.map(range);
@@ -219,7 +255,26 @@ export const determineWhichGrainsToShow = (grains, view, trackLength) => {
   return grainsToShow;
 };
 
-export const amplitudeCalculator = ({ protoGrains, quietCutoff, cases }) => {
+/**
+ * Adds information to grains based on some precalculated data. Primarily about
+ * quietness, amplitude, and max-amplitude.
+ * 
+ * @param {Object} message Message provided from the the web worker. Contains
+ * an grainsArray, a quietness cutoff threshold and the pre-determine sample
+ * cases for determining amplitude.
+ * @returns {Object} Containing two keys {grains, maxAmplitude} the array of
+ * grains now containing data on quietness, amplitude. And the max amplitude
+ * is the highest amplitude of all the grains.
+ */
+export const amplitudeCalculator = ({
+  protoGrains,
+  quietCutoff,
+  cases
+}: {
+  protoGrains: grainArray,
+  quietCutoff: number,
+  cases: numberArrayArray
+}): { grains: grainArray, maxAmplitude: number } => {
   // Add amplitudes to grains
   const amplitudes = cases.map(mean);
   const simpleGrains = zipObjectArray(protoGrains, "amplitude", amplitudes);

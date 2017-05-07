@@ -220,5 +220,6 @@ export const objectToArray = (object: {}): mixedArray => {
  * @returns {number} Returns the clamped number.
  */
 export const clamp = (value: number, lower: number, upper: number): number => {
-  return [value, lower, upper].sort((a, b) => a - b)[1];
+  const clampedValue: number = Math.min(Math.max(lower, value), upper);
+  return clampedValue;
 };

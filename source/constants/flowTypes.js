@@ -6,6 +6,7 @@ export type numberArray = Array<number>;
 export type objectArray = Array<{}>;
 export type mixedArray = Array<mixed>;
 export type stringArray = Array<string>;
+export type numberArrayArray = Array<numberArray>;
 
 export type grainType = {
   start: number,
