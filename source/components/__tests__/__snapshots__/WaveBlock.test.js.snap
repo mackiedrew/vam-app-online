@@ -1,0 +1,197 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<WaveBlock /> renders correctly with bare minimum props 1`] = `
+<div
+  className="wave-block"
+  style={
+    Object {
+      "backgroundColor": "rgb(240, 240, 240)",
+      "flexGrow": 13,
+    }
+  }
+>
+  <div
+    className="note"
+  >
+    
+  </div>
+  <button
+    className="amplitude"
+    onClick={[Function]}
+    style={
+      Object {
+        "height": "0%",
+        "opacity": "0.4",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`<WaveBlock /> renders correctly with bare minimum props, and filler grain 1`] = `
+<div
+  className="wave-block filler"
+  style={
+    Object {
+      "backgroundColor": "rgb(240, 240, 240)",
+      "flexGrow": 13,
+    }
+  }
+>
+  <div
+    className="note"
+  >
+    track ends
+  </div>
+  <button
+    className="amplitude"
+    onClick={[Function]}
+    style={
+      Object {
+        "height": "0%",
+        "opacity": "0.4",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`<WaveBlock /> renders correctly with bare minimum props, and grain with amplitude 1`] = `
+<div
+  className="wave-block"
+  style={
+    Object {
+      "backgroundColor": "rgb(240, 240, 240)",
+      "flexGrow": 13,
+    }
+  }
+>
+  <div
+    className="note"
+  >
+    
+  </div>
+  <button
+    className="amplitude"
+    onClick={[Function]}
+    style={
+      Object {
+        "height": "0%",
+        "opacity": "0.4",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`<WaveBlock /> renders correctly with bare minimum props, and maxAmplitude 1`] = `
+<div
+  className="wave-block"
+  style={
+    Object {
+      "backgroundColor": "rgb(240, 240, 240)",
+      "flexGrow": 13,
+    }
+  }
+>
+  <div
+    className="note"
+  >
+    
+  </div>
+  <button
+    className="amplitude"
+    onClick={[Function]}
+    style={
+      Object {
+        "height": "0%",
+        "opacity": "0.4",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`<WaveBlock /> renders correctly with bare minimum props, and more grain 1`] = `
+<div
+  className="wave-block more"
+  style={
+    Object {
+      "backgroundColor": "rgb(240, 240, 240)",
+      "flexGrow": 13,
+    }
+  }
+>
+  <div
+    className="note"
+  >
+    more...
+  </div>
+  <button
+    className="amplitude"
+    onClick={[Function]}
+    style={
+      Object {
+        "height": "0%",
+        "opacity": "0.4",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`<WaveBlock /> renders correctly with bare minimum props, and quiet grain 1`] = `
+<div
+  className="wave-block"
+  style={
+    Object {
+      "backgroundColor": "rgb(240, 230, 230)",
+      "flexGrow": 13,
+    }
+  }
+>
+  <div
+    className="note"
+  >
+    
+  </div>
+  <button
+    className="amplitude"
+    onClick={[Function]}
+    style={
+      Object {
+        "height": "0%",
+        "opacity": "0.4",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`<WaveBlock /> renders correctly with bare minimum props, and selected 1`] = `
+<div
+  className="wave-block"
+  style={
+    Object {
+      "backgroundColor": "rgb(240, 240, 240)",
+      "flexGrow": 13,
+    }
+  }
+>
+  <div
+    className="note"
+  >
+    
+  </div>
+  <button
+    className="amplitude"
+    onClick={[Function]}
+    style={
+      Object {
+        "height": "0%",
+        "opacity": "1.0",
+      }
+    }
+  />
+</div>
+`;

@@ -1,56 +1,44 @@
+// @flow
+
+// Render
 import React from "react";
 import "../styles/TimeBar.styl";
 
-import { samplesToTime, samplesToSeconds } from "../help/convert";
-import { range, leadingZeros } from "../help/generic";
+// Helpers
+import { framesToTimeStamp } from "../help/convert";
+import { range } from "../help/generic";
 
-export const Slice = ({ sample, sampleSpan }) => {
-  const { h, m, s, ms } = samplesToTime(sample);
-  const H = leadingZeros(h, 2);
-  const M = leadingZeros(m, 2);
-  const S = leadingZeros(s, 2);
-  const MS = leadingZeros(ms, 3);
+// Types
+import type { viewType } from "../constants/flowTypes";
 
-  const timesToShow = [];
-
-  const secondsSpan = samplesToSeconds(sampleSpan);
-
-  if (secondsSpan < 60) {
-    timesToShow.push(MS);
-  }
-
-  timesToShow.push(S);
-
-  if (secondsSpan >= 60) {
-    timesToShow.push(M);
-  }
-
-  if (secondsSpan >= 3600) {
-    timesToShow.push(H);
-  }
-
-  const timeStamp = timesToShow.reverse().join(":");
-
-  return (
-    <div className="slice">
-      {timeStamp}
-    </div>
-  );
-};
-
-const TimeBar = ({ view }) => {
-  const numberOfSlices = 10;
+/**
+ * Periodic, scaling, time display at the top of the tracks list.
+ * 
+ * @param {Object} props React props.
+ * @returns {Object} React element.
+ */
+const TimeBar = ({
+  view,
+  numberOfSlices = 10
+}: {
+  view: viewType,
+  numberOfSlices?: number
+}) => {
   const { start, end } = view;
-  const sampleSpan = end - start;
-  const sliceSize = sampleSpan / numberOfSlices;
+  const frameSpan = end - start;
+  const sliceSize = frameSpan / numberOfSlices;
   const sliceRange = range(numberOfSlices);
-  const sliceSamples = sliceRange.map(sliceNumber => sliceNumber * sliceSize);
+  const sliceFrames = sliceRange.map(sliceNumber => sliceNumber * sliceSize);
+  const timeStamps = sliceFrames.map(frame =>
+    framesToTimeStamp(frame, frameSpan)
+  );
+  const slices = timeStamps.map((timeStamp, i) => (
+    <div className="slice" key={i}>{timeStamp}</div>
+  ));
 
   return (
     <div className="time-bar">
-      {sliceSamples.map((sample, i) => (
-        <Slice key={i} sample={sample} sampleSpan={sampleSpan} />
-      ))}
+      {slices}
     </div>
   );
 };

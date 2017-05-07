@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ToggleButton /> renders correctly while off 1`] = `
+<button
+  className="toggle-button"
+  onClick={undefined}
+/>
+`;
+
+exports[`<ToggleButton /> renders correctly while on 1`] = `
+<button
+  className="toggle-button"
+  onClick={undefined}
+/>
+`;

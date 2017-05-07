@@ -11,11 +11,16 @@ import addTrack from "../actions/addTrack";
 
 // Libraries
 import { range } from "../help/generic";
-import { clearFileInput, getElementById } from "../help/dom";
+import { clearFileInput } from "../help/dom";
 
 // Components
 import Icon from "../components/Icon";
 
+/**
+ * Handles adding tracks to the page.
+ * 
+ * @extends React.Component
+ */
 export class AddTrack extends Component {
   constructor(props) {
     super(props);
@@ -24,7 +29,7 @@ export class AddTrack extends Component {
 
   handleOnChange() {
     const { addTrack, nextTrackId } = this.props;
-    const inputTag = getElementById(nextTrackId);
+    const inputTag = document.getElementById(nextTrackId);
     const selectedFiles = inputTag.files;
     const numberOfFiles = selectedFiles.length;
     const fileRange = range(numberOfFiles);

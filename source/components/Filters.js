@@ -1,13 +1,19 @@
+// @flow
+
+// Render
 import React from "react";
 import "../styles/Filters.styl";
 
-export const filtersStyle = open => {
-  return open ? { marginLeft: "0px" } : { marginLeft: "-100px" };
-};
-
-const Filters = ({ open }) => {
-  const style = filtersStyle(open);
-
+/**
+ * Shows a list of available filters and allows for selection.
+ * 
+ * @param {Object} props React props.
+ * @returns {Object} React element.
+ */
+const Filters = ({ open }: { open: boolean | void }) => {
+  const style: { marginLeft: string } = open
+    ? { marginLeft: "0px" }
+    : { marginLeft: "-100px" };
   return (
     <aside className="filters" style={style}>
       Filter!

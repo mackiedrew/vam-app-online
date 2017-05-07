@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AudioManager /> renders correctly while not playing 1`] = `
+<div
+  className="audio-manager"
+>
+  <audio
+    id="audio-manager-123ABC"
+    muted={false}
+  >
+    <source
+      src="http://track.1/"
+      type="wav/dog"
+    />
+  </audio>
+</div>
+`;
+
+exports[`<AudioManager /> renders correctly while playing 1`] = `
+<div
+  className="audio-manager"
+>
+  <audio
+    id="audio-manager-123ABC"
+    muted={false}
+  >
+    <source
+      src="http://track.1/"
+      type="wav/dog"
+    />
+  </audio>
+</div>
+`;

@@ -1,6 +1,6 @@
 import Subject from "../SettingsField";
 
-const mockProps = {
+const mockNumberField = {
   name: "grain",
   field: {
     label: "Grain Time",
@@ -10,18 +10,59 @@ const mockProps = {
   }
 };
 
+const mockTextField = {
+  name: "name",
+  field: {
+    label: "What's your name?",
+    value: "Mackie Drew",
+    type: "text"
+  }
+};
+
 describe("<SettingsField />", () => {
-  it("renders without crashing", () => {
-    shallow(<Subject {...mockProps} />);
+  describe("renders without crashing", () => {
+    it("with a number-type field", () => {
+      shallow(<Subject {...mockNumberField} handleChange={sinon.spy()} />);
+    });
+    it("with a text-type field", () => {
+      shallow(<Subject {...mockTextField} handleChange={sinon.spy()} />);
+    });
   });
 
-  it("renders without ", () => {
-    const mockHandleChange = sinon.spy();
-    const subject = shallow(
-      <Subject handleChange={mockHandleChange} {...mockProps} />
-    );
-    const inputTag = subject.find("input");
-    inputTag.simulate("change", { target: { value: 321 } });
-    expect(mockHandleChange.called).toBe(true);
+  describe("renders correctly", () => {
+    it("with a number-type field", () => {
+      const tree = renderer
+        .create(<Subject {...mockNumberField} handleChange={sinon.spy()} />)
+        .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it("with a text-type field", () => {
+      const tree = renderer
+        .create(<Subject {...mockTextField} handleChange={sinon.spy()} />)
+        .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+  });
+
+  describe("calls the passed handleChange when input is changed", () => {
+    it("with a number-type field", () => {
+      const mockHandleChange = sinon.spy();
+      const subject = shallow(
+        <Subject handleChange={mockHandleChange} {...mockNumberField} />
+      );
+      const inputTag = subject.find("input");
+      inputTag.simulate("change", { target: { value: 321 } });
+      expect(mockHandleChange.called).toBe(true);
+    });
+
+    it("with a text-type field", () => {
+      const mockHandleChange = sinon.spy();
+      const subject = shallow(
+        <Subject handleChange={mockHandleChange} {...mockTextField} />
+      );
+      const inputTag = subject.find("input");
+      inputTag.simulate("change", { target: { value: "test123" } });
+      expect(mockHandleChange.called).toBe(true);
+    });
   });
 });

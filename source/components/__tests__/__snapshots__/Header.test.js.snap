@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Header /> renders correctly with props 1`] = `
+<header
+  className="header"
+>
+  <div
+    className="main-bar"
+  >
+    <button
+      className="toggle-filters"
+      onClick={[Function]}
+    >
+      <i
+        className="material-icons icon"
+        style={
+          Object {
+            "fontSize": "24px",
+            "height": "24px",
+            "width": "24px",
+          }
+        }
+      >
+        library_add
+      </i>
+    </button>
+    <h1>
+      VAM
+    </h1>
+    <button>
+      <i
+        className="material-icons icon"
+        style={
+          Object {
+            "fontSize": "24px",
+            "height": "24px",
+            "width": "24px",
+          }
+        }
+      >
+        file_download
+      </i>
+    </button>
+    <AddTracks />
+    <button
+      className="toggle-settings"
+      onClick={[Function]}
+    >
+      <i
+        className="material-icons icon"
+        style={
+          Object {
+            "fontSize": "24px",
+            "height": "24px",
+            "width": "24px",
+          }
+        }
+      >
+        settings
+      </i>
+    </button>
+  </div>
+  <div
+    className="tool-bar"
+  >
+    <button
+      className="split-grain"
+      onClick={[Function]}
+    >
+      <i
+        className="material-icons icon"
+        style={
+          Object {
+            "fontSize": "16px",
+            "height": "16px",
+            "width": "16px",
+          }
+        }
+      >
+        call_split
+      </i>
+    </button>
+  </div>
+</header>
+`;

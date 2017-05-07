@@ -8,11 +8,16 @@ import { bindActionCreators } from "redux";
 // Actions
 import setSeekPosition from "../actions/setSeekPosition";
 
-// Libraries
+// Helpers
 import { secondsToSamples } from "../help/convert";
 import { floor } from "../help/generic";
-import { getElementById } from "../help/dom";
 
+/**
+ * Manages the playing state and seeking state as an interface between redux
+ * state and the DOM.
+ * 
+ * @extends React.Component
+ */
 export class AudioManager extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +37,9 @@ export class AudioManager extends Component {
   tick() {
     const { setSeekPosition, selectedTrack, currentlyPlaying } = this.props;
     if (currentlyPlaying) {
-      const audioTag = getElementById(`audio-manager-${selectedTrack}`);
+      const audioTag = document.getElementById(
+        `audio-manager-${selectedTrack}`
+      );
       const { currentTime } = audioTag;
       const currentSample = floor(secondsToSamples(currentTime));
       setSeekPosition(currentSample);

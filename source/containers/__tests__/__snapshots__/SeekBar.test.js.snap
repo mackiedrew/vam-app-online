@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Track /> renders correctly 1`] = `
+<div
+  className="seek-bar"
+>
+  <div
+    className="control-bar"
+  >
+    <button
+      className="seek-minus-1"
+      onClick={[Function]}
+    >
+      <i
+        className="material-icons icon"
+        style={
+          Object {
+            "fontSize": "24px",
+            "height": "24px",
+            "width": "24px",
+          }
+        }
+      >
+        skip_previous
+      </i>
+    </button>
+    <button
+      className="toggle-button"
+      onClick={[Function]}
+    >
+      <i
+        className="material-icons icon"
+        style={
+          Object {
+            "fontSize": "24px",
+            "height": "24px",
+            "width": "24px",
+          }
+        }
+      >
+        pause
+      </i>
+    </button>
+    <button
+      className="seek-plus-1"
+      onClick={[Function]}
+    >
+      <i
+        className="material-icons icon"
+        style={
+          Object {
+            "fontSize": "24px",
+            "height": "24px",
+            "width": "24px",
+          }
+        }
+      >
+        skip_next
+      </i>
+    </button>
+  </div>
+  <div
+    className="indicators"
+  >
+    <button
+      className="view-previous"
+      onClick={[Function]}
+    >
+      <i
+        className="material-icons icon"
+        style={
+          Object {
+            "fontSize": "24px",
+            "height": "24px",
+            "width": "24px",
+          }
+        }
+      >
+        navigate_before
+      </i>
+    </button>
+    <button
+      className="view-next"
+      onClick={[Function]}
+    >
+      <i
+        className="material-icons icon"
+        style={
+          Object {
+            "fontSize": "24px",
+            "height": "24px",
+            "width": "24px",
+          }
+        }
+      >
+        navigate_next
+      </i>
+    </button>
+    <button
+      className="zoom-in"
+      onClick={[Function]}
+    >
+      <i
+        className="material-icons icon"
+        style={
+          Object {
+            "fontSize": "24px",
+            "height": "24px",
+            "width": "24px",
+          }
+        }
+      >
+        zoom_in
+      </i>
+    </button>
+    <button
+      className="zoom-out"
+      onClick={[Function]}
+    >
+      <i
+        className="material-icons icon"
+        style={
+          Object {
+            "fontSize": "24px",
+            "height": "24px",
+            "width": "24px",
+          }
+        }
+      >
+        zoom_out
+      </i>
+    </button>
+    <div
+      className="current-time"
+    >
+      00:00:00:000
+    </div>
+  </div>
+</div>
+`;

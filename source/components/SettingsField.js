@@ -1,14 +1,27 @@
+// @flow
+
 // Render
 import React from "react";
 import "../styles/SettingsField.styl";
 
+// Types
+import type { settingsField } from "../constants/flowTypes";
+
 /**
  * Generates a field for the settings menu.
  * 
- * @param {Object} props Provided properties from react JSX.
+ * @param {Object} props React props.
+ * @returns {Object} React element.
  */
-const SettingsField = props => {
-  const { name, field, handleChange } = props;
+const SettingsField = ({
+  name,
+  field,
+  handleChange
+}: {
+  name: string,
+  field: settingsField,
+  handleChange: () => {}
+}) => {
   const { value, unit, label, type } = field;
 
   return (

@@ -15,12 +15,16 @@ import toggleSettingsMenu from "../actions/toggleSettingsMenu";
 import Header from "../components/Header";
 import Filters from "../components/Filters";
 import Tracks from "../components/Tracks";
+
+// Containers
 import Settings from "../containers/Settings";
 import SeekBar from "../containers/SeekBar";
 
 /**
- * This used to be called "Tracks" but was refactored to be the main app since everything was
- * happening here anyway.
+ * This used to be called "Tracks" but was refactored to be the main app since
+ * everything was happening here anyway.
+ * 
+ * @extends React.Component
  */
 export class App extends Component {
   constructor(props) {

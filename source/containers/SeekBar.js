@@ -21,8 +21,9 @@ import ToggleButton from "../components/ToggleButton";
 import Icon from "../components/Icon";
 
 /**
- * SeekBar will handle the controls and logic, and maybe a UI for interacting with the current seek
- * position of the tracks. This will be represented by a sample #.
+ * SeekBar will handle the controls and logic, and maybe a UI for interacting
+ * with the current seek position of the tracks. This will be represented by
+ * a frame #.
  */
 export class SeekBar extends Component {
   constructor(props) {

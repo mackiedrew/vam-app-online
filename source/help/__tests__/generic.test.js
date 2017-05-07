@@ -111,29 +111,19 @@ describe("divisionBinarySearch()", () => {
     }
   ];
 
-  it("quick fails when no targetValue is provided", () => {
-    const result = divisionBinarySearch(undefined, mockDivisionArray);
-    expect(result).toBe(false);
-  });
-
-  it("quick fails when no divisionArray is provided", () => {
-    const result = divisionBinarySearch(mockTarget, undefined);
-    expect(result).toBe(false);
-  });
-
   it("quick fails when an empty divisionArray is provided", () => {
     const result = divisionBinarySearch(mockTarget, []);
-    expect(result).toBe(false);
+    expect(result).toBe(-1);
   });
 
   it("quick fails when the mockTarget is less than 0", () => {
     const result = divisionBinarySearch(-1, mockDivisionArray);
-    expect(result).toBe(false);
+    expect(result).toBe(-1);
   });
 
   it("quick fails when the mockTarget is higher than the sorted array goes", () => {
     const result = divisionBinarySearch(81, mockDivisionArray);
-    expect(result).toBe(false);
+    expect(result).toBe(-1);
   });
 
   it("returns the proper result when given proper arguments and below first middle", () => {

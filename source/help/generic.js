@@ -1,44 +1,65 @@
+// @flow
+
+// Types
+import type {
+  grainArray,
+  numberArray,
+  objectArray,
+  mixedArray
+} from "../constants/flowTypes";
+
 /**
- * This generates an array with length of given size. With array entries being from zero to size
- * minus one. Which makes it work well as a mappable object with a build-in index.
+ * This generates an array with length of given size. With array entries being 
+ * from zero to size minus one. Which makes it work well as a mappable object
+ * with a build-in index.
  * 
  * @param {number} size The eventual length of the array generated.
  * @returns {Array} Array with keys from 0 to size-1.
  */
-export const range = size => [...Array(size).keys()];
+export const range = (size: number): numberArray => [...Array(size).keys()];
 
 /**
  * Calculate the max value of all the entries in an array.
  * 
  * @param {Array} array Array of values to determine the max array size.
+ * @returns {number} Maximum value of the array.
  */
-export const max = array => Math.max(...array);
+export const max = (array: numberArray): number => Math.max(...array);
 
 /**
  * Adds all the elements of an array together.
  * 
  * @param {Array} array Array of values to add.
+ * @returns {number} All array elements added together.
  */
-export const add = array => array.reduce((a, b) => a + b, 0);
+export const add = (array: numberArray): number =>
+  array.reduce((a, b) => a + b, 0);
 
 /**
- * Faster flooring method using a bitwise trick with better behavior than Math.floor().
- * Will round both positive and negative numbers closer to zero.
+ * Faster flooring method using a bitwise trick with better behavior than
+ * math.floor(). Will round both positive and negative numbers closer to zero.
  * 
  * @param {number} value The value to be rounded closer to zero.
+ * @returns {number} Number rounded to nearest integer.
  */
-export const floor = value => ~~value;
+export const floor = (value: number): number => ~~value;
 
 /**
  * Creates an array of 'segments' that contain two values: start and end.
- * These values indicate the segments' key in the array in which the begin and end.
- * It is designed to work like, and with, slice(), where start is inclusive, and end is exclusive.
- * Will not mutate the original array.
+ * These values indicate the segments' key in the array in which the begin and
+ * end. It is designed to work like, and with, slice(), where start is
+ * inclusive, and end is exclusive. Will not mutate the original array.
  * 
- * @param {Array} array Array of values to be segmented, basically just need this for the length.
- * @param {number} segmentSize Integer, number of array elements per segment (inclusive).
+ * @param {Array} array Array of values to be segmented, basically just need
+ * this for the length.
+ * @param {number} segmentSize Integer, number of array elements per segment
+ * (inclusive).
+ * @returns {Array} Returns an array of objects with start and end keys.
  */
-export const logicalSegment = (array, segmentSize) => {
+export const logicalSegment = (
+  array: numberArray,
+  segmentSize: number
+): grainArray => {
   const totalSegments = Math.ceil(array.length / segmentSize);
   const segmentsRange = range(totalSegments);
   const starts = segmentsRange.map(segment => segment * segmentSize);
@@ -55,39 +76,37 @@ export const logicalSegment = (array, segmentSize) => {
 };
 
 /**
- * This binary search will use large divisions of a sorted, continuous integer array with keys:
- * start, end. It will look for the index of the division containing a target value between it's
- * start and end keys.
+ * This binary search will use large divisions of a sorted, continuous integer
+ * array with keys: `start`, `end`. It will look for the index of the division
+ * containing a target value between it's `start` and `end` keys.
  * 
- * @param {number} targetValue Value within divisionArray to match for.
- * @param {Array} divisionArray Value of divisions with a start and end key with the start being
- * inclusive and the end being exclusive. Each entry in the array should obviously be an object.
+ * @param {number} target Value within heap to match for.
+ * @param {Array} heap Value of divisions with a start and end key with
+ * the start being inclusive and the end being exclusive. Each entry in the
+ * array should obviously be an object.
+ * @returns {number} Index of division in array the value exists within.
  */
-export const divisionBinarySearch = (targetValue, divisionArray) => {
+export const divisionBinarySearch = (target: number, heap: grainArray) => {
   // Exit quickly if the sample is not in the track.
-  if (
-    typeof targetValue !== "number" ||
-    !divisionArray ||
-    divisionArray.length < 1
-  ) {
-    return false;
+  if (heap.length < 1) {
+    return -1;
   }
-  const maxIndex = divisionArray && divisionArray[divisionArray.length - 1].end;
-  if (targetValue < 0 || targetValue > maxIndex) {
-    return false;
+  const maxIndex = heap && heap[heap.length - 1].end;
+  if (target < 0 || target > maxIndex) {
+    return -1;
   }
 
   // Search bounds for binary search, when they are equal, the value is found
   let low = 0;
-  let high = divisionArray.length;
+  let high = heap.length;
   // eslint-disable-next-line fp/no-loops
   while (low <= high) {
     // Middle is the current search point, keep bisecting to search
     const middle = floor(low + (high - low) / 2);
-    const currentDivision = divisionArray[middle];
+    const currentDivision = heap[middle];
     const { start, end } = currentDivision;
-    const targetIsLowerThanCurrentGrain = targetValue < start;
-    const targetIsInCurrentGrain = targetValue >= start && targetValue < end;
+    const targetIsLowerThanCurrentGrain = target < start;
+    const targetIsInCurrentGrain = target >= start && target < end;
     if (targetIsInCurrentGrain) {
       return middle;
     } else if (targetIsLowerThanCurrentGrain) {
@@ -98,8 +117,22 @@ export const divisionBinarySearch = (targetValue, divisionArray) => {
   }
 };
 
-export const leadingZeros = (rawNumber, columns = 2) => {
-  const number = String(Math.round(rawNumber));
+/**
+ * Formats a number to have leading zeroes if it is less than provided columns.
+ * It will round the number first, and it will also not add zeroes if the number
+ * is already long enough.
+ * 
+ * @param {number} rawNumber Raw number provided to be formatted.
+ * @param {number} columns Number of digits to the rounded rawNumber to.
+ * @returns {string} String containing the original value, rounded with leading
+ * zeroes to the set number of columns.
+ */
+export const leadingZeros = (
+  rawNumber: number,
+  columns: number = 2
+): string => {
+  const roundedNumber = Math.round(rawNumber);
+  const number = String(roundedNumber);
   const digits = number.length;
   const neededZeros = columns - digits;
   const zeroes = neededZeros > 0 ? new Array(neededZeros).fill("0") : [];
@@ -112,17 +145,23 @@ export const leadingZeros = (rawNumber, columns = 2) => {
  * Figure out the mean average of the elements in an array.
  * 
  * @param {Array} array Array to find the mean of.
+ * @returns {number} The mean of the values in the provided array.
  */
-export const mean = array => add(array) / array.length;
+export const mean = (array: numberArray): number => add(array) / array.length;
 
 /**
  * Adds a new key with given values to an existing array of object.
  * 
  * @param {Array} array Original array to add the values to under the given key.
- * @param {string} key The key name that the values should be added to the array as.
- * @param {string} values A hopefully length-matched array of values to add to the arry.
+ * @param {string} key Key that the values should be added to the array under.
+ * @param {Array} values A length-matched array of values to add to the array.
+ * @returns {Array} Array of objects with new added keys.
  */
-export const zipObjectArray = (array, key, values) => {
+export const zipObjectArray = (
+  array: objectArray,
+  key: string,
+  values: mixedArray
+): objectArray => {
   const newArray = array.map((object, index) => {
     return {
       ...object,
@@ -133,44 +172,53 @@ export const zipObjectArray = (array, key, values) => {
 };
 
 /**
- * Get a random integer from provided minimum and maximum number. This will produce an integer.
+ * Get a random integer from provided minimum and maximum number. This will
+ * produce an integer.
  * 
  * @param {number} min Minimum possible value (inclusive).
  * @param {number} max Maximum possible value (exclusive).
+ * @returns {number} Random number between given values excluding max value.
  */
-export const random = (min, max) => floor(Math.random() * (max - min)) + min;
+export const random = (min: number, max: number): number =>
+  floor(Math.random() * (max - min)) + min;
 
 /**
- * Pulls the provided key from each object in the provided array, should return undefined if it
- * doesn't exist in that object.
+ * Pulls the provided key from each object in the provided array, should return
+ * undefined if it doesn't exist in that object.
  * 
  * @param {Array} array Array of objects with keys contained.
  * @param {string} key Object key to take from each array entry.
+ * @returns {Array} Array containing all the values from the original array at
+ * given key.
  */
-export const getKeyFromObjectArray = (array, key) =>
-  array.map(entry => entry[key] || undefined);
+export const getKeyFromObjectArray = (
+  array: objectArray,
+  key: string
+): mixedArray => array.map(entry => entry[key] || undefined);
 
 /**
  * Removes top level keys from an object and flattens it into an array.
  * 
  * @param {Object} object Object to convert into an array.
+ * @returns {Array} Array of all the top level values.
  */
-export const objectToArray = object => {
+export const objectToArray = (object: {}): mixedArray => {
   const keys = Object.keys(object);
   const array = keys.map(key => object[key]);
   return array;
 };
 
 /**
- * Provided with 3 values it will always return the middle value. Effectively it allows for an upper
- * and lower bound to be set, and if the value is outside of these bounds, the corresponding bound
- * is returned instead. Lower and upper bounds are inclusive.
+ * Provided with 3 values it will always return the middle value. Effectively
+ * it allows for an upper and lower bound to be set, and if the value is outside
+ * of these bounds, the corresponding bound is returned instead. Lower and upper
+ * bounds are inclusive.
  * 
  * @param {number} value Value to ensure is between bounds.
  * @param {number} lower Inclusive lower limit/bound.
  * @param {number} upper Inclusive upper limit/bound.
  * @returns {number} Returns the clamped number.
  */
-export const clamp = (value, lower, upper) => {
+export const clamp = (value: number, lower: number, upper: number): number => {
   return [value, lower, upper].sort((a, b) => a - b)[1];
 };

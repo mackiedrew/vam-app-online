@@ -1,67 +1,122 @@
 import Subject from "../WaveBlock";
 
-const mockProps = {
-  amplitude: 3,
-  maxAmplitude: 10
+const minimumGrain = {
+  start: 0,
+  end: 13
 };
 
-describe("<WaveBlock /> structure", () => {
-  const wrapper = shallow(<Subject {...mockProps} />);
+const grainWithAmplitude = {
+  ...minimumGrain,
+  amplitude: 1
+};
 
-  it("renders without crashing", () => {
-    shallow(<Subject {...mockProps} />);
+const grainFiller = {
+  ...grainWithAmplitude,
+  filler: true
+};
+
+const grainMore = {
+  ...grainWithAmplitude,
+  more: true
+};
+
+const grainQuiet = {
+  ...grainWithAmplitude,
+  quiet: true
+};
+
+const mockProps = {
+  grain: minimumGrain,
+  setSeekPosition: sinon.spy()
+};
+
+describe("<WaveBlock />", () => {
+  describe("renders without crashing", () => {
+    it("with bare minimum props", () => {
+      shallow(<Subject {...mockProps} />);
+    });
+    it("with bare minimum props, and maxAmplitude", () => {
+      shallow(<Subject {...mockProps} maxAmplitude={3} />);
+    });
+    it("with bare minimum props, and selected", () => {
+      shallow(<Subject {...mockProps} selected />);
+    });
+    it("with bare minimum props, and grain with amplitude", () => {
+      shallow(<Subject {...mockProps} grain={grainWithAmplitude} />);
+    });
+    it("with bare minimum props, and filler grain", () => {
+      shallow(<Subject {...mockProps} grain={grainFiller} />);
+    });
+    it("with bare minimum props, and more grain", () => {
+      shallow(<Subject {...mockProps} grain={grainMore} />);
+    });
+    it("with bare minimum props, and quiet grain", () => {
+      shallow(<Subject {...mockProps} grain={grainQuiet} />);
+    });
   });
 
-  it("renders as a div with class: `wave-block`", () => {
-    expect(wrapper.is("div.wave-block")).toEqual(true);
+  describe("renders correctly", () => {
+    it("with bare minimum props", () => {
+      const tree = renderer.create(<Subject {...mockProps} />).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it("with bare minimum props, and maxAmplitude", () => {
+      const tree = renderer
+        .create(<Subject {...mockProps} maxAmplitude={3} />)
+        .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it("with bare minimum props, and selected", () => {
+      const tree = renderer
+        .create(<Subject {...mockProps} selected />)
+        .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it("with bare minimum props, and grain with amplitude", () => {
+      const tree = renderer
+        .create(<Subject {...mockProps} grain={grainWithAmplitude} />)
+        .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it("with bare minimum props, and filler grain", () => {
+      const tree = renderer
+        .create(<Subject {...mockProps} grain={grainFiller} />)
+        .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it("with bare minimum props, and more grain", () => {
+      const tree = renderer
+        .create(<Subject {...mockProps} grain={grainMore} />)
+        .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it("with bare minimum props, and quiet grain", () => {
+      const tree = renderer
+        .create(<Subject {...mockProps} grain={grainQuiet} />)
+        .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
   });
 
-  it("renders a single button with class: `amplitude`", () => {
-    expect(wrapper.find("button.amplitude")).toHaveLength(1);
-  });
+  describe("handleClick()", () => {
+    it("calls setSeekPosition with grain.start when called", () => {
+      const mockSetSeekPosition = sinon.spy();
+      const subject = shallow(
+        <Subject {...mockProps} setSeekPosition={mockSetSeekPosition} />
+      );
+      const expectedArgument = mockProps.grain.start;
+      subject.instance().handleClick();
+      expect(mockSetSeekPosition.calledWith(expectedArgument)).toBe(true);
+    });
 
-  it("renders without crashing when quiet", () => {
-    shallow(<Subject {...mockProps} quiet />);
-  });
-
-  it("renders without crashing when selected", () => {
-    shallow(<Subject {...mockProps} selected />);
-  });
-
-  it("renders without crashing when filler", () => {
-    shallow(<Subject {...mockProps} filler />);
-  });
-
-  it("renders without crashing when more", () => {
-    shallow(<Subject {...mockProps} more />);
-  });
-});
-
-describe("<WaveBlock /> display math", () => {
-  it("relative amplitude is returns 1 (100%) when provided with maxAmplitude === amplitude", () => {
-    const wrapper = shallow(<Subject amplitude={10} maxAmplitude={10} />);
-    expect(wrapper.instance().relativeAmplitude()).toEqual(1);
-  });
-
-  it("relative amplitude is returns 0 (0%) when provided with amplitude 0", () => {
-    const wrapper = shallow(<Subject amplitude={0} maxAmplitude={10} />);
-    expect(wrapper.instance().relativeAmplitude()).toEqual(0);
-  });
-
-  it("amplitudeStyle returns an object with expected keys", () => {
-    const wrapper = shallow(<Subject amplitude={5} maxAmplitude={10} />);
-    expect(wrapper.instance().amplitudeStyle()).toBeInstanceOf(Object);
-    expect(wrapper.instance().amplitudeStyle().height).toEqual("50%");
-  });
-});
-
-describe("<WaveBlock /> handleClick()", () => {
-  it("calls seekTo() function one time", () => {
-    const mockSetSeekPosition = sinon.spy();
-    const wrapper = shallow(
-      <Subject {...mockProps} setSeekPosition={mockSetSeekPosition} />
-    );
-    wrapper.instance().handleClick();
-    expect(mockSetSeekPosition.called).toEqual(true);
+    it("is called when the button is clicked", () => {
+      const mockSetSeekPosition = sinon.spy();
+      const subject = shallow(
+        <Subject {...mockProps} setSeekPosition={mockSetSeekPosition} />
+      );
+      const expectedArgument = mockProps.grain.start;
+      subject.find("button.amplitude").simulate("click");
+      expect(mockSetSeekPosition.calledWith(expectedArgument)).toBe(true);
+    });
   });
 });

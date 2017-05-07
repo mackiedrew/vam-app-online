@@ -1,42 +1,92 @@
-import { mapStateToProps, mapDispatchToProps } from "../Track";
+import {
+  Track as Subject,
+  mapStateToProps,
+  mapDispatchToProps
+} from "../Track";
+jest.mock("../TrackControls", () => "TrackControls");
+jest.mock("../../help/wav", () => ({
+  richReadWav: () =>
+    new Promise(resolve =>
+      resolve({
+        sampleRate: 0,
+        grains: [],
+        length: 4,
+        maxAmplitude: 10
+      })
+    )
+}));
 
-// const mockSettings = {
-//   grain: {
-//     label: "Grain Time",
-//     value: 5,
-//     unit: "s",
-//     type: "number"
-//   },
-//   quietCutoff: {
-//     label: "Quietness Threshold",
-//     value: 10,
-//     unit: "%",
-//     type: "number"
-//   }
-// };
+const mockSettings = {
+  grain: {
+    label: "Grain Time",
+    value: 5,
+    unit: "s",
+    type: "number"
+  },
+  quietCutoff: {
+    label: "Quietness Threshold",
+    value: 10,
+    unit: "%",
+    type: "number"
+  }
+};
 
-// const mockTracks = {
-//   "123ABC": {
-//     grains: [{ start: 0, end: 4 }, { start: 4, end: 8 }],
-//     fileName: "test.wav",
-//     maxAmplitude: 2
-//   }
-// };
+const mockTracks = {
+  "123ABC": {
+    grains: [{ start: 0, end: 4 }, { start: 4, end: 8 }],
+    fileName: "test.wav",
+    maxAmplitude: 2
+  }
+};
 
-// const mockProps = {
-//   id: "123ABC",
-//   seekPosition: 10,
-//   selectedTrack: "123ABC",
-//   settings: mockSettings,
-//   trackList: mockTracks,
-//   view: { start: 0, end: 20 }
-// };
+const mockProps = {
+  id: "123ABC",
+  seekPosition: 10,
+  selectedTrack: "123ABC",
+  settings: mockSettings,
+  trackList: mockTracks,
+  view: { start: 0, end: 20 }
+};
 
 describe("<Track />", () => {
-  // it("renders without crashing", () => {
-  //   const subject = shallow(<Subject {...mockProps} />);
-  //   expect(subject.is("div.track")).toBe(true);
-  // });
+  it("renders without crashing", () => {
+    shallow(<Subject {...mockProps} />);
+  });
+
+  describe("renders correctly", () => {
+    it("with no grains", () => {
+      const tree = renderer
+        .create(<Subject {...mockProps} trackList={{ "123ABC": {} }} />)
+        .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it("with grains", () => {
+      const tree = renderer.create(<Subject {...mockProps} />).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+  });
+
+  it("readPath() calls all actions it needs to", () => {
+    const mockSetTrackSampleRate = sinon.spy();
+    const mockSetTrackGrains = sinon.spy();
+    const mockSetTrackLength = sinon.spy();
+    const mockSetTrackMaxAmplitude = sinon.spy();
+    const subject = shallow(
+      <Subject
+        {...mockProps}
+        setTrackGrains={mockSetTrackGrains}
+        setTrackLength={mockSetTrackLength}
+        setTrackMaxAmplitude={mockSetTrackMaxAmplitude}
+        setTrackSampleRate={mockSetTrackSampleRate}
+      />
+    );
+    return subject.instance().readPath().then(() => {
+      expect(mockSetTrackSampleRate.called).toBe(true);
+      expect(mockSetTrackGrains.called).toBe(true);
+      expect(mockSetTrackLength.called).toBe(true);
+      expect(mockSetTrackMaxAmplitude.called).toBe(true);
+    });
+  });
 
   describe("mapStateToProps()", () => {
     const mockState = {

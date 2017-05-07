@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TimeBar /> renders correctly with props 1`] = `
+<div
+  className="time-bar"
+>
+  <div
+    className="slice"
+  >
+    00:000
+  </div>
+  <div
+    className="slice"
+  >
+    01:000
+  </div>
+  <div
+    className="slice"
+  >
+    02:000
+  </div>
+  <div
+    className="slice"
+  >
+    03:000
+  </div>
+  <div
+    className="slice"
+  >
+    04:000
+  </div>
+  <div
+    className="slice"
+  >
+    05:000
+  </div>
+  <div
+    className="slice"
+  >
+    06:000
+  </div>
+  <div
+    className="slice"
+  >
+    07:000
+  </div>
+  <div
+    className="slice"
+  >
+    08:000
+  </div>
+  <div
+    className="slice"
+  >
+    09:000
+  </div>
+</div>
+`;

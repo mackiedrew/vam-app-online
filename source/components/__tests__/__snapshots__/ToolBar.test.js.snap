@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ToolBar /> renders correctly with props 1`] = `
+<div
+  className="tool-bar"
+>
+  <button
+    className="split-grain"
+    onClick={[Function]}
+  >
+    <i
+      className="material-icons icon"
+      style={
+        Object {
+          "fontSize": "16px",
+          "height": "16px",
+          "width": "16px",
+        }
+      }
+    >
+      call_split
+    </i>
+  </button>
+</div>
+`;

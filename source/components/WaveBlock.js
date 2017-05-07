@@ -1,69 +1,72 @@
+// @flow
+
+// Render
 import React, { Component } from "react";
 import "../styles/WaveBlock.styl";
 
+// Types
+import type { grainType } from "../constants/flowTypes";
+
 /**
- * Single grain, fine chunk, or coarse chunk as displayed as a component of a waveform.
- * @param {Object} props Read-only properties that get passed down from parent.
+ * Used to display a single grain of a track.
+ * @extends React.Component
  */
 class WaveBlock extends Component {
-  constructor(props) {
+  props: {
+    grain: grainType,
+    maxAmplitude?: number,
+    selected?: boolean | void,
+    setSeekPosition: () => void
+  };
+  handleClick: () => void;
+
+  constructor(props: {}) {
     super(props);
-    // Bind functions to `this`
-    this.relativeAmplitude = this.relativeAmplitude.bind(this);
-    this.amplitudeStyle = this.amplitudeStyle.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
-  /**
-   * Figures out the programmatic style of the total wave-block.
-   * - uses flex-grow to determine proportion of waveform to grow to fill.
-   */
-  waveBlockStyle() {
-    const { start, end, quiet } = this.props;
+  waveBlockStyle(grain: grainType): {} {
+    const { start, end, quiet } = grain;
     const length = end - start;
     const backgroundColor = quiet ? "rgb(240, 230, 230)" : "rgb(240, 240, 240)";
-    return { flexGrow: length, backgroundColor };
+    const style = { flexGrow: length, backgroundColor };
+    return style;
   }
 
-  /**
-   * Figures out the programmatic style of the amplitude button.
-   * - height is calculated as % of total.
-   */
-  amplitudeStyle() {
-    const { selected } = this.props;
-    const fillPercentage = this.relativeAmplitude();
+  amplitudeStyle(
+    selected: boolean | void,
+    amplitude: number = 0,
+    maxAmplitude: number = Infinity
+  ): {} {
+    const fillPercentage: number = amplitude / maxAmplitude;
     const height = `${fillPercentage * 100}%`;
     const opacity = selected ? "1.0" : "0.4";
-    return { height, opacity };
+    const style = { height, opacity };
+    return style;
   }
 
-  /**
-   * Relative amplitude is the % of maximum amplitude,
-   * this is used to calculate the waveform height.
-   */
-  relativeAmplitude() {
-    const { amplitude, maxAmplitude } = this.props;
-    return amplitude / maxAmplitude;
-  }
-
-  // onClick handlers
   handleClick() {
-    const { start, setSeekPosition } = this.props;
-    setSeekPosition(start);
+    const { grain, setSeekPosition } = this.props;
+    setSeekPosition(grain.start);
   }
 
   render() {
-    const { filler, more } = this.props;
-    const amplitudeStyle = this.amplitudeStyle();
-    const waveBlockStyle = this.waveBlockStyle();
+    const { grain, selected, maxAmplitude } = this.props;
+    const { filler, more } = grain;
+    const amplitudeStyle = this.amplitudeStyle(
+      selected,
+      grain.amplitude,
+      maxAmplitude
+    );
+    const waveBlockStyle = this.waveBlockStyle(grain);
+    const extraClasses: string =
+      (filler ? " filler" : "") + (more ? " more" : "");
+    const note: string = more ? "more..." : filler ? "track ends" : "";
 
     return (
-      <div
-        className={`wave-block ${filler ? "filler" : ""} ${more ? "more" : ""}`}
-        style={waveBlockStyle}
-      >
+      <div className={`wave-block${extraClasses}`} style={waveBlockStyle}>
         <div className="note">
-          {more ? "more..." : filler ? "track ends" : ""}
+          {note}
         </div>
         <button
           className="amplitude"

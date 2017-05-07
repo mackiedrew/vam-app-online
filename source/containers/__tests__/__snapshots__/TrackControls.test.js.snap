@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<App /> renders correctly 1`] = `
+<div
+  className="track-controls"
+>
+  <div>
+    <button
+      className="toggle-button"
+      onClick={undefined}
+    >
+      <i
+        className="material-icons icon"
+        style={
+          Object {
+            "fontSize": "24px",
+            "height": "24px",
+            "width": "24px",
+          }
+        }
+      >
+        radio_button_checked
+      </i>
+    </button>
+    <button
+      className="toggle-button"
+      onClick={[Function]}
+    >
+      <i
+        className="material-icons icon"
+        style={
+          Object {
+            "fontSize": "24px",
+            "height": "24px",
+            "width": "24px",
+          }
+        }
+      >
+        volume_off
+      </i>
+    </button>
+  </div>
+  <span
+    className="name"
+  />
+  <button
+    className="remove"
+    onClick={[Function]}
+  >
+    <i
+      className="material-icons icon"
+      style={
+        Object {
+          "fontSize": "24px",
+          "height": "24px",
+          "width": "24px",
+        }
+      }
+    >
+      delete_forever
+    </i>
+  </button>
+</div>
+`;

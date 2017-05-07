@@ -2,7 +2,8 @@ import {
   clearFileInput,
   playElement,
   pauseElement,
-  setElementCurrentTime
+  setElementCurrentTime,
+  getElementById
 } from "../dom";
 
 describe("clearFileInput()", () => {
@@ -45,5 +46,15 @@ describe("setElementCurrentTime()", () => {
     expect(mockElement.currentTime).toBe(0);
     setElementCurrentTime(mockElement, 5);
     expect(mockElement.currentTime).toBe(5);
+  });
+});
+
+describe("getElementById()", () => {
+  it("document.getElementById is called with provided id", () => {
+    const mockDocumentGetElementById = sinon.spy();
+    document.getElementById = mockDocumentGetElementById;
+    const testId = "test123";
+    getElementById(testId);
+    expect(mockDocumentGetElementById.calledWith(testId)).toBe(true);
   });
 });
