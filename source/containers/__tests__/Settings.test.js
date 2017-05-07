@@ -64,6 +64,18 @@ describe("<Settings />", () => {
     expect(subject.is("aside.settings-closed")).toBe(true);
   });
 
+
+  describe("renders correctly", () => {
+    it("while open", () => {
+      const tree = renderer.create(<Subject {...mockProps} open />).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it("while closed", () => {
+      const tree = renderer.create(<Subject {...mockProps} open={false} />).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+  });
+
   it("triggers changeHotkey when handleHotKeyChange is called", () => {
     const mockChangeHotkey = sinon.spy();
     const mockPreventDefault = sinon.spy();

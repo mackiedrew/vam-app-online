@@ -1,6 +1,8 @@
 // Libraries
 import PromiseWorker from "promise-worker";
 import ObjectPromiseWorker from "promise-worker-transferable";
+
+// Helpers
 import { createSampleCases, createEquallySpacedGrains } from "./grain";
 
 // Workers

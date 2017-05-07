@@ -13,6 +13,11 @@ import setOperationHotkey from "../actions/setOperationHotkey";
 // Components
 import SettingsField from "../components/SettingsField";
 
+/**
+ * Right-side bar which handles settings for track management and controls.
+ * 
+ * @extends React.Component
+ */
 export class Settings extends Component {
   constructor(props) {
     super(props);

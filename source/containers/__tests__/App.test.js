@@ -1,4 +1,10 @@
 import { App as Subject, mapStateToProps, mapDispatchToProps } from "../App";
+jest.mock("../../components/Header", () => "Header");
+jest.mock("../../components/Filters", () => "Filters");
+jest.mock("../../components/Tracks", () => "Tracks");
+jest.mock("../Settings", () => "Settings");
+jest.mock("../SeekBar", () => "SeekBar");
+
 
 const mockSettings = {
   grain: {
@@ -31,6 +37,11 @@ describe("<App />", () => {
     );
     expect(subject.is("div.app")).toBe(true);
     expect(mockGenerateNextTrackId.called).toBe(true);
+  });
+
+  it("renders correctly", () => {
+    const tree = renderer.create(<Subject {...mockProps} generateNextTrackId={sinon.spy()} />).toJSON();
+    expect(tree).toMatchSnapshot();
   });
 
   describe("mapStateToProps()", () => {

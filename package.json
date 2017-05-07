@@ -50,6 +50,7 @@
     "collectCoverageFrom": [
       "**/*.js",
       "!**/webpack.config.*.js**",
+      "!**/flowTypes.js**",
       "!**/jestSetup.js**",
       "!**/index.js**",
       "!**/coverage/**",

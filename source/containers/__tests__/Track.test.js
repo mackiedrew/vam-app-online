@@ -1,42 +1,45 @@
-import { mapStateToProps, mapDispatchToProps } from "../Track";
+import { Track as Subject, mapStateToProps, mapDispatchToProps } from "../Track";
+jest.mock("../../help/wav", () => ({
+  richReadWav: () => new Promise(resolve => resolve())
+}));
 
-// const mockSettings = {
-//   grain: {
-//     label: "Grain Time",
-//     value: 5,
-//     unit: "s",
-//     type: "number"
-//   },
-//   quietCutoff: {
-//     label: "Quietness Threshold",
-//     value: 10,
-//     unit: "%",
-//     type: "number"
-//   }
-// };
+const mockSettings = {
+  grain: {
+    label: "Grain Time",
+    value: 5,
+    unit: "s",
+    type: "number"
+  },
+  quietCutoff: {
+    label: "Quietness Threshold",
+    value: 10,
+    unit: "%",
+    type: "number"
+  }
+};
 
-// const mockTracks = {
-//   "123ABC": {
-//     grains: [{ start: 0, end: 4 }, { start: 4, end: 8 }],
-//     fileName: "test.wav",
-//     maxAmplitude: 2
-//   }
-// };
+const mockTracks = {
+  "123ABC": {
+    grains: [{ start: 0, end: 4 }, { start: 4, end: 8 }],
+    fileName: "test.wav",
+    maxAmplitude: 2
+  }
+};
 
-// const mockProps = {
-//   id: "123ABC",
-//   seekPosition: 10,
-//   selectedTrack: "123ABC",
-//   settings: mockSettings,
-//   trackList: mockTracks,
-//   view: { start: 0, end: 20 }
-// };
+const mockProps = {
+  id: "123ABC",
+  seekPosition: 10,
+  selectedTrack: "123ABC",
+  settings: mockSettings,
+  trackList: mockTracks,
+  view: { start: 0, end: 20 }
+};
 
 describe("<Track />", () => {
-  // it("renders without crashing", () => {
-  //   const subject = shallow(<Subject {...mockProps} />);
-  //   expect(subject.is("div.track")).toBe(true);
-  // });
+  it("renders without crashing", () => {
+    const subject = shallow(<Subject {...mockProps} />);
+    expect(subject.is("div.track")).toBe(true);
+  });
 
   describe("mapStateToProps()", () => {
     const mockState = {

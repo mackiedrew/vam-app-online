@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddTrack /> renders correctly 1`] = `
+<div
+  className="add-track"
+>
+  <label
+    htmlFor="123ABC"
+  >
+    <i
+      className="material-icons icon"
+      style={
+        Object {
+          "fontSize": "24px",
+          "height": "24px",
+          "width": "24px",
+        }
+      }
+    >
+      add_circle
+    </i>
+  </label>
+  <input
+    accept="audio/wav"
+    id="123ABC"
+    multiple={true}
+    name="123ABC"
+    onChange={[Function]}
+    type="file"
+  />
+</div>
+`;

@@ -15,6 +15,12 @@ import toggleTrackMuted from "../actions/toggleTrackMuted";
 import ToggleButton from "../components/ToggleButton";
 import Icon from "../components/Icon";
 
+/**
+ * Top-bar for each individual track. Used to be a part of the <Track /> object
+ * but was broken out to help large file size.
+ * 
+ * @extends React.Component
+ */
 export class TrackControls extends Component {
   constructor(props) {
     super(props);

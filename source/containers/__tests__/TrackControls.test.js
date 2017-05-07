@@ -33,6 +33,11 @@ describe("<App />", () => {
     expect(subject.is("div.track-controls")).toBe(true);
   });
 
+  it("renders correctly", () => {
+    const tree = renderer.create(<Subject {...mockProps} />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
   it("calls toggledMuted prop when handleToggleMute is called", () => {
     const mockToggleMuted = sinon.spy();
     const subject = shallow(

@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<App /> renders correctly 1`] = `
+<div
+  className="app"
+>
+  <Header
+    toggleFiltersMenu={undefined}
+    toggleSettingsMenu={undefined}
+  />
+  <main>
+    <Filters
+      open={true}
+    />
+    <Tracks
+      trackList={
+        Array [
+          Object {
+            "id": "123ABC",
+          },
+          Object {
+            "id": "456DEF",
+          },
+        ]
+      }
+      view={
+        Object {
+          "end": 20,
+          "start": 0,
+        }
+      }
+    />
+    <Settings />
+  </main>
+  <footer>
+    <SeekBar />
+  </footer>
+</div>
+`;
