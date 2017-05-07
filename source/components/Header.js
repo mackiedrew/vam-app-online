@@ -1,3 +1,5 @@
+// @flow
+
 // Render
 import React from "react";
 import "../styles/Header.styl";
@@ -8,11 +10,19 @@ import ToolBar from "../components/ToolBar";
 import AddTrack from "../containers/AddTrack";
 
 /**
- * Loads the header containing some higher level functions, especially those concerning UI.
+ * Loads the header containing some higher level functions, especially those
+ * concerning UI.
  * 
- * @param {Object} props Pass button functions down in props.
+ * @param {Object} props React props.
+ * @returns {Object} React element.
  */
-const Header = ({ toggleFiltersMenu, toggleSettingsMenu }) => (
+const Header = ({
+  toggleFiltersMenu,
+  toggleSettingsMenu
+}: {
+  toggleFiltersMenu: () => {},
+  toggleSettingsMenu: () => {}
+}) => (
   <header className="header">
     <div className="main-bar">
       <button className="toggle-filters" onClick={toggleFiltersMenu}>
@@ -27,7 +37,7 @@ const Header = ({ toggleFiltersMenu, toggleSettingsMenu }) => (
         <Icon icon="settings" />
       </button>
     </div>
-    <ToolBar />
+    <ToolBar handleSplit={undefined} />
   </header>
 );
 

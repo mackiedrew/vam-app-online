@@ -1,3 +1,6 @@
+// @flow
+
+// Render
 import React, { Component } from "react";
 import "../styles/ToolBar.styl";
 
@@ -5,24 +8,30 @@ import "../styles/ToolBar.styl";
 import Icon from "../components/Icon";
 
 /**
- * Toolbar should display currently selected tool in mouse or keyboard mode. And allow for tool
- * selection as well.
+ * Toolbar should display currently selected tool in mouse or keyboard mode.
+ * And allow for tool selection as well.
+ * 
+ * @param {Object} props React props.
+ * @returns {Object} React element.
  */
 class ToolBar extends Component {
-  constructor(props) {
+  // Flow Types
+  props: { handleSplit: () => {} | void };
+  handleSplitButton: () => void;
+
+  constructor(props: {}) {
     super(props);
-    this.handleSplit = this.handleSplit.bind(this);
+    this.handleSplitButton = this.handleSplitButton.bind(this);
   }
 
-  handleSplit() {
-    const { handleSplit } = this.props;
-    handleSplit();
+  handleSplitButton() {
+    this.props.handleSplit();
   }
 
   render() {
     return (
       <div className="tool-bar">
-        <button className="split-grain" onClick={this.handleSplit}>
+        <button className="split-grain" onClick={this.handleSplitButton}>
           <Icon icon="call_split" size={16} />
         </button>
       </div>

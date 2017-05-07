@@ -86,10 +86,7 @@ export const logicalSegment = (
  * array should obviously be an object.
  * @returns {number} Index of division in array the value exists within.
  */
-export const divisionBinarySearch = (
-  target: number,
-  heap: grainArray
-) => {
+export const divisionBinarySearch = (target: number, heap: grainArray) => {
   // Exit quickly if the sample is not in the track.
   if (heap.length < 1) {
     return -1;

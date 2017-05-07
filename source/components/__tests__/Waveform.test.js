@@ -1,37 +1,35 @@
 import Subject from "../Waveform";
 
 const mockProps = {
-  blocks: [
+  grains: [
     {
       start: 0,
       end: 3,
       amplitude: 4
     }
   ],
-  maxAmplitude: 10
+  maxAmplitude: 10,
+  setSeekPosition: sinon.spy()
 };
 
-describe("<Waveform /> structure", () => {
-  it("renders without crashing with no grains", () => {
-    shallow(<Subject />);
+describe("<Waveform />", () => {
+  describe("renders without crashing", () => {
+    it("with empty grains", () => {
+      shallow(<Subject grains={[]} />);
+    });
+    it("with a grains", () => {
+      shallow(<Subject {...mockProps} />);
+    });
   });
 
-  it("renders without crashing with some grains", () => {
-    shallow(<Subject {...mockProps} />);
-  });
-
-  it("renders as a div with class: `waveform`", () => {
-    const wrapper = shallow(<Subject />);
-    expect(wrapper.is("div.waveform")).toEqual(true);
-  });
-
-  it("renders with no <WaveBlock />s when no blocks are supplied", () => {
-    const wrapper = shallow(<Subject />);
-    expect(wrapper.find("WaveBlock")).toHaveLength(0);
-  });
-
-  it("renders with a single <WaveBlock> when provided with one block", () => {
-    const wrapper = shallow(<Subject {...mockProps} />);
-    expect(wrapper.find("WaveBlock")).toHaveLength(1);
+  describe("renders correctly", () => {
+    it("with empty grains", () => {
+      const tree = renderer.create(<Subject grains={[]} />).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it("with a grains", () => {
+      const tree = renderer.create(<Subject {...mockProps} />).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
   });
 });

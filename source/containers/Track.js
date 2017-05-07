@@ -106,7 +106,7 @@ export class Track extends Component {
           {maxAmplitude ? "" : <Loading />}
           <div className="seek-line" style={seekLineStyle} />
           <Waveform
-            blocks={grainsToShow}
+            grains={grainsToShow || []}
             maxAmplitude={maxAmplitude}
             selected={selected}
             setSeekPosition={setSeekPosition}

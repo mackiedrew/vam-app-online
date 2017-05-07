@@ -22,20 +22,24 @@ const mockTextField = {
 describe("<SettingsField />", () => {
   describe("renders without crashing", () => {
     it("with a number-type field", () => {
-      shallow(<Subject {...mockNumberField} />);
+      shallow(<Subject {...mockNumberField} handleChange={sinon.spy()} />);
     });
     it("with a text-type field", () => {
-      shallow(<Subject {...mockTextField} />);
+      shallow(<Subject {...mockTextField} handleChange={sinon.spy()} />);
     });
   });
 
   describe("renders correctly", () => {
     it("with a number-type field", () => {
-      const tree = renderer.create(<Subject {...mockNumberField} />).toJSON();
+      const tree = renderer
+        .create(<Subject {...mockNumberField} handleChange={sinon.spy()} />)
+        .toJSON();
       expect(tree).toMatchSnapshot();
     });
     it("with a text-type field", () => {
-      const tree = renderer.create(<Subject {...mockTextField} />).toJSON();
+      const tree = renderer
+        .create(<Subject {...mockTextField} handleChange={sinon.spy()} />)
+        .toJSON();
       expect(tree).toMatchSnapshot();
     });
   });

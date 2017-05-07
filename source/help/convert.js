@@ -1,7 +1,7 @@
 // @flow
 
 // Helpers
-import { floor } from "./generic";
+import { floor, leadingZeros } from "./generic";
 
 /**
  * Converts seconds to samples, given a sample rate. Both have defaults so if
@@ -132,4 +132,43 @@ export const samplesToTime = (
   remainingSamples -= millisecondsToSamples(s, sampleRate);
 
   return { h, m, s, ms, samples: remainingSamples };
+};
+
+/**
+ * Converts a frame number into a reasonably granular number of digits. Which 
+ * should equal 2 time segments by default.
+ * 
+ * @param {number} frame The current audio frame (sample) for display.
+ * @param {number} frameSpan The total span of frames that is currently
+ * displayed within the current view. Used to determine granularity.
+ * @returns {string} Timestamp with a reasonable amount of granularity.
+ */
+export const framesToTimeStamp = (frame: number, frameSpan: number): string => {
+  const { h, m, s, ms } = samplesToTime(frame);
+  const H = leadingZeros(h, 2);
+  const M = leadingZeros(m, 2);
+  const S = leadingZeros(s, 2);
+  const MS = leadingZeros(ms, 3);
+
+  const timesToShow = [];
+
+  const secondsSpan = samplesToSeconds(frameSpan);
+
+  if (secondsSpan < 60) {
+    timesToShow.push(MS);
+  }
+
+  timesToShow.push(S);
+
+  if (secondsSpan >= 60) {
+    timesToShow.push(M);
+  }
+
+  if (secondsSpan >= 3600) {
+    timesToShow.push(H);
+  }
+
+  const timeStamp = timesToShow.reverse().join(":");
+
+  return timeStamp;
 };

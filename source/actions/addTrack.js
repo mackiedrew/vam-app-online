@@ -21,6 +21,7 @@ export const addTrackSimple = newTrack => {
  * @param {Object} trackObject Initial contents of a track object at an Id.
  * @returns {Function} Action creator that handles all track adding actions.
  */
+
 const addTrack = trackObject => {
   return (dispatch, getState) => {
     const id = getState().tracks.nextTrackId;

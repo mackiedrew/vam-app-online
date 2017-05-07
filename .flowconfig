@@ -12,3 +12,4 @@
 [libs]
 
 [options]
+module.name_mapper='.*\.styl$' -> '<PROJECT_ROOT>/flow/stub/styl-modules.js'

@@ -29,16 +29,3 @@ exports[`<Icon /> renders correctly with icon and size 1`] = `
   not_an_icon
 </i>
 `;
-
-exports[`<Icon /> renders correctly without props 1`] = `
-<i
-  className="material-icons icon"
-  style={
-    Object {
-      "fontSize": "24px",
-      "height": "24px",
-      "width": "24px",
-    }
-  }
-/>
-`;

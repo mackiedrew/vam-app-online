@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Tracks /> renders correctly with tracks 1`] = `
+<section
+  className="tracks"
+>
+  <div
+    className="time-bar"
+  >
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+  </div>
+  <AudioManager />
+  <Track
+    id="track1"
+  />
+  <Track
+    id="track2"
+  />
+</section>
+`;
+
+exports[`<Tracks /> renders correctly without tracks 1`] = `
+<section
+  className="tracks"
+>
+  <div
+    className="time-bar"
+  >
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+    <div
+      className="slice"
+    >
+      00:000
+    </div>
+  </div>
+  <AudioManager />
+  <div
+    className="no-tracks"
+  >
+    no tracks
+  </div>
+</section>
+`;

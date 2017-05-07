@@ -55,6 +55,7 @@
       "!**/coverage/**",
       "!**/example/**",
       "!**/build/**",
+      "!**/flow/**",
       "!**/node_modules/**"
     ],
     "coverageThreshold": {
@@ -69,11 +70,13 @@
   "flow-coverage-report": {
     "flowCommandPath": "./node_modules/.bin/flow",
     "outputDir": "./flow-coverage",
-    "threshold": 40,
+    "threshold": 50,
     "excludeGlob": [
       "./node_modules/**",
-      "*.test.js",
-      "**/__tests__/**"
+      "./source/**/*/",
+      "./source/**/_*/**/*",
+      "./**/*.test.js",
+      "./**/*.styl"
     ],
     "includeGlob": [
       "./source/**"

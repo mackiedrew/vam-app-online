@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Waveform /> renders correctly with a grains 1`] = `
+<div
+  className="waveform"
+>
+  <div
+    className="wave-block"
+    style={
+      Object {
+        "backgroundColor": "rgb(240, 240, 240)",
+        "flexGrow": 3,
+      }
+    }
+  >
+    <div
+      className="note"
+    >
+      
+    </div>
+    <button
+      className="amplitude"
+      onClick={[Function]}
+      style={
+        Object {
+          "height": "40%",
+          "opacity": "0.4",
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`<Waveform /> renders correctly with empty grains 1`] = `
+<div
+  className="waveform"
+/>
+`;

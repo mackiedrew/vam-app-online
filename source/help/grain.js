@@ -161,7 +161,8 @@ export const areGrainsQuiet = (grains, cutOff) => {
 export const grainIndexesInView = (grains, { start, end }, trackLength) => {
   const startIndex = divisionBinarySearch(start, grains, trackLength);
   const lastIndex = grains.length - 1;
-  const endIndex = divisionBinarySearch(end, grains, trackLength) || lastIndex;
+  const endIndexFromSearch = divisionBinarySearch(end, grains, trackLength);
+  const endIndex = endIndexFromSearch === -1 ? lastIndex : endIndexFromSearch;
   const indexesInView = { startIndex, endIndex };
   return indexesInView;
 };
