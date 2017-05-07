@@ -5,7 +5,6 @@ jest.mock("../../components/Tracks", () => "Tracks");
 jest.mock("../Settings", () => "Settings");
 jest.mock("../SeekBar", () => "SeekBar");
 
-
 const mockSettings = {
   grain: {
     label: "Grain Time",
@@ -40,7 +39,9 @@ describe("<App />", () => {
   });
 
   it("renders correctly", () => {
-    const tree = renderer.create(<Subject {...mockProps} generateNextTrackId={sinon.spy()} />).toJSON();
+    const tree = renderer
+      .create(<Subject {...mockProps} generateNextTrackId={sinon.spy()} />)
+      .toJSON();
     expect(tree).toMatchSnapshot();
   });
 

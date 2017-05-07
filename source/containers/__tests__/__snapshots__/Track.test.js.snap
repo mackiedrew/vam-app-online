@@ -1,0 +1,222 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Track /> renders correctly with grains 1`] = `
+<div
+  className="track"
+  id="track-123ABC"
+>
+  <TrackControls
+    id="123ABC"
+    name="test.wav"
+  />
+  <div
+    className="display"
+  >
+    
+    <div
+      className="seek-line"
+      style={
+        Object {
+          "left": "50%",
+        }
+      }
+    />
+    <div
+      className="waveform"
+    >
+      <div
+        className="wave-block filler"
+        style={
+          Object {
+            "backgroundColor": "rgb(240, 240, 240)",
+            "flexGrow": 0,
+          }
+        }
+      >
+        <div
+          className="note"
+        >
+          track ends
+        </div>
+        <button
+          className="amplitude"
+          onClick={[Function]}
+          style={
+            Object {
+              "height": "0%",
+              "opacity": "1.0",
+            }
+          }
+        />
+      </div>
+      <div
+        className="wave-block"
+        style={
+          Object {
+            "backgroundColor": "rgb(240, 240, 240)",
+            "flexGrow": 4,
+          }
+        }
+      >
+        <div
+          className="note"
+        >
+          
+        </div>
+        <button
+          className="amplitude"
+          onClick={[Function]}
+          style={
+            Object {
+              "height": "0%",
+              "opacity": "1.0",
+            }
+          }
+        />
+      </div>
+      <div
+        className="wave-block"
+        style={
+          Object {
+            "backgroundColor": "rgb(240, 240, 240)",
+            "flexGrow": 4,
+          }
+        }
+      >
+        <div
+          className="note"
+        >
+          
+        </div>
+        <button
+          className="amplitude"
+          onClick={[Function]}
+          style={
+            Object {
+              "height": "0%",
+              "opacity": "1.0",
+            }
+          }
+        />
+      </div>
+      <div
+        className="wave-block filler"
+        style={
+          Object {
+            "backgroundColor": "rgb(240, 240, 240)",
+            "flexGrow": 12,
+          }
+        }
+      >
+        <div
+          className="note"
+        >
+          track ends
+        </div>
+        <button
+          className="amplitude"
+          onClick={[Function]}
+          style={
+            Object {
+              "height": "0%",
+              "opacity": "1.0",
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Track /> renders correctly with no grains 1`] = `
+<div
+  className="track"
+  id="track-123ABC"
+>
+  <TrackControls
+    id="123ABC"
+    name={undefined}
+  />
+  <div
+    className="display"
+  >
+    <div
+      className="loading"
+      id="loading"
+    >
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+      <div
+        className="bar"
+      />
+    </div>
+    <div
+      className="seek-line"
+      style={
+        Object {
+          "left": "50%",
+        }
+      }
+    />
+    <div
+      className="waveform"
+    />
+  </div>
+</div>
+`;

@@ -10,7 +10,6 @@ const mockProps = {
 };
 
 describe("<AddTrack />", () => {
-
   it("renders without crashing", () => {
     shallow(<Subject {...mockProps} />);
   });
@@ -31,18 +30,20 @@ describe("<AddTrack />", () => {
         files: [
           {
             fileName: "test1.wav",
-            type: "dot/test",
+            type: "dot/test"
           },
           {
             fileName: "test2.wav",
-            type: "dot/test",
-          }, 
+            type: "dot/test"
+          }
         ]
       };
       mockGetElementById.withArgs(mockNextId).returns(mockInputTag);
       URL.createObjectURL = mockCreateObjectURL;
       document.getElementById = mockGetElementById;
-      const subject = shallow(<Subject addTrack={mockAddTrack} nextTrackId={mockNextId} />);
+      const subject = shallow(
+        <Subject addTrack={mockAddTrack} nextTrackId={mockNextId} />
+      );
       subject.instance().handleOnChange();
       expect(mockAddTrack.called).toBe(true);
       expect(mockCreateObjectURL.called).toBe(true);
@@ -58,18 +59,20 @@ describe("<AddTrack />", () => {
         files: [
           {
             fileName: "test1.wav",
-            type: "dot/test",
+            type: "dot/test"
           },
           {
             fileName: "test2.wav",
-            type: "dot/test",
-          }, 
+            type: "dot/test"
+          }
         ]
       };
       mockGetElementById.withArgs(mockNextId).returns(mockInputTag);
       URL.createObjectURL = mockCreateObjectURL;
       document.getElementById = mockGetElementById;
-      const subject = shallow(<Subject addTrack={mockAddTrack} nextTrackId={mockNextId} />);
+      const subject = shallow(
+        <Subject addTrack={mockAddTrack} nextTrackId={mockNextId} />
+      );
       const inputTag = subject.find("input");
       inputTag.simulate("change", { target: { value: 321 } });
       expect(mockAddTrack.called).toBe(true);

@@ -19,8 +19,10 @@ import { determineWhichGrainsToShow } from "../help/grain";
 
 // Components
 import Waveform from "../components/Waveform";
-import TrackControls from "../containers/TrackControls";
 import Loading from "../components/Loading";
+
+// Containers
+import TrackControls from "../containers/TrackControls";
 
 /**
  * <Track /> should take in a simple path to a to a file and generate logical divisions and pass

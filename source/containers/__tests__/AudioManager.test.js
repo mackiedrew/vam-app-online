@@ -1,4 +1,8 @@
-import { AudioManager as Subject,  mapStateToProps, mapDispatchToProps } from "../AudioManager";
+import {
+  AudioManager as Subject,
+  mapStateToProps,
+  mapDispatchToProps
+} from "../AudioManager";
 
 jest.useFakeTimers();
 
@@ -15,7 +19,6 @@ const mockProps = {
 };
 
 describe("<AudioManager />", () => {
-
   describe("renders without crashing", () => {
     it("while playing", () => {
       shallow(<Subject {...mockProps} currentlyPlaying />);
@@ -27,7 +30,9 @@ describe("<AudioManager />", () => {
 
   describe("renders correctly", () => {
     it("while playing", () => {
-      const tree = renderer.create(<Subject {...mockProps} currentlyPlaying />).toJSON();
+      const tree = renderer
+        .create(<Subject {...mockProps} currentlyPlaying />)
+        .toJSON();
       expect(tree).toMatchSnapshot();
     });
     it("while not playing", () => {
@@ -44,7 +49,13 @@ describe("<AudioManager />", () => {
         currentTime: 123
       });
       document.getElementById = mockGetElementById;
-      const subject = shallow(<Subject {...mockProps} setSeekPosition={mockSetSeekPosition} currentlyPlaying />);
+      const subject = shallow(
+        <Subject
+          {...mockProps}
+          setSeekPosition={mockSetSeekPosition}
+          currentlyPlaying
+        />
+      );
       subject.instance().tick();
       expect(mockSetSeekPosition.called).toBe(true);
     });
@@ -55,7 +66,9 @@ describe("<AudioManager />", () => {
         currentTime: 123
       });
       document.getElementById = mockGetElementById;
-      const subject = shallow(<Subject {...mockProps} setSeekPosition={mockSetSeekPosition} />);
+      const subject = shallow(
+        <Subject {...mockProps} setSeekPosition={mockSetSeekPosition} />
+      );
       subject.instance().tick();
       expect(mockSetSeekPosition.called).toBe(false);
     });

@@ -37,7 +37,9 @@ export class AudioManager extends Component {
   tick() {
     const { setSeekPosition, selectedTrack, currentlyPlaying } = this.props;
     if (currentlyPlaying) {
-      const audioTag = document.getElementById(`audio-manager-${selectedTrack}`);
+      const audioTag = document.getElementById(
+        `audio-manager-${selectedTrack}`
+      );
       const { currentTime } = audioTag;
       const currentSample = floor(secondsToSamples(currentTime));
       setSeekPosition(currentSample);

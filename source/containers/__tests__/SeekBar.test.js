@@ -99,7 +99,6 @@ describe("<Track />", () => {
     expect(mockToggleCurrentlyPlaying.called).toBe(true);
   });
 
-
   it("renders correctly", () => {
     const tree = renderer.create(<Subject {...mockProps} />).toJSON();
     expect(tree).toMatchSnapshot();
