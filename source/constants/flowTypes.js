@@ -24,8 +24,8 @@ export type settingsField = {
 // Array Types
 export type grainArray = Array<grainType>;
 export type numberArray = Array<number>;
-export type objectArray = Array<{}>;
+export type objectArray = Array<Object>;
 export type stringArray = Array<string>;
 export type booleanArray = Array<boolean>;
-export type mixedArray = Array<mixed>;
+export type mixedArray = Array<any>;
 export type numberArrayArray = Array<numberArray>;

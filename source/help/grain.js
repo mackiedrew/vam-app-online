@@ -260,11 +260,18 @@ export const createFillerGrain = (
  * 
  * 
  * @param {Array} grains Entire array of grains.
- * @param {Object} view Which frames (samples) should be seen, with start and end keys.
- * @param {number} trackLength How many frames (samples) are in the provided track.
- * @returns {Array} Returns a list of grains that need to be show with included filler grains.
+ * @param {Object} view Which frames (samples) should be seen, with start and
+ * end keys.
+ * @param {number} trackLength How many frames (samples) are in the provided
+ * track.
+ * @returns {Array} Returns a list of grains that need to be show with included
+ * filler grains.
  */
-export const determineWhichGrainsToShow = (grains, view, trackLength) => {
+export const determineWhichGrainsToShow = (
+  grains: grainArray,
+  view: viewType,
+  trackLength: number
+): grainArray => {
   const { start, end } = view;
   const { startIndex, endIndex } = grainIndexesInView(
     grains,
