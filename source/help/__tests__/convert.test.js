@@ -7,7 +7,8 @@ import {
   secondsToSamples,
   minutesToSamples,
   hoursToSamples,
-  samplesToTime
+  framesToTime,
+  framesToTimeStamp
 } from "../convert.js";
 
 const testSamples = 44100 * 3;
@@ -109,23 +110,96 @@ describe("hoursToSamples()", () => {
   });
 });
 
-describe("samplesToTime()", () => {
+describe("framesToTime()", () => {
   const timeSampleTest = 2 * 60 * 60 * 44100 + 30;
   it("returns object with all required keys without sampleRate", () => {
-    const result = samplesToTime(timeSampleTest);
+    const result = framesToTime(timeSampleTest);
     expect("h" in result).toBe(true);
     expect("m" in result).toBe(true);
     expect("s" in result).toBe(true);
     expect("ms" in result).toBe(true);
-    expect("samples" in result).toBe(true);
+    expect("frames" in result).toBe(true);
   });
 
   it("returns object with all required keys", () => {
-    const result = samplesToTime(timeSampleTest, testSampleRate);
+    const result = framesToTime(timeSampleTest, testSampleRate);
     expect("h" in result).toBe(true);
     expect("m" in result).toBe(true);
     expect("s" in result).toBe(true);
     expect("ms" in result).toBe(true);
-    expect("samples" in result).toBe(true);
+    expect("frames" in result).toBe(true);
+  });
+
+  it("returns object expected values", () => {
+    const result = framesToTime(timeSampleTest);
+    expect("h" in result).toBe(true);
+    expect("m" in result).toBe(true);
+    expect("s" in result).toBe(true);
+    expect("ms" in result).toBe(true);
+    expect("frames" in result).toBe(true);
+  });
+});
+
+describe("framesToTimeStamp()", () => {
+  it("Always returns two time segments", () => {
+    const millisecondSpan = 44100 * 0.5;
+    const secondSpan = 44100 * 30;
+    const minuteSpan = 44100 * 60 * 30;
+    const hourSpan = 44100 * 60 * 60 * 6;
+    expect(framesToTimeStamp(0, 0).split(":").length).toBe(2);
+    expect(
+      framesToTimeStamp(44100 * 0.25, millisecondSpan).split(":").length
+    ).toBe(2);
+    expect(framesToTimeStamp(44100 * 15, secondSpan).split(":").length).toBe(2);
+    expect(
+      framesToTimeStamp(44100 * 60 * 15, minuteSpan).split(":").length
+    ).toBe(2);
+    expect(
+      framesToTimeStamp(44100 * 60 * 60 * 3, hourSpan).split(":").length
+    ).toBe(2);
+  });
+
+  describe("provides correct time stamp format when provided with a time span of", () => {
+    it("less than a second", () => {
+      const frameSpan = 44100 * 0.5;
+      const frame = frameSpan / 2;
+      const result = framesToTimeStamp(frame, frameSpan);
+      expect(result).toMatch(/[0-9]{2}s\:[0-9]{3}/);
+    });
+
+    it("30 seconds", () => {
+      const frameSpan = 44100 * 30;
+      const frame = frameSpan / 2;
+      const result = framesToTimeStamp(frame, frameSpan);
+      expect(result).toMatch(/[0-9]{2}s\:[0-9]{3}/);
+    });
+
+    it("1 minute", () => {
+      const frameSpan = 44100 * 60;
+      const frame = frameSpan / 2;
+      const result = framesToTimeStamp(frame, frameSpan);
+      expect(result).toMatch(/[0-9]{2}m\:[0-9]{2}s/);
+    });
+
+    it("59 minutes", () => {
+      const frameSpan = 44100 * 60 * 59;
+      const frame = frameSpan / 2;
+      const result = framesToTimeStamp(frame, frameSpan);
+      expect(result).toMatch(/[0-9]{2}m\:[0-9]{2}s/);
+    });
+
+    it("60 minutes", () => {
+      const frameSpan = 44100 * 60 * 60;
+      const frame = frameSpan / 2;
+      const result = framesToTimeStamp(frame, frameSpan);
+      expect(result).toMatch(/[0-9]{2}h\:[0-9]{2}m/);
+    });
+
+    it("60 hours", () => {
+      const frameSpan = 44100 * 60 * 60 * 60;
+      const frame = frameSpan / 2;
+      const result = framesToTimeStamp(frame, frameSpan);
+      expect(result).toMatch(/[0-9]{2}h\:[0-9]{2}m/);
+    });
   });
 });

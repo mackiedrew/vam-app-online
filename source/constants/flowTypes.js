@@ -1,12 +1,5 @@
 // @flow
 
-// Array Types
-export type grainArray = Array<grainType>;
-export type numberArray = Array<number>;
-export type objectArray = Array<{}>;
-export type mixedArray = Array<mixed>;
-export type stringArray = Array<string>;
-
 export type grainType = {
   start: number,
   end: number,
@@ -27,3 +20,12 @@ export type settingsField = {
   type: "number" | "text",
   unit?: "s"
 };
+
+// Array Types
+export type grainArray = Array<grainType>;
+export type numberArray = Array<number>;
+export type objectArray = Array<Object>;
+export type stringArray = Array<string>;
+export type booleanArray = Array<boolean>;
+export type mixedArray = Array<any>;
+export type numberArrayArray = Array<numberArray>;

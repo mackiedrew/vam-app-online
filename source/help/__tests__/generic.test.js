@@ -116,6 +116,11 @@ describe("divisionBinarySearch()", () => {
     expect(result).toBe(-1);
   });
 
+  it("quick fails when an empty divisionArray is undefined", () => {
+    const result = divisionBinarySearch(mockTarget, undefined);
+    expect(result).toBe(-1);
+  });
+
   it("quick fails when the mockTarget is less than 0", () => {
     const result = divisionBinarySearch(-1, mockDivisionArray);
     expect(result).toBe(-1);

@@ -13,7 +13,7 @@ import shiftSeekPosition from "../actions/shiftSeekPosition";
 import toggleCurrentlyPlaying from "../actions/toggleCurrentlyPlaying";
 
 // Libraries
-import { secondsToSamples, samplesToTime } from "../help/convert";
+import { secondsToSamples, framesToTime } from "../help/convert";
 import { leadingZeros } from "../help/generic";
 
 // Components
@@ -77,7 +77,7 @@ export class SeekBar extends Component {
   render() {
     // Break out values for the sake of easier template reading
     const { seekPosition, currentlyPlaying } = this.props;
-    const time = samplesToTime(seekPosition);
+    const time = framesToTime(seekPosition);
     const { ms, s, m, h } = time;
 
     // Construct new time string

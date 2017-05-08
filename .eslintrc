@@ -15,7 +15,8 @@
     "plugin:jest/recommended",
     "plugin:unicorn/recommended",
     "plugin:import/errors",
-    "plugin:flowtype/recommended"
+    "plugin:flowtype/recommended",
+    "plugin:fp/recommended"
   ],
 
   "parserOptions": {
@@ -63,6 +64,7 @@
     "react/style-prop-object": "error",
     "react/void-dom-elements-no-children": "error",
     "react/prop-types": 0,
+    "react/jsx-tag-spacing": ["error", { "beforeSelfClosing": "always" }],
     "react/jsx-boolean-value": "error",
     "react/jsx-closing-bracket-location": "error",
     "react/react-in-jsx-scope": 0,
@@ -76,7 +78,6 @@
         "noSortAlphabetically": false
       }
     ],
-    "react/jsx-space-before-closing": "error",
     "react/jsx-indent-props": ["error", 2],
     "jsx-a11y/accessible-emoji": "error",
     "jsx-a11y/anchor-has-content": "error",
@@ -141,16 +142,14 @@
     "eslint-comments/no-unlimited-disable": "error",
     "eslint-comments/no-unused-disable": "error",
     "eslint-comments/no-unused-enable": "error",
-    "fp/no-arguments": "error",
-    "fp/no-delete": "error",
-    "fp/no-events": "error",
-    "fp/no-get-set": "error",
-    "fp/no-loops": "error",
-    "fp/no-mutating-assign": "error",
-    "fp/no-proxy": "error",
-    "fp/no-rest-parameters": "error",
-    "fp/no-valueof-field": "error",
     "no-var": "error",
+    "fp/no-nil": 0,
+    "fp/no-this": 0,
+    "fp/no-class": 0,
+    "fp/no-mutation": 0,
+    "fp/no-unused-expression": 0,
+    "fp/no-loops": "error",
+    "jest/valid-expect": 0,
     "prettier/prettier": "warn"
   }
 

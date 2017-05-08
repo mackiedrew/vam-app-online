@@ -10,52 +10,52 @@ exports[`<Tracks /> renders correctly with tracks 1`] = `
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
   </div>
   <AudioManager />
@@ -78,52 +78,52 @@ exports[`<Tracks /> renders correctly without tracks 1`] = `
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
     <div
       className="slice"
     >
-      00:000
+      00s:000
     </div>
   </div>
   <AudioManager />

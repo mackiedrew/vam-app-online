@@ -14,7 +14,6 @@ test:
     - yarn build:production
     - yarn lint:javascript
     - yarn lint:stylus
-    - yarn hint
     - yarn unit
     - yarn flow
     - yarn coverage:flow

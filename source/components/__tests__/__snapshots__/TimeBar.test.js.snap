@@ -7,52 +7,52 @@ exports[`<TimeBar /> renders correctly with props 1`] = `
   <div
     className="slice"
   >
-    00:000
+    00s:000
   </div>
   <div
     className="slice"
   >
-    01:000
+    01s:000
   </div>
   <div
     className="slice"
   >
-    02:000
+    02s:000
   </div>
   <div
     className="slice"
   >
-    03:000
+    03s:000
   </div>
   <div
     className="slice"
   >
-    04:000
+    04s:000
   </div>
   <div
     className="slice"
   >
-    05:000
+    05s:000
   </div>
   <div
     className="slice"
   >
-    06:000
+    06s:000
   </div>
   <div
     className="slice"
   >
-    07:000
+    07s:000
   </div>
   <div
     className="slice"
   >
-    08:000
+    08s:000
   </div>
   <div
     className="slice"
   >
-    09:000
+    09s:000
   </div>
 </div>
 `;
