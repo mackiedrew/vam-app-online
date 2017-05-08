@@ -13,7 +13,6 @@ import {
   SET_TRACK_GRAINS,
   SET_TRACK_LENGTH,
   SET_TRACK_MAX_AMPLITUDE,
-  SHIFT_SEEK_POSITION,
   TOGGLE_CURRENTLY_PLAYING
 } from "../constants/actionTypes";
 
@@ -43,11 +42,6 @@ const TracksReducer = (state = DEFAULT_STATE, { type, payload }) => {
       return {
         ...state,
         seekPosition: payload
-      };
-    case SHIFT_SEEK_POSITION:
-      return {
-        ...state,
-        seekPosition: state.seekPosition + payload
       };
     case SET_VIEW:
       return {

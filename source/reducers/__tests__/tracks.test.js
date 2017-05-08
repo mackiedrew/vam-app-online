@@ -13,7 +13,6 @@ import {
   SET_TRACK_GRAINS,
   SET_TRACK_LENGTH,
   SET_TRACK_MAX_AMPLITUDE,
-  SHIFT_SEEK_POSITION,
   TOGGLE_CURRENTLY_PLAYING
 } from "../../constants/actionTypes";
 
@@ -206,14 +205,6 @@ describe("tracks reducer", () => {
     const expected = {
       trackList: { "123ABC": { grains: [] } }
     };
-    expect(result).toEqual(expected);
-  });
-
-  it("should handle SHIFT_SEEK_POSITION", () => {
-    const mockAction = { type: SHIFT_SEEK_POSITION, payload: 23 };
-    const initialState = { seekPosition: 100 };
-    const result = reducer(initialState, mockAction);
-    const expected = { seekPosition: 123 };
     expect(result).toEqual(expected);
   });
 
