@@ -25,7 +25,8 @@
     "coverage": "./node_modules/.bin/codecov -t eb51943d-60b7-41f2-ba0c-4e3dc0ea802d",
     "coverage:flow": "./node_modules/.bin/flow-coverage-report",
     "start": "rm -rf build/*.js && (yarn watch & ./node_modules/.bin/webpack-dev-server)",
-    "deploy": "yarn run clean && yarn run build:production && ./node_modules/.bin/gh-pages -d build"
+    "deploy": "yarn run clean && yarn run build:production && ./node_modules/.bin/gh-pages -d build",
+    "precommit": "yarn lint:fix || yarn test"
   },
   "jest": {
     "verbose": true,
@@ -142,6 +143,7 @@
     "flow-coverage-report": "0.3.0",
     "gh-pages": "0.12.0",
     "html-webpack-plugin": "2.28.0",
+    "husky": "^0.13.3",
     "istanbul": "0.4.5",
     "jest": "20.0.0",
     "jest-cli": "20.0.0",
