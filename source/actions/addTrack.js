@@ -5,6 +5,8 @@ import { ADD_TRACK } from "../constants/actionTypes";
 import generateNextTrackId from "./generateNextTrackId";
 import selectTrack from "./selectTrack";
 
+// Selectors
+
 /**
  * Action creator: creates an action that adds a new track into the track list.
  * 
@@ -24,7 +26,8 @@ export const addTrackSimple = newTrack => {
 
 const addTrack = trackObject => {
   return (dispatch, getState) => {
-    const id = getState().tracks.nextTrackId;
+    const state = getState();
+    const id = state.tracks.nextTrackId;
     const newTrack = { [id]: trackObject };
     dispatch(addTrackSimple(newTrack));
     dispatch(generateNextTrackId());

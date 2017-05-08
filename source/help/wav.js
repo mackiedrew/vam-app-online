@@ -19,7 +19,7 @@ export const readFile = (url, filename) => {
 };
 
 export const richReadWav = (url, filename, grainSize, quietCutoff) => {
-  const richDataPromise = readFile(url)
+  const richDataPromise = readFile(url, filename)
     .then(({ sampleRate, channelData }) => ({
       data: channelData[0],
       length: channelData[0].length,

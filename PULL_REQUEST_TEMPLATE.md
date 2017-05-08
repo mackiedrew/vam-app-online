@@ -8,8 +8,6 @@
 <!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
 - [ ] All added user controls can be easily accessed through the keyboard only.
 - [ ] My code passes linting for both Stylus and JavaScript.
-- [ ] There are no flow errors.
-- [ ] Flow coverage is above threshold.
 - [ ] I have updated the documentation accordingly.
 - [ ] I have added tests to cover my changes.
 - [ ] All new and existing tests passed.
