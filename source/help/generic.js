@@ -8,6 +8,9 @@ import type {
   mixedArray
 } from "../constants/flowTypes";
 
+// Helpers
+import { isInGrain } from "./grain";
+
 /**
  * This generates an array with length of given size. With array entries being 
  * from zero to size minus one. Which makes it work well as a mappable object
@@ -76,45 +79,60 @@ export const logicalSegment = (
 };
 
 /**
- * This binary search will use large divisions of a sorted, continuous integer
- * array with keys: `start`, `end`. It will look for the index of the division
- * containing a target value between it's `start` and `end` keys.
+ * Simple version of the divisionBinarySearch() which takes low and high values
+ * for the sake of honing in on a value through recursion.
  * 
  * @param {number} target Value within heap to match for.
  * @param {Array} heap Value of divisions with a start and end key with
  * the start being inclusive and the end being exclusive. Each entry in the
  * array should obviously be an object.
+ * @param {number} low Current low value for search.
+ * @param {number} high Current high value for search.
  * @returns {number} Index of division in array the value exists within.
  */
-export const divisionBinarySearch = (target: number, heap: grainArray) => {
-  // Exit quickly if the sample is not in the track.
-  if (heap.length < 1) {
+export const simpleDivisionBinarySearch = (
+  target: number,
+  heap: grainArray,
+  low: number,
+  high: number
+): number => {
+  if (high < low) {
     return -1;
   }
-  const maxIndex = heap && heap[heap.length - 1].end;
-  if (target < 0 || target > maxIndex) {
-    return -1;
+  const middle: number = Math.ceil((low + high) / 2);
+  if (isInGrain(target, heap[middle])) {
+    return middle;
   }
+  if (target < heap[middle].start) {
+    return simpleDivisionBinarySearch(target, heap, low, middle - 1);
+  }
+  return simpleDivisionBinarySearch(target, heap, middle + 1, high);
+};
 
-  // Search bounds for binary search, when they are equal, the value is found
-  let low = 0;
-  let high = heap.length;
-  // eslint-disable-next-line fp/no-loops
-  while (low <= high) {
-    // Middle is the current search point, keep bisecting to search
-    const middle = floor(low + (high - low) / 2);
-    const currentDivision = heap[middle];
-    const { start, end } = currentDivision;
-    const targetIsLowerThanCurrentGrain = target < start;
-    const targetIsInCurrentGrain = target >= start && target < end;
-    if (targetIsInCurrentGrain) {
-      return middle;
-    } else if (targetIsLowerThanCurrentGrain) {
-      high = middle - 1;
-    } else {
-      low = middle + 1;
-    }
+/**
+ * This binary search will use large divisions of a sorted, continuous integer
+ * array with keys: `start`, `end`. It will look for the index of the division
+ * containing a target value between it's `start` and `end` keys.
+ * 
+ * @param {number} target Target value.
+ * @param {Array} heap An array of contiguous grains to search.
+ */
+export const divisionBinarySearch = (
+  target: number,
+  heap: grainArray
+): number => {
+  if (heap === undefined) {
+    return -1;
   }
+  if (heap.length === 0) {
+    return -1;
+  }
+  if (target > heap[heap.length - 1].end) {
+    return -1;
+  }
+  const low = 0;
+  const high = heap.length;
+  return simpleDivisionBinarySearch(target, heap, low, high);
 };
 
 /**
@@ -184,17 +202,19 @@ export const random = (min: number, max: number): number =>
 
 /**
  * Pulls the provided key from each object in the provided array, should return
- * undefined if it doesn't exist in that object.
+ * fallback if it doesn't exist in that object.
  * 
  * @param {Array} array Array of objects with keys contained.
  * @param {string} key Object key to take from each array entry.
+ * @param {any|undefined} fallback If key doesn't exist, fallback to this.
  * @returns {Array} Array containing all the values from the original array at
  * given key.
  */
 export const getKeyFromObjectArray = (
   array: objectArray,
-  key: string
-): mixedArray => array.map(entry => entry[key] || undefined);
+  key: string,
+  fallback: any = undefined
+): mixedArray => array.map(entry => entry[key] || fallback);
 
 /**
  * Removes top level keys from an object and flattens it into an array.

@@ -19,9 +19,11 @@ import { secondsToSamples } from "./convert";
 
 // Types
 import type {
+  viewType,
   grainType,
   grainArray,
   mixedArray,
+  booleanArray,
   numberArray,
   numberArrayArray
 } from "../constants/flowTypes";
@@ -160,45 +162,75 @@ export const createSampleCases = (
 };
 
 /**
- * This will contain whatever our current quietness calculation algorithm should be.
+ * Contain whatever our current quietness calculation algorithm should be.
  * 
  * @param {Object} grain Grain containing at least the amplitude key.
- * @param {number} cutOff Percentage (0 to 1) threshold that of which below, is considered quiet.
+ * @param {number} cutOff Percentage (0 to 1) threshold that of which below, is
+ * considered quiet.
  * @param {number} maxAmplitude Maximum amplitude of the track.
+ * @returns {boolean} Whether or not the grain is considered quiet.
  */
-export const isGrainQuiet = ({ amplitude }, cutOff, maxAmplitude) => {
-  const amplitudePercentage = amplitude / maxAmplitude;
+export const isGrainQuiet = (
+  { amplitude }: grainType,
+  cutOff: number,
+  maxAmplitude: number
+): boolean => {
+  const operationalAmplitude = amplitude !== undefined ? amplitude : 0;
+  const amplitudePercentage = operationalAmplitude / maxAmplitude;
   const quiet = amplitudePercentage <= cutOff;
   return quiet;
 };
 
 /**
- * Checks against an array of grains to see if the grains match criteria to be "quiet".
+ * Checks against an array of grains to see if the grains match criteria to be
+ * "quiet".
  * 
- * @param {Array} grains Grains array containing objects with at least the amplitude key.
- * @param {number} cutOff Percentage (0 to 1) threshold that of which below, is considered quiet.
+ * @param {Array} grains Grains array containing objects with at least the
+ * amplitude key.
+ * @param {number} cutOff Percentage (0 to 1) threshold that of which below, is
+ * considered quiet.
+ * @returns {Array} Boolean array matching provided grains in index, represents
+ * whether or not the grain could be considered quiet or not.
  */
-export const areGrainsQuiet = (grains, cutOff) => {
-  const amplitudes = getKeyFromObjectArray(grains, "amplitude");
+export const areGrainsQuiet = (
+  grains: grainArray,
+  cutOff: number
+): booleanArray => {
+  const amplitudes = getKeyFromObjectArray(grains, "amplitude", 0);
   const maxAmplitude = max(amplitudes);
-  const quiet = grains.map(grain => isGrainQuiet(grain, cutOff, maxAmplitude));
-  return quiet;
+  const quietArray = grains.map(grain =>
+    isGrainQuiet(grain, cutOff, maxAmplitude)
+  );
+  return quietArray;
 };
 
 /**
  * Figures out the indexes of grains contained within the provided view.
  * 
  * @param {Array} grains Entire array of grains.
- * @param {Object} view Which frames (samples) should be seen, with start and end keys.
- * @param {number} trackLength How many frames (samples) are in the provided track.
- * @returns {Array} Returns an object containing two keys, startIndex and endIndex, which indicate
- * (inclusively) the grains that are fully within the view window.
+ * @param {Object} view Which frames (samples) should be seen, with start and
+ * end keys.
+ * @param {number} trackLength How many frames (samples) are in the provided
+ * track.
+ * @returns {Object} Returns an object containing two keys, startIndex and
+ * endIndex, which indicate (inclusively) the grains that are fully within the
+ * view window.
  */
-export const grainIndexesInView = (grains, { start, end }, trackLength) => {
-  const startIndex = divisionBinarySearch(start, grains, trackLength);
-  const lastIndex = grains.length - 1;
-  const endIndexFromSearch = divisionBinarySearch(end, grains, trackLength);
-  const endIndex = endIndexFromSearch === -1 ? lastIndex : endIndexFromSearch;
+export const grainIndexesInView = (
+  grains: grainArray,
+  { start, end }: viewType,
+  trackLength: number
+): { startIndex: number, endIndex: number } => {
+  const startIndex: number = divisionBinarySearch(start, grains, trackLength);
+  const lastIndex: number = grains.length - 1;
+  const endIndexFromSearch: number = divisionBinarySearch(
+    end,
+    grains,
+    trackLength
+  );
+  const endIndex: number = endIndexFromSearch === -1
+    ? lastIndex
+    : endIndexFromSearch;
   const indexesInView = { startIndex, endIndex };
   return indexesInView;
 };
@@ -208,10 +240,16 @@ export const grainIndexesInView = (grains, { start, end }, trackLength) => {
  * 
  * @param {number} start Inclusive index of the start of the track.
  * @param {number} end Exclusive index of the end of the track.
- * @param {boolean} more Whether there is more track to the non-track-facing side of the grain.
- * @returns {Object} Object containing all provided values plus a true key of `filler`.
+ * @param {boolean} more Whether there is more track to the non-track-facing
+ * side of the grain.
+ * @returns {Object} Object containing all provided values plus a true key of
+ * `filler`.
  */
-export const createFillerGrain = (start, end, more) => ({
+export const createFillerGrain = (
+  start: number,
+  end: number,
+  more: boolean
+): grainType => ({
   start,
   end,
   more,
@@ -289,4 +327,19 @@ export const amplitudeCalculator = ({
 
   const result = { grains: finalGrains, maxAmplitude: maxAmplitude };
   return result;
+};
+
+/**
+ * Compares `start` and `end` keys of a grain against a target to ensure it is
+ * within that grain.
+ * 
+ * @param {number} target Which number should be checked for in the grain.
+ * @param {Object} grain The grain to check if the target is within.
+ * @returns {boolean} Whether target value is in a grain.
+ */
+export const isInGrain = (target: number, grain: grainType): boolean => {
+  const aboveStart = target >= grain.start;
+  const belowEnd = target < grain.end;
+  const inGrain = aboveStart && belowEnd;
+  return inGrain;
 };

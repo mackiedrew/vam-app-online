@@ -1,7 +1,11 @@
 // @flow
 
+// Flow Types
+import type { stringArray, numberArray } from "../constants/flowTypes";
+
 // Helpers
 import { floor, leadingZeros } from "./generic";
+import { reverse } from "./immutable";
 
 /**
  * Converts seconds to samples, given a sample rate. Both have defaults so if
@@ -106,32 +110,50 @@ export const millisecondsToSamples = (
 ): number => milliseconds * 1000 * sampleRate;
 
 /**
- * Converts samples to a series of keys representing hours, minutes, seconds, and milliseconds, as
- * well as a remaining number of samples.
+ * Converts frames (or samples) to a series of keys representing hours, minutes,
+ * seconds, and milliseconds, as well as a remaining number of samples.
  * 
- * @param {number} samples Number of samples for the given sample rate.
- * @param {number} sampleRate Number of samples per seconds, default is 44100Hz or 44.1kHz.
+ * @param {number} frames Number of frames for the given sample rate.
+ * @param {number} sampleRate Number of samples per seconds, default is 44100Hz
+ * or 44.1kHz.
  * @returns {Object} Keys representing the number of time units in the time.
  */
-export const samplesToTime = (
-  samples: number,
+export const framesToTime = (
+  frames: number,
   sampleRate: number = 44100
-): { h: number, m: number, s: number, ms: number, samples: number } => {
-  let remainingSamples = samples;
+): { h: number, m: number, s: number, ms: number, frames: number } => {
+  const convertSeconds = [
+    60 ** 2, // h
+    60 ** 1, // m
+    60 ** 0, // s
+    1 / 1000 // ms
+  ];
+  const convertFrames = convertSeconds.map(x => x * sampleRate);
+  const conversions: {
+    remainingFrames: number,
+    result: numberArray
+  } = convertFrames.reduce(
+    (accumulator, convertFrame) => {
+      const { remainingFrames } = accumulator;
+      const newValue: number = floor(remainingFrames / convertFrame);
+      const newValueInFrames: number = newValue * convertFrame;
+      const newFrames: number = remainingFrames - newValueInFrames;
 
-  const h = floor(samplesToHours(remainingSamples, sampleRate));
-  remainingSamples -= hoursToSamples(h, sampleRate);
-
-  const m = floor(samplesToMinutes(remainingSamples, sampleRate));
-  remainingSamples -= minutesToSamples(m, sampleRate);
-
-  const s = floor(samplesToSeconds(remainingSamples, sampleRate));
-  remainingSamples -= secondsToSamples(s, sampleRate);
-
-  const ms = floor(samplesToMilliseconds(remainingSamples, sampleRate));
-  remainingSamples -= millisecondsToSamples(s, sampleRate);
-
-  return { h, m, s, ms, samples: remainingSamples };
+      return {
+        remainingFrames: newFrames,
+        result: [...accumulator.result, newValue]
+      };
+    },
+    { remainingFrames: frames, result: [] }
+  );
+  const timeSegments = {
+    h: conversions.result[0],
+    m: conversions.result[1],
+    s: conversions.result[2],
+    ms: conversions.result[3],
+    frames: conversions.remainingFrames
+  };
+  return timeSegments;
 };
 
 /**
@@ -144,31 +166,25 @@ export const samplesToTime = (
  * @returns {string} Timestamp with a reasonable amount of granularity.
  */
 export const framesToTimeStamp = (frame: number, frameSpan: number): string => {
-  const { h, m, s, ms } = samplesToTime(frame);
-  const H = leadingZeros(h, 2);
-  const M = leadingZeros(m, 2);
-  const S = leadingZeros(s, 2);
-  const MS = leadingZeros(ms, 3);
+  // Construct time segments
+  const { h, m, s, ms } = framesToTime(frame);
+  const H: string = leadingZeros(h, 2);
+  const M: string = leadingZeros(m, 2);
+  const S: string = leadingZeros(s, 2);
+  const MS: string = leadingZeros(ms, 3);
+  const timeSegments: Array<string> = [MS, `${S}s`, `${M}m`, `${H}h`];
 
-  const timesToShow = [];
+  // Figure out which time segments should be included.
+  const secondsSpan: number = samplesToSeconds(frameSpan);
+  const segmentCutoffs: Array<number> = [60, 60 ** 2, Infinity, Infinity];
+  const segmentThresholdPassing = segmentCutoffs.filter(
+    segment => secondsSpan >= segment
+  );
+  const startIndex: number = segmentThresholdPassing.length;
+  const timesToShow = timeSegments.slice(startIndex, startIndex + 2);
 
-  const secondsSpan = samplesToSeconds(frameSpan);
-
-  if (secondsSpan < 60) {
-    timesToShow.push(MS);
-  }
-
-  timesToShow.push(S);
-
-  if (secondsSpan >= 60) {
-    timesToShow.push(M);
-  }
-
-  if (secondsSpan >= 3600) {
-    timesToShow.push(H);
-  }
-
-  const timeStamp = timesToShow.reverse().join(":");
-
+  // Construct final string.
+  const reversedTimesToShow: stringArray = reverse(timesToShow);
+  const timeStamp = reversedTimesToShow.join(":");
   return timeStamp;
 };
