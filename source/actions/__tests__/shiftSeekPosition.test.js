@@ -1,7 +1,12 @@
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import { SHIFT_SEEK_POSITION, SET_SEEK_POSITION } from "../../constants/actionTypes";
-import shiftSeekPosition, { shiftSeekPositionLabel } from "../shiftSeekPosition";
+import {
+  SHIFT_SEEK_POSITION,
+  SET_SEEK_POSITION
+} from "../../constants/actionTypes";
+import shiftSeekPosition, {
+  shiftSeekPositionLabel
+} from "../shiftSeekPosition";
 
 describe("shiftSeekPositionLabel()", () => {
   it("should create an action to shift the seek position", () => {
@@ -10,7 +15,6 @@ describe("shiftSeekPositionLabel()", () => {
     expect(result).toEqual(expectedAction);
   });
 });
-
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
@@ -75,6 +79,5 @@ describe("shiftSeekPosition() Thunk", () => {
       expect(result[1].payload).toBe(50);
       expect(result[1].type).toBe(SET_SEEK_POSITION);
     });
-
   });
 });

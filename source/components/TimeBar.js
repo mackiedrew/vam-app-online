@@ -1,5 +1,3 @@
-// @flow
-
 // Render
 import React from "react";
 import "../styles/TimeBar.styl";
@@ -8,22 +6,13 @@ import "../styles/TimeBar.styl";
 import { framesToTimeStamp } from "../help/convert";
 import { range } from "../help/generic";
 
-// Types
-import type { viewType } from "../constants/flowTypes";
-
 /**
  * Periodic, scaling, time display at the top of the tracks list.
  * 
  * @param {Object} props React props.
  * @returns {Object} React element.
  */
-const TimeBar = ({
-  view,
-  numberOfSlices = 10
-}: {
-  view: viewType,
-  numberOfSlices?: number
-}) => {
+const TimeBar = ({ view, numberOfSlices = 10 }) => {
   const { start, end } = view;
   const frameSpan = end - start;
   const sliceSize = frameSpan / numberOfSlices;
