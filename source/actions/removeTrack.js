@@ -47,6 +47,7 @@ const removeTrack = (trackId: string) => {
       (current, id) => ({ ...current, [id]: trackList[id] }),
       {}
     );
+
     dispatch(removeTrackSimple(newTrackList));
 
     if (trackId === selectedTrack) {
