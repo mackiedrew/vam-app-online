@@ -119,7 +119,7 @@ export const simpleDivisionBinarySearch = (
  */
 export const divisionBinarySearch = (
   target: number,
-  heap: grainArray
+  heap: grainArray | void
 ): number => {
   if (heap === undefined) {
     return -1;
