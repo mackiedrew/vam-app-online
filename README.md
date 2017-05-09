@@ -1,44 +1,83 @@
-# VAM Online
+# Vam Editor
 [![CircleCI](https://circleci.com/gh/mackiedrew/vam-online.svg?style=shield&circle-token=383514250cad12e2dde115ce5af3225907b390f2)](https://circleci.com/gh/mackiedrew/vam-online)
 [![codecov](https://codecov.io/gh/mackiedrew/vam-online/branch/master/graph/badge.svg?token=7cyF0ihR2C)](https://codecov.io/gh/mackiedrew/vam-online)
 [![David](https://david-dm.org/mackiedrew/vam-online.svg)](https://david-dm.org/mackiedrew/vam-online.svg)
 [![CodeFactor](https://www.codefactor.io/repository/github/mackiedrew/vam-online/badge)](https://www.codefactor.io/repository/github/mackiedrew/vam-online)
 [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
 
-VAM Online is a front-end-only implementation of the turk developed while experimenting in the Python version. It is implemented in Electron so NodeJS and Browser libraries can be used to make a proper product. It is intended for internal use by Valence Editing.
+The Vam Editor is intended to be a front-end only editor for editing audio in browser and on mobile.
 
 # Technology
 
-## Infrastructure
-1. CircleCI
-2. CodeCov
-3. GitHub
-4. Yarn & NPM
-5. CodeFactor.io
+This is a hopefully maintained on-going list of the technologies involved for the sake of on-boarding people to development.
 
-## Content
-1. Webpack
-2. Babel
-3. React
-4. ESLint
-5. Jest
-6. Stylus
-7. ejs Templates
-8. Electron
-9. NodeJS
+## Languages
+
+Even though languages mix and mingle in really abstract ways now a days you look to this section for a basic overview of the languages involved. They should be listed from most used to least used.
+
+1. **JavaScript** - This will be transpiled into a web-standard style but we will be using up to stage 0 JavaScript, this means all of the JavaScript stages of unreleased features from stage 0 to stage 3. You can read more about it [here](https://babeljs.io/docs/plugins/preset-stage-0/).
+2. **Flow** - This is a seperate section because it augments the javascript base language. It allows types to be included in typical JavaScript and does have a pretty extensive syntax.
+3. **JSX** - This is also augmenting the base language of JavaScript. It is the language that React speaks and it is used in the components and container. It looks like HTML mixed with JavaScript, in reality it is just syntatic sugar for generating a series of objects that React can render. 
+3. **Stylus** - This is a CSS and SASS (mostly) compatible form of styling which allows for extremely minimal typing for writing styling. It will be changed into vanilla CSS when the project builds. 
+4. **Liquid Code** - This is another way to integrate JavaScript and HTML, we only use it to help set up the index.html main page. It can interface with the webpack environment to generate environment specific entry points.
+5. **HTML** - Ya know...
+
+## Environment
+1. **Webpack 2** - Takes the diversity of files and generates a deployable, web-ready bundle of files.
+2. **Babel** - Converts the brand new JavaScript we are using into web-safe JavaScript, no matter how ridiculous we get.
+3. **NodeJS** - Node is the backend side of JavaScript, it runs all of the JavaScript-based packages that aid in development of the project.
+4. **Yarn** - This coordinates the packages included in the repository. It also creates simple commands that can help us keep consistent while executing what would normally be a complex series of maintaining commands.
+
+## Frontend
+1. **React** - The go-to standard JavaScript framework, it helps maitain a fast and modular frontend by creating a virtual DOM.
+2. **Redux** - Replaces state management that would normally be run through React. It allows for a single-source-of truth, any change to the state of the code should be run through the redux store through a reproducable action that is heavily predefined.
+3. **Redux Thunks** - A middle-ware for redux which creates a safe space for generating actions that dispatch multiple other actions or do a significant amount of calculations that are normally not cool to do in a Redux reducer or action creator.
+4. **Redux Selectors** - A memoizing filtration system for Redux state, it lets us store pre-calculated derivatives of the redux state and is only recalculated when the state is updated. This lets us reduce redundent state objects in the redux store.
+6. **Stylus** - This is a CSS and SASS (mostly) compatible form of styling which allows for extremely minimal typing for writing styling. It will be changed into vanilla CSS when the project builds. It allows for functions, variables, and can be linted as well to enforce our standards.
+
+## Testing and Code Quality
+1. **Flow** - Allows for variable types in JavaScript. Has it's own syntax, however, most of JavaScript runtime errors are caused by typing issues. Therefore, proper application of flow can be considered a component of functional testing.
+2. **Flow Coverage** - Allows us to keep track of how much of the project is being managed by Flow, this can help us know when we are getting to loose with typing.
+2. **Jest** - Classic, painless, React testing. It does not allow for browser-based testing but I think we can get past it. Primarily it is focused on small unit tests.
+3. **Jest Snapshots** - This is our operational functional testing (with flow). We commit and maintain manually checked snapshots of the DOM generated by React components. If some unrelated code unexpectedly changes the snapshot, jest snapshots will tell us of that change and ask if we intended it.
+3. **Istanbul** - Used to determine what portion of our code is covered by unit tests. It will not tell us some edge cases, just if a single test covers that branch, line, function, and expression.
+4. **Enzyme** - This is a Jest addon that helps select and work with React components much easier.
+5. **Sinon** - Sinon is a stand-alone mocking, stubbing and spying library which helps with complex mocking.
+6. **ESLint** - Let's me obsessively enforce rules on myself and others. I have a large set of rules that will help people keep consitent in their coding and try to let you know when things are starting to code sideways. This is mostly concerned with styling. But I also have plugins disabling certain language feautres to be more functional.
+7. **Prettier** - A new standard for JavaScript styling that is gaining a lot of traction lately. I basically hate the styling... But I'm living with it because if it's going to be a standard, I better learn to love it. This is integrated with ESLint.
+8. **Husky** - Adds pre-commit hooks, this means you can't make a commit unless you pass `yarn test`.
+
+## Continuous Integration
+1. **CircleCI** - Runs a series of tests and checks written in circle.yml. It runs our full test suite, and also build in production and development mode. Hopefully this gets more and more extensive. The only way you can merge a pull request is if the tests all pass.
+2. **CodeCov** - Makes sure Code Coverage only improves and fails if coverage is too low.
+3. **GitHub** - Helps us coordinate code with webhooks, issues, pull requests, and integrations.
+4. **Doppins** - We pin all of our dependencies, so we use this to create automatic pull requests when a new version comes out. That way we can review and run other CI suites on the new version. We should never run into updating issues this way, if we run into an issue we can solve it before it hits us on production.
+5. **CodeFactor.io** - Searches for minor code issues like duplicate code, this is mostly for fun.
 
 # Development
 
-## Install
+## Installation
 1. Clone repository: `git clone https://github.com/mackiedrew/vam-online.git`
 2. Globally install yarn: `npm install -g yarn`
 3. Go to the cloned repository directory and run `yarn`
 
 ## Testing
+
+To run unit tests you can run:
+`yarn unit`
+
+To run flow checking you can run:
+`yarn flow`
+
+To run a full test suit, including all the linting. This will run through a lot of tests and take a while, but if everything passes, you can be pretty confident you did really good.
 `yarn test`
 
 ## Linting
+
+To check code style check with the linting command:
 `yarn lint`
 
 # Running
-Simply run `yarn start` or `npm start` after running through the steps in the development section.
+Simply run `yarn start` or `npm start` after running through the steps in the development section. This will watch the file and update the site as it goes. You'll need to refresh for changes to JavaScript, but Stylus will update without a refresh.
+
+The running website should be avaliable at [http://localhost:7000](http://localhost:7000). 
