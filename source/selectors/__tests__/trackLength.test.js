@@ -9,7 +9,7 @@ describe("trackLength() selector", () => {
       }
     }
   };
-  
+
   const mockProps = {
     id: "123ABC"
   };
