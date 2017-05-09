@@ -50,12 +50,16 @@ const removeTrack = (trackId: string) => {
     dispatch(removeTrackSimple(newTrackList));
 
     if (trackId === selectedTrack) {
-      // Find the next track that should be selected after track is removed.
       const trackListLength: number = trackIds.length;
+      // Track list length will be one higher than the max index.
       const oldMaxIndex: number = trackListLength - 1;
+      // The new list is always one entry smaller.
       const newMaxIndex: number = oldMaxIndex - 1;
+      // Find the index of the old track so we can find the best replacement.
       const removedTrackIndex: number = trackIds.indexOf(trackId);
+      // Try for the previous index, if out of bounds fall to the first or last.
       const nextTrackId: number = clamp(removedTrackIndex, 0, newMaxIndex);
+      // Select the actual track ID rather than just the index.
       const nextTrack: string = filteredIds[nextTrackId];
       dispatch(selectTrack(nextTrack));
     }

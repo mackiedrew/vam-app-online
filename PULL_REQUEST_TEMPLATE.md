@@ -2,13 +2,12 @@
 
 
 ## Contributor Checklist:
-- [ ] My code passes linting for both Stylus and JavaScript.
+- [ ] Code passes all checks.
 - [ ] I have updated the documentation accordingly.
 - [ ] I have added tests to cover my changes.
-- [ ] Keyboard controls added for all new features
-- [ ] Code has been reviewed.
-- [ ] Code passes all checks.
+- [ ] If applicable, keyboard controls added for all new features
 - [ ] If applicable, new code is covered by flow.
+- [ ] Code has been reviewed.
 
 ## Reviewer Checklist:
 - [ ] Is it documented enough well enough to be easily understood
