@@ -1,9 +1,10 @@
-// Selector Framework
+// Libraries
 import { createSelector } from "reselect";
 
-// Create functions that return portions of state
+// State Filter
 const trackList = state => state.tracks.trackList;
 
+// Selector Constructor
 const trackIdArray = createSelector(trackList, Object.keys);
 
 export default trackIdArray;

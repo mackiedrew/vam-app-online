@@ -69,13 +69,11 @@ describe("<Track />", () => {
   it("readPath() calls all actions it needs to", () => {
     const mockSetTrackSampleRate = sinon.spy();
     const mockSetTrackGrains = sinon.spy();
-    const mockSetTrackLength = sinon.spy();
     const mockSetTrackMaxAmplitude = sinon.spy();
     const subject = shallow(
       <Subject
         {...mockProps}
         setTrackGrains={mockSetTrackGrains}
-        setTrackLength={mockSetTrackLength}
         setTrackMaxAmplitude={mockSetTrackMaxAmplitude}
         setTrackSampleRate={mockSetTrackSampleRate}
       />
@@ -83,7 +81,6 @@ describe("<Track />", () => {
     return subject.instance().readPath().then(() => {
       expect(mockSetTrackSampleRate.called).toBe(true);
       expect(mockSetTrackGrains.called).toBe(true);
-      expect(mockSetTrackLength.called).toBe(true);
       expect(mockSetTrackMaxAmplitude.called).toBe(true);
     });
   });
@@ -121,13 +118,11 @@ describe("<Track />", () => {
       const {
         setTrackSampleRate,
         setTrackGrains,
-        setTrackLength,
         setTrackMaxAmplitude,
         setSeekPosition
       } = mapDispatchToProps(mockDispatch);
       expect(typeof setTrackSampleRate).toBe("function");
       expect(typeof setTrackGrains).toBe("function");
-      expect(typeof setTrackLength).toBe("function");
       expect(typeof setTrackMaxAmplitude).toBe("function");
       expect(typeof setSeekPosition).toBe("function");
     });

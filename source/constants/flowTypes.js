@@ -35,3 +35,10 @@ export type ReduxAction = {
   type: string,
   payload?: any
 };
+
+export type State = {
+  ui: {},
+  tracks: {},
+  settings: {},
+  keyboard: {}
+};

@@ -9,7 +9,6 @@ import { bindActionCreators } from "redux";
 // Actions
 import setTrackSampleRate from "../actions/setTrackSampleRate";
 import setTrackGrains from "../actions/setTrackGrains";
-import setTrackLength from "../actions/setTrackLength";
 import setTrackMaxAmplitude from "../actions/setTrackMaxAmplitude";
 import setSeekPosition from "../actions/setSeekPosition";
 
@@ -49,7 +48,6 @@ export class Track extends Component {
       id,
       setTrackSampleRate,
       setTrackGrains,
-      setTrackLength,
       setTrackMaxAmplitude
     } = this.props;
     const { fileName, url } = trackList[id];
@@ -58,10 +56,9 @@ export class Track extends Component {
       fileName,
       settings.grain.value,
       settings.quietCutoff.value
-    ).then(({ sampleRate, grains, length, maxAmplitude }) => {
+    ).then(({ sampleRate, grains, maxAmplitude }) => {
       setTrackSampleRate(id, sampleRate);
       setTrackGrains(id, grains);
-      setTrackLength(id, length);
       setTrackMaxAmplitude(id, maxAmplitude);
     });
   }
@@ -135,7 +132,6 @@ export const mapDispatchToProps = dispatch => {
     {
       setTrackSampleRate: setTrackSampleRate,
       setTrackGrains: setTrackGrains,
-      setTrackLength: setTrackLength,
       setTrackMaxAmplitude: setTrackMaxAmplitude,
       setSeekPosition: setSeekPosition
     },
