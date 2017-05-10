@@ -47,4 +47,3 @@ export const readArrayBufferPromise = file => {
     reader.readAsArrayBuffer(file);
   }).then(decode);
 };
-

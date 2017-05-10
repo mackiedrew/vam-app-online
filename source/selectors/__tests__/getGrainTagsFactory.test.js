@@ -35,7 +35,6 @@ describe("getGrainTags() selector", () => {
   });
 
   it("returns expected result when there are no grains", () => {
-
     const noGrainsMock = {
       settings: {
         quietCutoff: {
@@ -44,7 +43,7 @@ describe("getGrainTags() selector", () => {
       },
       tracks: {
         trackList: {
-          "123ABC": {},
+          "123ABC": {}
         }
       }
     };

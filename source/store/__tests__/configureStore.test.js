@@ -14,5 +14,4 @@ describe("configureStore()", () => {
     const result = configureStore(mockInitialState);
     expect(typeof result).toBe("object");
   });
-
 });
