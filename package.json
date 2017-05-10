@@ -119,7 +119,7 @@
     "babel-preset-flow": "6.23.0",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-0": "6.24.1",
-    "codecov": "2.1.0",
+    "codecov": "2.2.0",
     "css-loader": "0.28.1",
     "dalek-cli": "0.0.5",
     "enzyme": "2.8.1",
