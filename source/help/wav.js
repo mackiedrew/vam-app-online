@@ -31,8 +31,8 @@ export const richReadWav = (url, filename, grainSize, quietCutoff) => {
       const promiseWorker = new PromiseWorker(worker);
       return promiseWorker
         .postMessage({ quietCutoff, cases, protoGrains })
-        .then(({ grains, maxAmplitude }) => {
-          const result = { sampleRate, grains, maxAmplitude };
+        .then(grains => {
+          const result = { sampleRate, grains };
           return result;
         });
     });

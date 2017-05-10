@@ -14,11 +14,18 @@ export type viewType = {
   end: number
 };
 
+export type trackType = {
+  fileName: string,
+  url: string,
+  type: string,
+  grains?: grainArray
+};
+
 export type settingsField = {
   label: string,
   value: string | number,
   type: "number" | "text",
-  unit?: "s"
+  unit?: string
 };
 
 // Array Types
@@ -38,7 +45,20 @@ export type ReduxAction = {
 
 export type State = {
   ui: {},
-  tracks: {},
+  tracks: {
+    trackList: {},
+    view: viewType
+  },
   settings: {},
   keyboard: {}
 };
+
+export type GetState = () => Object;
+export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
+export type PromiseAction = Promise<Action>;
+export type Payload = Array<any> | Object | string | number | boolean;
+export type Action = { type: string, payload?: Payload };
+export type ActionCreator = () => Action;
+export type Dispatch = (
+  action: Action | ThunkAction | PromiseAction | Array<Action>
+) => any;

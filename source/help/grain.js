@@ -307,9 +307,7 @@ export const determineWhichGrainsToShow = (
  * @param {Object} message Message provided from the the web worker. Contains
  * an grainsArray, a quietness cutoff threshold and the pre-determine sample
  * cases for determining amplitude.
- * @returns {Object} Containing two keys {grains, maxAmplitude} the array of
- * grains now containing data on quietness, amplitude. And the max amplitude
- * is the highest amplitude of all the grains.
+ * @returns {Array} A new set of grains with amplitudes included.
  */
 export const amplitudeCalculator = ({
   protoGrains,
@@ -319,21 +317,21 @@ export const amplitudeCalculator = ({
   protoGrains: grainArray,
   quietCutoff: number,
   cases: numberArrayArray
-}): { grains: grainArray, maxAmplitude: number } => {
-  // Add amplitudes to grains
-  const amplitudes = cases.map(mean);
-  const simpleGrains = zipObjectArray(protoGrains, "amplitude", amplitudes);
+}): grainArray => {
+  // Add amplitudes to grains.
+  const amplitudes: numberArray = cases.map(mean);
+  const amplitudeGrains: grainArray = zipObjectArray(
+    protoGrains,
+    "amplitude",
+    amplitudes
+  );
 
-  // Add quietness to grains
+  // Add quietness to grains.
   const quietnessCutoff = quietCutoff / 100;
-  const quietGrains = areGrainsQuiet(simpleGrains, quietnessCutoff);
-  const finalGrains = zipObjectArray(simpleGrains, "quiet", quietGrains);
+  const quietGrains = areGrainsQuiet(amplitudeGrains, quietnessCutoff);
+  const finalGrains = zipObjectArray(amplitudeGrains, "quiet", quietGrains);
 
-  // Calculate max amplitude
-  const maxAmplitude = max(amplitudes);
-
-  const result = { grains: finalGrains, maxAmplitude: maxAmplitude };
-  return result;
+  return finalGrains;
 };
 
 /**

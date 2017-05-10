@@ -11,7 +11,6 @@ import {
   SET_TRACK_SAMPLE_RATE,
   SET_TRACK_FILE_NAME,
   SET_TRACK_GRAINS,
-  SET_TRACK_MAX_AMPLITUDE,
   TOGGLE_CURRENTLY_PLAYING
 } from "../constants/actionTypes";
 
@@ -110,17 +109,6 @@ const TracksReducer = (state = DEFAULT_STATE, { type, payload }) => {
           [payload.id]: {
             ...state.trackList[payload.id],
             grains: payload.grains
-          }
-        }
-      };
-    case SET_TRACK_MAX_AMPLITUDE:
-      return {
-        ...state,
-        trackList: {
-          ...state.trackList,
-          [payload.id]: {
-            ...state.trackList[payload.id],
-            maxAmplitude: payload.maxAmplitude
           }
         }
       };

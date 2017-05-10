@@ -9,8 +9,10 @@ import { bindActionCreators } from "redux";
 // Actions
 import setTrackSampleRate from "../actions/setTrackSampleRate";
 import setTrackGrains from "../actions/setTrackGrains";
-import setTrackMaxAmplitude from "../actions/setTrackMaxAmplitude";
 import setSeekPosition from "../actions/setSeekPosition";
+
+// Selectors
+import maxAmplitudes from "../selectors/maxAmplitudes";
 
 // Helpers
 import { richReadWav } from "../help/wav";
@@ -47,8 +49,7 @@ export class Track extends Component {
       settings,
       id,
       setTrackSampleRate,
-      setTrackGrains,
-      setTrackMaxAmplitude
+      setTrackGrains
     } = this.props;
     const { fileName, url } = trackList[id];
     return richReadWav(
@@ -56,10 +57,9 @@ export class Track extends Component {
       fileName,
       settings.grain.value,
       settings.quietCutoff.value
-    ).then(({ sampleRate, grains, maxAmplitude }) => {
+    ).then(({ sampleRate, grains }) => {
       setTrackSampleRate(id, sampleRate);
       setTrackGrains(id, grains);
-      setTrackMaxAmplitude(id, maxAmplitude);
     });
   }
 
@@ -85,11 +85,13 @@ export class Track extends Component {
       id,
       seekPosition,
       trackList,
-      setSeekPosition
+      setSeekPosition,
+      maxAmplitudes
     } = this.props;
     const track = trackList[id];
-    const { grains, maxAmplitude, fileName } = track;
+    const { grains, fileName } = track;
     const selected = selectedTrack === id;
+    const maxAmplitude = maxAmplitudes[id];
 
     const grainsToShow = grains
       ? determineWhichGrainsToShow(grains, view, length)
@@ -102,7 +104,7 @@ export class Track extends Component {
       <div className="track" id={`track-${id}`}>
         <TrackControls id={id} name={fileName} />
         <div className="display">
-          {maxAmplitude ? "" : <Loading />}
+          {grains ? "" : <Loading />}
           <div className="seek-line" style={seekLineStyle} />
           <Waveform
             grains={grainsToShow || []}
@@ -123,7 +125,8 @@ export const mapStateToProps = state => {
     trackList: state.tracks.trackList,
     selectedTrack: state.tracks.selectedTrack,
     view: state.tracks.view,
-    settings: state.settings
+    settings: state.settings,
+    maxAmplitudes: maxAmplitudes(state)
   };
 };
 
@@ -132,7 +135,6 @@ export const mapDispatchToProps = dispatch => {
     {
       setTrackSampleRate: setTrackSampleRate,
       setTrackGrains: setTrackGrains,
-      setTrackMaxAmplitude: setTrackMaxAmplitude,
       setSeekPosition: setSeekPosition
     },
     dispatch
