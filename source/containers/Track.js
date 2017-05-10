@@ -13,10 +13,11 @@ import setSeekPosition from "../actions/setSeekPosition";
 
 // Selectors
 import maxAmplitudes from "../selectors/maxAmplitudes";
+import getGrainTagsFactory from "../selectors/getGrainTagsFactory";
 
 // Helpers
 import { richReadWav } from "../help/wav";
-import { determineWhichGrainsToShow } from "../help/grain";
+import { whichGrainsToShow } from "../help/grain";
 
 // Components
 import Waveform from "../components/Waveform";
@@ -26,8 +27,9 @@ import Loading from "../components/Loading";
 import TrackControls from "../containers/TrackControls";
 
 /**
- * <Track /> should take in a simple path to a to a file and generate logical divisions and pass
- * down any display options to allow
+ * <Track /> should take in a simple path to a to a file and generate logical
+ * divisions and pass down any display options to allow
+ * @extends React.Component
  */
 export class Track extends Component {
   constructor(props) {
@@ -41,7 +43,8 @@ export class Track extends Component {
   }
 
   /**
-   * Read important information from the wav file and place it into state. Or store an error.
+   * Read important information from the wav file and place it into state. Or
+   * store an error.
    */
   readPath() {
     const {
@@ -64,11 +67,12 @@ export class Track extends Component {
   }
 
   /**
-   * Generate the in-line style object for programmatically determining the position of the
-   * the seek line based on some % left of the screen taking into account the viewport.
+   * Generate the in-line style object for programmatically determining the
+   * position of the the seek line based on some % left of the screen taking
+   * into account the viewport.
    * 
    * @param {Object} view An object containing at least start and end keys.
-   * @param {number} seekPosition Value of current position of seek in frames (aka samples).
+   * @param {number} seekPosition Value of current position of seek in frames.
    * @returns {Object} The new style object for in-line styling.
    */
   generateSeekLineStyle({ start, end }, seekPosition) {
@@ -86,16 +90,15 @@ export class Track extends Component {
       seekPosition,
       trackList,
       setSeekPosition,
-      maxAmplitudes
+      maxAmplitudes,
+      grainTags
     } = this.props;
     const track = trackList[id];
     const { grains, fileName } = track;
     const selected = selectedTrack === id;
     const maxAmplitude = maxAmplitudes[id];
 
-    const grainsToShow = grains
-      ? determineWhichGrainsToShow(grains, view, length)
-      : grains;
+    const grainsToShow = grains ? whichGrainsToShow(grains, view) : grains;
 
     // Generate styles
     const seekLineStyle = this.generateSeekLineStyle(view, seekPosition);
@@ -107,6 +110,7 @@ export class Track extends Component {
           {grains ? "" : <Loading />}
           <div className="seek-line" style={seekLineStyle} />
           <Waveform
+            grainTags={grainTags}
             grains={grainsToShow || []}
             maxAmplitude={maxAmplitude}
             selected={selected}
@@ -119,15 +123,18 @@ export class Track extends Component {
   }
 }
 
-export const mapStateToProps = state => {
-  return {
+export const makeMapStateToProps = () => {
+  const getGrainTags = getGrainTagsFactory();
+  const mapStateToProps = (state, props) => ({
     seekPosition: state.tracks.seekPosition,
     trackList: state.tracks.trackList,
     selectedTrack: state.tracks.selectedTrack,
     view: state.tracks.view,
     settings: state.settings,
-    maxAmplitudes: maxAmplitudes(state)
-  };
+    maxAmplitudes: maxAmplitudes(state),
+    grainTags: getGrainTags(state, props)
+  });
+  return mapStateToProps;
 };
 
 export const mapDispatchToProps = dispatch => {
@@ -140,5 +147,7 @@ export const mapDispatchToProps = dispatch => {
     dispatch
   );
 };
+
+export const mapStateToProps = makeMapStateToProps();
 
 export default connect(mapStateToProps, mapDispatchToProps)(Track);

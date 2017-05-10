@@ -13,7 +13,7 @@ import selectTrack from "./selectTrack";
 import trackIdArray from "../selectors/trackIdArray";
 
 // Helpers
-import { clamp } from "../help/generic";
+import { clamp } from "../help/math";
 
 /**
  * Action creator: creates an action that sets a new track list to delete a

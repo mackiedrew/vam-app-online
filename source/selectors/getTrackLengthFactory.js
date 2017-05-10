@@ -2,8 +2,9 @@
 import { createSelector } from "reselect";
 
 // State Filter
-const getTargetTrackGrains = (state, props) =>
-  state.tracks.trackList[props.id].grains;
+const getTargetTrackGrains = (state, props) => {
+  return state.tracks.trackList[props.id].grains;
+};
 
 /**
  * Selects the final grains end point in an array of grains, this can be
@@ -14,7 +15,7 @@ const getTargetTrackGrains = (state, props) =>
  * @param {Array} grains Array of all the grains in a track.
  * @returns {number} The length of the track these grains belong to.
  */
-const trackLengthCore = grains => {
+const getTrackLengthCore = grains => {
   const length = grains.length;
   const lastIndex = length - 1;
   const lastGrain = grains[lastIndex];
@@ -24,6 +25,9 @@ const trackLengthCore = grains => {
 };
 
 // Selector Construction
-const trackLength = createSelector(getTargetTrackGrains, trackLengthCore);
+const getTrackLength = createSelector(getTargetTrackGrains, getTrackLengthCore);
 
-export default trackLength;
+// Selector Factory
+const getTrackLengthFactory = () => getTrackLength;
+
+export default getTrackLengthFactory;

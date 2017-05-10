@@ -21,12 +21,20 @@ export type trackType = {
   grains?: grainArray
 };
 
-export type settingsField = {
+export type settingsTextField = {
   label: string,
-  value: string | number,
-  type: "number" | "text",
+  value: string,
+  type: "text"
+};
+
+export type settingsNumberField = {
+  label: string,
+  value: number,
+  type: "number",
   unit?: string
 };
+
+export type settingsField = settingsTextField | settingsNumberField;
 
 // Array Types
 export type grainArray = Array<grainType>;
@@ -43,13 +51,18 @@ export type ReduxAction = {
   payload?: any
 };
 
+export type Settings = {
+  quietCutoff: settingsNumberField,
+  grain: settingsNumberField
+};
+
 export type State = {
   ui: {},
   tracks: {
     trackList: {},
     view: viewType
   },
-  settings: {},
+  settings: Settings,
   keyboard: {}
 };
 

@@ -3,16 +3,8 @@
 /**
  * File should contain all functions for working with grains with an emphasis on pure functions.
  */
-import {
-  logicalSegment,
-  divisionBinarySearch,
-  random,
-  range,
-  getKeyFromObjectArray,
-  max,
-  zipObjectArray,
-  mean
-} from "./generic";
+import { logicalSegment, divisionBinarySearch, range } from "./generic";
+import { random } from "./math";
 
 // Helpers
 import { secondsToSamples } from "./convert";
@@ -23,7 +15,6 @@ import type {
   grainType,
   grainArray,
   mixedArray,
-  booleanArray,
   numberArray,
   numberArrayArray
 } from "../constants/flowTypes";
@@ -162,67 +153,23 @@ export const createSampleCases = (
 };
 
 /**
- * Contain whatever our current quietness calculation algorithm should be.
- * 
- * @param {Object} grain Grain containing at least the amplitude key.
- * @param {number} cutOff Percentage (0 to 1) threshold that of which below, is
- * considered quiet.
- * @param {number} maxAmplitude Maximum amplitude of the track.
- * @returns {boolean} Whether or not the grain is considered quiet.
- */
-export const isGrainQuiet = (
-  { amplitude }: grainType,
-  cutOff: number,
-  maxAmplitude: number
-): boolean => {
-  const operationalAmplitude = amplitude !== undefined ? amplitude : 0;
-  const amplitudePercentage = operationalAmplitude / maxAmplitude;
-  const quiet = amplitudePercentage <= cutOff;
-  return quiet;
-};
-
-/**
- * Checks against an array of grains to see if the grains match criteria to be
- * "quiet".
- * 
- * @param {Array} grains Grains array containing objects with at least the
- * amplitude key.
- * @param {number} cutOff Percentage (0 to 1) threshold that of which below, is
- * considered quiet.
- * @returns {Array} Boolean array matching provided grains in index, represents
- * whether or not the grain could be considered quiet or not.
- */
-export const areGrainsQuiet = (
-  grains: grainArray,
-  cutOff: number
-): booleanArray => {
-  const amplitudes = getKeyFromObjectArray(grains, "amplitude", 0);
-  const maxAmplitude = max(amplitudes);
-  const quietArray = grains.map(grain =>
-    isGrainQuiet(grain, cutOff, maxAmplitude)
-  );
-  return quietArray;
-};
-
-/**
  * Figures out the indexes of grains contained within the provided view.
  * 
  * @param {Array} grains Entire array of grains.
  * @param {Object} view Which frames (samples) should be seen, with start and
  * end keys.
- * @param {number} trackLength How many frames (samples) are in the provided
- * track.
  * @returns {Object} Returns an object containing two keys, startIndex and
  * endIndex, which indicate (inclusively) the grains that are fully within the
  * view window.
  */
 export const grainIndexesInView = (
   grains: grainArray,
-  { start, end }: viewType,
-  trackLength: number
+  { start, end }: viewType
 ): { startIndex: number, endIndex: number } => {
-  const startIndex: number = divisionBinarySearch(start, grains, trackLength);
   const lastIndex: number = grains.length - 1;
+  const trackLength: number = grains[lastIndex].end;
+  const startIndex: number = divisionBinarySearch(start, grains, trackLength);
+
   const endIndexFromSearch: number = divisionBinarySearch(
     end,
     grains,
@@ -262,22 +209,15 @@ export const createFillerGrain = (
  * @param {Array} grains Entire array of grains.
  * @param {Object} view Which frames (samples) should be seen, with start and
  * end keys.
- * @param {number} trackLength How many frames (samples) are in the provided
- * track.
  * @returns {Array} Returns a list of grains that need to be show with included
  * filler grains.
  */
-export const determineWhichGrainsToShow = (
+export const whichGrainsToShow = (
   grains: grainArray,
-  view: viewType,
-  trackLength: number
+  view: viewType
 ): grainArray => {
   const { start, end } = view;
-  const { startIndex, endIndex } = grainIndexesInView(
-    grains,
-    view,
-    trackLength
-  );
+  const { startIndex, endIndex } = grainIndexesInView(grains, view);
 
   // Start Filler Grain
   const firstGrainToShow = grains[startIndex];
@@ -298,40 +238,6 @@ export const determineWhichGrainsToShow = (
 
   const grainsToShow = [startFiller, ...grainsToInclude, endFiller];
   return grainsToShow;
-};
-
-/**
- * Adds information to grains based on some precalculated data. Primarily about
- * quietness, amplitude, and max-amplitude.
- * 
- * @param {Object} message Message provided from the the web worker. Contains
- * an grainsArray, a quietness cutoff threshold and the pre-determine sample
- * cases for determining amplitude.
- * @returns {Array} A new set of grains with amplitudes included.
- */
-export const amplitudeCalculator = ({
-  protoGrains,
-  quietCutoff,
-  cases
-}: {
-  protoGrains: grainArray,
-  quietCutoff: number,
-  cases: numberArrayArray
-}): grainArray => {
-  // Add amplitudes to grains.
-  const amplitudes: numberArray = cases.map(mean);
-  const amplitudeGrains: grainArray = zipObjectArray(
-    protoGrains,
-    "amplitude",
-    amplitudes
-  );
-
-  // Add quietness to grains.
-  const quietnessCutoff = quietCutoff / 100;
-  const quietGrains = areGrainsQuiet(amplitudeGrains, quietnessCutoff);
-  const finalGrains = zipObjectArray(amplitudeGrains, "quiet", quietGrains);
-
-  return finalGrains;
 };
 
 /**

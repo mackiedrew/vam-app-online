@@ -9,6 +9,7 @@ const mockProps = {
     }
   ],
   maxAmplitude: 10,
+  grainTags: [{ quiet: false }],
   setSeekPosition: sinon.spy()
 };
 

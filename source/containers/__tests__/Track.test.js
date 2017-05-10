@@ -14,6 +14,8 @@ jest.mock("../../help/wav", () => ({
     )
 }));
 
+jest.mock("../../selectors/getGrainTagsFactory", () => () => () => []);
+
 const mockSettings = {
   grain: {
     label: "Grain Time",
@@ -42,7 +44,9 @@ const mockProps = {
   selectedTrack: "123ABC",
   settings: mockSettings,
   trackList: mockTracks,
-  view: { start: 0, end: 20 }
+  view: { start: 0, end: 20 },
+  maxAmplitudes: { "123ABC": 0 },
+  grainTags: [{ quiet: true }, { quiet: false }]
 };
 
 describe("<Track />", () => {
@@ -97,7 +101,7 @@ describe("<Track />", () => {
         settings,
         trackList,
         view
-      } = mapStateToProps(mockState);
+      } = mapStateToProps(mockState, { id: "123ABC" });
       expect(seekPosition).toBe(1);
       expect(trackList).toBe(2);
       expect(selectedTrack).toBe(3);

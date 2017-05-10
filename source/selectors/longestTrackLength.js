@@ -1,8 +1,9 @@
-// Selector Framework
+// Libraries
 import { createSelector } from "reselect";
 
-// Libraries
-import { max, objectToArray } from "../help/generic";
+// Helpers
+import { objectToArray } from "../help/generic";
+import { max } from "../help/math";
 
 // Other Selector
 import trackLengths from "./trackLengths";

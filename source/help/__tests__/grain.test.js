@@ -4,8 +4,6 @@ import {
   createEquallySpacedGrains,
   grainLengths,
   createSampleCases,
-  isGrainQuiet,
-  areGrainsQuiet,
   grainIndexesInView,
   createFillerGrain
 } from "../grain";
@@ -190,43 +188,6 @@ describe("createSampleCases()", () => {
   });
 });
 
-describe("isGrainQuiet()", () => {
-  const testLoudGrain = { amplitude: 0.5 };
-  const testQuietGrain = { amplitude: 0.1 };
-  const testCutOff = 0.3;
-  const testMaxAmplitude = 1.0;
-
-  it("returns false if the grain amplitude is above threshold", () => {
-    const result = isGrainQuiet(testLoudGrain, testCutOff, testMaxAmplitude);
-    expect(result).toBe(false);
-  });
-
-  it("returns true if the grain amplitude is below threshold", () => {
-    const result = isGrainQuiet(testQuietGrain, testCutOff, testMaxAmplitude);
-    expect(result).toBe(true);
-  });
-});
-
-describe("areGrainsQuiet()", () => {
-  const testGrains = [
-    { start: 0, end: 2, amplitude: 0.2 },
-    { start: 2, end: 4, amplitude: 0.4 },
-    { start: 4, end: 6, amplitude: 0.6 },
-    { start: 6, end: 8, amplitude: 0.8 }
-  ];
-  const testCutOff = 0.5;
-
-  it("returns an array", () => {
-    const result = areGrainsQuiet(testGrains, testCutOff);
-    expect(typeof result).toBe("object");
-  });
-
-  it("returns array the same length of original grains array", () => {
-    const result = areGrainsQuiet(testGrains, testCutOff);
-    expect(result.length).toBe(testGrains.length);
-  });
-});
-
 describe("grainIndexesInView()", () => {
   const testGrains = [
     { start: 0, end: 2 },
@@ -253,32 +214,6 @@ describe("grainIndexesInView()", () => {
   it("returns an array with startIndex being less than or equal to endIndex", () => {
     expect(basicResult.startIndex).toBeLessThanOrEqual(basicResult.endIndex);
   });
-
-  // it("returns full array indexes when provided with a view equal to span of grains", () => {
-  //   const fullView = {
-  //     start: 0,
-  //     end: 8
-  //   };
-  //   const result = grainIndexesInView(testGrains, fullView, testGrainsLength);
-  //   expect(result.startIndex).toBe(0);
-  //   expect(result.endIndex).toBe(3);
-  // });
-
-  // it("returns full array indexes when view.end is beyond end of grains", () => {
-  //   const extraView = {
-  //     start: 0,
-  //     end: 70
-  //   };
-  //   const result = grainIndexesInView(testGrains, extraView, 70);
-  //   expect(result.startIndex).toBe(0);
-  //   expect(result.endIndex).toBe(3);
-  // });
-
-  // it("returns expected grain indexes in typical conditions", () => {
-  //   const result = grainIndexesInView(testGrains, testView, testGrainsLength);
-  //   expect(result.startIndex).toBe(1);
-  //   expect(result.endIndex).toBe(1);
-  // });
 });
 
 describe("createFillerGrain()", () => {
@@ -298,8 +233,3 @@ describe("createFillerGrain()", () => {
     expect(result.filler).toBe(true);
   });
 });
-
-// describe("determineWhichGrainsToShow()", () => {
-//   it("returns grains of at least length of two");
-//   it("returns array of only objects");
-// });

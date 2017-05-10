@@ -7,7 +7,8 @@ import type { State, trackType, grainArray } from "../constants/flowTypes";
 import { createSelector } from "reselect";
 
 // Helpers
-import { objectToArray, getKeyFromObjectArray, max } from "../help/generic";
+import { objectToArray, getKeyFromObjectArray } from "../help/generic";
+import { max } from "../help/math";
 
 // State Filter
 const trackList = (state: State): {} => state.tracks.trackList;

@@ -18,7 +18,7 @@ export const readFile = (url, filename) => {
   });
 };
 
-export const richReadWav = (url, filename, grainSize, quietCutoff) => {
+export const richReadWav = (url, filename, grainSize) => {
   const richDataPromise = readFile(url, filename)
     .then(({ sampleRate, channelData }) => ({
       data: channelData[0],
@@ -30,7 +30,7 @@ export const richReadWav = (url, filename, grainSize, quietCutoff) => {
       const worker = new GrainAmplitudeWorker();
       const promiseWorker = new PromiseWorker(worker);
       return promiseWorker
-        .postMessage({ quietCutoff, cases, protoGrains })
+        .postMessage({ cases, grains: protoGrains })
         .then(grains => {
           const result = { sampleRate, grains };
           return result;
