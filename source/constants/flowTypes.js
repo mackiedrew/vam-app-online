@@ -29,3 +29,9 @@ export type stringArray = Array<string>;
 export type booleanArray = Array<boolean>;
 export type mixedArray = Array<any>;
 export type numberArrayArray = Array<numberArray>;
+
+// Redux
+export type ReduxAction = {
+  type: string,
+  payload?: any
+};
