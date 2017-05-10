@@ -1,4 +1,4 @@
-jest.mock("../../help/fileRead", () => ({
+jest.mock("../../help/wav", () => ({
   readArrayBufferPromise: () => "test"
 }));
 import readWav from "../readWav.worker";

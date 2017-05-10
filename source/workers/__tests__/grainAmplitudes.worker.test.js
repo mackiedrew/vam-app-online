@@ -1,4 +1,4 @@
-jest.mock("../../help/fileRead", () => ({
+jest.mock("../../help/grain", () => ({
   amplitudeCalculator: () => "test"
 }));
 import grainAmplitudes from "../grainAmplitudes.worker";

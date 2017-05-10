@@ -33,4 +33,25 @@ describe("getGrainTags() selector", () => {
     expect(result[0].quiet).toBe(false);
     expect(result[1].quiet).toBe(true);
   });
+
+  it("returns expected result when there are no grains", () => {
+
+    const noGrainsMock = {
+      settings: {
+        quietCutoff: {
+          value: 0.5
+        }
+      },
+      tracks: {
+        trackList: {
+          "123ABC": {},
+        }
+      }
+    };
+
+    const getGrainTags = getGrainTagsFactory();
+    const result = getGrainTags(noGrainsMock, mockProps);
+    expect(typeof result).toBe("object");
+    expect(result).toEqual([]);
+  });
 });

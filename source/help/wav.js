@@ -1,6 +1,7 @@
 // Libraries
 import PromiseWorker from "promise-worker";
 import ObjectPromiseWorker from "promise-worker-transferable";
+import { decode } from "wav-decoder";
 
 // Helpers
 import { createSampleCases, createEquallySpacedGrains } from "./grain";
@@ -38,3 +39,12 @@ export const richReadWav = (url, filename, grainSize) => {
     });
   return richDataPromise;
 };
+
+export const readArrayBufferPromise = file => {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.readAsArrayBuffer(file);
+  }).then(decode);
+};
+
