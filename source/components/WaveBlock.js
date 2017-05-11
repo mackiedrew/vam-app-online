@@ -12,7 +12,9 @@ import type { grainType } from "../constants/flowTypes";
  * @extends React.Component
  */
 class WaveBlock extends Component {
-  props: {
+  handleClick: () => void;
+
+  constructor(props: {
     grain: grainType,
     maxAmplitude?: number,
     selected?: boolean | void,
@@ -20,10 +22,7 @@ class WaveBlock extends Component {
     tags: {
       quiet: boolean
     }
-  };
-  handleClick: () => void;
-
-  constructor(props: {}) {
+  }) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
