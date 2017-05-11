@@ -11,8 +11,6 @@ import {
   SET_TRACK_SAMPLE_RATE,
   SET_TRACK_FILE_NAME,
   SET_TRACK_GRAINS,
-  SET_TRACK_LENGTH,
-  SET_TRACK_MAX_AMPLITUDE,
   TOGGLE_CURRENTLY_PLAYING
 } from "../../constants/actionTypes";
 
@@ -178,21 +176,6 @@ describe("tracks reducer", () => {
     expect(result).toEqual(expected);
   });
 
-  it("should handle SET_TRACK_LENGTH", () => {
-    const mockAction = {
-      type: SET_TRACK_LENGTH,
-      payload: { id: "123ABC", length: 12345 }
-    };
-    const initialState = {
-      trackList: { "123ABC": {} }
-    };
-    const result = reducer(initialState, mockAction);
-    const expected = {
-      trackList: { "123ABC": { length: 12345 } }
-    };
-    expect(result).toEqual(expected);
-  });
-
   it("should handle SET_TRACK_GRAINS", () => {
     const mockAction = {
       type: SET_TRACK_GRAINS,
@@ -204,21 +187,6 @@ describe("tracks reducer", () => {
     const result = reducer(initialState, mockAction);
     const expected = {
       trackList: { "123ABC": { grains: [] } }
-    };
-    expect(result).toEqual(expected);
-  });
-
-  it("should handle SET_TRACK_MAX_AMPLITUDE", () => {
-    const mockAction = {
-      type: SET_TRACK_MAX_AMPLITUDE,
-      payload: { id: "123ABC", maxAmplitude: 1000 }
-    };
-    const initialState = {
-      trackList: { "123ABC": {} }
-    };
-    const result = reducer(initialState, mockAction);
-    const expected = {
-      trackList: { "123ABC": { maxAmplitude: 1000 } }
     };
     expect(result).toEqual(expected);
   });

@@ -10,7 +10,7 @@
   "main": "electron.js",
   "scripts": {
     "clean": "rm -rf build/",
-    "clean:full": "rm -rf build/ coverage/ node_modules/",
+    "clean:full": "rm -rf build/ coverage/ node_modules/ yarn.lock",
     "build": "./node_modules/.bin/webpack",
     "build:production": "NODE_ENV=production ./node_modules/.bin/webpack",
     "watch": "yarn build -- --watch",
@@ -121,7 +121,6 @@
     "babel-preset-stage-0": "6.24.1",
     "codecov": "2.2.0",
     "css-loader": "0.28.1",
-    "dalek-cli": "0.0.5",
     "enzyme": "2.8.1",
     "enzyme-to-json": "1.5.1",
     "eslint": "3.19.0",
@@ -167,6 +166,6 @@
     "webpack": "2.5.1",
     "webpack-dev-server": "2.4.5",
     "worker-loader": "0.8.0",
-    "yarn": "0.23.3"
+    "yarn": "0.23.4"
   }
 }

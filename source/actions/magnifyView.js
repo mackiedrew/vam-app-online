@@ -1,3 +1,14 @@
+// @flow
+
+// Flow Types
+import type {
+  Action,
+  GetState,
+  ThunkAction,
+  Dispatch,
+  viewType
+} from "../constants/flowTypes";
+
 // Action Type
 import { MAGNIFY_VIEW } from "../constants/actionTypes";
 
@@ -9,21 +20,23 @@ import setView from "./setView";
  * 
  * @returns {Object} Action: that logs magnification change in actions.
  */
-export const magnifyViewLabel = () => ({ type: MAGNIFY_VIEW });
+export const magnifyViewLabel = (): Action => {
+  return { type: MAGNIFY_VIEW };
+};
 
 /**
  * Thunk: multiplies the view, changes just the end of the track. The start of
  * the track is anchored for now.
  * 
- * @param {Object} magnificationFactor What to multiply the end of view by.
+ * @param {number} magnificationFactor What to multiply the end of view by.
  * @returns {Function} Action creator that magnifies the current view by 
  * the provided magnification factor.
  */
-const magnifyView = magnificationFactor => {
-  return (dispatch, getState) => {
-    const { view } = getState().tracks;
-    const newEnd = Math.ceil(view.end * magnificationFactor);
-    const newView = {
+const magnifyView = (magnificationFactor: number): ThunkAction => {
+  return (dispatch: Dispatch, getState: GetState): void => {
+    const { view }: { view: viewType } = getState().tracks;
+    const newEnd: number = Math.ceil(view.end * magnificationFactor);
+    const newView: viewType = {
       ...view,
       end: newEnd
     };

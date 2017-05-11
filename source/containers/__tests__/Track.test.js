@@ -9,12 +9,12 @@ jest.mock("../../help/wav", () => ({
     new Promise(resolve =>
       resolve({
         sampleRate: 0,
-        grains: [],
-        length: 4,
-        maxAmplitude: 10
+        grains: []
       })
     )
 }));
+
+jest.mock("../../selectors/getGrainTagsFactory", () => () => () => []);
 
 const mockSettings = {
   grain: {
@@ -34,8 +34,7 @@ const mockSettings = {
 const mockTracks = {
   "123ABC": {
     grains: [{ start: 0, end: 4 }, { start: 4, end: 8 }],
-    fileName: "test.wav",
-    maxAmplitude: 2
+    fileName: "test.wav"
   }
 };
 
@@ -45,7 +44,9 @@ const mockProps = {
   selectedTrack: "123ABC",
   settings: mockSettings,
   trackList: mockTracks,
-  view: { start: 0, end: 20 }
+  view: { start: 0, end: 20 },
+  maxAmplitudes: { "123ABC": 0 },
+  grainTags: [{ quiet: true }, { quiet: false }]
 };
 
 describe("<Track />", () => {
@@ -69,22 +70,16 @@ describe("<Track />", () => {
   it("readPath() calls all actions it needs to", () => {
     const mockSetTrackSampleRate = sinon.spy();
     const mockSetTrackGrains = sinon.spy();
-    const mockSetTrackLength = sinon.spy();
-    const mockSetTrackMaxAmplitude = sinon.spy();
     const subject = shallow(
       <Subject
         {...mockProps}
         setTrackGrains={mockSetTrackGrains}
-        setTrackLength={mockSetTrackLength}
-        setTrackMaxAmplitude={mockSetTrackMaxAmplitude}
         setTrackSampleRate={mockSetTrackSampleRate}
       />
     );
     return subject.instance().readPath().then(() => {
       expect(mockSetTrackSampleRate.called).toBe(true);
       expect(mockSetTrackGrains.called).toBe(true);
-      expect(mockSetTrackLength.called).toBe(true);
-      expect(mockSetTrackMaxAmplitude.called).toBe(true);
     });
   });
 
@@ -106,7 +101,7 @@ describe("<Track />", () => {
         settings,
         trackList,
         view
-      } = mapStateToProps(mockState);
+      } = mapStateToProps(mockState, { id: "123ABC" });
       expect(seekPosition).toBe(1);
       expect(trackList).toBe(2);
       expect(selectedTrack).toBe(3);
@@ -121,14 +116,10 @@ describe("<Track />", () => {
       const {
         setTrackSampleRate,
         setTrackGrains,
-        setTrackLength,
-        setTrackMaxAmplitude,
         setSeekPosition
       } = mapDispatchToProps(mockDispatch);
       expect(typeof setTrackSampleRate).toBe("function");
       expect(typeof setTrackGrains).toBe("function");
-      expect(typeof setTrackLength).toBe("function");
-      expect(typeof setTrackMaxAmplitude).toBe("function");
       expect(typeof setSeekPosition).toBe("function");
     });
   });

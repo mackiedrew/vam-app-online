@@ -1,15 +1,19 @@
 [ignore]
-.*/node_modules/.*
-.*/coverage/.*
-.*/example/.*
-.*/build/.*
-.*/__tests__/.*
-.*/__mocks__/.*
+<PROJECT_ROOT>/node_modules/eslint-plugin-jsx-a11y/
+<PROJECT_ROOT>/coverage/.*
+<PROJECT_ROOT>/example/.*
+<PROJECT_ROOT>/.vscode/.*
+<PROJECT_ROOT>/build/.*
+<PROJECT_ROOT>/.*/__tests__/.*
+<PROJECT_ROOT>/.*/__mocks__/.*
 
 [include]
-.*/source/.*
 
 [libs]
 
 [options]
+module.system=node
 module.name_mapper='.*\.styl$' -> '<PROJECT_ROOT>/flow/stub/styl-modules.js'
+
+[version]
+^0.45.0

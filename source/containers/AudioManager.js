@@ -10,7 +10,7 @@ import setSeekPosition from "../actions/setSeekPosition";
 
 // Helpers
 import { secondsToSamples } from "../help/convert";
-import { floor } from "../help/generic";
+import { floor } from "../help/math";
 
 /**
  * Manages the playing state and seeking state as an interface between redux
