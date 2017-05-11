@@ -16,4 +16,4 @@ module.system=node
 module.name_mapper='.*\.styl$' -> '<PROJECT_ROOT>/flow/stub/styl-modules.js'
 
 [version]
-^0.45.0
+0.46.0
