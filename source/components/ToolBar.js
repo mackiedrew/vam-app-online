@@ -16,10 +16,9 @@ import Icon from "../components/Icon";
  */
 class ToolBar extends Component {
   // Flow Types
-  props: { handleSplit: () => {} | void };
   handleSplitButton: () => void;
 
-  constructor(props: {}) {
+  constructor(props: { handleSplit: () => {} | void }) {
     super(props);
     this.handleSplitButton = this.handleSplitButton.bind(this);
   }

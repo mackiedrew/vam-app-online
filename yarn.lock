@@ -2905,9 +2905,9 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
-flow-bin@0.45.0:
-  version "0.45.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.45.0.tgz#009dd0f577a3f665c74ca8be827ae8c2dd8fd6b5"
+flow-bin@0.46.0:
+  version "0.46.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.46.0.tgz#06ad7fe19dddb1042264438064a2a32fee12b872"
 
 flow-coverage-report@0.3.0:
   version "0.3.0"
@@ -6100,7 +6100,7 @@ request-progress@~2.0.1:
   dependencies:
     throttleit "^1.0.0"
 
-request@2, request@^2.81.0:
+request@2, request@^2.65.0, request@^2.79.0, request@^2.81.0:
   version "2.81.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.81.0.tgz#c6928946a0e06c5f8d6f8a9333469ffda46298a0"
   dependencies:
@@ -6127,7 +6127,7 @@ request@2, request@^2.81.0:
     tunnel-agent "^0.6.0"
     uuid "^3.0.0"
 
-request@2.79.0, request@^2.65.0, request@^2.79.0, request@~2.79.0:
+request@2.79.0, request@~2.79.0:
   version "2.79.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.79.0.tgz#4dfe5bf6be8b8cdc37fcf93e04b65577722710de"
   dependencies:
@@ -7581,7 +7581,7 @@ yargs@~4.8.0:
     y18n "^3.2.1"
     yargs-parser "^2.4.1"
 
-yarn@^0.23.4:
+yarn@0.23.4:
   version "0.23.4"
   resolved "https://registry.yarnpkg.com/yarn/-/yarn-0.23.4.tgz#f428c75ca27ad4910bc822174f586187c790c5db"
   dependencies:
