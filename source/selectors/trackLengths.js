@@ -1,13 +1,13 @@
-// Selector Framework
+// Libraries
 import { createSelector } from "reselect";
 
-// Libraries
+// Helpers
 import { objectToArray } from "../help/generic";
 
 // Create functions that return portions of state
 const trackList = state => state.tracks.trackList;
 
-const trackLengths = createSelector([trackList], list => {
+const trackLengths = createSelector(trackList, list => {
   const trackArray = objectToArray(list);
   const grainsList = trackArray.map(track => track.grains);
   const numberOfGrains = grainsList.map(grains => grains.length);

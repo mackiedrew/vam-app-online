@@ -1,7 +1,10 @@
+// @flow
+
+// Libraries
 import registerPromiseWorker from "promise-worker/register";
-import { amplitudeCalculator } from "../help/grain";
 
-// Register Promise Worker
-const worker = registerPromiseWorker(amplitudeCalculator);
+// Helpers
+import { amplitudeCalculator } from "../help/grainTags";
 
-export default worker;
+// Register Worker
+export default registerPromiseWorker(amplitudeCalculator);

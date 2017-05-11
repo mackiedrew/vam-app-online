@@ -28,7 +28,7 @@ exports[`<Track /> renders correctly with grains 1`] = `
         className="wave-block filler"
         style={
           Object {
-            "backgroundColor": "rgb(240, 240, 240)",
+            "backgroundColor": "rgb(240, 230, 230)",
             "flexGrow": 0,
           }
         }
@@ -43,7 +43,7 @@ exports[`<Track /> renders correctly with grains 1`] = `
           onClick={[Function]}
           style={
             Object {
-              "height": "0%",
+              "height": "NaN%",
               "opacity": "1.0",
             }
           }
@@ -68,7 +68,7 @@ exports[`<Track /> renders correctly with grains 1`] = `
           onClick={[Function]}
           style={
             Object {
-              "height": "0%",
+              "height": "NaN%",
               "opacity": "1.0",
             }
           }
@@ -93,7 +93,7 @@ exports[`<Track /> renders correctly with grains 1`] = `
           onClick={[Function]}
           style={
             Object {
-              "height": "0%",
+              "height": "NaN%",
               "opacity": "1.0",
             }
           }
@@ -118,7 +118,7 @@ exports[`<Track /> renders correctly with grains 1`] = `
           onClick={[Function]}
           style={
             Object {
-              "height": "0%",
+              "height": "NaN%",
               "opacity": "1.0",
             }
           }

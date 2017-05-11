@@ -8,7 +8,7 @@ import setSeekPosition from "./setSeekPosition";
 import longestTrackLength from "../selectors/longestTrackLength";
 
 // Helpers
-import { clamp, floor } from "../help/generic";
+import { clamp, floor } from "../help/math";
 
 /**
  * Action creator: creates an action that adds this number of frames to the

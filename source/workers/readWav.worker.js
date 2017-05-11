@@ -1,6 +1,10 @@
+// @flow
+
+// Libraries
 import registerPromiseWorker from "promise-worker-transferable/register";
+
+// Helpers
 import { readArrayBufferPromise } from "../help/fileRead";
 
-const worker = registerPromiseWorker(readArrayBufferPromise);
-
-export default worker;
+// Register Worker
+export default registerPromiseWorker(readArrayBufferPromise);

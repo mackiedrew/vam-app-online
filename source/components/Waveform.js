@@ -20,11 +20,13 @@ import WaveBlock from "../components/WaveBlock";
  * @returns {Object} React element.
  */
 const Waveform = ({
+  grainTags,
   grains,
   maxAmplitude,
   selected,
   setSeekPosition
 }: {
+  grainTags: Array<{ quiet: boolean }>,
   grains: grainArray,
   maxAmplitude: number,
   selected: boolean | void,
@@ -37,6 +39,7 @@ const Waveform = ({
       maxAmplitude={maxAmplitude}
       selected={selected}
       setSeekPosition={setSeekPosition}
+      tags={grainTags[i]}
     />
   ));
 

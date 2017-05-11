@@ -16,7 +16,10 @@ class WaveBlock extends Component {
     grain: grainType,
     maxAmplitude?: number,
     selected?: boolean | void,
-    setSeekPosition: () => void
+    setSeekPosition: () => void,
+    tags: {
+      quiet: boolean
+    }
   };
   handleClick: () => void;
 
@@ -25,8 +28,12 @@ class WaveBlock extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  waveBlockStyle(grain: grainType): {} {
-    const { start, end, quiet } = grain;
+  waveBlockStyle(
+    grain: grainType,
+    tags: { quiet: boolean } = { quiet: false }
+  ): {} {
+    const { start, end } = grain;
+    const quiet = tags.quiet;
     const length = end - start;
     const backgroundColor = quiet ? "rgb(240, 230, 230)" : "rgb(240, 240, 240)";
     const style = { flexGrow: length, backgroundColor };
@@ -46,19 +53,19 @@ class WaveBlock extends Component {
   }
 
   handleClick() {
-    const { grain, setSeekPosition } = this.props;
-    setSeekPosition(grain.start);
+    const { grain: { start }, setSeekPosition } = this.props;
+    setSeekPosition(start);
   }
 
   render() {
-    const { grain, selected, maxAmplitude } = this.props;
+    const { grain, selected, maxAmplitude, tags } = this.props;
     const { filler, more } = grain;
     const amplitudeStyle = this.amplitudeStyle(
       selected,
       grain.amplitude,
       maxAmplitude
     );
-    const waveBlockStyle = this.waveBlockStyle(grain);
+    const waveBlockStyle = this.waveBlockStyle(grain, tags);
     const extraClasses: string =
       (filler ? " filler" : "") + (more ? " more" : "");
     const note: string = more ? "more..." : filler ? "track ends" : "";

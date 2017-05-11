@@ -22,7 +22,8 @@ const SettingsField = ({
   field: settingsField,
   handleChange: () => {}
 }) => {
-  const { value, unit, label, type } = field;
+  const { value, label, type } = field;
+  const unit = field.unit || undefined;
 
   return (
     <div className="settings-field" key={name}>

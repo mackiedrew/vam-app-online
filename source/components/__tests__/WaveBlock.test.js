@@ -20,13 +20,9 @@ const grainMore = {
   more: true
 };
 
-const grainQuiet = {
-  ...grainWithAmplitude,
-  quiet: true
-};
-
 const mockProps = {
   grain: minimumGrain,
+  tags: { quiet: false },
   setSeekPosition: sinon.spy()
 };
 
@@ -51,7 +47,7 @@ describe("<WaveBlock />", () => {
       shallow(<Subject {...mockProps} grain={grainMore} />);
     });
     it("with bare minimum props, and quiet grain", () => {
-      shallow(<Subject {...mockProps} grain={grainQuiet} />);
+      shallow(<Subject {...mockProps} tags={{ quiet: true }} />);
     });
   });
 
@@ -92,7 +88,7 @@ describe("<WaveBlock />", () => {
     });
     it("with bare minimum props, and quiet grain", () => {
       const tree = renderer
-        .create(<Subject {...mockProps} grain={grainQuiet} />)
+        .create(<Subject {...mockProps} tags={{ quiet: true }} />)
         .toJSON();
       expect(tree).toMatchSnapshot();
     });

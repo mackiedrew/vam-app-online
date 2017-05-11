@@ -22,32 +22,6 @@ import { isInGrain } from "./grain";
 export const range = (size: number): numberArray => [...Array(size).keys()];
 
 /**
- * Calculate the max value of all the entries in an array.
- * 
- * @param {Array} array Array of values to determine the max array size.
- * @returns {number} Maximum value of the array.
- */
-export const max = (array: numberArray): number => Math.max(...array);
-
-/**
- * Adds all the elements of an array together.
- * 
- * @param {Array} array Array of values to add.
- * @returns {number} All array elements added together.
- */
-export const add = (array: numberArray): number =>
-  array.reduce((a, b) => a + b, 0);
-
-/**
- * Faster flooring method using a bitwise trick with better behavior than
- * math.floor(). Will round both positive and negative numbers closer to zero.
- * 
- * @param {number} value The value to be rounded closer to zero.
- * @returns {number} Number rounded to nearest integer.
- */
-export const floor = (value: number): number => ~~value;
-
-/**
  * Creates an array of 'segments' that contain two values: start and end.
  * These values indicate the segments' key in the array in which the begin and
  * end. It is designed to work like, and with, slice(), where start is
@@ -160,14 +134,6 @@ export const leadingZeros = (
 };
 
 /**
- * Figure out the mean average of the elements in an array.
- * 
- * @param {Array} array Array to find the mean of.
- * @returns {number} The mean of the values in the provided array.
- */
-export const mean = (array: numberArray): number => add(array) / array.length;
-
-/**
  * Adds a new key with given values to an existing array of object.
  * 
  * @param {Array} array Original array to add the values to under the given key.
@@ -183,22 +149,11 @@ export const zipObjectArray = (
   const newArray = array.map((object, index) => {
     return {
       ...object,
-      [key]: values[index] || undefined
+      [key]: values[index]
     };
   });
   return newArray;
 };
-
-/**
- * Get a random integer from provided minimum and maximum number. This will
- * produce an integer.
- * 
- * @param {number} min Minimum possible value (inclusive).
- * @param {number} max Maximum possible value (exclusive).
- * @returns {number} Random number between given values excluding max value.
- */
-export const random = (min: number, max: number): number =>
-  floor(Math.random() * (max - min)) + min;
 
 /**
  * Pulls the provided key from each object in the provided array, should return
@@ -226,20 +181,4 @@ export const objectToArray = (object: {}): mixedArray => {
   const keys = Object.keys(object);
   const array = keys.map(key => object[key]);
   return array;
-};
-
-/**
- * Provided with 3 values it will always return the middle value. Effectively
- * it allows for an upper and lower bound to be set, and if the value is outside
- * of these bounds, the corresponding bound is returned instead. Lower and upper
- * bounds are inclusive.
- * 
- * @param {number} value Value to ensure is between bounds.
- * @param {number} lower Inclusive lower limit/bound.
- * @param {number} upper Inclusive upper limit/bound.
- * @returns {number} Returns the clamped number.
- */
-export const clamp = (value: number, lower: number, upper: number): number => {
-  const clampedValue: number = Math.min(Math.max(lower, value), upper);
-  return clampedValue;
 };

@@ -11,8 +11,6 @@ import {
   SET_TRACK_SAMPLE_RATE,
   SET_TRACK_FILE_NAME,
   SET_TRACK_GRAINS,
-  SET_TRACK_LENGTH,
-  SET_TRACK_MAX_AMPLITUDE,
   TOGGLE_CURRENTLY_PLAYING
 } from "../constants/actionTypes";
 
@@ -23,7 +21,6 @@ export const DEFAULT_STATE = {
   nextTrackId: "track1",
   selectedTrack: undefined,
   currentlyPlaying: false,
-  length: 44100 * 60 * 10,
   view: {
     start: 0,
     end: 44100 * 60 * 10
@@ -104,17 +101,6 @@ const TracksReducer = (state = DEFAULT_STATE, { type, payload }) => {
           }
         }
       };
-    case SET_TRACK_LENGTH:
-      return {
-        ...state,
-        trackList: {
-          ...state.trackList,
-          [payload.id]: {
-            ...state.trackList[payload.id],
-            length: payload.length
-          }
-        }
-      };
     case SET_TRACK_GRAINS:
       return {
         ...state,
@@ -123,17 +109,6 @@ const TracksReducer = (state = DEFAULT_STATE, { type, payload }) => {
           [payload.id]: {
             ...state.trackList[payload.id],
             grains: payload.grains
-          }
-        }
-      };
-    case SET_TRACK_MAX_AMPLITUDE:
-      return {
-        ...state,
-        trackList: {
-          ...state.trackList,
-          [payload.id]: {
-            ...state.trackList[payload.id],
-            maxAmplitude: payload.maxAmplitude
           }
         }
       };

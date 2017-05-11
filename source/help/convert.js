@@ -4,8 +4,9 @@
 import type { stringArray, numberArray } from "../constants/flowTypes";
 
 // Helpers
-import { floor, leadingZeros } from "./generic";
+import { leadingZeros } from "./generic";
 import { reverse } from "./immutable";
+import { floor } from "./math";
 
 /**
  * Converts seconds to samples, given a sample rate. Both have defaults so if

@@ -18,22 +18,21 @@ export const readFile = (url, filename) => {
   });
 };
 
-export const richReadWav = (url, filename, grainSize, quietCutoff) => {
+export const richReadWav = (url, filename, grainSize) => {
   const richDataPromise = readFile(url, filename)
     .then(({ sampleRate, channelData }) => ({
       data: channelData[0],
-      length: channelData[0].length,
       sampleRate
     }))
-    .then(({ data, length, sampleRate }) => {
+    .then(({ data, sampleRate }) => {
       const protoGrains = createEquallySpacedGrains(data, grainSize);
       const cases = createSampleCases(protoGrains, data, 2000);
       const worker = new GrainAmplitudeWorker();
       const promiseWorker = new PromiseWorker(worker);
       return promiseWorker
-        .postMessage({ quietCutoff, cases, protoGrains })
-        .then(({ grains, maxAmplitude }) => {
-          const result = { sampleRate, length, grains, maxAmplitude };
+        .postMessage({ cases, grains: protoGrains })
+        .then(grains => {
+          const result = { sampleRate, grains };
           return result;
         });
     });
