@@ -1,6 +1,6 @@
 # Contributing to vam-online
 
-First and foremost, thank you! We appreciate that you want to contribute to vam-online, your time is valuable, and your contributions mean a lot to us.
+Thanks for actually checking the contribution guide! I hope it helps get you on board.
 
 **What does "contributing" mean?**
 
@@ -12,46 +12,62 @@ Creating an issue is the simplest form of contributing to a project. But there a
 
 If you'd like to learn more about contributing in general, the [Guide to Idiomatic Contributing](https://github.com/jonschlinkert/idiomatic-contributing) has a lot of useful information.
 
-**Showing support for vam-online**
-
-Please keep in mind that open source software is built by people like you, who spend their free time creating things the rest the community can use.
-
-Don't have time to contribute? No worries, here are some other ways to show your support for vam-online:
-
-- star the [project](https://github.com/mackiedrew/vam-online/)
-- tweet your support for vam-online
-
 ## Issues
 
 ### Before creating an issue
 
-Please try to determine if the issue is caused by an underlying library, and if so, create the issue there. Sometimes this is difficult to know. We only ask that you attempt to give a reasonable attempt to find out. Oftentimes the readme will have advice about where to go to create issues.
+Check to make sure the issue doesn't exist already in the [issues](https://github.com/mackiedrew/vam-online/issues) list.
 
-Try to follow these guidelines
-
-- **Investigate the issue**:
-- **Check the readme** - oftentimes you will find notes about creating issues, and where to go depending on the type of issue.
-- Create the issue in the appropriate repository.
+Make if you are making an issue it is about the `master` branch. If it is related to a branch then you are almost certainly better off making a comment inside the pull request.
 
 ### Creating an issue
 
-Please be as descriptive as possible when creating an issue. Give us the information we need to successfully answer your question or address your issue by answering the following in your issue:
+When creating an issue, follow the template provided by the issue template automatically added when you start a new issue. Try to be as descriptive as possible.
 
-- **version**: please note the version of vam-online are you using
-- **extensions, plugins, helpers, etc** (if applicable): please list any extensions you're using
-- **error messages**: please paste any error messages into the issue, or a [gist](https://gist.github.com/)
+You should remember to utilize the organizational tools on GitHub and if appropriate, set the following:
 
-## Above and beyond
+- Labels
+- Assignment
+- Project
+- Milestone
 
-Here are some tips for creating idiomatic issues. Taking just a little bit extra time will make your issue easier to read, easier to resolve, more likely to be found by others who have the same or similar issue in the future.
+## Commits
 
-- read the [Guide to Idiomatic Contributing](https://github.com/jonschlinkert/idiomatic-contributing)
-- take some time to learn basic markdown. This [markdown cheatsheet](https://gist.github.com/jonschlinkert/5854601) is super helpful, as is the GitHub guide to [basic markdown](https://help.github.com/articles/markdown-basics/).
-- Learn about [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/). And if you want to really go above and beyond, read [mastering markdown](https://guides.github.com/features/mastering-markdown/).
-- use backticks to wrap code. This ensures that code will retain its format, making it much more readable to others
-- use syntax highlighting by adding the correct language name after the first "code fence"
+Commit messages are only important when merging into `master` but keeping good practice everywhere can help personally enforce good practices. General commit writing guidelines can be found [here](https://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-messages). 
+
+However, in additional we use a new kind of commit system which makes use of markdown-style emoji called [Gitmoji](https://gitmoji.carloscuesta.me/).
+
+Some basic formatting rules:
+- Start commit message with a [Gitmoji](https://gitmoji.carloscuesta.me/)
+- Follow with a descriptive title with no more than 50 characters including Gitmoji.
+- Do not end title with a period
+- Skip a line before writing the body
+- Include changes summarized in the body considering the question of **why** and not **how**.
+- You can also refer to an issue by using `Issue: #132` in the body
+
+### Example Commit Formatting
+
+```
+:emoji: The title should be no longer than 50
+
+See that space below the title, that should be there too. This line can
+not be longer than 72 characters either...
+
+I wouldn't worry too much about most commit messages though,
+we now squash commits before merging.
+
+```
+
+## Branches
+
+Our branching structure is actually not that important, typically we squash commits and shortly delete branches. But if you want a guide, try to loosely stick to: [A successful Git branching model](http://nvie.com/posts/a-successful-git-branching-model/).
 
 
-[node-glob]: https://github.com/isaacs/node-glob
-[micromatch]: https://github.com/jonschlinkert/micromatch
-[so]: http://stackoverflow.com/questions/tagged/vam-online
+## Pull Requests
+
+Pull requests can be made against new branches without requiring immediate action on the part of maintainers and reviewers. This can be used as means to track the current state of integrations like CircleCI, CodeCov and CodeClimate. 
+
+### General Guidelines
+- Always make a pull request against the `master` branch.
+- Follow the guide within the `PULL_REQUEST_TEMPLATE.md`
+- Always squash into `master`
