@@ -1,11 +1,17 @@
 codecov:
   token: eb51943d-60b7-41f2-ba0c-4e3dc0ea802d
+  branch: master
 
 coverage:
-  precision: 2
+  precision: 3
   round: down
-  range: "70...100"
+  range: "50...100"
 
+  status:
+    patch:
+      default:
+        enabled: false
+        
 comment:
   layout: "header, diff, changes, sunburst, uncovered"
   require_changes: false
