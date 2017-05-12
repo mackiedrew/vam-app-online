@@ -50,9 +50,6 @@ const magnifyView = (magnifyFactor: number): ThunkAction => {
     const currentViewRange: number = end - start;
     const targetViewRange: number = currentViewRange * magnifyFactor;
     const changedViewRange: number = targetViewRange - currentViewRange;
-    console.log("currentViewRange", currentViewRange);
-    console.log("targetViewRange", targetViewRange);
-    console.log("changedViewRange", changedViewRange);
     // Used for determining the maximum zoom out distance depending on tracks.
     const longestTrack: number = longestTrackLength(state);
     // Arbitrary constant; should see beyond longest track to see its end.
@@ -61,13 +58,14 @@ const magnifyView = (magnifyFactor: number): ThunkAction => {
     const targetNewEnd: number = end + changedViewRange;
     const cantAddToEnd: number = maxView - targetNewEnd;
     const targetEndBeyondMax: boolean = cantAddToEnd < 0;
-    const targetNewStart: number = targetEndBeyondMax ? cantAddToEnd : start;
-    console.log("targetNewEnd", targetNewEnd);
-    console.log("cantAddToEnd", cantAddToEnd);
-    console.log("targetEndBeyondMax", targetEndBeyondMax);
-    console.log("targetNewStart", targetNewStart);
-    // Bound new values to respective, logical end points. Probably over-kill.
-    const rawNewEnd: number = clamp(targetNewEnd, targetNewStart + 1, maxView);
+    const targetNewStart: number = targetEndBeyondMax
+      ? start + cantAddToEnd
+      : start;
+    /* Bound new values to respective, logical end points. Probably over-kill.
+     * Note: targetNewStart + 2 is the minimum because start < end, view span
+     * must always be at least 1, and end is not inclusive.
+     */
+    const rawNewEnd: number = clamp(targetNewEnd, targetNewStart + 2, maxView);
     const rawNewStart: number = clamp(targetNewStart, 0, rawNewEnd - 1);
     // View should only contain integers since it represents discrete frames.
     const newEnd: number = floor(rawNewEnd);
