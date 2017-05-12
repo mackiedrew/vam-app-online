@@ -28,7 +28,7 @@ exports[`<Track /> renders correctly with grains 1`] = `
         className="wave-block filler"
         style={
           Object {
-            "backgroundColor": "rgb(240, 230, 230)",
+            "backgroundColor": "rgb(240, 240, 240)",
             "flexGrow": 0,
           }
         }
@@ -53,7 +53,7 @@ exports[`<Track /> renders correctly with grains 1`] = `
         className="wave-block"
         style={
           Object {
-            "backgroundColor": "rgb(240, 240, 240)",
+            "backgroundColor": "rgb(240, 230, 230)",
             "flexGrow": 4,
           }
         }

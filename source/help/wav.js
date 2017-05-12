@@ -18,23 +18,30 @@ export const readFile = (url, filename) => {
   });
 };
 
+export const processWavData = ({ sampleRate, channelData }) => {
+  return {
+    data: channelData[0],
+    sampleRate
+  };
+};
+
+export const createGrains = (processedWavData, grainSize) => {
+  const { data, sampleRate } = processedWavData;
+  const protoGrains = createEquallySpacedGrains(data, grainSize);
+  const cases = createSampleCases(protoGrains, data, 2000);
+  const worker = new GrainAmplitudeWorker();
+  const promiseWorker = new PromiseWorker(worker);
+
+  const grainPromise = promiseWorker
+    .postMessage({ cases, grains: protoGrains })
+    .then(grains => ({ sampleRate, grains }));
+
+  return grainPromise;
+};
+
 export const richReadWav = (url, filename, grainSize) => {
   const richDataPromise = readFile(url, filename)
-    .then(({ sampleRate, channelData }) => ({
-      data: channelData[0],
-      sampleRate
-    }))
-    .then(({ data, sampleRate }) => {
-      const protoGrains = createEquallySpacedGrains(data, grainSize);
-      const cases = createSampleCases(protoGrains, data, 2000);
-      const worker = new GrainAmplitudeWorker();
-      const promiseWorker = new PromiseWorker(worker);
-      return promiseWorker
-        .postMessage({ cases, grains: protoGrains })
-        .then(grains => {
-          const result = { sampleRate, grains };
-          return result;
-        });
-    });
+    .then(processWavData)
+    .then(processedWavData => createGrains(processedWavData, grainSize));
   return richDataPromise;
 };

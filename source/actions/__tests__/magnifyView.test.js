@@ -20,21 +20,42 @@ describe("magnifyView() Thunk", () => {
     expect(typeof result).toBe("function");
   });
 
-  it("dispatch a magnifyView action", () => {
-    const store = mockStore({
+  it("dispatch expected magnifyView action", () => {
+    const mockState = {
       tracks: {
+        trackList: { "123ABC": { grains: [{ end: 200 }] } },
         view: {
           start: 10,
           end: 100
         }
       }
+    };
+
+    it("without hitting bounds and zooming out", () => {
+      const store = mockStore(mockState);
+      store.dispatch(magnifyView(1.5));
+      const result = store.getActions();
+      expect(result[0].type).toBe(MAGNIFY_VIEW);
+      expect(result[1].payload).toEqual({ start: 10, end: 145 });
+      expect(result[1].type).toBe(SET_VIEW);
     });
-    store.dispatch(magnifyView(1.5));
-    const result = store.getActions();
 
-    expect(result[0].type).toBe(MAGNIFY_VIEW);
+    it("without hitting bounds and zooming in", () => {
+      const store = mockStore(mockState);
+      store.dispatch(magnifyView(0.5));
+      const result = store.getActions();
+      expect(result[0].type).toBe(MAGNIFY_VIEW);
+      expect(result[1].payload).toEqual({ start: 10, end: 55 });
+      expect(result[1].type).toBe(SET_VIEW);
+    });
 
-    expect(result[1].payload).toEqual({ start: 10, end: 150 });
-    expect(result[1].type).toBe(SET_VIEW);
+    it("without hitting bounds and zooming in", () => {
+      const store = mockStore(mockState);
+      store.dispatch(magnifyView(0.5));
+      const result = store.getActions();
+      expect(result[0].type).toBe(MAGNIFY_VIEW);
+      expect(result[1].payload).toEqual({ start: 10, end: 55 });
+      expect(result[1].type).toBe(SET_VIEW);
+    });
   });
 });
