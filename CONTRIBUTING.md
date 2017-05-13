@@ -18,7 +18,7 @@ If you'd like to learn more about contributing in general, the [Guide to Idiomat
 
 Check to make sure the issue doesn't exist already in the [issues](https://github.com/mackiedrew/vam-online/issues) list.
 
-Make if you are making an issue it is about the `master` branch. If it is related to a branch then you are almost certainly better off making a comment inside the pull request.
+Make sure if you are making an issue it is about the `master` branch. If it is related to a branch then you are almost certainly better off making a comment inside the pull request.
 
 ### Creating an issue
 
@@ -35,7 +35,7 @@ You should remember to utilize the organizational tools on GitHub and if appropr
 
 Commit messages are only important when merging into `master` but keeping good practice everywhere can help personally enforce good practices. General commit writing guidelines can be found [here](https://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-messages). 
 
-However, in additional we use a new kind of commit system which makes use of markdown-style emoji called [Gitmoji](https://gitmoji.carloscuesta.me/).
+However, in addition we use a new kind of commit system which makes use of markdown-style emoji called [Gitmoji](https://gitmoji.carloscuesta.me/).
 
 Some basic formatting rules:
 - Start commit message with a [Gitmoji](https://gitmoji.carloscuesta.me/)
