@@ -56,10 +56,16 @@ Even though languages mix and mingle in really abstract ways now a days you look
 
 # Development
 
+## Contributing
+
+All the information you need about contributing can be found in the [CONTRIBUTING.md](https://github.com/mackiedrew/vam-online/blob/master/CONTRIBUTING.md) file in root.
+
 ## Installation
-1. Clone repository: `git clone https://github.com/mackiedrew/vam-online.git`
-2. Globally install yarn: `npm install -g yarn`
-3. Go to the cloned repository directory and run `yarn`
+1. Install [Node](https://nodejs.org/en/download/) matching the version in [.nvmrc](https://github.com/mackiedrew/vam-online/blob/master/.nvmrc). I recommend using NVM to change node version on the fly. But pick your poison.
+2. Install [Git](https://git-scm.com/downloads).
+3. Install [Yarn](https://yarnpkg.com/en/docs/install).
+4. Clone repository: `git clone https://github.com/mackiedrew/vam-online.git`
+5. Go to the cloned repository directory and run `yarn`
 
 ## Testing
 
@@ -71,6 +77,12 @@ To run flow checking you can run:
 
 To run a full test suit, including all the linting. This will run through a lot of tests and take a while, but if everything passes, you can be pretty confident you did really good.
 `yarn test`
+
+## Coverage
+
+Coverage can be reported by running `yarn unit` which will report the unit test coverage after running all tests. Coverage will be reported even if the tests don't pass.
+
+Coverage can also be reported to see how much of the code is covered by **Flow** by running the command: `yarn coverage:flow`. This is a style of testing coverage because flow can be interpreted as a means to prevent unforseen runtime errors and therefore works as a functional test.
 
 ## Linting
 
