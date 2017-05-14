@@ -66,10 +66,10 @@ export class SeekBar extends Component {
     this.props.shiftView(-1.0);
   }
   handleZoomIn() {
-    this.props.magnifyView(0.75);
+    this.props.magnifyView(2 / 3);
   }
   handleZoomOut() {
-    this.props.magnifyView(1.50);
+    this.props.magnifyView(3 / 2);
   }
   handleTogglePlay() {
     this.props.toggleCurrentlyPlaying();

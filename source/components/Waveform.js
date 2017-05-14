@@ -39,7 +39,7 @@ const Waveform = ({
       maxAmplitude={maxAmplitude}
       selected={selected}
       setSeekPosition={setSeekPosition}
-      tags={grainTags[i]}
+      tags={grainTags[i - 1]}
     />
   ));
 
