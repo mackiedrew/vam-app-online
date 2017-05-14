@@ -1,3 +1,5 @@
+// @flow
+
 // Libraries
 import { createSelector } from "reselect";
 
@@ -5,13 +7,22 @@ import { createSelector } from "reselect";
 import { objectToArray } from "../help/generic";
 import { max } from "../help/math";
 
-// Other Selector
+// Selectors
 import trackLengths from "./trackLengths";
 
-const longestTrackLength = createSelector(trackLengths, lengths => {
-  const lengthArray = objectToArray(lengths);
-  const longest = max(lengthArray);
+/**
+ * Find the largest value in a ID-matched length object.
+ * 
+ * @param {Object} lengths Object with trackIds matched to their lengths.
+ * @returns {number} Longest track length as a number.
+ */
+const longestTrackLengthCore = (lengths: {}): number => {
+  const lengthArray: Array<number> = objectToArray(lengths);
+  const longest: number = max(lengthArray);
   return longest;
-});
+};
+
+// Selector Construction
+const longestTrackLength = createSelector(trackLengths, longestTrackLengthCore);
 
 export default longestTrackLength;
