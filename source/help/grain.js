@@ -158,27 +158,51 @@ export const createSampleCases = (
  * @param {Array} grains Entire array of grains.
  * @param {Object} view Which frames (samples) should be seen, with start and
  * end keys.
- * @returns {Object} Returns an object containing two keys, startIndex and
- * endIndex, which indicate (inclusively) the grains that are fully within the
- * view window.
+ * @returns {Array} Returns an array containing which indicate (inclusively)
+ * the grains that are fully within the view window.
  */
 export const grainIndexesInView = (
   grains: grainArray,
-  { start, end }: viewType
-): { startIndex: number, endIndex: number } => {
-  const lastIndex: number = grains.length - 1;
-  const trackLength: number = grains[lastIndex].end;
-  const startIndex: number = divisionBinarySearch(start, grains, trackLength);
+  view: viewType
+): [number, number] => {
+  // Get start of view and enf of view with pre-cautious defaults
+  const { start = 0, end = Infinity }: { start: number, end: number } = view;
 
-  const endIndexFromSearch: number = divisionBinarySearch(
-    end,
-    grains,
-    trackLength
-  );
-  const endIndex: number = endIndexFromSearch === -1
-    ? lastIndex
-    : endIndexFromSearch;
-  const indexesInView = { startIndex, endIndex };
+  // Calculate total length of array as a help to the search function.
+  const grainsLength: number = grains.length;
+  const maxGrainsIndex: number = grainsLength - 1;
+  const lastGrain: grainType = grains[maxGrainsIndex];
+  const heapSize: number = lastGrain.end;
+
+  // Find points where the start and end values of view cut the grain array.
+  const search = divisionBinarySearch;
+  const startSearch: number = search(start, grains, heapSize);
+  const endSearch: number = search(end - 1, grains, heapSize);
+
+  // No indexes in view, quick exit.
+  if (startSearch === -1) {
+    return [-1, -1];
+  }
+
+  // Protect against values that are "not found" for the end value.
+  const endCandidate: number = endSearch === -1 ? maxGrainsIndex : endSearch;
+
+  // Check to see if the returned values contain a whole grain.
+  const startSearchGrain: grainType = grains[startSearch];
+  const endSearchGrain: grainType = grains[endCandidate];
+  const isStartSearchFull: boolean = start <= startSearchGrain.start;
+  const isEndSearchFull: boolean = end >= endSearchGrain.end;
+
+  // These should represent full grains.
+  const firstFullIndex: number = isStartSearchFull
+    ? startSearch
+    : startSearch + 1;
+  const lastFullIndex: number = isEndSearchFull
+    ? endCandidate
+    : endCandidate - 1;
+
+  // Construct return item which has inclusive indexes for full array.
+  const indexesInView = [firstFullIndex, lastFullIndex];
   return indexesInView;
 };
 
@@ -204,43 +228,6 @@ export const createFillerGrain = (
 });
 
 /**
- * 
- * 
- * @param {Array} grains Entire array of grains.
- * @param {Object} view Which frames (samples) should be seen, with start and
- * end keys.
- * @returns {Array} Returns a list of grains that need to be show with included
- * filler grains.
- */
-export const whichGrainsToShow = (
-  grains: grainArray,
-  view: viewType
-): grainArray => {
-  const { start, end } = view;
-  const { startIndex, endIndex } = grainIndexesInView(grains, view);
-
-  // Start Filler Grain
-  const firstGrainToShow = grains[startIndex];
-  const moreStart = startIndex !== 0;
-  const startFiller = createFillerGrain(
-    start,
-    firstGrainToShow.start,
-    moreStart
-  );
-
-  // End Filler Grain
-  const lastGrainToShow = grains[endIndex];
-  const lastGrainIndex = grains.length - 1;
-  const moreEnd = lastGrainIndex !== endIndex;
-  const endFiller = createFillerGrain(lastGrainToShow.end, end, moreEnd);
-
-  const grainsToInclude = grains.slice(startIndex, endIndex + 1);
-
-  const grainsToShow = [startFiller, ...grainsToInclude, endFiller];
-  return grainsToShow;
-};
-
-/**
  * Compares `start` and `end` keys of a grain against a target to ensure it is
  * within that grain.
  * 
@@ -248,9 +235,13 @@ export const whichGrainsToShow = (
  * @param {Object} grain The grain to check if the target is within.
  * @returns {boolean} Whether target value is in a grain.
  */
-export const isInGrain = (target: number, grain: grainType): boolean => {
-  const aboveStart = target >= grain.start;
-  const belowEnd = target < grain.end;
-  const inGrain = aboveStart && belowEnd;
+export const isInGrain = (
+  target: number,
+  grain: grainType = { start: Infinity, end: -Infinity }
+): boolean => {
+  const { start, end } = grain;
+  const aboveStart: boolean = target >= start;
+  const belowEnd: boolean = target < end;
+  const inGrain: boolean = aboveStart && belowEnd;
   return inGrain;
 };

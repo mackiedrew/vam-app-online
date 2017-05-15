@@ -1,11 +1,11 @@
 // @flow
 
+// Flow Types
+import type { grainType } from "../constants/flowTypes";
+
 // Render
 import React, { Component } from "react";
 import "../styles/WaveBlock.styl";
-
-// Types
-import type { grainType } from "../constants/flowTypes";
 
 /**
  * Used to display a single grain of a track.
@@ -27,59 +27,59 @@ class WaveBlock extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  waveBlockStyle(
-    grain: grainType,
-    tags: { quiet: boolean } = { quiet: false }
-  ): {} {
+  waveBlockStyle(grain: grainType): { flexGrow: number } {
     const { start, end } = grain;
-    const quiet = tags.quiet;
     const length = end - start;
-    const backgroundColor = quiet ? "rgb(240, 230, 230)" : "rgb(240, 240, 240)";
-    const style = { flexGrow: length, backgroundColor };
+    const style = { flexGrow: length };
     return style;
   }
 
   amplitudeStyle(
-    selected: boolean | void,
     amplitude: number = 0,
     maxAmplitude: number = Infinity
-  ): {} {
+  ): { height: string } {
     const fillPercentage: number = amplitude / maxAmplitude;
     const height = `${fillPercentage * 100}%`;
-    const opacity = selected ? "1.0" : "0.4";
-    const style = { height, opacity };
+    const style = { height };
     return style;
   }
 
+  /**
+   * Handles a click event of the whole WaveBlock. Should set seek line to the 
+   * start of the grain.
+   * 
+   * @returns {void} Nothing returned.
+   */
   handleClick() {
     const { grain: { start }, setSeekPosition } = this.props;
     setSeekPosition(start);
   }
 
   render() {
-    const { grain, selected, maxAmplitude, tags } = this.props;
-    const { filler, more } = grain;
-    const amplitudeStyle = this.amplitudeStyle(
-      selected,
-      grain.amplitude,
-      maxAmplitude
-    );
-    const waveBlockStyle = this.waveBlockStyle(grain, tags);
-    const extraClasses: string =
-      (filler ? " filler" : "") + (more ? " more" : "");
-    const note: string = more ? "more..." : filler ? "track ends" : "";
+    // Breakout values
+    const { grain, selected, maxAmplitude, tags = {} } = this.props;
+    const { disabled } = grain;
+
+    // Figure out styles derived from props.
+    const amplitudeStyle = this.amplitudeStyle(grain.amplitude, maxAmplitude);
+    const waveBlockStyle: { flexGrow: number } = this.waveBlockStyle(grain);
+
+    // Figure out classes derived from props.
+    const isDisabled: string = disabled ? "disabled" : "enabled";
+    const isSelected: string = selected ? "selected" : "unselected";
+    const tagsAsStrings: Array<string> = Object.keys(tags);
+    const appliedTags: Array<string> = tagsAsStrings.filter(tag => tags[tag]);
+    const extraClasses: string = appliedTags.join(" ");
 
     return (
-      <div className={`wave-block${extraClasses}`} style={waveBlockStyle}>
-        <div className="note">
-          {note}
-        </div>
-        <button
-          className="amplitude"
-          onClick={this.handleClick}
-          style={amplitudeStyle}
-        />
-      </div>
+      <button
+        className={`wave-block ${isDisabled} ${isSelected} ${extraClasses}`}
+        disabled={disabled}
+        onClick={this.handleClick}
+        style={waveBlockStyle}
+      >
+        <div className={"amplitude"} style={amplitudeStyle} />
+      </button>
     );
   }
 }

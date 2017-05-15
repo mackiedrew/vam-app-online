@@ -7,17 +7,19 @@
   flex-direction column
   justify-content center
   margin 0
+  padding 0
   height 100%
   overflow hidden
+  background-color rgb(240, 240, 240)
 
-  .note
-    position absolute
-    width 100%
-    text-align center
-    color darken($color-divider, 10)
-    margin-top -20px
+  &.selected
+    opacity 1.0
+
+  &.unselected
+    opacity 0.4
 
   .amplitude
+    position absolute
     display block
     margin auto 0
     padding 0
@@ -26,7 +28,10 @@
     transform scaleY(0.8)
     transition all 0.2s ease
     width 100%
-    
+
+  &.quiet
+    background-color rgb(240, 230, 230)
+
   &:hover
     filter: brightness(1.05)
 
@@ -36,7 +41,9 @@
       transition all 0.2s ease
       cursor pointer
 
-.filler
+.disabled
+
+  background-color darken($color-divider, 2)
 
   &:hover
     filter: brightness(1)
@@ -46,18 +53,3 @@
 
     &:hover
       filter: brightness(1)
-
-
-.more
-
-  .note
-    overflow visible
-    position absolute
-    width 100%
-    text-align center
-    color rgba(0, 0, 0, 0.6)
-    margin-top 0
-    transform rotate(-90deg)
-
-  .amplitude
-    background-color rgba(0, 0, 0, 0)

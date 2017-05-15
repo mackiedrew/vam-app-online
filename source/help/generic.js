@@ -37,11 +37,14 @@ export const logicalSegment = (
   array: numberArray,
   segmentSize: number
 ): grainArray => {
-  const totalSegments = Math.ceil(array.length / segmentSize);
-  const segmentsRange = range(totalSegments);
-  const starts = segmentsRange.map(segment => segment * segmentSize);
+  const totalSegments: number = Math.ceil(array.length / segmentSize);
+  const segmentsRange: Array<number> = range(totalSegments);
+  const starts: Array<number> = segmentsRange.map(
+    (segmentIndex: number): number => segmentIndex * segmentSize
+  );
+  const maxSegmentIndex: number = totalSegments - 1;
   const ends = segmentsRange.map(segment => {
-    return segment === totalSegments - 1
+    return segment === maxSegmentIndex
       ? array.length - 1
       : (segment + 1) * segmentSize;
   });
@@ -105,7 +108,7 @@ export const divisionBinarySearch = (
     return -1;
   }
   const low = 0;
-  const high = heap.length;
+  const high = heap.length - 1;
   return simpleDivisionBinarySearch(target, heap, low, high);
 };
 

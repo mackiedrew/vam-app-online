@@ -190,14 +190,20 @@ describe("createSampleCases()", () => {
 
 describe("grainIndexesInView()", () => {
   const testGrains = [
-    { start: 0, end: 2 },
-    { start: 2, end: 4 },
-    { start: 4, end: 6 },
-    { start: 6, end: 8 }
+    { start: 0, end: 10 },
+    { start: 10, end: 20 },
+    { start: 20, end: 30 },
+    { start: 30, end: 40 },
+    { start: 40, end: 50 },
+    { start: 50, end: 60 },
+    { start: 60, end: 70 },
+    { start: 70, end: 80 },
+    { start: 80, end: 90 },
+    { start: 90, end: 100 }
   ];
   const testView = {
-    start: 2,
-    end: 5
+    start: 0,
+    end: 50
   };
   const testGrainsLength = testGrains[testGrains.length - 1].end;
   const basicResult = grainIndexesInView(
@@ -207,12 +213,102 @@ describe("grainIndexesInView()", () => {
   );
 
   it("returns an array with startIndex and endIndex", () => {
-    expect(basicResult.startIndex).toBeDefined();
-    expect(basicResult.endIndex).toBeDefined();
+    expect(basicResult[0]).toBeDefined();
+    expect(basicResult[1]).toBeDefined();
   });
 
   it("returns an array with startIndex being less than or equal to endIndex", () => {
-    expect(basicResult.startIndex).toBeLessThanOrEqual(basicResult.endIndex);
+    expect(basicResult[0]).toBeLessThanOrEqual(basicResult[1]);
+  });
+
+  it("returns the whole track when view equals track length", () => {
+    const instanceView = { start: 0, end: 100 };
+    const expected = [0, 9];
+    const result = grainIndexesInView(testGrains, instanceView);
+    expect(result[0]).toBeDefined();
+    expect(result[1]).toBeDefined();
+    expect(result[0]).toBeLessThanOrEqual(result[1]);
+    expect(result).toEqual(expected);
+  });
+
+  it("returns the whole track when view is larger than track length", () => {
+    const instanceView = { start: 0, end: 200 };
+    const expected = [0, 9];
+    const result = grainIndexesInView(testGrains, instanceView);
+    expect(result[0]).toBeDefined();
+    expect(result[1]).toBeDefined();
+    expect(result[0]).toBeLessThanOrEqual(result[1]);
+    expect(result).toEqual(expected);
+  });
+
+  it("returns double -1 when the view completely misses the track", () => {
+    const instanceView = { start: 200, end: 300 };
+    const expected = [-1, -1];
+    const result = grainIndexesInView(testGrains, instanceView);
+    expect(result[0]).toBeDefined();
+    expect(result[1]).toBeDefined();
+    expect(result[0]).toBeLessThanOrEqual(result[1]);
+    expect(result).toEqual(expected);
+  });
+
+  it("returns the expected track when view is to the left and full", () => {
+    const instanceView = { start: 0, end: 50 };
+    const expected = [0, 4];
+    const result = grainIndexesInView(testGrains, instanceView);
+    expect(result[0]).toBeDefined();
+    expect(result[1]).toBeDefined();
+    expect(result[0]).toBeLessThanOrEqual(result[1]);
+    expect(result).toEqual(expected);
+  });
+
+  it("returns the expected track when view is to the right and full", () => {
+    const instanceView = { start: 50, end: 100 };
+    const expected = [5, 9];
+    const result = grainIndexesInView(testGrains, instanceView);
+    expect(result[0]).toBeDefined();
+    expect(result[1]).toBeDefined();
+    expect(result[0]).toBeLessThanOrEqual(result[1]);
+    expect(result).toEqual(expected);
+  });
+
+  it("returns the expected track when view is in the middle and full", () => {
+    const instanceView = { start: 30, end: 60 };
+    const expected = [3, 5];
+    const result = grainIndexesInView(testGrains, instanceView);
+    expect(result[0]).toBeDefined();
+    expect(result[1]).toBeDefined();
+    expect(result[0]).toBeLessThanOrEqual(result[1]);
+    expect(result).toEqual(expected);
+  });
+
+  it("returns the expected track when view is to the left and partial", () => {
+    const instanceView = { start: 0, end: 65 };
+    const expected = [0, 5];
+    const result = grainIndexesInView(testGrains, instanceView);
+    expect(result[0]).toBeDefined();
+    expect(result[1]).toBeDefined();
+    expect(result[0]).toBeLessThanOrEqual(result[1]);
+    expect(result).toEqual(expected);
+  });
+
+  it("returns the expected track when view is to the right and partial", () => {
+    const instanceView = { start: 10, end: 100 };
+    const expected = [1, 9];
+    const result = grainIndexesInView(testGrains, instanceView);
+    expect(result[0]).toBeDefined();
+    expect(result[1]).toBeDefined();
+    expect(result[0]).toBeLessThanOrEqual(result[1]);
+    expect(result).toEqual(expected);
+  });
+
+  it("returns the expected track when view is in the middle and partial", () => {
+    const instanceView = { start: 10, end: 90 };
+    const expected = [1, 8];
+    const result = grainIndexesInView(testGrains, instanceView);
+    expect(result[0]).toBeDefined();
+    expect(result[1]).toBeDefined();
+    expect(result[0]).toBeLessThanOrEqual(result[1]);
+    expect(result).toEqual(expected);
   });
 });
 

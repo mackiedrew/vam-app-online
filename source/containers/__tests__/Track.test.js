@@ -4,6 +4,7 @@ import {
   mapDispatchToProps
 } from "../Track";
 jest.mock("../TrackControls", () => "TrackControls");
+jest.mock("../../components/Waveform", () => "Waveform");
 jest.mock("../../help/wav", () => ({
   richReadWav: () =>
     new Promise(resolve =>
