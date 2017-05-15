@@ -5,12 +5,11 @@ exports[`<Waveform /> renders correctly with a grains 1`] = `
   className="waveform"
 >
   <button
-    className="wave-block enabled"
+    className="wave-block enabled unselected "
     disabled={undefined}
     onClick={[Function]}
     style={
       Object {
-        "backgroundColor": "rgb(240, 240, 240)",
         "flexGrow": 3,
       }
     }
@@ -20,7 +19,6 @@ exports[`<Waveform /> renders correctly with a grains 1`] = `
       style={
         Object {
           "height": "40%",
-          "opacity": "0.4",
         }
       }
     />

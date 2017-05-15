@@ -2,12 +2,11 @@
 
 exports[`<WaveBlock /> renders correctly with bare minimum props 1`] = `
 <button
-  className="wave-block enabled"
+  className="wave-block enabled unselected "
   disabled={undefined}
   onClick={[Function]}
   style={
     Object {
-      "backgroundColor": "rgb(240, 240, 240)",
       "flexGrow": 13,
     }
   }
@@ -17,7 +16,6 @@ exports[`<WaveBlock /> renders correctly with bare minimum props 1`] = `
     style={
       Object {
         "height": "0%",
-        "opacity": "0.4",
       }
     }
   />
@@ -26,12 +24,11 @@ exports[`<WaveBlock /> renders correctly with bare minimum props 1`] = `
 
 exports[`<WaveBlock /> renders correctly with bare minimum props, and filler grain 1`] = `
 <button
-  className="wave-block disabled"
+  className="wave-block disabled unselected "
   disabled={true}
   onClick={[Function]}
   style={
     Object {
-      "backgroundColor": "rgb(240, 240, 240)",
       "flexGrow": 13,
     }
   }
@@ -41,7 +38,6 @@ exports[`<WaveBlock /> renders correctly with bare minimum props, and filler gra
     style={
       Object {
         "height": "0%",
-        "opacity": "0.4",
       }
     }
   />
@@ -50,12 +46,11 @@ exports[`<WaveBlock /> renders correctly with bare minimum props, and filler gra
 
 exports[`<WaveBlock /> renders correctly with bare minimum props, and grain with amplitude 1`] = `
 <button
-  className="wave-block enabled"
+  className="wave-block enabled unselected "
   disabled={undefined}
   onClick={[Function]}
   style={
     Object {
-      "backgroundColor": "rgb(240, 240, 240)",
       "flexGrow": 13,
     }
   }
@@ -65,7 +60,6 @@ exports[`<WaveBlock /> renders correctly with bare minimum props, and grain with
     style={
       Object {
         "height": "0%",
-        "opacity": "0.4",
       }
     }
   />
@@ -74,12 +68,11 @@ exports[`<WaveBlock /> renders correctly with bare minimum props, and grain with
 
 exports[`<WaveBlock /> renders correctly with bare minimum props, and maxAmplitude 1`] = `
 <button
-  className="wave-block enabled"
+  className="wave-block enabled unselected "
   disabled={undefined}
   onClick={[Function]}
   style={
     Object {
-      "backgroundColor": "rgb(240, 240, 240)",
       "flexGrow": 13,
     }
   }
@@ -89,7 +82,6 @@ exports[`<WaveBlock /> renders correctly with bare minimum props, and maxAmplitu
     style={
       Object {
         "height": "0%",
-        "opacity": "0.4",
       }
     }
   />
@@ -98,12 +90,11 @@ exports[`<WaveBlock /> renders correctly with bare minimum props, and maxAmplitu
 
 exports[`<WaveBlock /> renders correctly with bare minimum props, and more grain 1`] = `
 <button
-  className="wave-block enabled"
+  className="wave-block enabled unselected "
   disabled={undefined}
   onClick={[Function]}
   style={
     Object {
-      "backgroundColor": "rgb(240, 240, 240)",
       "flexGrow": 13,
     }
   }
@@ -113,7 +104,6 @@ exports[`<WaveBlock /> renders correctly with bare minimum props, and more grain
     style={
       Object {
         "height": "0%",
-        "opacity": "0.4",
       }
     }
   />
@@ -122,12 +112,11 @@ exports[`<WaveBlock /> renders correctly with bare minimum props, and more grain
 
 exports[`<WaveBlock /> renders correctly with bare minimum props, and quiet grain 1`] = `
 <button
-  className="wave-block enabled"
+  className="wave-block enabled unselected quiet"
   disabled={undefined}
   onClick={[Function]}
   style={
     Object {
-      "backgroundColor": "rgb(240, 230, 230)",
       "flexGrow": 13,
     }
   }
@@ -137,7 +126,6 @@ exports[`<WaveBlock /> renders correctly with bare minimum props, and quiet grai
     style={
       Object {
         "height": "0%",
-        "opacity": "0.4",
       }
     }
   />
@@ -146,12 +134,11 @@ exports[`<WaveBlock /> renders correctly with bare minimum props, and quiet grai
 
 exports[`<WaveBlock /> renders correctly with bare minimum props, and selected 1`] = `
 <button
-  className="wave-block enabled"
+  className="wave-block enabled selected "
   disabled={undefined}
   onClick={[Function]}
   style={
     Object {
-      "backgroundColor": "rgb(240, 240, 240)",
       "flexGrow": 13,
     }
   }
@@ -161,7 +148,6 @@ exports[`<WaveBlock /> renders correctly with bare minimum props, and selected 1
     style={
       Object {
         "height": "0%",
-        "opacity": "1.0",
       }
     }
   />
