@@ -5,7 +5,7 @@ exports[`<Track /> renders correctly 1`] = `
   className="seek-bar"
 >
   <div
-    className="control-bar"
+    className="seek-controls"
   >
     <button
       className="seek-minus-1"
@@ -60,7 +60,7 @@ exports[`<Track /> renders correctly 1`] = `
     </button>
   </div>
   <div
-    className="indicators"
+    className="view-controls"
   >
     <button
       className="view-previous"

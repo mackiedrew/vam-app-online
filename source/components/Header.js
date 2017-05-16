@@ -9,6 +9,9 @@ import Icon from "../components/Icon";
 import ToolBar from "../components/ToolBar";
 import AddTrack from "../containers/AddTrack";
 
+// Images
+import logo from "../images/logo.svg";
+
 /**
  * Loads the header containing some higher level functions, especially those
  * concerning UI.
@@ -16,19 +19,11 @@ import AddTrack from "../containers/AddTrack";
  * @param {Object} props React props.
  * @returns {Object} React element.
  */
-const Header = ({
-  toggleFiltersMenu,
-  toggleSettingsMenu
-}: {
-  toggleFiltersMenu: () => {},
-  toggleSettingsMenu: () => {}
-}) => (
+const Header = ({ toggleSettingsMenu }: { toggleSettingsMenu: Function }) => (
   <header className="header">
     <div className="main-bar">
-      <button className="toggle-filters" onClick={toggleFiltersMenu}>
-        <Icon icon="library_add" />
-      </button>
-      <h1>VAM</h1>
+      <img alt="Valence Logo" className="logo" src={logo} />
+      <h1>Vam Editor</h1>
       <button>
         <Icon icon="file_download" />
       </button>

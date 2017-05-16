@@ -26,8 +26,8 @@ button
     filter brightness(1.2)
     
   &:active
-    filter brightness(0.8)
     transition filter 0.2s ease
+    filter brightness(0.8)
 
 audio
   display block
@@ -45,6 +45,10 @@ audio
     display flex
     flex-grow 1
     overflow auto
+    flex-wrap nowrap
+
+    .tracks-container
+      flex-grow 1
 
   footer
     flex-shrink 0

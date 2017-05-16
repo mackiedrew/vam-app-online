@@ -7,25 +7,13 @@ exports[`<Header /> renders correctly with props 1`] = `
   <div
     className="main-bar"
   >
-    <button
-      className="toggle-filters"
-      onClick={[Function]}
-    >
-      <i
-        className="material-icons icon"
-        style={
-          Object {
-            "fontSize": "24px",
-            "height": "24px",
-            "width": "24px",
-          }
-        }
-      >
-        library_add
-      </i>
-    </button>
+    <img
+      alt="Valence Logo"
+      className="logo"
+      src="#"
+    />
     <h1>
-      VAM
+      Vam Editor
     </h1>
     <button>
       <i

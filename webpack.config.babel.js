@@ -143,22 +143,7 @@ const configuration = {
         loader: ["style-loader", "css-loader", "stylus-loader"]
       },
       {
-        test: /\.svg$/,
-        loader: [
-          "babel-loader",
-          {
-            loader: "react-svg-loader",
-            query: {
-              svgo: {
-                plugins: [{ removeTitle: true }],
-                floatPrecision: 2
-              }
-            }
-          }
-        ]
-      },
-      {
-        test: /\.(png|jpe?g|gif)$/,
+        test: /\.(png|jpe?g|gif|svg)$/,
         exclude: /node_modules/,
         loader: [
           "file-loader?name=images/[hash].[ext]",

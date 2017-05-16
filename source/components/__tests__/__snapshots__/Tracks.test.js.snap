@@ -4,60 +4,6 @@ exports[`<Tracks /> renders correctly with tracks 1`] = `
 <section
   className="tracks"
 >
-  <div
-    className="time-bar"
-  >
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-  </div>
   <AudioManager />
   <Track
     id="track1"
@@ -72,60 +18,6 @@ exports[`<Tracks /> renders correctly without tracks 1`] = `
 <section
   className="tracks"
 >
-  <div
-    className="time-bar"
-  >
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-    <div
-      className="slice"
-    >
-      00s:000
-    </div>
-  </div>
   <AudioManager />
   <div
     className="no-tracks"

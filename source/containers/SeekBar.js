@@ -87,7 +87,7 @@ export class SeekBar extends Component {
 
     return (
       <div className="seek-bar">
-        <div className="control-bar">
+        <div className="seek-controls">
           <button className="seek-minus-1" onClick={this.handleMinus1}>
             <Icon icon="skip_previous" />
           </button>
@@ -102,7 +102,7 @@ export class SeekBar extends Component {
             <Icon icon="skip_next" />
           </button>
         </div>
-        <div className="indicators">
+        <div className="view-controls">
           <button className="view-previous" onClick={this.handleViewPrevious}>
             <Icon icon="navigate_before" />
           </button>

@@ -1,23 +1,23 @@
 @require './palette.styl'
 
 .settings
+  display inline-block
   background-color $color-lite
-  transition all 0.6s ease
-  overflow hidden
+  transition all 0.4s ease
+  overflow-x hidden
+  overflow-y auto
+  opacity 1
+  flex-grow 0
+  flex-shrink 0
+  flex-basis 250px
 
   fieldset
     display flex
+    flex-wrap wrap
     flex-grow 1
     border 0
 
-.settings-opened
-  display block
-  opacity 1
-  width auto
-  transition all 0.6s ease
-
-.settings-closed
-  display inline-block
-  opacity 0
-  width 0
-  transition all 0.6s ease
+  &.closed
+    display inline-block
+    flex-basis 0
+    opacity 0

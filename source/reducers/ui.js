@@ -1,11 +1,7 @@
-import {
-  TOGGLE_SETTINGS_MENU,
-  TOGGLE_FILTERS_MENU
-} from "../constants/actionTypes";
+import { TOGGLE_SETTINGS_MENU } from "../constants/actionTypes";
 
 export const DEFAULT_STATE = {
-  settingsOpen: false,
-  filtersOpen: false
+  settingsOpen: false
 };
 
 const UIReducer = (state = DEFAULT_STATE, action) => {
@@ -14,11 +10,6 @@ const UIReducer = (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         settingsOpen: !state.settingsOpen
-      };
-    case TOGGLE_FILTERS_MENU:
-      return {
-        ...state,
-        filtersOpen: !state.filtersOpen
       };
     default:
       return state;

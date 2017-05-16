@@ -1,5 +1,6 @@
 // Render
 import React, { Component } from "react";
+import "../styles/AudioManager.styl";
 
 // State
 import { connect } from "react-redux";

@@ -22,7 +22,6 @@ const mockSettings = {
 const mockProps = {
   id: "123ABC",
   selectedTrack: "123ABC",
-  filtersOpen: true,
   settings: mockSettings,
   trackList: { "123ABC": { muted: true }, "456DEF": { muted: false } }
 };

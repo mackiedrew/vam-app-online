@@ -1,6 +1,5 @@
 import { App as Subject, mapStateToProps, mapDispatchToProps } from "../App";
 jest.mock("../../components/Header", () => "Header");
-jest.mock("../../components/Filters", () => "Filters");
 jest.mock("../../components/Tracks", () => "Tracks");
 jest.mock("../Settings", () => "Settings");
 jest.mock("../SeekBar", () => "SeekBar");
@@ -22,7 +21,6 @@ const mockSettings = {
 
 const mockProps = {
   seekPosition: 10,
-  filtersOpen: true,
   settings: mockSettings,
   trackList: [{ id: "123ABC" }, { id: "456DEF" }],
   view: { start: 0, end: 20 }
@@ -52,37 +50,26 @@ describe("<App />", () => {
         trackList: 2,
         view: 3
       },
-      ui: {
-        filtersOpen: 4
-      },
-      settings: 5
+      settings: 4
     };
 
     it("returns object with expected properties", () => {
-      const {
-        seekPosition,
-        filtersOpen,
-        settings,
-        trackList,
-        view
-      } = mapStateToProps(mockState);
+      const { seekPosition, settings, trackList, view } = mapStateToProps(
+        mockState
+      );
       expect(seekPosition).toBe(1);
       expect(trackList).toBe(2);
       expect(view).toBe(3);
-      expect(filtersOpen).toBe(4);
-      expect(settings).toBe(5);
+      expect(settings).toBe(4);
     });
   });
 
   describe("mapDispatchToProps()", () => {
     it("returns object with expected properties", () => {
       const mockDispatch = sinon.spy();
-      const {
-        toggleFiltersMenu,
-        toggleSettingsMenu,
-        generateNextTrackId
-      } = mapDispatchToProps(mockDispatch);
-      expect(typeof toggleFiltersMenu).toBe("function");
+      const { toggleSettingsMenu, generateNextTrackId } = mapDispatchToProps(
+        mockDispatch
+      );
       expect(typeof toggleSettingsMenu).toBe("function");
       expect(typeof generateNextTrackId).toBe("function");
     });

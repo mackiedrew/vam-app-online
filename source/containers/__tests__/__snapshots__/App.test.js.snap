@@ -5,31 +5,79 @@ exports[`<App /> renders correctly 1`] = `
   className="app"
 >
   <Header
-    toggleFiltersMenu={undefined}
     toggleSettingsMenu={undefined}
   />
   <main>
-    <Filters
-      open={true}
-    />
-    <Tracks
-      trackList={
-        Array [
-          Object {
-            "id": "123ABC",
-          },
-          Object {
-            "id": "456DEF",
-          },
-        ]
-      }
-      view={
-        Object {
-          "end": 20,
-          "start": 0,
+    <div
+      className="tracks-container"
+    >
+      <div
+        className="time-bar"
+      >
+        <div
+          className="slice"
+        >
+          00s:000
+        </div>
+        <div
+          className="slice"
+        >
+          00s:000
+        </div>
+        <div
+          className="slice"
+        >
+          00s:000
+        </div>
+        <div
+          className="slice"
+        >
+          00s:000
+        </div>
+        <div
+          className="slice"
+        >
+          00s:000
+        </div>
+        <div
+          className="slice"
+        >
+          00s:000
+        </div>
+        <div
+          className="slice"
+        >
+          00s:000
+        </div>
+        <div
+          className="slice"
+        >
+          00s:000
+        </div>
+        <div
+          className="slice"
+        >
+          00s:000
+        </div>
+        <div
+          className="slice"
+        >
+          00s:000
+        </div>
+      </div>
+      <Tracks
+        trackList={
+          Array [
+            Object {
+              "id": "123ABC",
+            },
+            Object {
+              "id": "456DEF",
+            },
+          ]
         }
-      }
-    />
+      />
+    </div>
     <Settings />
   </main>
   <footer>
