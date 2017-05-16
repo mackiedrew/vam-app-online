@@ -6,8 +6,8 @@
     "Mackie Drew <mackiedrew@gmail.com> (http://mackiedrew.com/)"
   ],
   "license": "CC-BY-NC-ND-4.0",
-  "description": "Electron implementation of VAM.",
-  "main": "electron.js",
+  "description": "Browser-based implementation of the mechanical turk portion of Vam.",
+  "main": "source/index.js",
   "scripts": {
     "clean": "rm -rf build/",
     "clean:full": "rm -rf build/ coverage/ node_modules/ yarn.lock",
@@ -61,17 +61,17 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 85,
-        "functions": 85,
-        "lines": 85,
-        "statements": 85
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
       }
     }
   },
   "flow-coverage-report": {
     "flowCommandPath": "./node_modules/.bin/flow",
     "outputDir": "./flow-coverage",
-    "threshold": 65,
+    "threshold": 70,
     "excludeGlob": [
       "./node_modules/**",
       "./source/**/*/",

@@ -1,19 +1,12 @@
 ## Pull Request Requirements
-<!-- List which issue numbers this pull request addresses, delimit with commas. -->
 **This pull request addresses the issue(s):** #???
 <!-- List exactly what you wanted to solve here. -->
-
-
 
 ## Change Summary
 <!-- Add itemized changes here. -->
 
-
-
 ## Screenshots (if applicable)
 <!-- It may be worth showing a before and after. -->
-
-
 
 ## Contributor Checklist
 

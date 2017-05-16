@@ -92,14 +92,14 @@ const productionPlugins = [
   new OfflinePlugin()
 ];
 
-const productionEntry = [
+const developmentEntry = [
   "react-hot-loader/patch",
   `webpack-dev-server/client?http://${HOST}:${PORT}`,
   "webpack/hot/only-dev-server",
   "./index.js"
 ];
 
-const entry = isProduction ? "./index.js" : productionEntry;
+const entry = isProduction ? "./index.js" : developmentEntry;
 
 const configuration = {
   context: join(__dirname, source_directory),
