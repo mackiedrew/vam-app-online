@@ -1,12 +1,7 @@
 // @flow
 
 // Flow Types
-import type {
-  grainArray,
-  State,
-  Settings,
-  trackType
-} from "../constants/flowTypes";
+import type { State, Settings, trackType } from "../constants/flowTypes";
 
 // Libraries
 import { createSelector } from "reselect";
@@ -15,7 +10,7 @@ import { createSelector } from "reselect";
 import { areGrainsQuiet } from "../help/grainTags";
 
 // State Filters
-const getTargetTrack = (state: State, props: { id: string }): grainArray => {
+const getTargetTrack = (state: State, props: { id: string }): {} => {
   const { id } = props;
   return state.tracks.trackList[id];
 };
@@ -28,7 +23,7 @@ const getSettings = (state: State): Settings => {
  * Creates an object corresponding to each grain classifying it based on 
  * predetermined rules.
  * 
- * @param {Array} track Track object.
+ * @param {Object} track Track object.
  * @param {Object} settings Current settings state.
  * @returns {Array} Array of objects containing all tag data.
  */

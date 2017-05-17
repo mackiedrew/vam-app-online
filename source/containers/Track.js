@@ -14,10 +14,10 @@ import setSeekPosition from "../actions/setSeekPosition";
 // Selectors
 import maxAmplitudes from "../selectors/maxAmplitudes";
 import getGrainTagsFactory from "../selectors/getGrainTagsFactory";
+import getVisibleGrainsFactory from "../selectors/getVisibleGrainsFactory";
 
 // Helpers
 import { richReadWav } from "../help/wav";
-import { whichGrainsToShow } from "../help/grain";
 
 // Components
 import Waveform from "../components/Waveform";
@@ -91,14 +91,13 @@ export class Track extends Component {
       trackList,
       setSeekPosition,
       maxAmplitudes,
-      grainTags
+      grainTags,
+      visibleGrains
     } = this.props;
     const track = trackList[id];
     const { grains, fileName } = track;
     const selected = selectedTrack === id;
     const maxAmplitude = maxAmplitudes[id];
-
-    const grainsToShow = grains ? whichGrainsToShow(grains, view) : grains;
 
     // Generate styles
     const seekLineStyle = this.generateSeekLineStyle(view, seekPosition);
@@ -111,7 +110,7 @@ export class Track extends Component {
           <div className="seek-line" style={seekLineStyle} />
           <Waveform
             grainTags={grainTags}
-            grains={grainsToShow || []}
+            grains={visibleGrains}
             maxAmplitude={maxAmplitude}
             selected={selected}
             setSeekPosition={setSeekPosition}
@@ -125,6 +124,7 @@ export class Track extends Component {
 
 export const makeMapStateToProps = () => {
   const getGrainTags = getGrainTagsFactory();
+  const getVisibleGrains = getVisibleGrainsFactory();
   const mapStateToProps = (state, props) => ({
     seekPosition: state.tracks.seekPosition,
     trackList: state.tracks.trackList,
@@ -132,7 +132,8 @@ export const makeMapStateToProps = () => {
     view: state.tracks.view,
     settings: state.settings,
     maxAmplitudes: maxAmplitudes(state),
-    grainTags: getGrainTags(state, props)
+    grainTags: getGrainTags(state, props),
+    visibleGrains: getVisibleGrains(state, props)
   });
   return mapStateToProps;
 };

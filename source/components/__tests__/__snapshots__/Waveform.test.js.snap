@@ -4,31 +4,25 @@ exports[`<Waveform /> renders correctly with a grains 1`] = `
 <div
   className="waveform"
 >
-  <div
-    className="wave-block"
+  <button
+    className="wave-block enabled unselected "
+    disabled={undefined}
+    onClick={[Function]}
     style={
       Object {
-        "backgroundColor": "rgb(240, 240, 240)",
         "flexGrow": 3,
       }
     }
   >
     <div
-      className="note"
-    >
-      
-    </div>
-    <button
       className="amplitude"
-      onClick={[Function]}
       style={
         Object {
           "height": "40%",
-          "opacity": "0.4",
         }
       }
     />
-  </div>
+  </button>
 </div>
 `;
 

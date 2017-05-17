@@ -1,197 +1,155 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<WaveBlock /> renders correctly with bare minimum props 1`] = `
-<div
-  className="wave-block"
+<button
+  className="wave-block enabled unselected "
+  disabled={undefined}
+  onClick={[Function]}
   style={
     Object {
-      "backgroundColor": "rgb(240, 240, 240)",
       "flexGrow": 13,
     }
   }
 >
   <div
-    className="note"
-  >
-    
-  </div>
-  <button
     className="amplitude"
-    onClick={[Function]}
     style={
       Object {
         "height": "0%",
-        "opacity": "0.4",
       }
     }
   />
-</div>
+</button>
 `;
 
 exports[`<WaveBlock /> renders correctly with bare minimum props, and filler grain 1`] = `
-<div
-  className="wave-block filler"
+<button
+  className="wave-block disabled unselected "
+  disabled={true}
+  onClick={[Function]}
   style={
     Object {
-      "backgroundColor": "rgb(240, 240, 240)",
       "flexGrow": 13,
     }
   }
 >
   <div
-    className="note"
-  >
-    track ends
-  </div>
-  <button
     className="amplitude"
-    onClick={[Function]}
     style={
       Object {
         "height": "0%",
-        "opacity": "0.4",
       }
     }
   />
-</div>
+</button>
 `;
 
 exports[`<WaveBlock /> renders correctly with bare minimum props, and grain with amplitude 1`] = `
-<div
-  className="wave-block"
+<button
+  className="wave-block enabled unselected "
+  disabled={undefined}
+  onClick={[Function]}
   style={
     Object {
-      "backgroundColor": "rgb(240, 240, 240)",
       "flexGrow": 13,
     }
   }
 >
   <div
-    className="note"
-  >
-    
-  </div>
-  <button
     className="amplitude"
-    onClick={[Function]}
     style={
       Object {
         "height": "0%",
-        "opacity": "0.4",
       }
     }
   />
-</div>
+</button>
 `;
 
 exports[`<WaveBlock /> renders correctly with bare minimum props, and maxAmplitude 1`] = `
-<div
-  className="wave-block"
+<button
+  className="wave-block enabled unselected "
+  disabled={undefined}
+  onClick={[Function]}
   style={
     Object {
-      "backgroundColor": "rgb(240, 240, 240)",
       "flexGrow": 13,
     }
   }
 >
   <div
-    className="note"
-  >
-    
-  </div>
-  <button
     className="amplitude"
-    onClick={[Function]}
     style={
       Object {
         "height": "0%",
-        "opacity": "0.4",
       }
     }
   />
-</div>
+</button>
 `;
 
 exports[`<WaveBlock /> renders correctly with bare minimum props, and more grain 1`] = `
-<div
-  className="wave-block more"
+<button
+  className="wave-block enabled unselected "
+  disabled={undefined}
+  onClick={[Function]}
   style={
     Object {
-      "backgroundColor": "rgb(240, 240, 240)",
       "flexGrow": 13,
     }
   }
 >
   <div
-    className="note"
-  >
-    more...
-  </div>
-  <button
     className="amplitude"
-    onClick={[Function]}
     style={
       Object {
         "height": "0%",
-        "opacity": "0.4",
       }
     }
   />
-</div>
+</button>
 `;
 
 exports[`<WaveBlock /> renders correctly with bare minimum props, and quiet grain 1`] = `
-<div
-  className="wave-block"
+<button
+  className="wave-block enabled unselected quiet"
+  disabled={undefined}
+  onClick={[Function]}
   style={
     Object {
-      "backgroundColor": "rgb(240, 230, 230)",
       "flexGrow": 13,
     }
   }
 >
   <div
-    className="note"
-  >
-    
-  </div>
-  <button
     className="amplitude"
-    onClick={[Function]}
     style={
       Object {
         "height": "0%",
-        "opacity": "0.4",
       }
     }
   />
-</div>
+</button>
 `;
 
 exports[`<WaveBlock /> renders correctly with bare minimum props, and selected 1`] = `
-<div
-  className="wave-block"
+<button
+  className="wave-block enabled selected "
+  disabled={undefined}
+  onClick={[Function]}
   style={
     Object {
-      "backgroundColor": "rgb(240, 240, 240)",
       "flexGrow": 13,
     }
   }
 >
   <div
-    className="note"
-  >
-    
-  </div>
-  <button
     className="amplitude"
-    onClick={[Function]}
     style={
       Object {
         "height": "0%",
-        "opacity": "1.0",
       }
     }
   />
-</div>
+</button>
 `;

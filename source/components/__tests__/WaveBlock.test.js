@@ -10,9 +10,9 @@ const grainWithAmplitude = {
   amplitude: 1
 };
 
-const grainFiller = {
+const grainDisabled = {
   ...grainWithAmplitude,
-  filler: true
+  disabled: true
 };
 
 const grainMore = {
@@ -41,7 +41,7 @@ describe("<WaveBlock />", () => {
       shallow(<Subject {...mockProps} grain={grainWithAmplitude} />);
     });
     it("with bare minimum props, and filler grain", () => {
-      shallow(<Subject {...mockProps} grain={grainFiller} />);
+      shallow(<Subject {...mockProps} grain={grainDisabled} />);
     });
     it("with bare minimum props, and more grain", () => {
       shallow(<Subject {...mockProps} grain={grainMore} />);
@@ -76,7 +76,7 @@ describe("<WaveBlock />", () => {
     });
     it("with bare minimum props, and filler grain", () => {
       const tree = renderer
-        .create(<Subject {...mockProps} grain={grainFiller} />)
+        .create(<Subject {...mockProps} grain={grainDisabled} />)
         .toJSON();
       expect(tree).toMatchSnapshot();
     });
@@ -111,7 +111,7 @@ describe("<WaveBlock />", () => {
         <Subject {...mockProps} setSeekPosition={mockSetSeekPosition} />
       );
       const expectedArgument = mockProps.grain.start;
-      subject.find("button.amplitude").simulate("click");
+      subject.find("button.wave-block").simulate("click");
       expect(mockSetSeekPosition.calledWith(expectedArgument)).toBe(true);
     });
   });

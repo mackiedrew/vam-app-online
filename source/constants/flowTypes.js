@@ -4,8 +4,7 @@ export type grainType = {
   start: number,
   end: number,
   amplitude?: number,
-  filler?: boolean,
-  more?: boolean,
+  disabled?: boolean,
   quiet?: boolean
 };
 
