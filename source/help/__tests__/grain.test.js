@@ -1,4 +1,5 @@
 import {
+  isInGrain,
   splitGrainIntoTwo,
   splitGrain,
   createEquallySpacedGrains,
@@ -241,6 +242,16 @@ describe("grainIndexesInView()", () => {
     expect(result).toEqual(expected);
   });
 
+  it("returns the whole track no view is provided", () => {
+    const instanceView = {};
+    const expected = [0, 9];
+    const result = grainIndexesInView(testGrains, instanceView);
+    expect(result[0]).toBeDefined();
+    expect(result[1]).toBeDefined();
+    expect(result[0]).toBeLessThanOrEqual(result[1]);
+    expect(result).toEqual(expected);
+  });
+
   it("returns double -1 when the view completely misses the track", () => {
     const instanceView = { start: 200, end: 300 };
     const expected = [-1, -1];
@@ -327,5 +338,47 @@ describe("createFillerGrain()", () => {
 
   it("returns object with key of filler", () => {
     expect(result.filler).toBe(true);
+  });
+});
+
+describe("isInGrain()", () => {
+  it("returns false if empty grain is provided", () => {
+    const testTarget = 10;
+    const testGrain = {};
+    const result = isInGrain(testTarget, testGrain);
+    const expected = false;
+    expect(result).toBe(expected);
+  });
+
+  it("returns false if no grain is provided", () => {
+    const testTarget = 10;
+    const testGrain = undefined;
+    const result = isInGrain(testTarget, testGrain);
+    const expected = false;
+    expect(result).toBe(expected);
+  });
+
+  it("returns true if target is the same as grain start", () => {
+    const testTarget = 5;
+    const testGrain = { start: 5, end: 15 };
+    const result = isInGrain(testTarget, testGrain);
+    const expected = true;
+    expect(result).toBe(expected);
+  });
+
+  it("returns false if target is the same as grain end", () => {
+    const testTarget = 15;
+    const testGrain = { start: 5, end: 15 };
+    const result = isInGrain(testTarget, testGrain);
+    const expected = false;
+    expect(result).toBe(expected);
+  });
+
+  it("returns true if target is the same as grain end minus 1", () => {
+    const testTarget = 15 - 1;
+    const testGrain = { start: 5, end: 15 };
+    const result = isInGrain(testTarget, testGrain);
+    const expected = true;
+    expect(result).toBe(expected);
   });
 });

@@ -43,7 +43,7 @@ describe("getVisibleGrainsCore() factory", () => {
 
   it("returns expected result when there are no grains in view", () => {
     const result = getVisibleGrainsCore(mockTrack, { start: 200, end: 300 });
-    expect(result).toEqual([]);
+    expect(result).toEqual([{ disabled: true, end: 300, start: 200 }]);
   });
 
   it("returns expected result when getting a middle section of a track", () => {
