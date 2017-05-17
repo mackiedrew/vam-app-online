@@ -50,7 +50,7 @@ export const getVisibleGrainsCore = (
   );
 
   if (startIndex === -1 && endIndex === -1) {
-    return [];
+    return [{ start: view.start, end: view.end, disabled: true }];
   }
 
   /* Generate a filler grain which fills the space between full grains and
