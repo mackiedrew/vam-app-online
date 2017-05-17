@@ -110,7 +110,7 @@
   "devDependencies": {
     "babel-core": "6.24.1",
     "babel-eslint": "7.2.3",
-    "babel-jest": "20.0.1",
+    "babel-jest": "20.0.3",
     "babel-loader": "7.0.0",
     "babel-plugin-syntax-dynamic-import": "6.18.0",
     "babel-plugin-transform-async-to-generator": "6.24.1",
@@ -145,7 +145,7 @@
     "husky": "0.13.3",
     "img-loader": "^2.0.0",
     "istanbul": "0.4.5",
-    "jest": "20.0.1",
+    "jest": "20.0.3",
     "jest-cli": "20.0.1",
     "jest-css-modules": "1.1.0",
     "json-loader": "0.5.4",
