@@ -4,12 +4,8 @@
 import React from "react";
 import "../styles/Tracks.styl";
 
-// Types
-import type { viewType } from "../constants/flowTypes";
-
 // Components
 import Track from "../containers/Track";
-import TimeBar from "../components/TimeBar";
 import AudioManager from "../containers/AudioManager";
 
 /**
@@ -18,7 +14,7 @@ import AudioManager from "../containers/AudioManager";
  * @param {Object} props React props.
  * @returns {Object} React element.
  */
-const Tracks = ({ trackList, view }: { trackList: {}, view: viewType }) => {
+const Tracks = ({ trackList }: { trackList: {} }) => {
   const trackIds: Array<string> = Object.keys(trackList);
   const numberOfTracks: number = trackIds.length;
   const tracksExist: boolean = numberOfTracks > 0;
@@ -28,7 +24,6 @@ const Tracks = ({ trackList, view }: { trackList: {}, view: viewType }) => {
 
   return (
     <section className="tracks">
-      <TimeBar view={view} />
       <AudioManager />
       {children}
     </section>

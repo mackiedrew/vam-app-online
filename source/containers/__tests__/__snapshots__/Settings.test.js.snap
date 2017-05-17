@@ -2,7 +2,7 @@
 
 exports[`<Settings /> renders correctly while closed 1`] = `
 <aside
-  className="settings settings-closed"
+  className="settings closed"
 >
   <fieldset>
     <div
@@ -183,7 +183,7 @@ exports[`<Settings /> renders correctly while closed 1`] = `
 
 exports[`<Settings /> renders correctly while open 1`] = `
 <aside
-  className="settings settings-open"
+  className="settings open"
 >
   <fieldset>
     <div

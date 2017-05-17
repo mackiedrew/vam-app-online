@@ -8,13 +8,12 @@ import { bindActionCreators } from "redux";
 
 // Actions
 import generateNextTrackId from "../actions/generateNextTrackId";
-import toggleFiltersMenu from "../actions/toggleFiltersMenu";
 import toggleSettingsMenu from "../actions/toggleSettingsMenu";
 
 // Components
 import Header from "../components/Header";
-import Filters from "../components/Filters";
 import Tracks from "../components/Tracks";
+import TimeBar from "../components/TimeBar";
 
 // Containers
 import Settings from "../containers/Settings";
@@ -33,23 +32,16 @@ export class App extends Component {
   }
 
   render() {
-    const {
-      filtersOpen,
-      trackList,
-      toggleSettingsMenu,
-      toggleFiltersMenu,
-      view
-    } = this.props;
+    const { trackList, toggleSettingsMenu, view } = this.props;
 
     return (
       <div className="app">
-        <Header
-          toggleFiltersMenu={toggleFiltersMenu}
-          toggleSettingsMenu={toggleSettingsMenu}
-        />
+        <Header toggleSettingsMenu={toggleSettingsMenu} />
         <main>
-          <Filters open={filtersOpen} />
-          <Tracks trackList={trackList} view={view} />
+          <div className="tracks-container">
+            <TimeBar view={view} />
+            <Tracks trackList={trackList} />
+          </div>
           <Settings />
         </main>
         <footer>
@@ -65,7 +57,6 @@ export const mapStateToProps = state => {
     seekPosition: state.tracks.seekPosition,
     trackList: state.tracks.trackList,
     view: state.tracks.view,
-    filtersOpen: state.ui.filtersOpen,
     settings: state.settings
   };
 };
@@ -73,7 +64,6 @@ export const mapStateToProps = state => {
 export const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      toggleFiltersMenu: toggleFiltersMenu,
       toggleSettingsMenu: toggleSettingsMenu,
       generateNextTrackId: generateNextTrackId
     },

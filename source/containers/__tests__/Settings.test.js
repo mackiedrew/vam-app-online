@@ -54,14 +54,14 @@ describe("<Settings />", () => {
     expect(subject.is("aside.settings")).toBe(true);
   });
 
-  it("renders with settings-open class when passed open prop as true", () => {
+  it("renders with open class when passed open prop as true", () => {
     const subject = shallow(<Subject {...mockProps} open />);
-    expect(subject.is("aside.settings-open")).toBe(true);
+    expect(subject.is("aside.open")).toBe(true);
   });
 
-  it("renders with settings-closed class when passed open prop as false", () => {
+  it("renders with closed class when passed open prop as false", () => {
     const subject = shallow(<Subject {...mockProps} open={false} />);
-    expect(subject.is("aside.settings-closed")).toBe(true);
+    expect(subject.is("aside.closed")).toBe(true);
   });
 
   describe("renders correctly", () => {

@@ -40,7 +40,7 @@ export class Settings extends Component {
   }
 
   settingsClass(open) {
-    return open ? "settings-open" : "settings-closed";
+    return open ? "open" : "closed";
   }
 
   generateFields(fields, handleChange) {

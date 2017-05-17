@@ -92,14 +92,14 @@ const productionPlugins = [
   new OfflinePlugin()
 ];
 
-const productionEntry = [
+const developmentEntry = [
   "react-hot-loader/patch",
   `webpack-dev-server/client?http://${HOST}:${PORT}`,
   "webpack/hot/only-dev-server",
   "./index.js"
 ];
 
-const entry = isProduction ? "./index.js" : productionEntry;
+const entry = isProduction ? "./index.js" : developmentEntry;
 
 const configuration = {
   context: join(__dirname, source_directory),
@@ -143,22 +143,7 @@ const configuration = {
         loader: ["style-loader", "css-loader", "stylus-loader"]
       },
       {
-        test: /\.svg$/,
-        loader: [
-          "babel-loader",
-          {
-            loader: "react-svg-loader",
-            query: {
-              svgo: {
-                plugins: [{ removeTitle: true }],
-                floatPrecision: 2
-              }
-            }
-          }
-        ]
-      },
-      {
-        test: /\.(png|jpe?g|gif)$/,
+        test: /\.(png|jpe?g|gif|svg)$/,
         exclude: /node_modules/,
         loader: [
           "file-loader?name=images/[hash].[ext]",

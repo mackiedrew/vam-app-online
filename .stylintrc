@@ -36,7 +36,13 @@
     },
     "semicolons": "never",
     "sortOrder": [
+        "transition",
+        "transform",
         "position",
+        "top",
+        "left",
+        "bottom",
+        "right",
         "float",
         "display",
         "margin",
@@ -44,7 +50,9 @@
         "padding",
         "width",
         "height",
+        "min-height",
         "background",
+        "background-color",
         "color"
     ],
     "stackedProperties": "never",
