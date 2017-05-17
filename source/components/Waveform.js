@@ -5,7 +5,7 @@ import React from "react";
 import "../styles/Waveform.styl";
 
 // Types
-import type { grainArray } from "../constants/flowTypes";
+import type { grainArray, grainTagArray } from "../constants/flowTypes";
 
 // Components
 import WaveBlock from "../components/WaveBlock";
@@ -26,7 +26,7 @@ const Waveform = ({
   selected,
   setSeekPosition
 }: {
-  grainTags: Array<{ quiet: boolean }>,
+  grainTags: grainTagArray,
   grains: grainArray,
   maxAmplitude: number,
   selected: boolean | void,

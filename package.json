@@ -61,23 +61,24 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 90,
-        "functions": 90,
-        "lines": 90,
-        "statements": 90
+        "branches": 95,
+        "functions": 95,
+        "lines": 95,
+        "statements": 95
       }
     }
   },
   "flow-coverage-report": {
     "flowCommandPath": "./node_modules/.bin/flow",
     "outputDir": "./flow-coverage",
-    "threshold": 70,
+    "threshold": 80,
     "excludeGlob": [
       "./node_modules/**",
       "./source/**/*/",
       "./source/**/_*/**/*",
       "./**/*.test.js",
-      "./**/*.styl"
+      "./**/*.styl",
+      "./**/*.svg"
     ],
     "includeGlob": [
       "./source/**"

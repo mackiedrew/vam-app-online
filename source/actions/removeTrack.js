@@ -1,7 +1,13 @@
 // @flow
 
 // Flow Types
-import type { ReduxAction } from "../constants/flowTypes";
+import type {
+  Action,
+  State,
+  GetState,
+  Dispatch,
+  ThunkAction
+} from "../constants/flowTypes";
 
 // Action Type
 import { REMOVE_TRACK } from "../constants/actionTypes";
@@ -24,7 +30,7 @@ import { clamp } from "../help/math";
  * @returns {Object} Action: removes track by setting the track list to a new
  * object.
  */
-export const removeTrackSimple = (newTrackList: Object): ReduxAction => {
+export const removeTrackSimple = (newTrackList: Object): Action => {
   return { type: REMOVE_TRACK, payload: newTrackList };
 };
 
@@ -34,11 +40,11 @@ export const removeTrackSimple = (newTrackList: Object): ReduxAction => {
  * @param {string} trackId Which track to remove by ID.
  * @returns {Function} Action creator that removes a track from the track list. 
  */
-const removeTrack = (trackId: string) => {
-  return (dispatch: Function, getState: Function) => {
+const removeTrack = (trackId: string): ThunkAction => {
+  return (dispatch: Dispatch, getState: GetState): void => {
     // Get a list of existing tracks.
-    const state = getState();
-    const trackIds = trackIdArray(state);
+    const state: State = getState();
+    const trackIds: Array<string> = trackIdArray(state);
     const { trackList, selectedTrack } = state.tracks;
 
     // Reconstruct a whole new track list to avoid mutation.
