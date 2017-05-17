@@ -19,7 +19,7 @@ export const DEFAULT_STATE = {
   seekPosition: 0,
   trackList: {},
   nextTrackId: "track1",
-  selectedTrack: undefined,
+  selectedTrack: "unselected",
   currentlyPlaying: false,
   view: {
     start: 0,

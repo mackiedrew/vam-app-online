@@ -20,7 +20,8 @@ import selectTrack from "./selectTrack";
 /**
  * Action creator: creates an action that adds a new track into the track list.
  * 
- * @param {Object} newTrack Object that contains one key { [id]: {trackContents} }.
+ * @param {Object} newTrack Object that contains one key
+ * { [id]: {trackContents} }.
  * @returns {Object} Action: adds a new track into the track list.
  */
 export const addTrackSimple = (newTrack: {}): Action => {

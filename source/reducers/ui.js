@@ -1,10 +1,17 @@
+// @flow
+
+// Flow Types
+import type { UIState, Action } from "../constants/flowTypes";
+
+// Action Types
 import { TOGGLE_SETTINGS_MENU } from "../constants/actionTypes";
 
-export const DEFAULT_STATE = {
+// Initializing state
+export const DEFAULT_STATE: UIState = {
   settingsOpen: false
 };
 
-const UIReducer = (state = DEFAULT_STATE, action) => {
+const UIReducer = (state: UIState = DEFAULT_STATE, action: Action) => {
   switch (action.type) {
     case TOGGLE_SETTINGS_MENU:
       return {

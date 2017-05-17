@@ -1,4 +1,9 @@
-// Action Types
+// @flow
+
+// Flow Types
+import type { Action } from "../constants/flowTypes";
+
+// Action Type
 import { SET_TRACK_SAMPLE_RATE } from "../constants/actionTypes";
 
 /**
@@ -8,7 +13,7 @@ import { SET_TRACK_SAMPLE_RATE } from "../constants/actionTypes";
  * @param {string} sampleRate The sampleRate to set the specified track to.
  * @returns {Object} Action: sets the sampleRate key of the specified track.
  */
-const setTrackSampleRate = (trackId, sampleRate) => ({
+const setTrackSampleRate = (trackId: string, sampleRate: number): Action => ({
   type: SET_TRACK_SAMPLE_RATE,
   payload: { id: trackId, sampleRate }
 });
