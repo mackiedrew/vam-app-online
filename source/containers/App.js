@@ -1,3 +1,13 @@
+// @flow
+
+// Flow Types
+import type {
+  State,
+  Dispatch,
+  viewType,
+  ModalTypes
+} from "../constants/flowTypes";
+
 // Render
 import React, { Component } from "react";
 import "../styles/App.styl";
@@ -18,6 +28,7 @@ import TimeBar from "../components/TimeBar";
 // Containers
 import Settings from "../containers/Settings";
 import SeekBar from "../containers/SeekBar";
+import ModalManager from "../containers/ModalManager";
 
 /**
  * This used to be called "Tracks" but was refactored to be the main app since
@@ -26,7 +37,14 @@ import SeekBar from "../containers/SeekBar";
  * @extends React.Component
  */
 export class App extends Component {
-  constructor(props) {
+  constructor(props: {
+    trackList: Object,
+    view: viewType,
+    modalType: ModalTypes,
+    modalData: Object,
+    generateNextTrackId: Function,
+    toggleSettingsMenu: Function
+  }) {
     super(props);
     props.generateNextTrackId();
   }
@@ -47,12 +65,13 @@ export class App extends Component {
         <footer>
           <SeekBar />
         </footer>
+        <ModalManager />
       </div>
     );
   }
 }
 
-export const mapStateToProps = state => {
+export const mapStateToProps = (state: State): Object => {
   return {
     seekPosition: state.tracks.seekPosition,
     trackList: state.tracks.trackList,
@@ -61,7 +80,7 @@ export const mapStateToProps = state => {
   };
 };
 
-export const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = (dispatch: Dispatch): Function => {
   return bindActionCreators(
     {
       toggleSettingsMenu: toggleSettingsMenu,

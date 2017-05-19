@@ -10,6 +10,7 @@ import { bindActionCreators } from "redux";
 import selectTrack from "../actions/selectTrack";
 import removeTrack from "../actions/removeTrack";
 import toggleTrackMuted from "../actions/toggleTrackMuted";
+import makeModal from "../actions/makeModal";
 
 // Components
 import ToggleButton from "../components/ToggleButton";
@@ -31,7 +32,17 @@ export class TrackControls extends Component {
 
   // Button handleClick functions
   handleRemoveButton() {
-    this.props.removeTrack(this.props.id);
+    // Which props need easy-access?
+    const { makeModal, id, name } = this.props;
+    // What modal type should be shown?
+    const modalType = "REMOVE_TRACK";
+    // What data does the modal need to render correctly?
+    const modalData = {
+      trackId: id,
+      fileName: name
+    };
+    // How is the modal actually dispatched?
+    makeModal(modalType, modalData);
   }
 
   handleSelectTrack() {
@@ -87,7 +98,8 @@ export const mapDispatchToProps = dispatch => {
     {
       selectTrack: selectTrack,
       removeTrack: removeTrack,
-      toggleMuted: toggleTrackMuted
+      toggleMuted: toggleTrackMuted,
+      makeModal: makeModal
     },
     dispatch
   );

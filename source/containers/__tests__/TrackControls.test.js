@@ -23,10 +23,11 @@ const mockProps = {
   id: "123ABC",
   selectedTrack: "123ABC",
   settings: mockSettings,
+  makeModal: sinon.spy(),
   trackList: { "123ABC": { muted: true }, "456DEF": { muted: false } }
 };
 
-describe("<App />", () => {
+describe("<TrackControls />", () => {
   it("renders without crashing", () => {
     const subject = shallow(<Subject {...mockProps} />);
     expect(subject.is("div.track-controls")).toBe(true);
@@ -46,13 +47,13 @@ describe("<App />", () => {
     expect(mockToggleMuted.called).toBe(true);
   });
 
-  it("calls remoteTrack prop when handleRemoveButton is called", () => {
-    const mockRemoteTrack = sinon.spy();
+  it("calls makeModal prop when handleRemoveButton is called", () => {
+    const mockMakeModal = sinon.spy();
     const subject = shallow(
-      <Subject {...mockProps} removeTrack={mockRemoteTrack} />
+      <Subject {...mockProps} makeModal={mockMakeModal} />
     );
     subject.instance().handleRemoveButton();
-    expect(mockRemoteTrack.called).toBe(true);
+    expect(mockMakeModal.called).toBe(true);
   });
 
   it("calls selectTrack prop when handleSelectTrack is called", () => {

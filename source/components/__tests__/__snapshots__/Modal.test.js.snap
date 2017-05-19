@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Modal /> renders correctly with no button text props provided 1`] = `
+<div
+  className="modal"
+>
+  <div
+    className="dialog"
+  >
+    <h2
+      className="title"
+    >
+      Are you sure you want to remove the track?
+    </h2>
+    <p
+      className="text"
+    >
+      Once it is removed it cannot be undone.
+    </p>
+    <button
+      className="yes-button"
+      onClick={[Function]}
+    >
+      Confirm
+    </button>
+    <button
+      className="no-button"
+      onClick={undefined}
+    >
+      Cancel
+    </button>
+  </div>
+</div>
+`;
+
+exports[`<Modal /> renders correctly with props 1`] = `
+<div
+  className="modal"
+>
+  <div
+    className="dialog"
+  >
+    <h2
+      className="title"
+    >
+      Are you sure you want to remove the track?
+    </h2>
+    <p
+      className="text"
+    >
+      Once it is removed it cannot be undone.
+    </p>
+    <button
+      className="yes-button"
+      onClick={[Function]}
+    >
+      Yes
+    </button>
+    <button
+      className="no-button"
+      onClick={undefined}
+    >
+      No
+    </button>
+  </div>
+</div>
+`;

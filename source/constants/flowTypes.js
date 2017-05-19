@@ -62,8 +62,12 @@ export type Settings = {
   grain: settingsNumberField
 };
 
+export type ModalTypes = "REMOVE_TRACK" | "NONE";
+
 export type UIState = {
-  settingsOpen: boolean
+  settingsOpen: boolean,
+  modalType: ModalTypes,
+  modalData: Object
 };
 
 export type TracksState = {

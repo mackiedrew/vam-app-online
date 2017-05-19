@@ -23,7 +23,7 @@ const TimeBar = ({
   numberOfSlices = 10
 }: {
   view: viewType,
-  numberOfSlices: number
+  numberOfSlices?: number
 }) => {
   // Break out values
   const { start, end }: { start: number, end: number } = view;
