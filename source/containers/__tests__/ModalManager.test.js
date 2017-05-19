@@ -1,8 +1,12 @@
+<<<<<<< ef97b3dc783b5f27ace9bad51153d4797e1c70b8
 import {
   ModalManager as Subject,
   mapStateToProps,
   mapDispatchToProps
 } from "../ModalManager";
+=======
+import { ModalManager as Subject, mapStateToProps, mapDispatchToProps } from "../ModalManager";
+>>>>>>> :spakles: Added modals! Only one so far
 jest.mock("../../components/RemoveTrackModal", () => "RemoveTrackModal");
 
 const baseMockProps = {
@@ -62,6 +66,10 @@ describe("<ModalManager />", () => {
       expect(mockRemoveTrack.called).toBe(true);
       expect(mockClearModal.called).toBe(true);
     });
+<<<<<<< ef97b3dc783b5f27ace9bad51153d4797e1c70b8
+=======
+
+>>>>>>> :spakles: Added modals! Only one so far
   });
 
   describe("renders correctly", () => {
