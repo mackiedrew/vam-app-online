@@ -1,3 +1,16 @@
+// @flow
+
+// Flow Types
+import type {
+  viewType,
+  grainArray,
+  Settings,
+  trackType,
+  State,
+  Dispatch,
+  grainTagArray
+} from "../constants/flowTypes";
+
 // Render
 import React, { Component } from "react";
 import "../styles/Track.styl";
@@ -32,7 +45,26 @@ import TrackControls from "../containers/TrackControls";
  * @extends React.Component
  */
 export class Track extends Component {
-  constructor(props) {
+  readPath: () => void;
+  generateSeekLineStyle: (
+    view: viewType,
+    seekPosition: number
+  ) => { left: string };
+
+  constructor(props: {
+    selectedTrack: string,
+    view: viewType,
+    id: string,
+    seekPosition: number,
+    trackList: {},
+    setSeekPosition: Function,
+    maxAmplitudes: {},
+    grainTags: grainTagArray,
+    visibleGrains: grainArray,
+    settings: Settings,
+    setTrackSampleRate: Function,
+    setTrackGrains: Function
+  }) {
     super(props);
 
     // Read wav data from provided path
@@ -54,16 +86,18 @@ export class Track extends Component {
       setTrackSampleRate,
       setTrackGrains
     } = this.props;
-    const { fileName, url } = trackList[id];
+    const { fileName, url }: { fileName: string, url: string } = trackList[id];
     return richReadWav(
       url,
       fileName,
       settings.grain.value,
       settings.quietCutoff.value
-    ).then(({ sampleRate, grains }) => {
-      setTrackSampleRate(id, sampleRate);
-      setTrackGrains(id, grains);
-    });
+    ).then(
+      ({ sampleRate, grains }: { sampleRate: number, grains: grainArray }) => {
+        setTrackSampleRate(id, sampleRate);
+        setTrackGrains(id, grains);
+      }
+    );
   }
 
   /**
@@ -75,7 +109,10 @@ export class Track extends Component {
    * @param {number} seekPosition Value of current position of seek in frames.
    * @returns {Object} The new style object for in-line styling.
    */
-  generateSeekLineStyle({ start, end }, seekPosition) {
+  generateSeekLineStyle(
+    { start, end }: viewType,
+    seekPosition: number
+  ): { left: string } {
     const seekPercentageInView = (seekPosition - start) / end * 100;
     const seekLineStyle = { left: `${seekPercentageInView}%` };
     return seekLineStyle;
@@ -94,13 +131,16 @@ export class Track extends Component {
       grainTags,
       visibleGrains
     } = this.props;
-    const track = trackList[id];
-    const { grains, fileName } = track;
-    const selected = selectedTrack === id;
-    const maxAmplitude = maxAmplitudes[id];
+    const track: trackType = trackList[id];
+    const {
+      grains,
+      fileName
+    }: { grains: grainArray | void, fileName: string } = track;
+    const selected: boolean = selectedTrack === id;
+    const maxAmplitude: number = maxAmplitudes[id];
 
     // Generate styles
-    const seekLineStyle = this.generateSeekLineStyle(view, seekPosition);
+    const seekLineStyle: {} = this.generateSeekLineStyle(view, seekPosition);
 
     return (
       <div className="track" id={`track-${id}`}>
@@ -123,9 +163,9 @@ export class Track extends Component {
 }
 
 export const makeMapStateToProps = () => {
-  const getGrainTags = getGrainTagsFactory();
-  const getVisibleGrains = getVisibleGrainsFactory();
-  const mapStateToProps = (state, props) => ({
+  const getGrainTags: Function = getGrainTagsFactory();
+  const getVisibleGrains: Function = getVisibleGrainsFactory();
+  const mapStateToProps = (state: State, props: {}) => ({
     seekPosition: state.tracks.seekPosition,
     trackList: state.tracks.trackList,
     selectedTrack: state.tracks.selectedTrack,
@@ -138,7 +178,7 @@ export const makeMapStateToProps = () => {
   return mapStateToProps;
 };
 
-export const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators(
     {
       setTrackSampleRate: setTrackSampleRate,

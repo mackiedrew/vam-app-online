@@ -1,3 +1,8 @@
+// @flow
+
+// Flow Types
+import type { Action } from "../constants/flowTypes";
+
 // Action Type
 import { SET_TRACK_FILE_NAME } from "../constants/actionTypes";
 
@@ -8,9 +13,11 @@ import { SET_TRACK_FILE_NAME } from "../constants/actionTypes";
  * @param {string} fileName The file name to set the specified track to.
  * @returns {Object} Action: sets the fileName key of the specified track.
  */
-const setTrackFileName = (trackId, fileName) => ({
-  type: SET_TRACK_FILE_NAME,
-  payload: { id: trackId, fileName }
-});
+const setTrackFileName = (trackId: string, fileName: string): Action => {
+  return {
+    type: SET_TRACK_FILE_NAME,
+    payload: { id: trackId, fileName }
+  };
+};
 
 export default setTrackFileName;

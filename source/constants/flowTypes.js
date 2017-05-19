@@ -8,6 +8,10 @@ export type grainType = {
   quiet?: boolean
 };
 
+export type grainTag = {
+  quiet: boolean
+};
+
 export type viewType = {
   start: number,
   end: number
@@ -33,10 +37,13 @@ export type settingsNumberField = {
   unit?: string
 };
 
+export type settingsValue = number | string;
+
 export type settingsField = settingsTextField | settingsNumberField;
 
 // Array Types
 export type grainArray = Array<grainType>;
+export type grainTagArray = Array<grainTag>;
 export type numberArray = Array<number>;
 export type objectArray = Array<Object>;
 export type stringArray = Array<string>;
@@ -55,12 +62,21 @@ export type Settings = {
   grain: settingsNumberField
 };
 
+export type UIState = {
+  settingsOpen: boolean
+};
+
+export type TracksState = {
+  trackList: {},
+  view: viewType,
+  seekPosition: number,
+  currentlyPlaying: boolean,
+  selectedTrack: string
+};
+
 export type State = {
-  ui: {},
-  tracks: {
-    trackList: {},
-    view: viewType
-  },
+  ui: UIState,
+  tracks: TracksState,
   settings: Settings,
   keyboard: {}
 };
@@ -74,3 +90,12 @@ export type ActionCreator = () => Action;
 export type Dispatch = (
   action: Action | ThunkAction | PromiseAction | Array<Action>
 ) => any;
+
+// React
+export type Element<Config> = React$Element<Config>;
+export type AnyReactElement = ?Element<any>;
+export type ReactChildren =
+  | AnyReactElement
+  | Array<AnyReactElement>
+  | string
+  | number;

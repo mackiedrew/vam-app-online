@@ -1,5 +1,8 @@
 // @flow
 
+// Flow Types
+import type { ReactChildren } from "../constants/flowTypes";
+
 // Render
 import React from "react";
 
@@ -10,20 +13,20 @@ import React from "react";
  * @returns {Object} React element.
  */
 const ToggleButton = ({
-  on,
+  on = false,
   onContents,
   offContents,
   onFunction,
   offFunction
 }: {
-  on: boolean | void,
-  onContents: any,
-  offContents: any,
-  onFunction: () => {},
-  offFunction: () => {}
+  on: boolean,
+  onContents: ReactChildren,
+  offContents: ReactChildren,
+  onFunction: Function,
+  offFunction: Function
 }) => {
-  const onClick = on ? onFunction : offFunction;
-  const contents = on ? onContents : offContents;
+  const onClick: Function = on ? onFunction : offFunction;
+  const contents: ReactChildren = on ? onContents : offContents;
 
   return (
     <button className="toggle-button" onClick={onClick}>
