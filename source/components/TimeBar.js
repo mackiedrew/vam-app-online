@@ -6,7 +6,7 @@ import "../styles/TimeBar.styl";
 
 // Helpers
 import { framesToTimeStamp } from "../help/convert";
-import { range } from "../help/generic";
+import { range } from "../help/collections";
 import { floor } from "../help/math";
 
 // Types
