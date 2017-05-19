@@ -1,12 +1,18 @@
+<<<<<<< 772402a3454b26110ad4f1dbaaee916ec20ea809
 <<<<<<< ef97b3dc783b5f27ace9bad51153d4797e1c70b8
+=======
+>>>>>>> :memo::bug: Added missing docs and fixed binding bug
 import {
   ModalManager as Subject,
   mapStateToProps,
   mapDispatchToProps
 } from "../ModalManager";
+<<<<<<< 772402a3454b26110ad4f1dbaaee916ec20ea809
 =======
 import { ModalManager as Subject, mapStateToProps, mapDispatchToProps } from "../ModalManager";
 >>>>>>> :spakles: Added modals! Only one so far
+=======
+>>>>>>> :memo::bug: Added missing docs and fixed binding bug
 jest.mock("../../components/RemoveTrackModal", () => "RemoveTrackModal");
 
 const baseMockProps = {
@@ -66,10 +72,13 @@ describe("<ModalManager />", () => {
       expect(mockRemoveTrack.called).toBe(true);
       expect(mockClearModal.called).toBe(true);
     });
+<<<<<<< 772402a3454b26110ad4f1dbaaee916ec20ea809
 <<<<<<< ef97b3dc783b5f27ace9bad51153d4797e1c70b8
 =======
 
 >>>>>>> :spakles: Added modals! Only one so far
+=======
+>>>>>>> :memo::bug: Added missing docs and fixed binding bug
   });
 
   describe("renders correctly", () => {
