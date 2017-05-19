@@ -22,6 +22,12 @@ import removeTrack from "../actions/removeTrack";
 // Components
 import RemoveTrackModal from "../components/RemoveTrackModal";
 
+/**
+ * Manages the state of the currently displayed modal and composes more complex
+ * actions.
+ * 
+ * @extends React.Component
+ */
 export class ModalManager extends Component {
   removeTrackAndModal: Function;
 
@@ -32,10 +38,18 @@ export class ModalManager extends Component {
     removeTrack: Function
   }) {
     super(props);
+    // Bind props to class methods.
+    this.removeTrackAndModal = this.removeTrackAndModal.bind(this);
   }
 
+  /**
+   * Removes the track specified by the modal generating function. Then clears
+   * the modal.
+   */
   removeTrackAndModal() {
+    // Which props need easy access?
     const { data, removeTrack, clearModal } = this.props;
+    // Protects against type issues when no data is provided.
     removeTrack(data.trackId || "");
     clearModal();
   }
@@ -66,7 +80,7 @@ export class ModalManager extends Component {
       </div>
     );
   }
-};
+}
 
 export const makeMapStateToProps = () => {
   const mapStateToProps = (state: State) => ({

@@ -1,4 +1,8 @@
-import { ModalManager as Subject, mapStateToProps, mapDispatchToProps } from "../ModalManager";
+import {
+  ModalManager as Subject,
+  mapStateToProps,
+  mapDispatchToProps
+} from "../ModalManager";
 jest.mock("../../components/RemoveTrackModal", () => "RemoveTrackModal");
 
 const baseMockProps = {
@@ -58,7 +62,6 @@ describe("<ModalManager />", () => {
       expect(mockRemoveTrack.called).toBe(true);
       expect(mockClearModal.called).toBe(true);
     });
-
   });
 
   describe("renders correctly", () => {
