@@ -26,19 +26,24 @@ import getHotkeyValues from "../selectors/getHotkeyValues";
  */
 export class KeyboardManager extends Component {
   // Set flow types for class properties
-  hotkeys: Array<{
-    operation: Function,
-    binding: string
-  }>;
+  resetBindings: Function;
+  createBindings: Function;
+  manageBindings: Function;
 
   constructor(props: {
     hotkeyValues: HotkeyValues,
     toggleCurrentlyPlaying: Function
   }) {
     super(props);
+    this.createBindings = this.createBindings.bind(this);
   }
 
-  render() {
+  resetBindings() {
+    // Remove all existing keyboard bindings.
+    keyboard.reset();
+  }
+
+  createBindings() {
     const {
       hotkeyValues,
       toggleCurrentlyPlaying
@@ -46,22 +51,31 @@ export class KeyboardManager extends Component {
       hotkeyValues: HotkeyValues,
       toggleCurrentlyPlaying: Function
     } = this.props;
+
     // Set actual actions (not necessarily redux actions) of hotkey events.
     const hotkeyOperations = {
       play: toggleCurrentlyPlaying
     };
+    // Which keyboard operations currently have operations set?
     const setOperations: Array<string> = Object.keys(hotkeyOperations);
+    /* 
+     * What is the true full binding of each hotkey? This can be used to specify
+     * more complex varieties that might otherwise be difficult to convey to 
+     * users. You can keep something like "p" as an action but actually have
+     * the back end of this operation be more complex like "p -> x + CRTL".
+     */
     const fullBindings: HotkeyValues = {
       ...hotkeyValues
       // Add special varieties here: `play: hotkeyValues[play] + " -> x"`
     };
+    // What are all the fully configured keyboard operations?
     const hotkeys = setOperations.map(operationName => {
       return {
-        operation: hotkeyOperations[operationName],
-        binding: fullBindings[operationName]
+        binding: fullBindings[operationName],
+        operation: hotkeyOperations[operationName]
       };
     });
-    keyboard.reset();
+    // Create a new binding for any fully configured keyboard operations.
     hotkeys.forEach(
       ({
         binding,
@@ -73,6 +87,15 @@ export class KeyboardManager extends Component {
         keyboard.bind(binding, operation);
       }
     );
+  }
+
+  manageBindings() {
+    this.resetBindings();
+    this.createBindings();
+  }
+
+  render() {
+    this.manageBindings();
     return <div className="keyboard-manager" />;
   }
 }
