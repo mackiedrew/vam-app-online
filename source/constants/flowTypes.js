@@ -78,11 +78,37 @@ export type TracksState = {
   selectedTrack: string
 };
 
+export type Hotkey = {
+  value: string,
+  label: string
+};
+
+export type Hotkeys = {
+  play: Hotkey,
+  next: Hotkey,
+  previous: Hotkey,
+  nextTrack: Hotkey,
+  previousTrack: Hotkey
+};
+
+export type HotkeyValues = {
+  play: string,
+  next: string,
+  previous: string,
+  nextTrack: string,
+  previousTrack: string
+};
+
+export type KeyboardState = {
+  hotkeys: Hotkeys,
+  controlsEnabled: boolean
+};
+
 export type State = {
   ui: UIState,
   tracks: TracksState,
   settings: Settings,
-  keyboard: {}
+  keyboard: KeyboardState
 };
 
 export type GetState = () => Object;

@@ -16,11 +16,15 @@ import type { settingsField } from "../constants/flowTypes";
 const SettingsField = ({
   name,
   field,
-  handleChange
+  handleBlur,
+  handleChange,
+  handleFocus
 }: {
   name: string,
   field: settingsField,
-  handleChange: () => {}
+  handleBlur: Function,
+  handleChange: Function,
+  handleFocus: Function
 }) => {
   const { value, label, type } = field;
   const unit = field.unit || undefined;
@@ -33,7 +37,9 @@ const SettingsField = ({
           className="input"
           id={name}
           name={name}
+          onBlur={handleBlur}
           onChange={event => handleChange(event, name)}
+          onFocus={handleFocus}
           type={type}
           value={value}
         />

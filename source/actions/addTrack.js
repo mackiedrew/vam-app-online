@@ -15,8 +15,6 @@ import { ADD_TRACK } from "../constants/actionTypes";
 import generateNextTrackId from "./generateNextTrackId";
 import selectTrack from "./selectTrack";
 
-// Selectors
-
 /**
  * Action creator: creates an action that adds a new track into the track list.
  * 

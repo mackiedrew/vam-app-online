@@ -1,5 +1,9 @@
 import reducer, { DEFAULT_STATE } from "../keyboard";
-import { SET_OPERATION_HOTKEY } from "../../constants/actionTypes";
+import {
+  SET_OPERATION_HOTKEY,
+  RESUME_CONTROLS,
+  PAUSE_CONTROLS
+} from "../../constants/actionTypes";
 
 describe("keyboard reducer", () => {
   it("should return the initial state", () => {
@@ -30,9 +34,32 @@ describe("keyboard reducer", () => {
     const result = reducer(DEFAULT_STATE, mockAction);
     const expected = {
       ...DEFAULT_STATE,
-      testOperation: {
-        value: "p"
+      hotkeys: {
+        ...DEFAULT_STATE.hotkeys,
+        testOperation: {
+          value: "p"
+        }
       }
+    };
+    expect(result).toEqual(expected);
+  });
+
+  it("should handle RESUME_CONTROLS", () => {
+    const mockAction = { type: RESUME_CONTROLS };
+    const result = reducer(DEFAULT_STATE, mockAction);
+    const expected = {
+      ...DEFAULT_STATE,
+      controlsEnabled: true
+    };
+    expect(result).toEqual(expected);
+  });
+
+  it("should handle PAUSE_CONTROLS", () => {
+    const mockAction = { type: PAUSE_CONTROLS };
+    const result = reducer(DEFAULT_STATE, mockAction);
+    const expected = {
+      ...DEFAULT_STATE,
+      controlsEnabled: false
     };
     expect(result).toEqual(expected);
   });
