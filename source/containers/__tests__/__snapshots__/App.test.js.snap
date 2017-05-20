@@ -83,5 +83,6 @@ exports[`<App /> renders correctly 1`] = `
   <footer>
     <SeekBar />
   </footer>
+  <ModalManager />
 </div>
 `;

@@ -3,7 +3,8 @@
 /**
  * File should contain all functions for working with grains with an emphasis on pure functions.
  */
-import { logicalSegment, divisionBinarySearch, range } from "./generic";
+import { logicalSegment, divisionBinarySearch } from "./generic";
+import { range } from "../help/collections";
 import { random } from "./math";
 
 // Helpers

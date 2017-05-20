@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ModalManager /> renders correctly as NONE modal 1`] = `
+<div
+  className="modal-manager"
+>
+  
+</div>
+`;
+
+exports[`<ModalManager /> renders correctly as REMOVE_TRACK modal 1`] = `
+<div
+  className="modal-manager"
+>
+  <RemoveTrackModal
+    clearModal={[Function]}
+    fileName="this track"
+    removeTrack={[Function]}
+  />
+</div>
+`;

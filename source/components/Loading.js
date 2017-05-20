@@ -5,7 +5,7 @@ import React from "react";
 import "../styles/Loading.styl";
 
 // Helpers
-import { range } from "../help/generic";
+import { range } from "../help/collections";
 
 /**
  * Loading bar for displaying before the track fully loads.

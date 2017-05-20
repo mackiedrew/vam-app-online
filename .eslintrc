@@ -45,7 +45,9 @@
     "sinon": false,
     "shallow": false,
     "global": true,
-    "renderer": false
+    "renderer": false,
+    "render": false,
+    "mount": false
   },
 
   "rules": {

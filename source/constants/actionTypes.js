@@ -5,6 +5,8 @@ export const CHANGE_SETTING_VALUE = "SETTINGS/CHANGE_SETTING_VALUE";
 
 // UI Reducer
 export const TOGGLE_SETTINGS_MENU = "UI/TOGGLE_SETTINGS_MENU";
+export const CLEAR_MODAL = "UI/CLEAR_MODAL";
+export const MAKE_MODAL = "UI/MAKE_MODAL";
 
 // Tracks Reducer
 export const SET_SEEK_POSITION = "TRACKS/SET_SEEK_POSITION";

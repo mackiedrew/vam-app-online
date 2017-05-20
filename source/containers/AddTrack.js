@@ -10,7 +10,7 @@ import { bindActionCreators } from "redux";
 import addTrack from "../actions/addTrack";
 
 // Libraries
-import { range } from "../help/generic";
+import { range } from "../help/collections";
 import { clearFileInput } from "../help/dom";
 
 // Components

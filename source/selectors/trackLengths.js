@@ -2,7 +2,7 @@
 import { createSelector } from "reselect";
 
 // Helpers
-import { objectToArray } from "../help/generic";
+import { objectToArray } from "../help/collections";
 
 // Create functions that return portions of state
 const trackList = state => state.tracks.trackList;
