@@ -12,7 +12,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 // Actions
-import magnifyView from "../actions/magnifyView";
+import zoomIn from "../actions/zoomIn";
+import zoomOut from "../actions/zoomOut";
 import shiftView from "../actions/shiftView";
 import shiftSeekPosition from "../actions/shiftSeekPosition";
 import toggleCurrentlyPlaying from "../actions/toggleCurrentlyPlaying";
@@ -24,9 +25,6 @@ import { leadingZeros } from "../help/generic";
 // Components
 import ToggleButton from "../components/ToggleButton";
 import Icon from "../components/Icon";
-
-// Constants
-import { zoomOutMultiple, zoomInMultiple } from "../constants/configuration";
 
 /**
  * SeekBar will handle the controls and logic, and maybe a UI for interacting
@@ -47,7 +45,8 @@ export class SeekBar extends Component {
   constructor(props: {
     seekPosition: number,
     currentlyPlaying: boolean,
-    magnifyView: Function,
+    zoomIn: Function,
+    zoomOut: Function,
     shiftView: Function,
     shiftSeekPosition: Function,
     toggleCurrentlyPlaying: Function
@@ -92,10 +91,10 @@ export class SeekBar extends Component {
     this.props.shiftView(-1.0);
   }
   handleZoomIn() {
-    this.props.magnifyView(zoomInMultiple);
+    this.props.zoomIn();
   }
   handleZoomOut() {
-    this.props.magnifyView(zoomOutMultiple);
+    this.props.zoomOut();
   }
   handleTogglePlay() {
     this.props.toggleCurrentlyPlaying();
@@ -159,7 +158,8 @@ export const mapStateToProps = (state: State) => {
 export const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators(
     {
-      magnifyView: magnifyView,
+      zoomIn: zoomIn,
+      zoomOut: zoomOut,
       shiftView: shiftView,
       shiftSeekPosition: shiftSeekPosition,
       toggleCurrentlyPlaying: toggleCurrentlyPlaying

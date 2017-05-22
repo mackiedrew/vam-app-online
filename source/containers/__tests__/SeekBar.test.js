@@ -9,7 +9,7 @@ const mockProps = {
   currentlyPlaying: true
 };
 
-describe("<Track />", () => {
+describe("<SeekBar />", () => {
   it("renders without crashing", () => {
     const subject = shallow(<Subject {...mockProps} />);
     expect(subject.is("div.seek-bar")).toBe(true);
@@ -70,21 +70,17 @@ describe("<Track />", () => {
   });
 
   it("handleZoomIn call appropriate function", () => {
-    const mockMagnifyView = sinon.spy();
-    const subject = shallow(
-      <Subject {...mockProps} magnifyView={mockMagnifyView} />
-    );
+    const mockZoomIn = sinon.spy();
+    const subject = shallow(<Subject {...mockProps} zoomIn={mockZoomIn} />);
     subject.instance().handleZoomIn();
-    expect(mockMagnifyView.called).toBe(true);
+    expect(mockZoomIn.called).toBe(true);
   });
 
   it("handleZoomOut call appropriate function", () => {
-    const mockMagnifyView = sinon.spy();
-    const subject = shallow(
-      <Subject {...mockProps} magnifyView={mockMagnifyView} />
-    );
+    const mockZoomOut = sinon.spy();
+    const subject = shallow(<Subject {...mockProps} zoomOut={mockZoomOut} />);
     subject.instance().handleZoomOut();
-    expect(mockMagnifyView.called).toBe(true);
+    expect(mockZoomOut.called).toBe(true);
   });
 
   it("handleTogglePlay call appropriate function", () => {
@@ -123,12 +119,14 @@ describe("<Track />", () => {
     it("returns object with expected properties", () => {
       const mockDispatch = sinon.spy();
       const {
-        magnifyView,
+        zoomIn,
+        zoomOut,
         shiftView,
         shiftSeekPosition,
         toggleCurrentlyPlaying
       } = mapDispatchToProps(mockDispatch);
-      expect(typeof magnifyView).toBe("function");
+      expect(typeof zoomIn).toBe("function");
+      expect(typeof zoomOut).toBe("function");
       expect(typeof shiftView).toBe("function");
       expect(typeof shiftSeekPosition).toBe("function");
       expect(typeof toggleCurrentlyPlaying).toBe("function");

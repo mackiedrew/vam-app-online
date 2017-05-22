@@ -123,7 +123,10 @@ export type HotkeyValues = {
 
 export type KeyboardState = {
   hotkeys: Hotkeys,
-  controlsEnabled: boolean
+  controlsEnabled: boolean,
+  augmentA: boolean,
+  augmentB: boolean,
+  augmentC: boolean
 };
 
 export type State = {

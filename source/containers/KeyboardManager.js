@@ -20,6 +20,8 @@ import augmentBOff from "../actions/augmentBOff";
 import augmentBOn from "../actions/augmentBOn";
 import augmentCOff from "../actions/augmentCOff";
 import augmentCOn from "../actions/augmentCOn";
+import zoomIn from "../actions/zoomIn";
+import zoomOut from "../actions/zoomOut";
 import toggleCurrentlyPlaying from "../actions/toggleCurrentlyPlaying";
 import toggleSettingsMenu from "../actions/toggleSettingsMenu";
 
@@ -42,6 +44,8 @@ export class KeyboardManager extends Component {
     hotkeyValues: HotkeyValues,
     toggleCurrentlyPlaying: Function,
     toggleSettingsMenu: Function,
+    zoomIn: Function,
+    zoomOut: Function,
     augmentAOff: Function,
     augmentAOn: Function,
     augmentBOff: Function,
@@ -102,17 +106,23 @@ export class KeyboardManager extends Component {
     const {
       hotkeyValues,
       toggleCurrentlyPlaying,
-      toggleSettingsMenu
+      toggleSettingsMenu,
+      zoomIn,
+      zoomOut
     }: {
       hotkeyValues: HotkeyValues,
       toggleCurrentlyPlaying: Function,
-      toggleSettingsMenu: Function
+      toggleSettingsMenu: Function,
+      zoomIn: Function,
+      zoomOut: Function
     } = this.props;
 
     // Set actual actions (not necessarily redux actions) of hotkey events.
     const hotkeyOperations = {
       play: toggleCurrentlyPlaying,
-      settings: toggleSettingsMenu
+      settings: toggleSettingsMenu,
+      zoomIn: zoomIn,
+      zoomOut: zoomOut
     };
     // Which keyboard operations currently have operations set?
     const setOperations: Array<string> = Object.keys(hotkeyOperations);
@@ -173,6 +183,8 @@ export const makeMapStateToProps = () => {
 
 export const mapDispatchToProps = (dispatch: Dispatch) => {
   const keyedFunctions = {
+    zoomIn: zoomIn,
+    zoomOut: zoomOut,
     augmentAOff: augmentAOff,
     augmentAOn: augmentAOn,
     augmentBOff: augmentBOff,

@@ -19,6 +19,14 @@ const hotkeys = {
     label: "Control Key",
     value: "ctrl"
   },
+  zoomIn: {
+    label: "Zoom In",
+    value: "["
+  },
+  zoomOut: {
+    label: "Zoom Out",
+    value: "]"
+  },
   next: {
     label: "Next Grain Key",
     value: "e"
