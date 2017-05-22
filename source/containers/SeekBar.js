@@ -25,6 +25,9 @@ import { leadingZeros } from "../help/generic";
 import ToggleButton from "../components/ToggleButton";
 import Icon from "../components/Icon";
 
+// Constants
+import { zoomOutMultiple, zoomInMultiple } from "../constants/configuration";
+
 /**
  * SeekBar will handle the controls and logic, and maybe a UI for interacting
  * with the current seek position of the tracks. This will be represented by
@@ -89,10 +92,10 @@ export class SeekBar extends Component {
     this.props.shiftView(-1.0);
   }
   handleZoomIn() {
-    this.props.magnifyView(2 / 3);
+    this.props.magnifyView(zoomInMultiple);
   }
   handleZoomOut() {
-    this.props.magnifyView(3 / 2);
+    this.props.magnifyView(zoomOutMultiple);
   }
   handleTogglePlay() {
     this.props.toggleCurrentlyPlaying();

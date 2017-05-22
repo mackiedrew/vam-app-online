@@ -150,7 +150,7 @@ export class KeyboardManager extends Component {
   /**
    * Gross order of subroutines for managing the keyboard bindings.
    */
-  manageBindings() {
+  manageBindings(): void {
     this.resetBindings();
     this.augmentBindings();
     this.createBindings();
@@ -172,19 +172,17 @@ export const makeMapStateToProps = () => {
 };
 
 export const mapDispatchToProps = (dispatch: Dispatch) => {
-  return bindActionCreators(
-    {
-      augmentAOff: augmentAOff,
-      augmentAOn: augmentAOn,
-      augmentBOff: augmentBOff,
-      augmentBOn: augmentBOn,
-      augmentCOff: augmentCOff,
-      augmentCOn: augmentCOn,
-      toggleCurrentlyPlaying: toggleCurrentlyPlaying,
-      toggleSettingsMenu: toggleSettingsMenu
-    },
-    dispatch
-  );
+  const keyedFunctions = {
+    augmentAOff: augmentAOff,
+    augmentAOn: augmentAOn,
+    augmentBOff: augmentBOff,
+    augmentBOn: augmentBOn,
+    augmentCOff: augmentCOff,
+    augmentCOn: augmentCOn,
+    toggleCurrentlyPlaying: toggleCurrentlyPlaying,
+    toggleSettingsMenu: toggleSettingsMenu
+  };
+  return bindActionCreators(keyedFunctions, dispatch);
 };
 
 export const mapStateToProps = makeMapStateToProps();
