@@ -1,0 +1,35 @@
+@require './palette.styl'
+
+.modal
+  position absolute
+  display flex
+  align-items center
+  top 0
+  left 0
+  bottom 0
+  right 0
+  margin auto
+  width 350px
+
+  .dialog
+    display flex
+    flex-direction column
+    flex-wrap wrap
+    border 1px solid $color-divider
+    padding 35px
+    min-height 150px
+
+    background-color white
+    box-shadow 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+
+    .title
+      margin-top 0
+      flex-grow 1
+
+    .text
+      margin-top 0
+      margin-bottom 30px
+      flex-grow 1
+    
+    button
+      margin 4px

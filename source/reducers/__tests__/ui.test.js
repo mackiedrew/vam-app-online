@@ -1,11 +1,17 @@
 import reducer, { DEFAULT_STATE } from "../ui";
-import { TOGGLE_SETTINGS_MENU } from "../../constants/actionTypes";
+import {
+  TOGGLE_SETTINGS_MENU,
+  CLEAR_MODAL,
+  MAKE_MODAL
+} from "../../constants/actionTypes";
 
 describe("ui reducer", () => {
   it("should return the initial state", () => {
     const result = reducer(DEFAULT_STATE, {});
     const expected = {
-      settingsOpen: false
+      settingsOpen: false,
+      modalType: "NONE",
+      modalData: {}
     };
     expect(result).toEqual(expected);
   });
@@ -26,10 +32,35 @@ describe("ui reducer", () => {
     const mockAction = { type: TOGGLE_SETTINGS_MENU };
     const firstResult = reducer(DEFAULT_STATE, mockAction);
     const expected = {
+      ...DEFAULT_STATE,
       settingsOpen: true
     };
     expect(firstResult).toEqual(expected);
     const secondResult = reducer(firstResult, mockAction);
     expect(secondResult).toEqual(DEFAULT_STATE);
+  });
+
+  it("should handle CLEAR_MODAL", () => {
+    const mockAction = { type: CLEAR_MODAL };
+    const firstResult = reducer(DEFAULT_STATE, mockAction);
+    const expected = DEFAULT_STATE;
+    expect(firstResult).toEqual(expected);
+  });
+
+  it("should handle MAKE_MODAL", () => {
+    const mockAction = {
+      type: MAKE_MODAL,
+      payload: {
+        type: "MODAL_1",
+        data: { test: "object" }
+      }
+    };
+    const firstResult = reducer(DEFAULT_STATE, mockAction);
+    const expected = {
+      ...DEFAULT_STATE,
+      modalType: "MODAL_1",
+      modalData: { test: "object" }
+    };
+    expect(firstResult).toEqual(expected);
   });
 });

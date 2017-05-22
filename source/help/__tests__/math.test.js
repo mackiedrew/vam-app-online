@@ -1,6 +1,6 @@
 import { floor, max, mean, random, clamp } from "../math";
 
-import { range } from "../generic";
+import { range } from "../../help/collections";
 
 describe("floor(value)", () => {
   it("rounds a positive number closer to zero", () => {

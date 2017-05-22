@@ -5,7 +5,7 @@
  * receive a grainArray and return an array containing whatever 
  */
 
-import { getKeyFromObjectArray, zipObjectArray } from "./generic";
+import { getKeyFromObjectArray, zipObjectArray } from "./collections";
 import { max, mean } from "./math";
 
 // Types

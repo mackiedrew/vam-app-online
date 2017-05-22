@@ -6,7 +6,7 @@ import "../styles/TimeBar.styl";
 
 // Helpers
 import { framesToTimeStamp } from "../help/convert";
-import { range } from "../help/generic";
+import { range } from "../help/collections";
 import { floor } from "../help/math";
 
 // Types
@@ -23,7 +23,7 @@ const TimeBar = ({
   numberOfSlices = 10
 }: {
   view: viewType,
-  numberOfSlices: number
+  numberOfSlices?: number
 }) => {
   // Break out values
   const { start, end }: { start: number, end: number } = view;

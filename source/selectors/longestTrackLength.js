@@ -4,7 +4,7 @@
 import { createSelector } from "reselect";
 
 // Helpers
-import { objectToArray } from "../help/generic";
+import { objectToArray } from "../help/collections";
 import { max } from "../help/math";
 
 // Selectors

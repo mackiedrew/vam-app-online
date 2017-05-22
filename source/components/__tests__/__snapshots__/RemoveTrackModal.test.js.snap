@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Modal /> renders correctly 1`] = `
+<div
+  className="modal"
+>
+  <div
+    className="dialog"
+  >
+    <h2
+      className="title"
+    >
+      Are you sure you want to remove File Name.wav?
+    </h2>
+    <p
+      className="text"
+    >
+      Once it is removed it cannot be undone.
+    </p>
+    <button
+      className="yes-button"
+      onClick={[Function]}
+    >
+      Yes
+    </button>
+    <button
+      className="no-button"
+      onClick={[Function]}
+    >
+      No
+    </button>
+  </div>
+</div>
+`;
