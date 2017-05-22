@@ -22,6 +22,8 @@ import augmentCOff from "../actions/augmentCOff";
 import augmentCOn from "../actions/augmentCOn";
 import zoomIn from "../actions/zoomIn";
 import zoomOut from "../actions/zoomOut";
+import seekForward from "../actions/seekForward";
+import seekReverse from "../actions/seekReverse";
 import toggleCurrentlyPlaying from "../actions/toggleCurrentlyPlaying";
 import toggleSettingsMenu from "../actions/toggleSettingsMenu";
 
@@ -46,6 +48,8 @@ export class KeyboardManager extends Component {
     toggleSettingsMenu: Function,
     zoomIn: Function,
     zoomOut: Function,
+    seekForward: Function,
+    seekReverse: Function,
     augmentAOff: Function,
     augmentAOn: Function,
     augmentBOff: Function,
@@ -108,13 +112,17 @@ export class KeyboardManager extends Component {
       toggleCurrentlyPlaying,
       toggleSettingsMenu,
       zoomIn,
-      zoomOut
+      zoomOut,
+      seekForward,
+      seekReverse
     }: {
       hotkeyValues: HotkeyValues,
       toggleCurrentlyPlaying: Function,
       toggleSettingsMenu: Function,
       zoomIn: Function,
-      zoomOut: Function
+      zoomOut: Function,
+      seekForward: Function,
+      seekReverse: Function
     } = this.props;
 
     // Set actual actions (not necessarily redux actions) of hotkey events.
@@ -122,7 +130,9 @@ export class KeyboardManager extends Component {
       play: toggleCurrentlyPlaying,
       settings: toggleSettingsMenu,
       zoomIn: zoomIn,
-      zoomOut: zoomOut
+      zoomOut: zoomOut,
+      seekForward: seekForward,
+      seekReverse: seekReverse
     };
     // Which keyboard operations currently have operations set?
     const setOperations: Array<string> = Object.keys(hotkeyOperations);
@@ -185,6 +195,8 @@ export const mapDispatchToProps = (dispatch: Dispatch) => {
   const keyedFunctions = {
     zoomIn: zoomIn,
     zoomOut: zoomOut,
+    seekForward: seekForward,
+    seekReverse: seekReverse,
     augmentAOff: augmentAOff,
     augmentAOn: augmentAOn,
     augmentBOff: augmentBOff,

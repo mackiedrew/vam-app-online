@@ -9,6 +9,7 @@ import "../styles/WaveBlock.styl";
 
 /**
  * Used to display a single grain of a track.
+ * 
  * @extends React.Component
  */
 class WaveBlock extends Component {

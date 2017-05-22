@@ -27,13 +27,13 @@ const hotkeys = {
     label: "Zoom Out",
     value: "]"
   },
-  next: {
-    label: "Next Grain Key",
-    value: "e"
+  seekForward: {
+    label: "Seek Forward",
+    value: "d"
   },
-  previous: {
-    label: "Previous Grain Key",
-    value: "q"
+  seekReverse: {
+    label: "Seek Reverse",
+    value: "a"
   },
   nextTrack: {
     label: "Next Track Key",
