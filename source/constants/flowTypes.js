@@ -100,6 +100,10 @@ export type Hotkey = {
 export type Hotkeys = {
   play: Hotkey,
   next: Hotkey,
+  settings: Hotkey,
+  augmentA: Hotkey,
+  augmentB: Hotkey,
+  augmentC: Hotkey,
   previous: Hotkey,
   nextTrack: Hotkey,
   previousTrack: Hotkey
@@ -108,6 +112,10 @@ export type Hotkeys = {
 export type HotkeyValues = {
   play: string,
   next: string,
+  settings: string,
+  augmentA: string,
+  augmentB: string,
+  augmentC: string,
   previous: string,
   nextTrack: string,
   previousTrack: string

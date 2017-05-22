@@ -2,7 +2,13 @@
 import {
   SET_OPERATION_HOTKEY,
   RESUME_CONTROLS,
-  PAUSE_CONTROLS
+  PAUSE_CONTROLS,
+  AUGMENT_A_OFF,
+  AUGMENT_A_ON,
+  AUGMENT_B_OFF,
+  AUGMENT_B_ON,
+  AUGMENT_C_OFF,
+  AUGMENT_C_ON
 } from "../constants/actionTypes";
 
 // Settings configuration file is the default state.
@@ -11,7 +17,10 @@ import hotkeys from "../constants/hotkeys";
 // Initial State
 export const DEFAULT_STATE = {
   hotkeys: hotkeys,
-  controlsEnabled: false
+  controlsEnabled: false,
+  augmentA: false,
+  augmentB: false,
+  augmentC: false
 };
 
 /**
@@ -43,6 +52,36 @@ const KeyboardReducer = (state = DEFAULT_STATE, { type, payload }) => {
       return {
         ...state,
         controlsEnabled: false
+      };
+    case AUGMENT_A_OFF:
+      return {
+        ...state,
+        augmentA: false
+      };
+    case AUGMENT_A_ON:
+      return {
+        ...state,
+        augmentA: true
+      };
+    case AUGMENT_B_OFF:
+      return {
+        ...state,
+        augmentB: false
+      };
+    case AUGMENT_B_ON:
+      return {
+        ...state,
+        augmentB: true
+      };
+    case AUGMENT_C_OFF:
+      return {
+        ...state,
+        augmentC: false
+      };
+    case AUGMENT_C_ON:
+      return {
+        ...state,
+        augmentC: true
       };
     default:
       return state;

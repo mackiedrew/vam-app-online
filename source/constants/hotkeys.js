@@ -7,6 +7,18 @@ const hotkeys = {
     label: "Toggle Settings Key",
     value: "c"
   },
+  augmentA: {
+    label: "Alt/Menu Key",
+    value: "alt"
+  },
+  augmentB: {
+    label: "Shift Key",
+    value: "shift"
+  },
+  augmentC: {
+    label: "Control Key",
+    value: "ctrl"
+  },
   next: {
     label: "Next Grain Key",
     value: "e"

@@ -14,6 +14,12 @@ import { bindActionCreators } from "redux";
 import keyboard from "keyboardjs";
 
 // Actions
+import augmentAOff from "../actions/augmentAOff";
+import augmentAOn from "../actions/augmentAOn";
+import augmentBOff from "../actions/augmentBOff";
+import augmentBOn from "../actions/augmentBOn";
+import augmentCOff from "../actions/augmentCOff";
+import augmentCOn from "../actions/augmentCOn";
 import toggleCurrentlyPlaying from "../actions/toggleCurrentlyPlaying";
 import toggleSettingsMenu from "../actions/toggleSettingsMenu";
 
@@ -30,25 +36,67 @@ export class KeyboardManager extends Component {
   resetBindings: Function;
   createBindings: Function;
   manageBindings: Function;
+  augmentBindings: Function;
 
   constructor(props: {
     hotkeyValues: HotkeyValues,
     toggleCurrentlyPlaying: Function,
-    toggleSettingsMenu: Function
+    toggleSettingsMenu: Function,
+    augmentAOff: Function,
+    augmentAOn: Function,
+    augmentBOff: Function,
+    augmentBOn: Function,
+    augmentCOff: Function,
+    augmentCOn: Function
   }) {
     super(props);
     this.createBindings = this.createBindings.bind(this);
+    this.augmentBindings = this.augmentBindings.bind(this);
   }
 
   /**
    * Remove all existing keyboard bindings.
+   * 
+   * @returns {undefined} Returns nothing, creates side effects.
    */
   resetBindings() {
     keyboard.reset();
   }
 
+  /** 
+   * Creates special bindings for minding the Redux state of the key augments.
+   * 
+   * @returns {undefined} Returns nothing, creates redux side effects.
+   */
+  augmentBindings() {
+    const {
+      hotkeyValues,
+      augmentAOff,
+      augmentAOn,
+      augmentBOff,
+      augmentBOn,
+      augmentCOff,
+      augmentCOn
+    }: {
+      hotkeyValues: HotkeyValues,
+      augmentAOff: Function,
+      augmentAOn: Function,
+      augmentBOff: Function,
+      augmentBOn: Function,
+      augmentCOff: Function,
+      augmentCOn: Function
+    } = this.props;
+
+    // Bind press down and release actions.
+    keyboard.bind(hotkeyValues.augmentA, augmentAOn, augmentAOff);
+    keyboard.bind(hotkeyValues.augmentB, augmentBOn, augmentBOff);
+    keyboard.bind(hotkeyValues.augmentC, augmentCOn, augmentCOff);
+  }
+
   /**
    * Handle any binding creation operations.
+   * 
+   * @returns {undefined} Returns nothing, creates side effects.
    */
   createBindings() {
     const {
@@ -104,6 +152,7 @@ export class KeyboardManager extends Component {
    */
   manageBindings() {
     this.resetBindings();
+    this.augmentBindings();
     this.createBindings();
   }
 
@@ -125,6 +174,12 @@ export const makeMapStateToProps = () => {
 export const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators(
     {
+      augmentAOff: augmentAOff,
+      augmentAOn: augmentAOn,
+      augmentBOff: augmentBOff,
+      augmentBOn: augmentBOn,
+      augmentCOff: augmentCOff,
+      augmentCOn: augmentCOn,
       toggleCurrentlyPlaying: toggleCurrentlyPlaying,
       toggleSettingsMenu: toggleSettingsMenu
     },

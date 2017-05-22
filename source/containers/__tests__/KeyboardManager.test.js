@@ -62,8 +62,24 @@ describe("<KeyboardManager />", () => {
   describe("mapDispatchToProps()", () => {
     it("returns object with expected properties", () => {
       const mockDispatch = sinon.spy();
-      const { toggleCurrentlyPlaying } = mapDispatchToProps(mockDispatch);
+      const {
+        toggleCurrentlyPlaying,
+        toggleSettingsMenu,
+        augmentAOff,
+        augmentAOn,
+        augmentBOff,
+        augmentBOn,
+        augmentCOff,
+        augmentCOn
+      } = mapDispatchToProps(mockDispatch);
       expect(typeof toggleCurrentlyPlaying).toBe("function");
+      expect(typeof toggleSettingsMenu).toBe("function");
+      expect(typeof augmentAOff).toBe("function");
+      expect(typeof augmentAOn).toBe("function");
+      expect(typeof augmentBOff).toBe("function");
+      expect(typeof augmentBOn).toBe("function");
+      expect(typeof augmentCOff).toBe("function");
+      expect(typeof augmentCOn).toBe("function");
     });
   });
 });
