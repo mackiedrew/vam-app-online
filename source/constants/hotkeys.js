@@ -3,6 +3,10 @@ const hotkeys = {
     label: "Play/Pause Key",
     value: "p"
   },
+  settings: {
+    label: "Toggle Settings Key",
+    value: "c"
+  },
   next: {
     label: "Next Grain Key",
     value: "e"

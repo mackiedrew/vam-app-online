@@ -15,6 +15,7 @@ import keyboard from "keyboardjs";
 
 // Actions
 import toggleCurrentlyPlaying from "../actions/toggleCurrentlyPlaying";
+import toggleSettingsMenu from "../actions/toggleSettingsMenu";
 
 // Selectors
 import getHotkeyValues from "../selectors/getHotkeyValues";
@@ -32,7 +33,8 @@ export class KeyboardManager extends Component {
 
   constructor(props: {
     hotkeyValues: HotkeyValues,
-    toggleCurrentlyPlaying: Function
+    toggleCurrentlyPlaying: Function,
+    toggleSettingsMenu: Function
   }) {
     super(props);
     this.createBindings = this.createBindings.bind(this);
@@ -51,15 +53,18 @@ export class KeyboardManager extends Component {
   createBindings() {
     const {
       hotkeyValues,
-      toggleCurrentlyPlaying
+      toggleCurrentlyPlaying,
+      toggleSettingsMenu
     }: {
       hotkeyValues: HotkeyValues,
-      toggleCurrentlyPlaying: Function
+      toggleCurrentlyPlaying: Function,
+      toggleSettingsMenu: Function
     } = this.props;
 
     // Set actual actions (not necessarily redux actions) of hotkey events.
     const hotkeyOperations = {
-      play: toggleCurrentlyPlaying
+      play: toggleCurrentlyPlaying,
+      settings: toggleSettingsMenu
     };
     // Which keyboard operations currently have operations set?
     const setOperations: Array<string> = Object.keys(hotkeyOperations);
@@ -120,7 +125,8 @@ export const makeMapStateToProps = () => {
 export const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators(
     {
-      toggleCurrentlyPlaying: toggleCurrentlyPlaying
+      toggleCurrentlyPlaying: toggleCurrentlyPlaying,
+      toggleSettingsMenu: toggleSettingsMenu
     },
     dispatch
   );
