@@ -52,12 +52,25 @@ export type mixedArray = Array<any>;
 export type numberArrayArray = Array<numberArray>;
 
 // Redux
+export type Reducer<State, Action> = (
+  state: State,
+  action: ReduxAction<Action>
+) => State;
+
+export type Store<State, Action> = {
+  dispatch: (action: ReduxAction<Action>) => ReduxAction<Action>,
+  subscribe: (listener: () => void) => () => void,
+  getState: () => State,
+  getReducer: () => Reducer<State, Action>,
+  replaceReducer: any
+};
+
 export type ReduxAction = {
   type: string,
   payload?: any
 };
 
-export type Settings = {
+export type SettingsType = {
   quietCutoff: settingsNumberField,
   grain: settingsNumberField
 };
@@ -75,7 +88,8 @@ export type TracksState = {
   view: viewType,
   seekPosition: number,
   currentlyPlaying: boolean,
-  selectedTrack: string
+  selectedTrack: string,
+  nextTrackId: string
 };
 
 export type Hotkey = {
@@ -107,7 +121,7 @@ export type KeyboardState = {
 export type State = {
   ui: UIState,
   tracks: TracksState,
-  settings: Settings,
+  settings: SettingsType,
   keyboard: KeyboardState
 };
 

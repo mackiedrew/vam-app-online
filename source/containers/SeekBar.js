@@ -1,3 +1,8 @@
+// @flow
+
+// Flow Types
+import type { State, Dispatch } from "../constants/flowTypes";
+
 // Render
 import React, { Component } from "react";
 import "../styles/SeekBar.styl";
@@ -26,7 +31,24 @@ import Icon from "../components/Icon";
  * a frame #.
  */
 export class SeekBar extends Component {
-  constructor(props) {
+  // Set class method flow types.
+  seekSeconds: (number, number) => number;
+  handlePlus1: () => void;
+  handleMinus1: () => void;
+  handleViewNext: () => void;
+  handleViewPrevious: () => void;
+  handleZoomIn: () => void;
+  handleZoomOut: () => void;
+  handleTogglePlay: () => void;
+
+  constructor(props: {
+    seekPosition: number,
+    currentlyPlaying: boolean,
+    magnifyView: Function,
+    shiftView: Function,
+    shiftSeekPosition: Function,
+    toggleCurrentlyPlaying: Function
+  }) {
     // Initialize extended class with passed props
     super(props);
 
@@ -46,18 +68,19 @@ export class SeekBar extends Component {
    * 
    * @param {number} seconds Number of seconds to move seek by.
    * @param {number} sampleRate Sample rate of the audio clip you are working with.
+   * @returns {undefined} Returns nothing, side effects occur.
    */
-  seekSeconds(seconds, sampleRate = 44100) {
-    const frames = secondsToSamples(seconds, sampleRate);
-    return this.props.shiftSeekPosition(frames);
+  seekSeconds(seconds: number, sampleRate: number = 44100) {
+    const frames: number = secondsToSamples(seconds, sampleRate);
+    this.props.shiftSeekPosition(frames);
   }
 
   // Click handle functions for different buttons
   handlePlus1() {
-    this.seekSeconds(1);
+    this.seekSeconds(1, 44100);
   }
   handleMinus1() {
-    this.seekSeconds(-1);
+    this.seekSeconds(-1, 44110);
   }
   handleViewNext() {
     this.props.shiftView(1.0);
@@ -123,14 +146,14 @@ export class SeekBar extends Component {
   }
 }
 
-export const mapStateToProps = state => {
+export const mapStateToProps = (state: State) => {
   return {
     seekPosition: state.tracks.seekPosition,
     currentlyPlaying: state.tracks.currentlyPlaying
   };
 };
 
-export const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators(
     {
       magnifyView: magnifyView,

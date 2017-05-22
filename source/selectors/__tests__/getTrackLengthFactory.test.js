@@ -17,6 +17,15 @@ describe("getTrackLength() selector", () => {
     }
   };
 
+  const noGrainState = {
+    tracks: {
+      trackList: {
+        "123ABC": {},
+        "456DEF": {}
+      }
+    }
+  };
+
   const mockProps = {
     id: "123ABC"
   };
@@ -25,5 +34,11 @@ describe("getTrackLength() selector", () => {
     const getTrackLength = getTrackLengthFactory();
     const result = getTrackLength(mockState, mockProps);
     expect(result).toBe(599);
+  });
+
+  it("returns expected value when no grains exist", () => {
+    const getTrackLength = getTrackLengthFactory();
+    const result = getTrackLength(noGrainState, mockProps);
+    expect(result).toBe(-Infinity);
   });
 });

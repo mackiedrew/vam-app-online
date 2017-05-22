@@ -4,7 +4,7 @@
 import type {
   viewType,
   grainArray,
-  Settings,
+  SettingsType,
   trackType,
   State,
   Dispatch,
@@ -61,7 +61,7 @@ export class Track extends Component {
     maxAmplitudes: {},
     grainTags: grainTagArray,
     visibleGrains: grainArray,
-    settings: Settings,
+    settings: SettingsType,
     setTrackSampleRate: Function,
     setTrackGrains: Function
   }) {

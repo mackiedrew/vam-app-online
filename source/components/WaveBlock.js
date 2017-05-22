@@ -68,7 +68,9 @@ class WaveBlock extends Component {
     const isDisabled: string = disabled ? "disabled" : "enabled";
     const isSelected: string = selected ? "selected" : "unselected";
     const tagsAsStrings: Array<string> = Object.keys(tags);
-    const appliedTags: Array<string> = tagsAsStrings.filter(tag => tags[tag]);
+    const appliedTags: Array<string> = tagsAsStrings.filter(
+      (tag: string): boolean => tags[tag]
+    );
     const extraClasses: string = appliedTags.join(" ");
 
     return (

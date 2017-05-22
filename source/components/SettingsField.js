@@ -38,7 +38,7 @@ const SettingsField = ({
           id={name}
           name={name}
           onBlur={handleBlur}
-          onChange={event => handleChange(event, name)}
+          onChange={(event: Event): void => handleChange(event, name)}
           onFocus={handleFocus}
           type={type}
           value={value}

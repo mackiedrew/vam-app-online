@@ -38,11 +38,16 @@ export class KeyboardManager extends Component {
     this.createBindings = this.createBindings.bind(this);
   }
 
+  /**
+   * Remove all existing keyboard bindings.
+   */
   resetBindings() {
-    // Remove all existing keyboard bindings.
     keyboard.reset();
   }
 
+  /**
+   * Handle any binding creation operations.
+   */
   createBindings() {
     const {
       hotkeyValues,
@@ -89,13 +94,18 @@ export class KeyboardManager extends Component {
     );
   }
 
+  /**
+   * Gross order of subroutines for managing the keyboard bindings.
+   */
   manageBindings() {
     this.resetBindings();
     this.createBindings();
   }
 
   render() {
+    // Manage bindings through the gross bindings manager.
     this.manageBindings();
+    // Return a token render for debugging, testings and tracking purposes.
     return <div className="keyboard-manager" />;
   }
 }

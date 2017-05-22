@@ -5,7 +5,8 @@ import type {
   Action,
   GetState,
   ThunkAction,
-  Dispatch
+  Dispatch,
+  State
 } from "../constants/flowTypes";
 
 // Action Type
@@ -34,7 +35,7 @@ export const addTrackSimple = (newTrack: {}): Action => {
  */
 const addTrack = (trackObject: {}): ThunkAction => {
   return (dispatch: Dispatch, getState: GetState): void => {
-    const state = getState();
+    const state: State = getState();
     const id: string = state.tracks.nextTrackId;
     const newTrack = { [id]: trackObject };
     dispatch(addTrackSimple(newTrack));

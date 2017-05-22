@@ -1,10 +1,13 @@
 // @flow
 
+// Flow Types
+import type { State, Hotkeys } from "../constants/flowTypes";
+
 // Libraries
 import { createSelector } from "reselect";
 
 // State Filter
-const getHotkeys = state => state.keyboard.hotkeys;
+const getHotkeys = (state: State): Hotkeys => state.keyboard.hotkeys;
 
 /**
  * Create a simplified state object that contains only hotkeys names as keys
@@ -31,6 +34,9 @@ const getHotkeyValuesCore = (hotkeys: Object): Object => {
 };
 
 // Selector Construction
-const getHotkeyValues = createSelector(getHotkeys, getHotkeyValuesCore);
+const getHotkeyValues: Function = createSelector(
+  getHotkeys,
+  getHotkeyValuesCore
+);
 
 export default getHotkeyValues;

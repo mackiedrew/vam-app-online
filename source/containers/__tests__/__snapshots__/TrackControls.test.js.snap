@@ -7,7 +7,7 @@ exports[`<TrackControls /> renders correctly 1`] = `
   <div>
     <button
       className="toggle-button"
-      onClick={undefined}
+      onClick={[Function]}
     >
       <i
         className="material-icons icon"
