@@ -18,7 +18,6 @@ const testSamples = 44100 * 3;
 const testSampleRate = 500;
 
 describe("toDecibels()", () => {
-
   it("clamps to 0 when too low", () => {
     const result = toDecibels(-10);
     const expectation = -Infinity;
@@ -41,7 +40,6 @@ describe("toDecibels()", () => {
     const expectation = 0;
     expect(result).toBe(expectation);
   });
-
 });
 
 describe("samplesToMilliseconds()", () => {
