@@ -1,3 +1,8 @@
+// @flow
+
+// Flow Types
+import type { State, Dispatch } from "../constants/flowTypes";
+
 // Render
 import React, { Component } from "react";
 import "../styles/TrackControls.styl";
@@ -23,8 +28,24 @@ import Icon from "../components/Icon";
  * @extends React.Component
  */
 export class TrackControls extends Component {
-  constructor(props) {
+  // Set class method flow types.
+  handleRemoveButton: () => void;
+  handleSelectTrack: () => void;
+  handleToggleMute: () => void;
+
+  constructor(props: {
+    name: string,
+    id: string,
+    seekPosition: number,
+    selectedTrack: string,
+    trackList: Object,
+    selectTrack: Function,
+    removeTrack: Function,
+    toggleMuted: Function,
+    makeModal: Function
+  }) {
     super(props);
+    // Bind `this` to class methods.
     this.handleRemoveButton = this.handleRemoveButton.bind(this);
     this.handleSelectTrack = this.handleSelectTrack.bind(this);
     this.handleToggleMute = this.handleToggleMute.bind(this);
@@ -55,9 +76,10 @@ export class TrackControls extends Component {
 
   render() {
     const { name, selectedTrack, id, trackList } = this.props;
-
-    const selected = id === selectedTrack;
-    const { muted } = trackList[id];
+    // Is this track selected?
+    const selected: boolean = id === selectedTrack;
+    // Is this track muted?
+    const muted: boolean = trackList[id].muted;
 
     return (
       <div className="track-controls">
@@ -67,6 +89,7 @@ export class TrackControls extends Component {
             offFunction={this.handleSelectTrack}
             on={selected}
             onContents={<Icon icon="radio_button_checked" />}
+            onFunction={this.handleSelectTrack}
           />
           <ToggleButton
             offContents={<Icon icon="volume_up" />}
@@ -85,7 +108,7 @@ export class TrackControls extends Component {
   }
 }
 
-export const mapStateToProps = state => {
+export const mapStateToProps = (state: State) => {
   return {
     seekPosition: state.tracks.seekPosition,
     selectedTrack: state.tracks.selectedTrack,
@@ -93,7 +116,7 @@ export const mapStateToProps = state => {
   };
 };
 
-export const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators(
     {
       selectTrack: selectTrack,

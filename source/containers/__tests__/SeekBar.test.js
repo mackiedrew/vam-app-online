@@ -9,46 +9,10 @@ const mockProps = {
   currentlyPlaying: true
 };
 
-describe("<Track />", () => {
+describe("<SeekBar />", () => {
   it("renders without crashing", () => {
     const subject = shallow(<Subject {...mockProps} />);
     expect(subject.is("div.seek-bar")).toBe(true);
-  });
-
-  it("seekSeconds call appropriate function with no sampleRate", () => {
-    const mockShiftSeekPosition = sinon.spy();
-    const subject = shallow(
-      <Subject {...mockProps} shiftSeekPosition={mockShiftSeekPosition} />
-    );
-    subject.instance().seekSeconds(10);
-    expect(mockShiftSeekPosition.called).toBe(true);
-  });
-
-  it("seekSeconds call appropriate function with a sampleRate", () => {
-    const mockShiftSeekPosition = sinon.spy();
-    const subject = shallow(
-      <Subject {...mockProps} shiftSeekPosition={mockShiftSeekPosition} />
-    );
-    subject.instance().seekSeconds(10, 33333);
-    expect(mockShiftSeekPosition.called).toBe(true);
-  });
-
-  it("handlePlus1 call appropriate function", () => {
-    const mockShiftSeekPosition = sinon.spy();
-    const subject = shallow(
-      <Subject {...mockProps} shiftSeekPosition={mockShiftSeekPosition} />
-    );
-    subject.instance().handlePlus1();
-    expect(mockShiftSeekPosition.called).toBe(true);
-  });
-
-  it("handleMinus1 call appropriate function", () => {
-    const mockShiftSeekPosition = sinon.spy();
-    const subject = shallow(
-      <Subject {...mockProps} shiftSeekPosition={mockShiftSeekPosition} />
-    );
-    subject.instance().handleMinus1();
-    expect(mockShiftSeekPosition.called).toBe(true);
   });
 
   it("handleViewNext call appropriate function", () => {
@@ -67,36 +31,6 @@ describe("<Track />", () => {
     );
     subject.instance().handleViewPrevious();
     expect(mockShiftView.called).toBe(true);
-  });
-
-  it("handleZoomIn call appropriate function", () => {
-    const mockMagnifyView = sinon.spy();
-    const subject = shallow(
-      <Subject {...mockProps} magnifyView={mockMagnifyView} />
-    );
-    subject.instance().handleZoomIn();
-    expect(mockMagnifyView.called).toBe(true);
-  });
-
-  it("handleZoomOut call appropriate function", () => {
-    const mockMagnifyView = sinon.spy();
-    const subject = shallow(
-      <Subject {...mockProps} magnifyView={mockMagnifyView} />
-    );
-    subject.instance().handleZoomOut();
-    expect(mockMagnifyView.called).toBe(true);
-  });
-
-  it("handleTogglePlay call appropriate function", () => {
-    const mockToggleCurrentlyPlaying = sinon.spy();
-    const subject = shallow(
-      <Subject
-        {...mockProps}
-        toggleCurrentlyPlaying={mockToggleCurrentlyPlaying}
-      />
-    );
-    subject.instance().handleTogglePlay();
-    expect(mockToggleCurrentlyPlaying.called).toBe(true);
   });
 
   it("renders correctly", () => {
@@ -123,14 +57,18 @@ describe("<Track />", () => {
     it("returns object with expected properties", () => {
       const mockDispatch = sinon.spy();
       const {
-        magnifyView,
+        zoomIn,
+        zoomOut,
         shiftView,
-        shiftSeekPosition,
+        seekForward,
+        seekReverse,
         toggleCurrentlyPlaying
       } = mapDispatchToProps(mockDispatch);
-      expect(typeof magnifyView).toBe("function");
+      expect(typeof zoomIn).toBe("function");
+      expect(typeof zoomOut).toBe("function");
+      expect(typeof seekForward).toBe("function");
+      expect(typeof seekReverse).toBe("function");
       expect(typeof shiftView).toBe("function");
-      expect(typeof shiftSeekPosition).toBe("function");
       expect(typeof toggleCurrentlyPlaying).toBe("function");
     });
   });

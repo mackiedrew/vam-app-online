@@ -3,13 +3,37 @@ const hotkeys = {
     label: "Play/Pause Key",
     value: "p"
   },
-  next: {
-    label: "Next Grain Key",
-    value: "e"
+  settings: {
+    label: "Toggle Settings Key",
+    value: "c"
   },
-  previous: {
-    label: "Previous Grain Key",
-    value: "q"
+  augmentA: {
+    label: "Alt/Menu Key",
+    value: "alt"
+  },
+  augmentB: {
+    label: "Shift Key",
+    value: "shift"
+  },
+  augmentC: {
+    label: "Control Key",
+    value: "ctrl"
+  },
+  zoomIn: {
+    label: "Zoom In",
+    value: "["
+  },
+  zoomOut: {
+    label: "Zoom Out",
+    value: "]"
+  },
+  seekForward: {
+    label: "Seek Forward",
+    value: "d"
+  },
+  seekReverse: {
+    label: "Seek Reverse",
+    value: "a"
   },
   nextTrack: {
     label: "Next Track Key",

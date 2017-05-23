@@ -16,7 +16,9 @@ exports[`<SettingsField /> renders correctly with a number-type field 1`] = `
       className="input"
       id="grain"
       name="grain"
+      onBlur={undefined}
       onChange={[Function]}
+      onFocus={undefined}
       type="number"
       value={5}
     />
@@ -45,7 +47,9 @@ exports[`<SettingsField /> renders correctly with a text-type field 1`] = `
       className="input"
       id="name"
       name="name"
+      onBlur={undefined}
       onChange={[Function]}
+      onFocus={undefined}
       type="text"
       value="Mackie Drew"
     />

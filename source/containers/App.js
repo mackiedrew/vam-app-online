@@ -29,6 +29,7 @@ import TimeBar from "../components/TimeBar";
 import Settings from "../containers/Settings";
 import SeekBar from "../containers/SeekBar";
 import ModalManager from "../containers/ModalManager";
+import KeyboardManager from "../containers/KeyboardManager";
 
 /**
  * This used to be called "Tracks" but was refactored to be the main app since
@@ -66,6 +67,7 @@ export class App extends Component {
           <SeekBar />
         </footer>
         <ModalManager />
+        <KeyboardManager />
       </div>
     );
   }

@@ -9,6 +9,8 @@ import { bindActionCreators } from "redux";
 // Actions
 import changeSettingValue from "../actions/changeSettingValue";
 import setOperationHotkey from "../actions/setOperationHotkey";
+import pauseControls from "../actions/pauseControls";
+import resumeControls from "../actions/resumeControls";
 
 // Components
 import SettingsField from "../components/SettingsField";
@@ -21,8 +23,12 @@ import SettingsField from "../components/SettingsField";
 export class Settings extends Component {
   constructor(props) {
     super(props);
+    // Bind `this` to class methods.
     this.handleSettingsChange = this.handleSettingsChange.bind(this);
     this.handleHotkeyChange = this.handleHotkeyChange.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
+    this.generateFields = this.generateFields.bind(this);
   }
 
   handleSettingsChange(event, settingName) {
@@ -39,15 +45,25 @@ export class Settings extends Component {
     changeHotkey(operationName, value);
   }
 
+  handleBlur() {
+    this.props.resumeControls();
+  }
+
+  handleFocus() {
+    this.props.pauseControls();
+  }
+
   settingsClass(open) {
     return open ? "open" : "closed";
   }
 
-  generateFields(fields, handleChange) {
+  generateFields(fields, handleChange, handleBlur, handleFocus) {
     return Object.keys(fields).map(name => (
       <SettingsField
         field={fields[name]}
+        handleBlur={handleBlur}
         handleChange={handleChange}
+        handleFocus={handleFocus}
         key={name}
         name={name}
       />
@@ -62,8 +78,18 @@ export class Settings extends Component {
     return (
       <aside className={`settings ${extraClass}`}>
         <fieldset>
-          {this.generateFields(settings, this.handleSettingsChange)}
-          {this.generateFields(hotkeys, this.handleHotkeyChange)}
+          {this.generateFields(
+            settings,
+            this.handleSettingsChange,
+            this.handleBlur,
+            this.handleFocus
+          )}
+          {this.generateFields(
+            hotkeys,
+            this.handleHotkeyChange,
+            this.handleBlur,
+            this.handleFocus
+          )}
         </fieldset>
       </aside>
     );
@@ -74,7 +100,7 @@ export const mapStateToProps = state => {
   return {
     open: state.ui.settingsOpen,
     settings: state.settings,
-    hotkeys: state.keyboard
+    hotkeys: state.keyboard.hotkeys
   };
 };
 
@@ -82,7 +108,9 @@ export const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       changeSetting: changeSettingValue,
-      changeHotkey: setOperationHotkey
+      changeHotkey: setOperationHotkey,
+      pauseControls: pauseControls,
+      resumeControls: resumeControls
     },
     dispatch
   );

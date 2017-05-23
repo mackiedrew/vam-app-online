@@ -1,9 +1,27 @@
+// @flow
+
+// Flow Types
+import type {
+  State,
+  TracksState,
+  trackType,
+  grainArray,
+  grainType
+} from "../constants/flowTypes";
+
 // Libraries
 import { createSelector } from "reselect";
 
 // State Filter
-const getTargetTrackGrains = (state, props) => {
-  return state.tracks.trackList[props.id].grains;
+const getTargetTrackGrains = (state: State, props: { id: string }) => {
+  const tracks: TracksState = state.tracks;
+  const trackList: Object = tracks.trackList;
+  const id: string = props.id;
+  const track: trackType = trackList[id];
+  const grains: grainArray = track.grains || [
+    { start: Infinity, end: -Infinity }
+  ];
+  return grains;
 };
 
 /**
@@ -15,19 +33,28 @@ const getTargetTrackGrains = (state, props) => {
  * @param {Array} grains Array of all the grains in a track.
  * @returns {number} The length of the track these grains belong to.
  */
-const getTrackLengthCore = grains => {
-  const length = grains.length;
-  const lastIndex = length - 1;
-  const lastGrain = grains[lastIndex];
-  const exclusiveLength = lastGrain.end;
-  const inclusiveLength = exclusiveLength - 1;
+const getTrackLengthCore = (grains: grainArray): number => {
+  // How many grains are there total?
+  const length: number = grains.length;
+  // What is the last valid index value given the known length of the array?
+  const lastIndex: number = length - 1;
+  // Which grain is the last grain in the provided array?
+  const lastGrain: grainType = grains[lastIndex];
+  // What's the length of the grain array in frames including the last frame?
+  const exclusiveLength: number = lastGrain.end;
+  // What is the actually included length of the grain array?
+  const inclusiveLength: number = exclusiveLength - 1;
+  // What should the `correct` length be reported as? Exclusive? Inclusive?
   return inclusiveLength;
 };
 
 // Selector Construction
-const getTrackLength = createSelector(getTargetTrackGrains, getTrackLengthCore);
+const getTrackLength: Function = createSelector(
+  getTargetTrackGrains,
+  getTrackLengthCore
+);
 
 // Selector Factory
-const getTrackLengthFactory = () => getTrackLength;
+const getTrackLengthFactory: Function = () => getTrackLength;
 
 export default getTrackLengthFactory;

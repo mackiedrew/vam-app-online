@@ -4,6 +4,7 @@ jest.mock("../../components/Tracks", () => "Tracks");
 jest.mock("../Settings", () => "Settings");
 jest.mock("../SeekBar", () => "SeekBar");
 jest.mock("../ModalManager", () => "ModalManager");
+jest.mock("../KeyboardManager", () => "KeyboardManager");
 
 const mockSettings = {
   grain: {

@@ -1,7 +1,12 @@
 // @flow
 
 // Flow Types
-import type { State, Settings, trackType } from "../constants/flowTypes";
+import type {
+  State,
+  SettingsType,
+  trackType,
+  TracksState
+} from "../constants/flowTypes";
 
 // Libraries
 import { createSelector } from "reselect";
@@ -11,11 +16,14 @@ import { areGrainsQuiet } from "../help/grainTags";
 
 // State Filters
 const getTargetTrack = (state: State, props: { id: string }): {} => {
-  const { id } = props;
-  return state.tracks.trackList[id];
+  const id: string = props.id;
+  const tracks: TracksState = state.tracks;
+  const trackList: {} = tracks.trackList;
+  const track: trackType = trackList[id];
+  return track;
 };
 
-const getSettings = (state: State): Settings => {
+const getSettings = (state: State): SettingsType => {
   return state.settings;
 };
 
@@ -27,17 +35,31 @@ const getSettings = (state: State): Settings => {
  * @param {Object} settings Current settings state.
  * @returns {Array} Array of objects containing all tag data.
  */
-const getGrainTagsCore = (track: trackType, settings: Settings): Array<{}> => {
+const getGrainTagsCore = (
+  track: trackType,
+  settings: SettingsType
+): Array<{}> => {
+  // Which grains exist within the track?
   const grains = track.grains || [];
+  // What % of max volume should be considered quiet (0 to 1)?
   const quietCutOff: number = settings.quietCutoff.value / 100;
+  // Which grains are quiet?
   const quietArray: Array<boolean> = areGrainsQuiet(grains, quietCutOff);
-  const tags: {} = { quiet: quietArray };
-
+  // Which arrays should be considered tags, and by what name (the key)?
+  const tags: { quiet: Array<boolean> } = { quiet: quietArray };
+  // What tags does each grain have with one object per grain in an array?
   const combinedArrays: Array<{}> = grains.map((grain, i) => {
-    const grainTags: {} = Object.keys(tags).reduce((accumulator, tag) => {
-      const newObject: {} = { ...accumulator, [tag]: tags[tag][i] };
+    // What types of tags exist for each grain?
+    const tagNames: Array<string> = Object.keys(tags);
+    // By what method will we stitch together the tag arrays?
+    const tagCombiner: Function = (accumulator: {}, tag: string): {} => {
+      const newTagValue: any = tags[tag][i];
+      const newTag: {} = { [tag]: newTagValue };
+      const newObject: {} = { ...accumulator, ...newTag };
       return newObject;
-    }, {});
+    };
+    // Which tags does the current grain have?
+    const grainTags: {} = tagNames.reduce(tagCombiner, {});
     return grainTags;
   });
 
@@ -45,12 +67,12 @@ const getGrainTagsCore = (track: trackType, settings: Settings): Array<{}> => {
 };
 
 // Selector Construction
-const getGrainTags = createSelector(
+const getGrainTags: Function = createSelector(
   [getTargetTrack, getSettings],
   getGrainTagsCore
 );
 
 // Factory
-const getGrainTagsFactory = () => getGrainTags;
+const getGrainTagsFactory: Function = (): Function => getGrainTags;
 
 export default getGrainTagsFactory;

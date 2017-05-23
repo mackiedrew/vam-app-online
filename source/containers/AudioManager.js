@@ -13,6 +13,9 @@ import setSeekPosition from "../actions/setSeekPosition";
 import { secondsToSamples } from "../help/convert";
 import { floor } from "../help/math";
 
+// Constants
+import { seekPositionTickRate } from "../constants/configuration";
+
 /**
  * Manages the playing state and seeking state as an interface between redux
  * state and the DOM.
@@ -28,7 +31,7 @@ export class AudioManager extends Component {
   }
 
   componentDidMount() {
-    this.timer = setInterval(this.tick, 200);
+    this.timer = setInterval(this.tick, seekPositionTickRate);
   }
 
   componentWillUnmount() {

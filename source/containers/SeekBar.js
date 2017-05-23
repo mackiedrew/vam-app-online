@@ -1,3 +1,8 @@
+// @flow
+
+// Flow Types
+import type { State, Dispatch } from "../constants/flowTypes";
+
 // Render
 import React, { Component } from "react";
 import "../styles/SeekBar.styl";
@@ -7,13 +12,15 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 // Actions
-import magnifyView from "../actions/magnifyView";
+import zoomIn from "../actions/zoomIn";
+import zoomOut from "../actions/zoomOut";
+import seekForward from "../actions/seekForward";
+import seekReverse from "../actions/seekReverse";
 import shiftView from "../actions/shiftView";
-import shiftSeekPosition from "../actions/shiftSeekPosition";
 import toggleCurrentlyPlaying from "../actions/toggleCurrentlyPlaying";
 
 // Libraries
-import { secondsToSamples, framesToTime } from "../help/convert";
+import { framesToTime } from "../help/convert";
 import { leadingZeros } from "../help/generic";
 
 // Components
@@ -26,57 +33,48 @@ import Icon from "../components/Icon";
  * a frame #.
  */
 export class SeekBar extends Component {
-  constructor(props) {
+  // Set class method flow types.
+  handleViewNext: () => void;
+  handleViewPrevious: () => void;
+
+  constructor(props: {
+    seekPosition: number,
+    currentlyPlaying: boolean,
+    zoomIn: Function,
+    zoomOut: Function,
+    seekForward: Function,
+    seekReverse: Function,
+    shiftView: Function,
+    shiftSeekPosition: Function,
+    toggleCurrentlyPlaying: Function
+  }) {
     // Initialize extended class with passed props
     super(props);
 
     // Bind functions to `this`
-    this.seekSeconds = this.seekSeconds.bind(this);
-    this.handlePlus1 = this.handlePlus1.bind(this);
-    this.handleMinus1 = this.handleMinus1.bind(this);
     this.handleViewNext = this.handleViewNext.bind(this);
     this.handleViewPrevious = this.handleViewPrevious.bind(this);
-    this.handleZoomIn = this.handleZoomIn.bind(this);
-    this.handleZoomOut = this.handleZoomOut.bind(this);
-    this.handleTogglePlay = this.handleTogglePlay.bind(this);
-  }
-
-  /**
-   * Move the seek value by given seconds and rate.
-   * 
-   * @param {number} seconds Number of seconds to move seek by.
-   * @param {number} sampleRate Sample rate of the audio clip you are working with.
-   */
-  seekSeconds(seconds, sampleRate = 44100) {
-    const frames = secondsToSamples(seconds, sampleRate);
-    return this.props.shiftSeekPosition(frames);
   }
 
   // Click handle functions for different buttons
-  handlePlus1() {
-    this.seekSeconds(1);
-  }
-  handleMinus1() {
-    this.seekSeconds(-1);
-  }
   handleViewNext() {
     this.props.shiftView(1.0);
   }
   handleViewPrevious() {
     this.props.shiftView(-1.0);
   }
-  handleZoomIn() {
-    this.props.magnifyView(2 / 3);
-  }
-  handleZoomOut() {
-    this.props.magnifyView(3 / 2);
-  }
-  handleTogglePlay() {
-    this.props.toggleCurrentlyPlaying();
-  }
+
   render() {
     // Break out values for the sake of easier template reading
-    const { seekPosition, currentlyPlaying } = this.props;
+    const {
+      seekPosition,
+      currentlyPlaying,
+      toggleCurrentlyPlaying,
+      seekReverse,
+      seekForward,
+      zoomIn,
+      zoomOut
+    } = this.props;
     const time = framesToTime(seekPosition);
     const { ms, s, m, h } = time;
 
@@ -88,17 +86,17 @@ export class SeekBar extends Component {
     return (
       <div className="seek-bar">
         <div className="seek-controls">
-          <button className="seek-minus-1" onClick={this.handleMinus1}>
+          <button className="seek-minus-1" onClick={seekReverse}>
             <Icon icon="skip_previous" />
           </button>
           <ToggleButton
             offContents={<Icon icon="play_arrow" />}
-            offFunction={this.handleTogglePlay}
+            offFunction={toggleCurrentlyPlaying}
             on={currentlyPlaying}
             onContents={<Icon icon="pause" />}
-            onFunction={this.handleTogglePlay}
+            onFunction={toggleCurrentlyPlaying}
           />
-          <button className="seek-plus-1" onClick={this.handlePlus1}>
+          <button className="seek-plus-1" onClick={seekForward}>
             <Icon icon="skip_next" />
           </button>
         </div>
@@ -109,10 +107,10 @@ export class SeekBar extends Component {
           <button className="view-next" onClick={this.handleViewNext}>
             <Icon icon="navigate_next" />
           </button>
-          <button className="zoom-in" onClick={this.handleZoomIn}>
+          <button className="zoom-in" onClick={zoomIn}>
             <Icon icon="zoom_in" />
           </button>
-          <button className="zoom-out" onClick={this.handleZoomOut}>
+          <button className="zoom-out" onClick={zoomOut}>
             <Icon icon="zoom_out" />
           </button>
           <div className="current-time">{timeStamp}</div>
@@ -123,19 +121,21 @@ export class SeekBar extends Component {
   }
 }
 
-export const mapStateToProps = state => {
+export const mapStateToProps = (state: State) => {
   return {
     seekPosition: state.tracks.seekPosition,
     currentlyPlaying: state.tracks.currentlyPlaying
   };
 };
 
-export const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators(
     {
-      magnifyView: magnifyView,
+      zoomIn: zoomIn,
+      zoomOut: zoomOut,
+      seekForward: seekForward,
+      seekReverse: seekReverse,
       shiftView: shiftView,
-      shiftSeekPosition: shiftSeekPosition,
       toggleCurrentlyPlaying: toggleCurrentlyPlaying
     },
     dispatch
