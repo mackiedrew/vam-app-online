@@ -12,7 +12,7 @@ import { floor, clamp } from "./math";
  * This is a simple decibel estimation. Decibels are estimations and relative,
  * and therefore without knowing sound pressure cannot be accurately calculated.
  * However, this is the standard method for estimating decibels in wav format.
- * Credit to: https://goo.gl/3YhCIm
+ * Credit to: https://goo.gl/3YhCIm.
  * 
  * @param {number} amplitude Relative amplitude from 0 to 1.
  * @returns {number} Estimated decibels.
