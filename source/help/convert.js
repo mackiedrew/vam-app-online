@@ -6,7 +6,23 @@ import type { stringArray, numberArray } from "../constants/flowTypes";
 // Helpers
 import { leadingZeros } from "./generic";
 import { reverse } from "./immutable";
-import { floor } from "./math";
+import { floor, clamp } from "./math";
+
+/**
+ * This is a simple decibel estimation. Decibels are estimations and relative,
+ * and therefore without knowing sound pressure cannot be accurately calculated.
+ * However, this is the standard method for estimating decibels in wav format.
+ * 
+ * @param {number} amplitude Relative amplitude from 0 to 1.
+ * @returns {number} Estimated decibels.
+ */
+export const toDecibels = (amplitude: number): number => {
+  // What is the amplitude when enforced between the hard limits of 0 and 1?
+  const clampedAmplitude: number = clamp(amplitude, 0, 1);
+  // What is the best decimal estimate for the provided wav file amplitude?
+  const decibels: number = 20 * Math.log10(clampedAmplitude);
+  return decibels;
+};
 
 /**
  * Converts seconds to samples, given a sample rate. Both have defaults so if

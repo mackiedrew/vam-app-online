@@ -1,4 +1,5 @@
 import {
+  toDecibels,
   samplesToMilliseconds,
   samplesToSeconds,
   samplesToMinutes,
@@ -11,8 +12,37 @@ import {
   framesToTimeStamp
 } from "../convert.js";
 
+import { range } from "../collections";
+
 const testSamples = 44100 * 3;
 const testSampleRate = 500;
+
+describe("toDecibels()", () => {
+
+  it("clamps to 0 when too low", () => {
+    const result = toDecibels(-10);
+    const expectation = -Infinity;
+    expect(result).toBe(expectation);
+  });
+
+  it("Provides a reasonable number for a reasonable range", () => {
+    const numberOfTests = 100;
+    const tests = range(100);
+    const amplitudeSlice = 1 / numberOfTests;
+    const testAmplitudes = tests.map(test => test * amplitudeSlice);
+    testAmplitudes.forEach(testAmplitude => {
+      const result = toDecibels(testAmplitude);
+      expect(result).toBeLessThanOrEqual(0);
+    });
+  });
+
+  it("clamps to 1 when too high", () => {
+    const result = toDecibels(10);
+    const expectation = 0;
+    expect(result).toBe(expectation);
+  });
+
+});
 
 describe("samplesToMilliseconds()", () => {
   const subjectFunction = samplesToMilliseconds;
