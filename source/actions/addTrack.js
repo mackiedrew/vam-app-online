@@ -5,7 +5,8 @@ import type {
   Action,
   GetState,
   ThunkAction,
-  Dispatch
+  Dispatch,
+  State
 } from "../constants/flowTypes";
 
 // Action Type
@@ -14,8 +15,6 @@ import { ADD_TRACK } from "../constants/actionTypes";
 // Actions
 import generateNextTrackId from "./generateNextTrackId";
 import selectTrack from "./selectTrack";
-
-// Selectors
 
 /**
  * Action creator: creates an action that adds a new track into the track list.
@@ -36,7 +35,7 @@ export const addTrackSimple = (newTrack: {}): Action => {
  */
 const addTrack = (trackObject: {}): ThunkAction => {
   return (dispatch: Dispatch, getState: GetState): void => {
-    const state = getState();
+    const state: State = getState();
     const id: string = state.tracks.nextTrackId;
     const newTrack = { [id]: trackObject };
     dispatch(addTrackSimple(newTrack));

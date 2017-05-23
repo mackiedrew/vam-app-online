@@ -6,7 +6,24 @@ import type { stringArray, numberArray } from "../constants/flowTypes";
 // Helpers
 import { leadingZeros } from "./generic";
 import { reverse } from "./immutable";
-import { floor } from "./math";
+import { floor, clamp } from "./math";
+
+/**
+ * This is a simple decibel estimation. Decibels are estimations and relative,
+ * and therefore without knowing sound pressure cannot be accurately calculated.
+ * However, this is the standard method for estimating decibels in wav format.
+ * Credit to: https://goo.gl/3YhCIm.
+ * 
+ * @param {number} amplitude Relative amplitude from 0 to 1.
+ * @returns {number} Estimated decibels.
+ */
+export const toDecibels = (amplitude: number): number => {
+  // What is the amplitude when enforced between the hard limits of 0 and 1?
+  const clampedAmplitude: number = clamp(amplitude, 0, 1);
+  // What is the best decimal estimate for the provided wav file amplitude?
+  const decibels: number = 20 * Math.log10(clampedAmplitude);
+  return decibels;
+};
 
 /**
  * Converts seconds to samples, given a sample rate. Both have defaults so if
@@ -51,11 +68,12 @@ export const samplesToMilliseconds = (
 ): number => samples / sampleRate * 1000;
 
 /**
- * Converts samples to minutes, given a sample rate. Both have defaults so if you provide
- * not params it will simply provide a typical conversion factor.
+ * Converts samples to minutes, given a sample rate. Both have defaults so if
+ * you provide not params it will simply provide a typical conversion factor.
  * 
  * @param {number} samples Number of samples for the given sample rate.
- * @param {number} sampleRate Number of samples per seconds, default is 44100Hz or 44.1kHz.
+ * @param {number} sampleRate Number of samples per seconds, default is 44100Hz
+ * or 44.1kHz.
  */
 export const samplesToMinutes = (
   samples: number = 1,
@@ -63,11 +81,12 @@ export const samplesToMinutes = (
 ): number => samples / sampleRate / 60;
 
 /**
- * Converts samples to hours, given a sample rate. Both have defaults so if you provide
- * not params it will simply provide a typical conversion factor.
+ * Converts samples to hours, given a sample rate. Both have defaults so if you
+ * provide not params it will simply provide a typical conversion factor.
  * 
  * @param {number} samples Number of samples for the given sample rate.
- * @param {number} sampleRate Number of samples per seconds, default is 44100Hz or 44.1kHz.
+ * @param {number} sampleRate Number of samples per seconds, default is 44100Hz
+ * or 44.1kHz.
  */
 export const samplesToHours = (
   samples: number = 1,
@@ -75,11 +94,12 @@ export const samplesToHours = (
 ): number => samples / sampleRate / 3600;
 
 /**
- * Converts hours to samples, given a sample rate. Both have defaults so if you provide
- * not params it will simply provide a typical conversion factor.
+ * Converts hours to samples, given a sample rate. Both have defaults so if you
+ * provide not params it will simply provide a typical conversion factor.
  * 
  * @param {number} hours Number of hours to convert to samples.
- * @param {number} sampleRate Number of samples per seconds, default is 44100Hz or 44.1kHz.
+ * @param {number} sampleRate Number of samples per seconds, default is 44100Hz
+ * or 44.1kHz.
  */
 export const hoursToSamples = (
   hours: number = 1,
@@ -87,11 +107,12 @@ export const hoursToSamples = (
 ): number => hours * 3600 * sampleRate;
 
 /**
- * Converts minutes to samples, given a sample rate. Both have defaults so if you provide
- * not params it will simply provide a typical conversion factor.
+ * Converts minutes to samples, given a sample rate. Both have defaults so if
+ * you provide not params it will simply provide a typical conversion factor.
  * 
  * @param {number} minutes Number of minutes to convert to samples.
- * @param {number} sampleRate Number of samples per seconds, default is 44100Hz or 44.1kHz.
+ * @param {number} sampleRate Number of samples per seconds, default is 44100Hz
+ * or 44.1kHz.
  */
 export const minutesToSamples = (
   minutes: number = 1,
@@ -99,11 +120,12 @@ export const minutesToSamples = (
 ): number => minutes * 60 * sampleRate;
 
 /**
- * Converts milliseconds to samples, given a sample rate. Both have defaults so if you provide
- * not params it will simply provide a typical conversion factor.
+ * Converts milliseconds to samples, given a sample rate. Both have defaults so
+ * if you provide not params it will simply provide a typical conversion factor.
  * 
  * @param {number} milliseconds Number of milliseconds to convert to samples.
- * @param {number} sampleRate Number of samples per seconds, default is 44100Hz or 44.1kHz.
+ * @param {number} sampleRate Number of samples per seconds, default is 44100Hz
+ * or 44.1kHz.
  */
 export const millisecondsToSamples = (
   milliseconds: number = 1,

@@ -29,14 +29,12 @@ const UIReducer = (state = DEFAULT_STATE, { type, payload }) => {
     case CLEAR_MODAL:
       return {
         ...state,
-        // Reset modal to the empty modal that starts off the state.
         modalType: DEFAULT_STATE.modalType,
         modalData: DEFAULT_STATE.modalData
       };
     case MAKE_MODAL:
       return {
         ...state,
-        // Reassign state values to payload values.
         modalType: payload.type,
         modalData: payload.data
       };

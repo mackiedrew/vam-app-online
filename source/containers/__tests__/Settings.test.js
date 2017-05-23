@@ -113,13 +113,33 @@ describe("<Settings />", () => {
     expect(mockChangeSetting.called).toBe(true);
   });
 
+  it("triggers pauseControls when handleFocus is called", () => {
+    const mockPauseControls = sinon.spy();
+    const subject = shallow(
+      <Subject {...mockProps} pauseControls={mockPauseControls} />
+    );
+    subject.instance().handleFocus();
+    expect(mockPauseControls.called).toBe(true);
+  });
+
+  it("triggers resumeControls when handleBlur is called", () => {
+    const mockResumeControls = sinon.spy();
+    const subject = shallow(
+      <Subject {...mockProps} resumeControls={mockResumeControls} />
+    );
+    subject.instance().handleBlur();
+    expect(mockResumeControls.called).toBe(true);
+  });
+
   describe("mapStateToProps()", () => {
     const mockState = {
       ui: {
         settingsOpen: 1
       },
       settings: 2,
-      keyboard: 3
+      keyboard: {
+        hotkeys: 3
+      }
     };
 
     it("returns object with expected properties", () => {
@@ -133,9 +153,16 @@ describe("<Settings />", () => {
   describe("mapDispatchToProps()", () => {
     it("returns object with expected properties", () => {
       const mockDispatch = sinon.spy();
-      const { changeSetting, changeHotkey } = mapDispatchToProps(mockDispatch);
+      const {
+        changeSetting,
+        changeHotkey,
+        resumeControls,
+        pauseControls
+      } = mapDispatchToProps(mockDispatch);
       expect(typeof changeSetting).toBe("function");
       expect(typeof changeHotkey).toBe("function");
+      expect(typeof resumeControls).toBe("function");
+      expect(typeof pauseControls).toBe("function");
     });
   });
 });

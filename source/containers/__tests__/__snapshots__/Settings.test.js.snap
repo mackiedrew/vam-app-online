@@ -20,7 +20,9 @@ exports[`<Settings /> renders correctly while closed 1`] = `
           className="input"
           id="grain"
           name="grain"
+          onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           type="number"
           value={5}
         />
@@ -46,7 +48,9 @@ exports[`<Settings /> renders correctly while closed 1`] = `
           className="input"
           id="quietCutoff"
           name="quietCutoff"
+          onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           type="number"
           value={10}
         />
@@ -72,7 +76,9 @@ exports[`<Settings /> renders correctly while closed 1`] = `
           className="input"
           id="play"
           name="play"
+          onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           type={undefined}
           value="p"
         />
@@ -96,7 +102,9 @@ exports[`<Settings /> renders correctly while closed 1`] = `
           className="input"
           id="next"
           name="next"
+          onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           type={undefined}
           value="e"
         />
@@ -120,7 +128,9 @@ exports[`<Settings /> renders correctly while closed 1`] = `
           className="input"
           id="previous"
           name="previous"
+          onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           type={undefined}
           value="q"
         />
@@ -144,7 +154,9 @@ exports[`<Settings /> renders correctly while closed 1`] = `
           className="input"
           id="nextTrack"
           name="nextTrack"
+          onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           type={undefined}
           value="j"
         />
@@ -168,7 +180,9 @@ exports[`<Settings /> renders correctly while closed 1`] = `
           className="input"
           id="previousTrack"
           name="previousTrack"
+          onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           type={undefined}
           value="k"
         />
@@ -201,7 +215,9 @@ exports[`<Settings /> renders correctly while open 1`] = `
           className="input"
           id="grain"
           name="grain"
+          onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           type="number"
           value={5}
         />
@@ -227,7 +243,9 @@ exports[`<Settings /> renders correctly while open 1`] = `
           className="input"
           id="quietCutoff"
           name="quietCutoff"
+          onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           type="number"
           value={10}
         />
@@ -253,7 +271,9 @@ exports[`<Settings /> renders correctly while open 1`] = `
           className="input"
           id="play"
           name="play"
+          onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           type={undefined}
           value="p"
         />
@@ -277,7 +297,9 @@ exports[`<Settings /> renders correctly while open 1`] = `
           className="input"
           id="next"
           name="next"
+          onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           type={undefined}
           value="e"
         />
@@ -301,7 +323,9 @@ exports[`<Settings /> renders correctly while open 1`] = `
           className="input"
           id="previous"
           name="previous"
+          onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           type={undefined}
           value="q"
         />
@@ -325,7 +349,9 @@ exports[`<Settings /> renders correctly while open 1`] = `
           className="input"
           id="nextTrack"
           name="nextTrack"
+          onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           type={undefined}
           value="j"
         />
@@ -349,7 +375,9 @@ exports[`<Settings /> renders correctly while open 1`] = `
           className="input"
           id="previousTrack"
           name="previousTrack"
+          onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           type={undefined}
           value="k"
         />
