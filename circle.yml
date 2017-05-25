@@ -1,12 +1,23 @@
-version: 2
 machine:
+  pre:
+   - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.11.2
+   - sudo pip install docker-compose
   services:
     - docker
 
+dependencies:
+  cache_directories:
+    - "~/docker"
+  override:
+    - docker info
+
 test:
   override:
-    - docker-compose run editor yarn lint:javascript
-    - docker-compose run editor yarn lint:stylus
-    - docker-compose run editor yarn unit
+    - docker-compose up -d ci; sleep 20
+    - docker-compose run ci coverage run ./manage.py test
+    - docker-compose run ci npm run lint
+    - docker-compose run ci jest -i --coverage
   post:
-    - docker-compose run editor yarn coverage
+    - mkdir -p $CIRCLE_TEST_REPORTS/django
+    - docker-compose run ci coverage xml
+    - docker-compose run ci codecov -t 8ecf530d-5f4e-414c-b5bf-8ab3fea28374 --required
