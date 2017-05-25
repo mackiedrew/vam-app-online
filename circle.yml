@@ -14,7 +14,6 @@ dependencies:
 test:
   override:
     - docker-compose up -d ci; sleep 20
-    - docker-compose run ci coverage run ./manage.py test
     - docker-compose run editor yarn lint:javascript
     - docker-compose run editor yarn unit
   post:
