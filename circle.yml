@@ -1,26 +1,11 @@
 machine:
-  node:
-    version: 6.10.3
-
-dependencies:
-  override:
-    - yarn
-  cache_directories:
-    - ~/.cache/yarn
+  services:
+    - docker
 
 test:
   override:
-    - yarn build
-    - yarn build:production
-    - yarn lint:javascript
-    - yarn lint:stylus
-    - yarn unit
-    - yarn flow
-    - yarn coverage:flow
+    - docker-compose run editor yarn lint:javascript
+    - docker-compose run editor yarn lint:stylus
+    - docker-compose run editor yarn unit
   post:
-    - yarn coverage
-
-general:
-  branches:
-    ignore:
-      - gh-pages
+    - docker-compose run editor yarn coverage
