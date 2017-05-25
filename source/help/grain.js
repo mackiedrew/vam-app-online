@@ -1,16 +1,6 @@
 // @flow
 
-/**
- * File should contain all functions for working with grains with an emphasis on pure functions.
- */
-import { logicalSegment, divisionBinarySearch } from "./generic";
-import { range } from "../help/collections";
-import { random } from "./math";
-
-// Helpers
-import { secondsToSamples } from "./convert";
-
-// Types
+// Flow Types
 import type {
   viewType,
   grainType,
@@ -19,6 +9,12 @@ import type {
   numberArray,
   numberArrayArray
 } from "../constants/flowTypes";
+
+// Helpers
+import { logicalSegment, divisionBinarySearch } from "../help/generic";
+import { range } from "../help/collections";
+import { random } from "../help/math";
+import { secondsToSamples } from "./convert";
 
 /**
  * Splits a single grain object into two adjacent grain objects that maintain
