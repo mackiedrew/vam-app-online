@@ -146,7 +146,7 @@
     "husky": "0.13.3",
     "img-loader": "^2.0.0",
     "istanbul": "0.4.5",
-    "jest": "21.0.1",
+    "jest": "21.0.2",
     "jest-cli": "20.0.1",
     "jest-css-modules": "1.1.0",
     "json-loader": "0.5.4",
