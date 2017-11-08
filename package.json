@@ -96,7 +96,7 @@
   },
   "homepage": "https://valence.audio/",
   "dependencies": {
-    "keyboardjs": "2.3.4",
+    "keyboardjs": "2.4.0",
     "promise-worker": "1.1.1",
     "promise-worker-transferable": "1.0.4",
     "react": "15.5.4",
