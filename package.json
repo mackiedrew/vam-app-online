@@ -153,7 +153,7 @@
     "offline-plugin": "4.8.1",
     "postcss-loader": "2.0.5",
     "postcss-svgo": "2.1.6",
-    "prettier": "1.11.1",
+    "prettier": "1.12.0",
     "react-addons-test-utils": "15.5.1",
     "react-hot-loader": "3.0.0-beta.7",
     "react-test-renderer": "15.5.4",
