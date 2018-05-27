@@ -166,7 +166,7 @@
     "svgo": "0.7.2",
     "webpack": "2.6.0",
     "webpack-dev-server": "2.4.5",
-    "worker-loader": "1.1.1",
+    "worker-loader": "2.0.0",
     "yarn": "0.24.5"
   }
 }
