@@ -157,7 +157,7 @@
     "react-addons-test-utils": "15.5.1",
     "react-hot-loader": "3.0.0-beta.7",
     "react-test-renderer": "15.5.4",
-    "redux-mock-store": "1.2.3",
+    "redux-mock-store": "1.5.3",
     "sinon": "2.3.1",
     "style-loader": "0.18.1",
     "stylint": "1.5.9",
