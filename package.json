@@ -164,7 +164,7 @@
     "stylus": "0.54.5",
     "stylus-loader": "3.0.1",
     "svgo": "0.7.2",
-    "webpack": "4.28.2",
+    "webpack": "4.28.3",
     "webpack-dev-server": "2.4.5",
     "worker-loader": "0.8.0",
     "yarn": "0.24.5"
