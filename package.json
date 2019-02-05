@@ -125,7 +125,7 @@
     "enzyme": "2.8.1",
     "enzyme-to-json": "1.5.1",
     "eslint": "3.19.0",
-    "eslint-loader": "1.7.1",
+    "eslint-loader": "2.1.2",
     "eslint-plugin-eslint-comments": "1.0.0",
     "eslint-plugin-flowtype": "2.33.0",
     "eslint-plugin-fp": "2.3.0",
