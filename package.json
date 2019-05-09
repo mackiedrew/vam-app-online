@@ -167,6 +167,6 @@
     "webpack": "2.6.0",
     "webpack-dev-server": "2.4.5",
     "worker-loader": "0.8.0",
-    "yarn": "0.24.5"
+    "yarn": "1.16.0"
   }
 }
