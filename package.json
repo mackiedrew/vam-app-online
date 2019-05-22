@@ -130,7 +130,7 @@
     "eslint-plugin-flowtype": "2.33.0",
     "eslint-plugin-fp": "2.3.0",
     "eslint-plugin-import": "2.3.0",
-    "eslint-plugin-jest": "20.0.3",
+    "eslint-plugin-jest": "22.6.4",
     "eslint-plugin-jsdoc": "3.1.0",
     "eslint-plugin-jsx-a11y": "5.0.3",
     "eslint-plugin-prettier": "2.1.1",
